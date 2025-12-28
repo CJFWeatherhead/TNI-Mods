@@ -5,7 +5,6 @@ on:
   push:
     branches: [ "**" ]
     paths-ignore:
-      - "lua/"
       - "*.md"
   # NOTE: This is privileged, do not run pull_requests.
 
