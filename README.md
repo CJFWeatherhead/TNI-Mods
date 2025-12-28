@@ -26,9 +26,9 @@ Examples are your friend. To get started, take a look at the following examples:
 
 ### 2x BW switches (Lua)
 
-The [2x BW switches](/lua/2x-bandwidth-switches/) mod doubles the bandwidth of every switch when spawned in. The store display the original value!
+The [2x BW switches](/mods/2x-bandwidth-switches/) mod doubles the bandwidth of every switch when spawned in. The store display the original value!
 
-### Template mod (C/C++)
+### C++ Template mod (C/C++)
 
 The [Template mod](/programs/tni-mod-template) is a template that contains the common use scenario for writing a mod in c/c++.
 

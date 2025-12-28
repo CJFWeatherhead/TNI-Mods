@@ -35,7 +35,7 @@ void print_scenario_name() {
 
 static Variant on_mod_load() {
 	fetch_mod_api();
-	printf("Loaded tni-mod-template\n");
+	printf("Loaded cpp-template\n");
 	return Nil;
 }
 
@@ -47,7 +47,7 @@ static Variant on_engine_load() {
 	std::string path = "";
 	AcceptDialog diag = sys_node_create(Node_Create_Shortlist::CREATE_CLASSDB, classname.data(), classname.size(), path.data(), path.size());
 	diag.title() = "Testing a dialog.";
-	diag.dialog_text() = "Hello from a tni mod!";
+	diag.dialog_text() = "Hello from a C++ tni mod!";
 	Callable close_fn = Callable::Create<Variant(AcceptDialog)>([](AcceptDialog diag) -> Variant {
 		diag.queue_free();
 		return Nil;

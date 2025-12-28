@@ -35,14 +35,14 @@ jobs:
       shell: bash
       run: |
         export PATH=$PWD/zig-x86_64-windows-0.15.2:$PATH
-        ./zig.cmd
+        ./build-zig.cmd
 
     - name: Collect Artifact
       shell: bash
       run: |
         mkdir ./artifact
         # For every directory containing a .elf file, zip it into ./artifact
-        find ./.zig -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
+        find ./mods/ -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6

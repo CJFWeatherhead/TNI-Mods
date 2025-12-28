@@ -16,7 +16,7 @@ int push_gd_array(lua_State *L, Array array) {
     // `Array` just holds an index to the real array.
     Array* ud = (Array*)lua_newuserdata(L, sizeof(Array));
     // `Array` has assign operator, so we use memcpy to get around it.
-    memcpy(ud, &array, sizeof(Array));
+    memcpy((void*)ud, &array, sizeof(Array));
 
     push_gd_array_metatable(L);
     lua_setmetatable(L, -2);

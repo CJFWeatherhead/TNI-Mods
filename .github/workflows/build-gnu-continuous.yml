@@ -31,14 +31,14 @@ jobs:
 
     - name: Build luajit support mod and C++ examples
       working-directory: ${{github.workspace}}
-      run: ./build.sh
+      run: ./build-gnu.sh
 
     - name: Collect Artifact
       shell: bash
       run: |
         mkdir ./artifact
         # For every directory containing a .elf file, zip it into ./artifact
-        find ./.build -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
+        find ./mods/ -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6

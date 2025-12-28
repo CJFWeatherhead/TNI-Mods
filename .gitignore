@@ -1,5 +1,4 @@
 **/.build/
-**/.embedded/
 **/.zig/
 *.o
 *.a
@@ -7,6 +6,8 @@
 .vscode/
 
 changes.diff
+
+mods/**/*.elf
 
 !programs/luajit/libluajit.a
 !programs/luajit/zig-libluajit.a
