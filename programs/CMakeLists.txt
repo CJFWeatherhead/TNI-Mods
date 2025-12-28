@@ -20,4 +20,4 @@ endfunction()
 
 # Build the trivial examples
 add_subdirectory(cpp-template)
-add_subdirectory(luajit)
+add_subdirectory(luajit-support)

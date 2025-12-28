@@ -9,5 +9,5 @@ changes.diff
 
 mods/**/*.elf
 
-!programs/luajit/libluajit.a
-!programs/luajit/zig-libluajit.a
+!programs/luajit-support/libluajit.a
+!programs/luajit-support/zig-libluajit.a

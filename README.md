@@ -30,11 +30,11 @@ The [2x BW switches](/mods/2x-bandwidth-switches/) mod doubles the bandwidth of 
 
 ### C++ Template mod (C/C++)
 
-The [Template mod](/programs/tni-mod-template) is a template that contains the common use scenario for writing a mod in c/c++.
+The [Template mod](/programs/cpp-template/) is a template that contains the common use scenario for writing a mod in c/c++.
 
 ### LuaJIT support mod (C/C++)
 
-The [LuaJIT support mod](/programs/luajit) adds Lua based mods. It is much more complex but may help with things the template doesn't have.
+The [LuaJIT support mod](/programs/luajit-support/) adds Lua based mods. It is much more complex but may help with things the template doesn't have.
 
 ---
 
