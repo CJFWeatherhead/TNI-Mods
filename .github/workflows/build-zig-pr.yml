@@ -20,7 +20,7 @@ jobs:
     - name: Install dependencies
       shell: bash
       run: |
-        choco install ninja
+        choco install ninja zip -y
         # Install Zig
         curl -L https://ziglang.org/download/0.15.2/zig-x86_64-windows-0.15.2.zip -o zig.zip
         7z.exe x -y zig.zip
@@ -30,19 +30,17 @@ jobs:
       shell: bash
       run: |
         export PATH=$PWD/zig-x86_64-windows-0.15.2:$PATH
-        cmd /c ./zig.cmd
+        ./zig.cmd
 
     - name: Collect Artifact
-      if: github.event_name == 'push'
       shell: bash
       run: |
         mkdir ./artifact
-        find ./.zig -name '*.elf' -exec cp "{}" ./artifact \;
-        ${{github.ref_name}}
+        # For every directory containing a .elf file, zip it into ./artifact
+        find ./.zig -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
-      if: github.event_name == 'push'
       with:
         name: artifact
         path: ./artifact

@@ -38,7 +38,6 @@ jobs:
         ./zig.cmd
 
     - name: Collect Artifact
-      if: github.event_name == 'push'
       shell: bash
       run: |
         mkdir ./artifact
@@ -47,7 +46,6 @@ jobs:
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
-      if: github.event_name == 'push'
       with:
         name: artifact
         path: ./artifact

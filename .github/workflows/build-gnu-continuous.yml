@@ -34,7 +34,6 @@ jobs:
       run: ./build.sh
 
     - name: Collect Artifact
-      if: github.event_name == 'push'
       shell: bash
       run: |
         mkdir ./artifact
@@ -43,9 +42,8 @@ jobs:
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
-      if: github.event_name == 'push'
       with:
-        name: ${{github.ref_name}}
+        name: artifact
         path: ./artifact/**/*
 
     - name: Create/Update continuous release
