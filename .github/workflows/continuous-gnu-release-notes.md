@@ -10,7 +10,7 @@ This is an automatically generated continuous release built with the GNU RISC-V 
 ### Installation
 
 1. Download `luajit.zip` and extract it
-2. Place `luajit/entry.elf` in your game's `mods/` directory as `mods/luajit/entry.elf`
+2. Place `luajity.elf` in your game's `mods/` directory as `mods/luajit.elf`
 3. Download and install any additional mods you want to use
 
 For detailed installation instructions, see the [main README](https://github.com/CJFWeatherhead/TNI-Mods#installing-mods).
