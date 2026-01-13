@@ -21,7 +21,7 @@ Zig builds have known issues with error handling, particularly for the LuaJIT su
 If you still want to use Zig builds:
 
 1. Download the desired mod `.zip` file
-2. Extract and place in your game's `mods/` directory
+2. Place `luajity.elf` in your game's `mods/` directory as `mods/luajit.elf`
 3. Follow the [installation guide](https://github.com/CJFWeatherhead/TNI-Mods#installing-mods)
 
 ### Need Help?
