@@ -1,6 +1,10 @@
 function on_engine_load()
     print("High BW capacity switches!")
-    ModApiV1.sanity()
+    if ModApiV1 and ModApiV1.sanity then
+        ModApiV1.sanity()
+    else
+        print("ModApiV1 is not available!")
+    end
 end
 
 function on_mod_reload()
