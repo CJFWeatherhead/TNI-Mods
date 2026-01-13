@@ -103,7 +103,7 @@ static Variant on_player_input(InputEvent event) {
             somevar += 1;
 			print_scenario_name();
         } else if (!key->is_pressed() && key->get_keycode() == 32) {
-            print("Spacebar released\n");
+            printf("Spacebar released\n");
         }
     }
 	
