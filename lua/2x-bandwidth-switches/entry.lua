@@ -13,7 +13,11 @@
 -- Called when all mods have been loaded and the engine is ready
 function on_engine_load()
     print("High BW capacity switches mod loaded!")
-    ModApiV1.sanity()  -- Verify the mod API is working correctly
+    if ModApiV1 and ModApiV1.sanity then -- Verify the mod API is working correctly
+        ModApiV1.sanity()
+    else
+        print("ModApiV1 is not available!")
+    end
 end
 
 -- Called when the player presses the reload key (F11)
