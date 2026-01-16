@@ -1,108 +1,178 @@
 # Tower Networking Inc. Modding Kit
 
-This repository is a modding kit that can be used to create mods for the game [Tower Networking Inc](https://store.steampowered.com/app/2939600/Tower_Networking_Inc/). Modding support for the game is implemented with [Godot Sandbox](https://github.com/libriscv/godot-sandbox) using [libriscv](https://libriscv.no/).
+This repository is a modding kit for creating mods for [Tower Networking Inc](https://store.steampowered.com/app/2939600/Tower_Networking_Inc/). Modding support is implemented using [Godot Sandbox](https://github.com/libriscv/godot-sandbox) with [libriscv](https://libriscv.no/).
 
-Mods are created in C/C++, however this repository also contains the official LuaJIT support mod. Lua mods are preferred as they are easier to develop and are naturally source-available.
+## Language Support
 
-Note that modding for the game is still in early design/implementation stage, and any feedback/suggestions is encouraged to make modding the game fun!
+Mods can be created in **C/C++** or **Lua** (via the LuaJIT support mod):
 
-## Using Lua based mods
+- **Lua mods** (recommended): Easier to develop, naturally source-available, and support hot-reloading
+- **C/C++ mods**: Provide full control and performance for complex modifications
 
-If you want to use a Lua based mods, you will need to manually add the `luajit` support mod first. This may be improved in the future.
+> **Note**: Modding for Tower Networking Inc is in active development. Feedback and suggestions are welcome to improve the modding experience!
 
-You can find the mod in the github releases, or [click here](https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/releases/early-0) for the latest stable release. Download the luajit file and place it in your mods folder. Refer to [Loading the mod](#loading-the-mod) for further instructions.
+## Using Lua Mods
 
-If you are using the `beta` branch of the game, you'll likely want to use the ["Continuous (gnu) - beta"](https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/releases/tag/continuous-gnu-beta) release instead.
+To use Lua-based mods, you must first install the `luajit` support mod:
 
-## Beta branch
+1. Download the latest LuaJIT support mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+2. Place the `luajit.elf` file directly in your game's `mods/` directory (not in a subdirectory)
+3. The game will automatically load the LuaJIT support mod before all other mods
 
-There is a `beta` github branch which should work with the game's `beta` branch on steam.
+> **Beta Branch Users**: If you're using the `beta` branch of the game on Steam, download the release tagged with `continuous-gnu-beta` instead.
 
-Changes to the modding-kit go through the beta branch first.
+## Beta Branch
 
-## Example mods
+This repository includes a `beta` branch that corresponds to the game's `beta` branch on Steam.
 
-Examples are your friend. To get started, take a look at the following examples:
+- Changes to the modding kit are tested on the `beta` branch first
+- Use the `beta` branch if you're developing mods for the beta version of the game
 
-### 2x BW switches (Lua)
+## Example Mods
 
-The [2x BW switches](/lua/2x-bandwidth-switches/) mod doubles the bandwidth of every switch when spawned in. The store display the original value!
+Learn by example! The following examples demonstrate different modding approaches:
 
-### Template mod (C/C++)
+### 2x Bandwidth Switches (Lua)
 
-The [Template mod](/programs/tni-mod-template) is a template that contains the common use scenario for writing a mod in c/c++.
+**Location**: [`/lua/2x-bandwidth-switches/`](/lua/2x-bandwidth-switches/)
 
-### LuaJIT support mod (C/C++)
+A simple Lua mod that doubles the bandwidth capacity of every switch when spawned. The store continues to display the original value, so players get a nice surprise!
 
-The [LuaJIT support mod](/programs/luajit) adds Lua based mods. It is much more complex but may help with things the template doesn't have.
+**Key concepts demonstrated**:
+- Using the `on_device_spawned` callback
+- Accessing device properties
+- Modifying game logic
+
+### Template Mod (C/C++)
+
+**Location**: [`/programs/tni-mod-template/`](/programs/tni-mod-template/)
+
+A comprehensive C/C++ template demonstrating common modding scenarios including:
+- Registering callbacks for game events
+- Creating UI dialogs
+- Handling player input
+- Accessing game world state
+
+### LuaJIT Support Mod (C/C++)
+
+**Location**: [`/programs/luajit/`](/programs/luajit/)
+
+The official LuaJIT support mod implementation. This is a more complex example showing advanced integration with the game engine.
 
 ---
 
-## Loading the mod
+## Installing Mods
 
-Mods in the game will be loaded from the user's game directory in alphabetical order.
+Mods are loaded from the game's user directory in alphabetical order:
 
-- Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc`
+- **Windows**: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+- **Linux**: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
 
-- Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc`
+### Installing C/C++ Mods
 
-On the user's game directory, you'll observe directories like `saves/` and `logs/`. Place your mod in the `mods/` directory.
+1. Build the mod (see [Building C/C++ Mods](#building-cc-mods))
+2. Copy the entire mod directory from `.zig/<mod-name>/` to the game's `mods/` directory
+3. Ensure the file structure is: `mods/<mod-name>/entry.elf`
 
-For example, to install the `tni-mod-template` mod, place `.zig/tni-mod-template` to `mods/` such that `mods/tni-mod-template/entry.elf` exists.
+**Example**: To install `tni-mod-template`:
+```
+mods/
+└── tni-mod-template/
+    └── entry.elf
+```
 
-### Lua mods
+### Installing Lua Mods
 
-If you'd like to use Lua instead, you can download the [pre-built luajit.elf mod](https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/releases/download/early-0/luajit.elf) from the releases section and place it as `mods/luajit.elf` (directly in the `mods/`) directory. This enables loading of `.lua` mods.
+1. Ensure the LuaJIT support mod is installed (see [Using Lua Mods](#using-lua-mods))
+2. Place your `.lua` mod file directly in the `mods/` directory
 
-The engine will always first try to load the `luajit.elf` before all mods, so you do not need to worry about the naming.
+**Example**: To install `2x-bandwidth-switches.lua`:
+```
+mods/
+├── luajit.elf          # Required for Lua support
+└── 2x-bandwidth-switches.lua
+```
+
+> **Note**: The game engine loads `luajit.elf` first automatically, so naming is not critical.
 
 ---
 
-## Building C/C++ mods
+## Building C/C++ Mods
 
-Check out the [librisc-v docs](https://libriscv.no/docs/host_langs/godot_integration/godot_docs/cmake#cmake-setup) for more information.
+For comprehensive documentation on building mods, see the [libriscv documentation](https://libriscv.no/docs/host_langs/godot_integration/godot_docs/cmake#cmake-setup).
 
-To clone and initialize the repository locally;
+### Initial Setup
+
+Clone the repository and initialize submodules:
 
 ```sh
-# Ensure you have `git` installed.
-git clone https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit.git --branch main
+git clone https://github.com/CJFWeatherhead/TNI-Mods.git --branch main
+cd TNI-Mods
 git submodule update --init --recursive
 ```
 
-### Windows
+### Windows Build Requirements
 
-Make sure the following is installed:
+Install the following tools:
 
-1. [git](https://git-scm.com/install/windows) (version control system, used to clone the repo locally)
-2. [CMake](https://cmake.org/download/) (generator for build systems)
-3. [Ninja](https://ninja-build.org/) (build system)
-4. [ZIG](https://ziglang.org/download/) (RISC-V cross-compilation)
+1. [Git](https://git-scm.com/install/windows) - Version control system
+2. [CMake](https://cmake.org/download/) - Build system generator
+3. [Ninja](https://ninja-build.org/) - Fast build system
+4. [Zig](https://ziglang.org/download/) - RISC-V cross-compilation toolchain
 
-Then in the root of this project, run the command:
-
-```
+**Build command**:
+```cmd
 zig.cmd
 ```
 
-The built output (a .elf file) will be in the `.zig/<name-of-your-mod>/entry.elf` directory.
+Built mods will be in `.zig/<mod-name>/entry.elf`
 
-### Linux (and WSL2)
+### Linux Build Requirements (including WSL2)
 
-Make sure the following is installed:
-
-1. `git` (version control system, used to clone the repo locally)
-2. `CMake` (generator for build systems)
-3. `Ninja` (build system)
-4. `g++-riscv64-linux-gnu-14` (GNU RISC-V compiler)
+Install dependencies:
 
 ```sh
-# For Debian based systems like Ubuntu;
+# Debian/Ubuntu
 sudo apt install git cmake ninja-build g++-riscv64-linux-gnu-14
 ```
 
-Then in the root of this project, run the command:
-
+**Build command**:
 ```sh
-./build.cmd
+./build.sh
 ```
+
+Built mods will be in `.build/<mod-name>/entry.elf`
+
+### Build Output
+
+After building, mod binaries (`.elf` files) are placed in:
+- **Windows/Zig**: `.zig/<mod-name>/`
+- **Linux/GNU**: `.build/<mod-name>/`
+
+See [Installing C/C++ Mods](#installing-cc-mods) for installation instructions.
+
+---
+
+## Resources
+
+- **Game**: [Tower Networking Inc on Steam](https://store.steampowered.com/app/2939600/Tower_Networking_Inc/)
+- **Godot Sandbox**: [GitHub Repository](https://github.com/libriscv/godot-sandbox)
+- **libriscv Documentation**: [https://libriscv.no/](https://libriscv.no/)
+- **C++ API Reference**: [Godot Sandbox C++ API](https://libriscv.no/docs/host_langs/godot_integration/godot_docs/cppapi)
+- **C++ Examples**: [Godot Sandbox C++ Examples](https://libriscv.no/docs/host_langs/godot_integration/godot_docs/cppexamples/)
+
+## Contributing
+
+Contributions are welcome! When contributing:
+
+1. Fork this repository
+2. Create a feature branch
+3. Follow the existing code style
+4. Test your changes thoroughly
+5. Submit a pull request with a clear description
+
+For bug reports or feature requests, please open an issue on GitHub.
+
+## License
+
+This project is licensed under the BSD 3-Clause License. See [LICENSE](LICENSE) for details.
