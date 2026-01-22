@@ -1,0 +1,48 @@
+Name: Money Cheat
+Description: |
+  Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.
+  
+  ## Features
+  - Instant money injection via keyboard shortcut (SHIFT+M)
+  - Configurable amount (default: $10,000)
+  - Console feedback on activation
+  - Optional in-game notifications
+  - Cooldown protection to prevent accidental double-activation
+  
+  ## Usage
+  Press SHIFT+M during gameplay to add money to your balance.
+  Configure the amount in the Mod Manager settings.
+  
+  ## Configuration
+  - **Money Amount**: The amount to add when activated (default: $10,000)
+  - **Debug Logging**: Show detailed console messages
+  - **Show Notification**: Attempt to display in-game notification
+  
+Author: CJFWeatherhead
+Creation Date: 2026-01-21
+Last Updated: 2026-01-21
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat
+Development Status: Active Development
+Game Version Supported: beta
+ID: money-cheat
+Dependencies: []
+Notes: Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s cooldown to prevent accidental double-activation.
+Parameters:
+  - Name: money_amount
+    Label: Money Amount
+    Type: integer
+    Default: 10000
+    Min: 100
+    Max: 10000000
+    Step: 100
+    Description: Amount of money to add when SHIFT+M is pressed
+  - Name: debug_logging
+    Label: Enable Debug Logging
+    Type: boolean
+    Default: true
+    Description: Log detailed information to console when cheat is activated
+  - Name: show_notification
+    Label: Show In-Game Notification
+    Type: boolean
+    Default: true
+    Description: Attempt to show an in-game notification when money is added (may not be supported by all game versions)
