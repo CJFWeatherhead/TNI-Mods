@@ -7,10 +7,11 @@ import yaml
 from pathlib import Path
 from datetime import datetime
 
-# Paths
-REPO_ROOT = Path('/home/runner/work/TNI-Mods/TNI-Mods')
+# Paths - determine repository root dynamically
+SCRIPT_DIR = Path(__file__).parent.resolve()
+REPO_ROOT = SCRIPT_DIR.parent
 LUA_DIR = REPO_ROOT / 'lua'
-DOCS_CONTENT_DIR = REPO_ROOT / 'docs' / 'content' / 'mods'
+DOCS_CONTENT_DIR = SCRIPT_DIR / 'content' / 'mods'
 
 def load_yaml(filepath):
     """Load YAML file"""
@@ -20,13 +21,14 @@ def load_yaml(filepath):
     except yaml.scanner.ScannerError as e:
         print(f"Error parsing YAML in {filepath}: {e}")
         # Return minimal metadata to allow continuing
+        today = datetime.now().strftime('%Y-%m-%d')
         return {
             'Name': filepath.parent.name,
             'ID': filepath.parent.name,
             'Description': 'Error loading description from metadata.yaml',
             'Author': 'Unknown',
-            'Creation Date': '2026-01-01',
-            'Last Updated': '2026-01-01',
+            'Creation Date': today,
+            'Last Updated': today,
             'Development Status': 'Unknown',
             'Game Version Supported': 'Unknown'
         }
@@ -60,10 +62,11 @@ def generate_mod_page(mod_dir):
     readme_content = load_markdown(readme_file)
     
     # Extract metadata fields with defaults
+    today = datetime.now().strftime('%Y-%m-%d')
     title = metadata.get('Name', mod_name)
     description = metadata.get('Description', '')
     author = metadata.get('Author', 'Unknown')
-    creation_date = metadata.get('Creation Date', '2026-01-01')
+    creation_date = metadata.get('Creation Date', today)
     last_updated = metadata.get('Last Updated', creation_date)
     status = metadata.get('Development Status', 'Unknown')
     game_version = metadata.get('Game Version Supported', 'Unknown')
