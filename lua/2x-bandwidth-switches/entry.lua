@@ -1,3 +1,17 @@
+-- 2x Bandwidth Switches Mod
+-- This mod doubles the bandwidth capacity of all switches in the game.
+--
+-- 
+-- Version: 1.0
+-- Description: Increases the installed network bandwidth (nbw) of switch devices by a factor of 2.
+--              This allows switches to handle more network traffic.
+--
+-- Usage: Place this mod in the lua/2x-bandwidth-switches/ folder and load the game.
+--        All switches spawned will have doubled bandwidth.
+--
+-- Notes: Only affects devices with device_hardware_class == 1 (switches).
+--        The modification happens when the device is spawned.
+
 function on_engine_load()
     print("High BW capacity switches!")
     if ModApiV1 and ModApiV1.sanity then
