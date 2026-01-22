@@ -1,0 +1,201 @@
+---
+title: "User Floor-Based Addressing"
+date: 2026-01-11
+draft: false
+mod_id: "user-floor-addressing"
+author: "CJFWeatherhead"
+status: "Active Development"
+game_version: "beta"
+---
+
+# User Floor-Based Addressing
+
+This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
+
+## Features
+- Sets DHCP mode to "boot_dhcp" for all users
+- Assigns addresses like "f{floor}/usr{increment}"
+- Configures DNS servers with floor-specific primary and floor 0 fallbacks
+- Tracks user count per floor for incremental addressing
+
+
+## Mod Information
+
+- **Author**: CJFWeatherhead
+- **Development Status**: Active Development
+- **Game Version**: beta
+- **Last Updated**: 2026-01-11
+- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing)
+
+## Download
+
+**[Download User Floor-Based Addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/user-floor-addressing)**
+
+### Installation Instructions
+
+1. Download or clone this repository
+2. Copy the `lua/user-floor-addressing/` folder to your game's mods directory:
+   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
+4. Enable and configure using [ModManagerGUI.ps1](/mods/tools/modmanager/)
+
+## Configuration Parameters
+
+This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
+
+### Network Address Format
+
+- **Parameter Name**: `address_format`
+- **Type**: string
+- **Default**: `f%d/usr%d`
+
+Format string for network addresses. %d placeholders are replaced with floor number and user increment (e.g., "f%d/usr%d" becomes "f0/usr1")
+
+### DHCP Mode
+
+- **Parameter Name**: `dhcp_mode`
+- **Type**: select
+- **Default**: `boot_dhcp`
+- **Options**: `disabled`, `boot_dhcp`, `periodic_dhcp`
+
+DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only
+
+### Floor DNS Server Format
+
+- **Parameter Name**: `dns_format`
+- **Type**: string
+- **Default**: `@f%d/dns`
+
+Format string for floor-specific DNS servers. %d is replaced with floor number (e.g., "@f%d/dns" becomes "@f0/dns")
+
+### Fallback DNS Server 1
+
+- **Parameter Name**: `fallback_dns_1`
+- **Type**: string
+- **Default**: `@f0/dns1`
+
+First fallback DNS server if floor-specific DNS is unavailable
+
+### Fallback DNS Server 2
+
+- **Parameter Name**: `fallback_dns_2`
+- **Type**: string
+- **Default**: `@f0/dns2`
+
+Second fallback DNS server
+
+### Disable Hardware Address Refresh
+
+- **Parameter Name**: `disable_hw_refresh`
+- **Type**: boolean
+- **Default**: `False`
+
+If enabled, users will not refresh their hardware addresses
+
+### Use Predictable Hardware Addresses
+
+- **Parameter Name**: `predictable_hw_address`
+- **Type**: boolean
+- **Default**: `False`
+
+If enabled (requires Disable Hardware Address Refresh), hardware addresses will be floor + increment (e.g., floor 5 user 3 = 5003, floor 113 user 321 = 113321)
+
+### Phone Address Format
+
+- **Parameter Name**: `phone_address_format`
+- **Type**: string
+- **Default**: `@voice/f%d/%d`
+
+Format string for phone network addresses. First %d is floor number, second %d is device increment (e.g., "@voice/f%d/%d" becomes "@voice/f0/1")
+
+### CCTV Address Format
+
+- **Parameter Name**: `cctv_address_format`
+- **Type**: string
+- **Default**: `@cam/f%d/%d`
+
+Format string for CCTV camera network addresses. First %d is floor number, second %d is device increment (e.g., "@cam/f%d/%d" becomes "@cam/f0/1")
+
+---
+
+## Detailed Documentation
+
+# User Floor-Based Addressing Mod
+
+This mod automatically configures network settings for users when they spawn in the game.
+
+## Features
+
+- **DHCP Configuration**: Automatically sets DHCP to "boot_dhcp" mode (DHCP on boot)
+- **Floor-Based Addressing**: Assigns predictable network addresses based on floor number and user count
+  - Format: `f<floor_num>/usr<increment>`
+  - Example: User #5 on floor 3 gets address `f3/usr5`
+  - Example: User #1 on floor 10 gets address `f10/usr1`
+- **Automatic DNS Setup**: All users automatically get DNS servers configured as `@f0/dns1`, `@f0/dns2`, `@f0/dns3`
+
+## How It Works
+
+The mod hooks into the `on_user_spawned` callback, triggered whenever a new user is created:
+
+1. Retrieves the user's logic controller and network control module
+2. Gets the floor number from the user's location
+3. Maintains a counter of users per floor
+4. Generates a predictable network address based on floor and user count
+5. Sets DHCP mode to "boot_dhcp"
+6. Configures DNS servers to floor 0 DNS (`@f0/dns1`, `@f0/dns2`, `@f0/dns3`)
+
+## Limitations
+
+**Hardware Addresses**: Hardware addresses are randomly generated by the game's RNG during device creation and cannot be controlled by mods. The mod API does not provide methods to set or modify hardware addresses. This is a game engine limitation.
+
+## Installation
+
+1. Copy the `user-floor-addressing` folder to your `lua/` directory
+2. The mod will be automatically loaded when the game starts
+3. Press F11 to reload the mod without restarting the game
+
+## Technical Details
+
+### DHCP Modes
+
+The game supports three DHCP modes:
+
+- `"disabled"` - DHCP disabled, manual configuration required
+- `"boot_dhcp"` - Request DHCP address on boot
+- `"periodic_dhcp"` - Periodically request DHCP updates
+
+This mod uses `"boot_dhcp"` for reliable automatic configuration on user creation.
+
+### DNS Configuration
+
+DNS servers are set using a Godot Array containing the addresses:
+
+- `@f0/dns1`
+- `@f0/dns2`
+- `@f0/dns3`
+
+### Address Format
+
+Addresses follow the pattern `f<floor>/usr<count>` where:
+
+- `floor` is the floor number from the location
+- `count` is an auto-incrementing counter per floor starting at 1
+
+## Compatibility
+
+- Tested with game version: beta
+- Compatible with other mods that don't modify user network settings
+- Works alongside device modification mods and reward scaling mods (like `floor-reward-scaling`)
+
+
+---
+
+## Additional Notes
+
+DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
+
+
+---
+
+[← Back to All Mods](/mods/)

@@ -16,7 +16,8 @@ Game Version Supported: beta
 ID: user-floor-addressing
 Dependencies: []
 Image: 
-Notes: DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
+Notes: |
+  DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
 Parameters:
   - Name: address_format
     Label: Network Address Format
