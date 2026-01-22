@@ -1,0 +1,66 @@
+Name: User Floor-Based Addressing
+Description: |
+  This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
+
+  ## Features
+  - Sets DHCP mode to "boot_dhcp" for all users
+  - Assigns addresses like "f{floor}/usr{increment}"
+  - Configures DNS servers with floor-specific primary and floor 0 fallbacks
+  - Tracks user count per floor for incremental addressing
+Author: CJFWeatherhead
+Creation Date: 2026-01-01
+Last Updated: 2026-01-11
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing
+Development Status: Active Development
+Game Version Supported: beta
+ID: user-floor-addressing
+Dependencies: []
+Image: 
+Notes: DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
+Parameters:
+  - Name: address_format
+    Label: Network Address Format
+    Type: string
+    Default: "f%d/usr%d"
+    Description: Format string for network addresses. %d placeholders are replaced with floor number and user increment (e.g., "f%d/usr%d" becomes "f0/usr1")
+  - Name: dhcp_mode
+    Label: DHCP Mode
+    Type: select
+    Default: "boot_dhcp"
+    Options: ["disabled", "boot_dhcp", "periodic_dhcp"]
+    Description: DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only
+  - Name: dns_format
+    Label: Floor DNS Server Format
+    Type: string
+    Default: "@f%d/dns"
+    Description: Format string for floor-specific DNS servers. %d is replaced with floor number (e.g., "@f%d/dns" becomes "@f0/dns")
+  - Name: fallback_dns_1
+    Label: Fallback DNS Server 1
+    Type: string
+    Default: "@f0/dns1"
+    Description: First fallback DNS server if floor-specific DNS is unavailable
+  - Name: fallback_dns_2
+    Label: Fallback DNS Server 2
+    Type: string
+    Default: "@f0/dns2"
+    Description: Second fallback DNS server
+  - Name: disable_hw_refresh
+    Label: Disable Hardware Address Refresh
+    Type: boolean
+    Default: false
+    Description: If enabled, users will not refresh their hardware addresses
+  - Name: predictable_hw_address
+    Label: Use Predictable Hardware Addresses
+    Type: boolean
+    Default: false
+    Description: If enabled (requires Disable Hardware Address Refresh), hardware addresses will be floor + increment (e.g., floor 5 user 3 = 5003, floor 113 user 321 = 113321)
+  - Name: phone_address_format
+    Label: Phone Address Format
+    Type: string
+    Default: "@voice/f%d/%d"
+    Description: Format string for phone network addresses. First %d is floor number, second %d is device increment (e.g., "@voice/f%d/%d" becomes "@voice/f0/1")
+  - Name: cctv_address_format
+    Label: CCTV Address Format
+    Type: string
+    Default: "@cam/f%d/%d"
+    Description: Format string for CCTV camera network addresses. First %d is floor number, second %d is device increment (e.g., "@cam/f%d/%d" becomes "@cam/f0/1")
