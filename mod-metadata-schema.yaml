@@ -1,0 +1,66 @@
+# Mod Metadata Schema
+# This schema defines the structure for mod metadata files in YAML format.
+# Each mod in the lua/ folder should have a metadata.yaml file with these fields.
+
+# Required fields:
+# - Name: Pretty name of the mod (e.g., "Double the Bandwidth on Switches")
+# - Description: Description in Markdown format
+# - Author: Author's name
+# - Creation Date: Date in YYYY-MM-DD format
+# - Last Updated: Date in YYYY-MM-DD format
+# - Development Status: One of: "Active Development", "Maintenance only", "Discontinued", "Defunct"
+# - Game Version Supported: Game version or range (e.g., "beta", "1.0.0", "1.0.0-1.2.0")
+# - ID: Unique identifier, usually the folder name (e.g., "2x-bandwidth-switches")
+
+# Optional fields:
+# - Website: URL to the mod's website or repository
+# - Dependencies: List of other mod IDs this mod depends on
+# - Image: Path or URL to an image for the mod (for modloader)
+# - Notes: Free text notes
+# - Parameters: List of user-configurable parameters (see below)
+
+# Parameters Schema:
+# Parameters is a list where each parameter has:
+# - Name: Parameter identifier (used in code, e.g., "warranty_multiplier_min")
+# - Label: Display name shown to users (e.g., "Minimum Warranty Multiplier")
+# - Type: One of: "number", "integer", "boolean", "string", "select"
+# - Default: Default value for the parameter
+# - Description: Help text explaining what this parameter does
+# - Min: (for number/integer) Minimum allowed value
+# - Max: (for number/integer) Maximum allowed value
+# - Step: (for number/integer) Increment step for sliders (optional, default 1)
+# - Options: (for select type) List of valid options ["option1", "option2", ...]
+
+# Example:
+# Name: Random Device Warranties
+# Description: This mod randomizes the warranty periods of all spawned devices.
+# Author: CJFWeatherhead
+# Creation Date: 2026-01-01
+# Last Updated: 2026-06-01
+# Website: https://github.com/example/tni-mods
+# Development Status: Discontinued
+# Game Version Supported: beta
+# ID: random-warranties
+# Dependencies: []
+# Image: images/random-warranties.png
+# Notes: This mod makes the game more unpredictable.
+# Parameters:
+#   - Name: warranty_multiplier_min
+#     Label: Minimum Warranty Multiplier
+#     Type: integer
+#     Default: 2
+#     Min: 1
+#     Max: 100
+#     Description: Minimum multiplier for device warranties (e.g., 2 = 2x base warranty)
+#   - Name: warranty_multiplier_max
+#     Label: Maximum Warranty Multiplier
+#     Type: integer
+#     Default: 25
+#     Min: 1
+#     Max: 100
+#     Description: Maximum multiplier for device warranties (e.g., 25 = 25x base warranty)
+#   - Name: apply_to_cycles
+#     Label: Apply to Warranty Cycles
+#     Type: boolean
+#     Default: true
+#     Description: Whether to also multiply warranty cycles (in addition to days)

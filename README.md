@@ -4,7 +4,16 @@ This repository is a modding kit that can be used to create mods for the game [T
 
 Mods are created in C/C++, however this repository also contains the official LuaJIT support mod. Lua mods are preferred as they are easier to develop and are naturally source-available.
 
-Note that modding for the game is still in early design/implementation stage, and any feedback/suggestions is encouraged to make modding the game fun!
+Note that modding for the game is still in early design/implementation stage.
+
+## Mod Manager
+
+This repository includes a PowerShell-based [Mod Manager](ModManager-README.md) for easy configuration and management of mods. Use `ModManager.bat` or `ModManagerGUI.ps1` to configure mods without editing files manually.
+
+For more details, see:
+
+- [ModManager-README.md](ModManager-README.md) - Full mod manager documentation
+- [CONFIG-SYSTEM.md](CONFIG-SYSTEM.md) - Configuration system architecture
 
 ## Using Lua based mods
 
@@ -20,21 +29,75 @@ There is a `beta` github branch which should work with the game's `beta` branch 
 
 Changes to the modding-kit go through the beta branch first.
 
-## Example mods
+---
 
-Examples are your friend. To get started, take a look at the following examples:
+## Creating Lua Mods
 
-### 2x BW switches (Lua)
+### Mod Structure Standards
 
-The [2x BW switches](/lua/2x-bandwidth-switches/) mod doubles the bandwidth of every switch when spawned in. The store display the original value!
+All Lua mods follow this structure:
 
-### Template mod (C/C++)
+```
+lua/<mod-name>/
+├── entry.lua          # Main mod file (REQUIRED)
+├── metadata.yaml      # Mod metadata (REQUIRED)
+├── README.md          # Mod documentation (REQUIRED)
+└── ui-config.ps1      # Custom UI config (OPTIONAL, for complex configs)
+```
 
-The [Template mod](/programs/tni-mod-template) is a template that contains the common use scenario for writing a mod in c/c++.
+#### Required Files
 
-### LuaJIT support mod (C/C++)
+**entry.lua** - Main mod implementation
 
-The [LuaJIT support mod](/programs/luajit) adds Lua based mods. It is much more complex but may help with things the template doesn't have.
+- Must be a single, self-contained Lua file
+
+- Configuration options must be in a marked section:
+  
+  ```lua
+  -- ===== MOD CONFIGURATION START =====
+  -- This section is parsed and modified by ModManager
+  -- Do not remove the configuration markers
+  
+  local config = {
+      param1 = true,
+      param2 = 2.0,
+      param3 = "value"
+  }
+  
+  -- ===== MOD CONFIGURATION END =====
+  ```
+
+**metadata.yaml** - Mod metadata
+
+- Follow the schema in [mod-metadata-schema.yaml](mod-metadata-schema.yaml)
+- Must include: Name, Description, Author, Creation Date, Last Updated, Development Status, Game Version Supported, ID
+- Parameters section defines configurable options (used by basic ModManager UI)
+
+**README.md** - User documentation
+
+- Describe what the mod does
+- List features
+- Explain installation and usage
+- Include compatibility information
+- Document any special configuration
+
+#### Optional Files
+
+**ui-config.ps1** - Custom configuration UI
+
+- Only needed for complex mods with conditional parameters
+- Defines UI elements in PowerShell (not in metadata.yaml)
+- See [device-tweaker/ui-config.ps1](lua/device-tweaker/ui-config.ps1) for examples
+
+
+
+### Configuration Best Practices
+
+1. **Keep it simple**: Most mods should use the Parameters section in metadata.yaml
+2. **Use marked sections**: Always use the `MOD CONFIGURATION START/END` markers in entry.lua
+3. **Type-safe defaults**: Provide sensible defaults for all parameters
+4. **Document parameters**: Add clear descriptions in metadata.yaml
+5. **Use ui-config.ps1 only when needed**: For conditional/dynamic parameter visibility
 
 ---
 
