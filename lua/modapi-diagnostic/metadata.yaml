@@ -1,0 +1,43 @@
+Name: ModAPI Diagnostic Tool
+Description: |
+  Comprehensive diagnostic and inspection tool for TNI game engine callbacks and API endpoints.
+  
+  ## Features
+  - **Engine Event Logging**: Tracks engine load, mod reload, and game lifecycle events
+  - **Device Spawn Inspection**: Logs detailed device properties and network configuration
+  - **User Spawn Analysis**: Comprehensive user property inspection with network/DNS details
+  - **Re-inspection Capability**: Press Shift+R to re-inspect all spawned users
+  - **Network Configuration Monitoring**: Track DHCP settings, IP addresses, and DNS servers
+  - **Safe Error Handling**: Protected table dumps and property access
+  - **Console Integration**: Call `reinspect_all_users()` from Lua console
+  
+  ## Use Cases
+  - Debug mod development issues
+  - Understand game object structures
+  - Inspect network configurations
+  - Track user and device properties
+  - Test API endpoints and callbacks
+  - Learn the game engine's behavior
+  
+  ## Logged Events
+  - `on_engine_load()` - Initial engine startup
+  - `on_mod_reload()` - When F11 is pressed
+  - `on_device_spawned()` - Device creation with full network config
+  - `on_user_spawned()` - User creation with location and network details
+  - `on_day_start()` / `on_day_end()` - Day cycle events
+  - Input events (Shift+R hotkey)
+  
+  ## Output
+  All diagnostic information is printed to the game console. Use the in-game console
+  to view detailed logs and object structures.
+  
+Author: CJFWeatherhead
+Creation Date: 2026-01-20
+Last Updated: 2026-01-20
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic
+Development Status: Active Development
+Game Version Supported: beta
+ID: modapi-diagnostic
+Dependencies: []
+Image: 
+Notes: This is a developer tool for mod creators. No gameplay impact.
