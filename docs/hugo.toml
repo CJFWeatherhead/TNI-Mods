@@ -5,9 +5,8 @@ theme = 'terminal'
 
 [params]
   # Terminal theme specific settings
-  themeColor = "blue"
   fullWidthTheme = false
-  centerTheme = false
+  centerTheme = true
   
   # Site info
   contentTypeName = "mods"
