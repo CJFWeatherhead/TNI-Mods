@@ -1,20 +1,23 @@
 baseURL = 'https://tower.networking.ink/'
 languageCode = 'en-us'
-title = 'Tower Networking Inc - Mods'
+title = 'Tower Networking Inc'
 theme = 'terminal'
 
 [params]
   # Terminal theme specific settings
   themeColor = "blue"
+  fullWidthTheme = false
+  centerTheme = false
   
   # Site info
   contentTypeName = "mods"
   showMenuItems = 4
   showLanguageSelector = false
+  showLastUpdated = false
   
   # Logo
   [params.logo]
-    logoText = "TNI Mods"
+    logoText = "Tower Networking Ink."
     logoHomeLink = "/"
 
 # Menu configuration
