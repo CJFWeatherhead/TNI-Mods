@@ -7,7 +7,9 @@ Description: |
   - Assigns addresses like "f{floor}/usr{increment}"
   - Configures DNS servers with floor-specific primary and floor 0 fallbacks
   - Tracks user count per floor for incremental addressing
-Author: CJFWeatherheadVersion: 0.1.0Creation Date: 2026-01-01
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-01
 Last Updated: 2026-01-11
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing
 Development Status: Active Development

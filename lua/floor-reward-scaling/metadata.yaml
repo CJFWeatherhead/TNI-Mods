@@ -7,7 +7,9 @@ Description: |
   - **Linear**: Constant growth rate - each floor adds the same amount
   - **Exponential**: Rapid growth - rewards increase dramatically on higher floors
   - **Randomised**: Unpredictable rewards - each user gets a random multiplier within configured range
-Author: CJFWeatherheadVersion: 0.1.0Creation Date: 2026-01-01
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-01
 Last Updated: 2026-01-17
 Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling"
 Development Status: Active Development

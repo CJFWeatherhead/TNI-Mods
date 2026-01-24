@@ -54,7 +54,26 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add "lua/${{ inputs.mod_name }}/metadata.yaml"
           git commit -m "chore(${{ inputs.mod_name }}): bump version to ${{ steps.version.outputs.new_version }}"
-          git push
+          
+          # Retry push with rebase on conflict (handles concurrent workflow runs)
+          MAX_RETRIES=5
+          RETRY_COUNT=0
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if git push; then
+              echo "Push successful"
+              break
+            else
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                echo "Push failed, attempt $RETRY_COUNT of $MAX_RETRIES. Pulling with rebase..."
+                git pull --rebase origin ${{ github.ref_name }}
+                sleep $((RETRY_COUNT * 2))  # Exponential backoff
+              else
+                echo "Push failed after $MAX_RETRIES attempts"
+                exit 1
+              fi
+            fi
+          done
       
       - name: Package mod
         run: |

@@ -31,7 +31,9 @@ Description: |
   All diagnostic information is printed to the game console. Use the in-game console
   to view detailed logs and object structures.
   
-Author: CJFWeatherheadVersion: 0.1.0Creation Date: 2026-01-20
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-20
 Last Updated: 2026-01-20
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic
 Development Status: Active Development

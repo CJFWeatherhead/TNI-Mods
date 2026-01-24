@@ -40,7 +40,9 @@ Description: |
   - Disable device classes you don't want to modify
   - Network addressing format: @f{floor}/{abbrev}{increment}
   
-Author: CJFWeatherheadVersion: 0.1.0Creation Date: 2026-01-18
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-18
 Last Updated: 2026-01-18
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker
 Development Status: Active Development
