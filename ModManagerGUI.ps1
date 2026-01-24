@@ -8,7 +8,7 @@
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
 .NOTES
     Author: Chris
-    Version: 3.0
+    $13.0.1
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
@@ -469,7 +469,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="The Network Inc - Mod Manager v3.0" 
+        Title="The Network Inc - Mod Manager v3.0.1" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">
