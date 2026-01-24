@@ -9,9 +9,9 @@ Description: |
   - Also modifies remaining warranty period if applicable
   - Provides console logging of changes
 Author: CJFWeatherhead
-Version: 0.1.0
+Version: 0.1.1
 Creation Date: 2026-01-01
-Last Updated: 2026-01-01
+Last Updated: 2026-01-24
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties
 Development Status: Active Development
 Game Version Supported: beta
