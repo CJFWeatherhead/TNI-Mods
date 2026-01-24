@@ -83,6 +83,8 @@ jobs:
           $version = "${{ steps.version.outputs.version }}"
           
           # Convert to exe with metadata
+          # Note: Removed -noConsole to allow console output for logging
+          # (prevents Write-Host from creating dialog boxes)
           ps2exe -inputFile "ModManagerGUI.ps1" `
                  -outputFile "TNI-ModManager-v$version.exe" `
                  -title "TNI Mod Manager" `
@@ -90,8 +92,6 @@ jobs:
                  -company "TNI-Mods" `
                  -product "Tower Network Inc Mod Manager" `
                  -copyright "MIT License" `
-                 -noConsole `
-                 -noError `
                  -requireAdmin
           
           echo "Built TNI-ModManager-v$version.exe"
