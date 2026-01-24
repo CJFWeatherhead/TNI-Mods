@@ -1252,7 +1252,10 @@ function Get-ModParameters {
     if (Test-Path $uiConfigPath) {
         Write-Host "  Loading UI config from ui-config.ps1..." -ForegroundColor Gray
         try {
-            $parameters = & $uiConfigPath -CurrentConfig $CurrentConfig
+            # Read and execute script content to bypass execution policy in compiled exe
+            $scriptContent = Get-Content $uiConfigPath -Raw
+            $scriptBlock = [ScriptBlock]::Create($scriptContent)
+            $parameters = & $scriptBlock -CurrentConfig $CurrentConfig
             
             if ($parameters -and $parameters.Count -gt 0) {
                 return $parameters
