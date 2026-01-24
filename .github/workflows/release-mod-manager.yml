@@ -106,30 +106,19 @@ jobs:
           # Read current doc
           $content = Get-Content $docPath -Raw
           
-          # Update download section with correct link format
-          $downloadSection = @"
-## Download
-
-### Latest Release: v$version
-
-**[📦 Download TNI-ModManager-v$version.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v$version/TNI-ModManager-v$version.exe)** *(Recommended)*
-
-**Windows Application** - Double-click to run. No PowerShell knowledge required!
-
----
-
-**Alternative: PowerShell Script**
-
-Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManagerGUI.ps1) and run:
-``````powershell
-powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1
-``````
-
-Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManager.bat) for easy launching.
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v$version)
-
-"@
+          # Build download section
+          $downloadSection = "## Download`n`n"
+          $downloadSection += "### Latest Release: v$version`n`n"
+          $downloadSection += "**[[U+1F4E6] Download TNI-ModManager-v$version.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v$version/TNI-ModManager-v$version.exe)** *(Recommended)*`n`n"
+          $downloadSection += "**Windows Application** - Double-click to run. No PowerShell knowledge required!`n`n"
+          $downloadSection += "---`n`n"
+          $downloadSection += "**Alternative: PowerShell Script**`n`n"
+          $downloadSection += "Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManagerGUI.ps1) and run:`n"
+          $downloadSection += '```powershell' + "`n"
+          $downloadSection += "powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1`n"
+          $downloadSection += '```' + "`n`n"
+          $downloadSection += "Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManager.bat) for easy launching.`n`n"
+          $downloadSection += "[View all releases on GitHub [U+2192]](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v$version)`n`n"
           
           # Replace the download section (everything between ## Download and the next ##)
           $content = $content -replace '(?s)## Download.*?(?=## Quick Start)', $downloadSection
