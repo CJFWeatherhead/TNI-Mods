@@ -1,0 +1,30 @@
+name: Release 2x-bandwidth-switches
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+    paths:
+      - 'lua/2x-bandwidth-switches/**'
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    uses: ./.github/workflows/mod-release-reusable.yml
+    with:
+      mod_name: '2x-bandwidth-switches'
+      bump_type: ${{ inputs.bump_type || 'patch' }}
+    secrets:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

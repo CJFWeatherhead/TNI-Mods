@@ -2,9 +2,14 @@ name: Build with Zig on Windows
 on:
   pull_request:
     branches: [ "**" ]
-    paths-ignore:
-      - "lua/"
-      - "*.md"
+    paths:
+      - "ext/LuaJIT/**"
+      - "programs/luajit/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
+      - "zig.cmd"
+      - "zig.sh"
+      - ".github/workflows/build-zig-pr.yml"
 
 jobs:
   build:

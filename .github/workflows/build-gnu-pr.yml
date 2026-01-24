@@ -3,9 +3,13 @@ name: Build with GNU RISC-V toolchain on Linux
 on:
   pull_request:
     branches: [ "**" ]
-    paths-ignore:
-      - "lua/"
-      - "*.md"
+    paths:
+      - "ext/LuaJIT/**"
+      - "programs/luajit/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
+      - "build.sh"
+      - ".github/workflows/build-gnu-pr.yml"
 
 jobs:
   build:

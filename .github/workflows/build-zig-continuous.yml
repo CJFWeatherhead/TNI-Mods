@@ -4,9 +4,14 @@ name: Build with Zig on Windows and update continuous release
 on:
   push:
     branches: [ "**" ]
-    paths-ignore:
-      - "lua/"
-      - "*.md"
+    paths:
+      - "ext/LuaJIT/**"
+      - "programs/luajit/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
+      - "zig.cmd"
+      - "zig.sh"
+      - ".github/workflows/build-zig-continuous.yml"
   # NOTE: This is privileged, do not run pull_requests.
 
 jobs:

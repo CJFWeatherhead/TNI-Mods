@@ -6,13 +6,37 @@ Mods are created in C/C++, however this repository also contains the official Lu
 
 Note that modding for the game is still in early design/implementation stage.
 
-## Mod Manager
+## Mod Manager v3.0
 
-This repository includes a PowerShell-based [Mod Manager](ModManager-README.md) for easy configuration and management of mods. Use `ModManager.bat` or `ModManagerGUI.ps1` to configure mods without editing files manually.
+This repository includes a modern WPF-based **[Mod Manager](ModManager-README.md)** that can download mods directly from GitHub releases and manage local installations.
 
-For more details, see:
+### Features
 
-- [ModManager-README.md](ModManager-README.md) - Full mod manager documentation
+- 🌐 **GitHub Integration**: Browse, download, and update mods from releases
+- 📊 **Progress Bars**: Visual feedback during mod downloads
+- 🎨 **Visual Distinctions**: Color-coded mods (Downloaded/Manual/Available)
+- ⚙️ **Parameter Configuration**: Configure mod settings through the GUI
+- 🚀 **One-Click Launch**: Start the game directly from the manager
+
+### Quick Start
+
+1. Double-click `ModManager.bat` to launch
+2. Available mods from GitHub releases appear in gray
+3. Click a mod and press **Download** to install
+4. Installed mods show as blue (downloaded) or purple (manual)
+5. Configure parameters and click **Save Changes**
+
+### Mod Sources
+
+| Source | Color | Behavior |
+|--------|-------|----------|
+| **Downloaded** | Blue | Installed from GitHub releases. Deleted when removed. |
+| **Manual** | Purple | Manually installed. Moved to disabled folder when disabled. |
+| **Available** | Gray | Not installed. Can be downloaded from GitHub. |
+
+For full documentation, see:
+
+- [ModManager-README.md](ModManager-README.md) - Complete mod manager guide
 - [CONFIG-SYSTEM.md](CONFIG-SYSTEM.md) - Configuration system architecture
 
 ## Using Lua based mods
@@ -28,6 +52,25 @@ If you are using the `beta` branch of the game, you'll likely want to use the ["
 There is a `beta` github branch which should work with the game's `beta` branch on steam.
 
 Changes to the modding-kit go through the beta branch first.
+
+## Automated Mod Releases
+
+Each mod in the `/lua` directory has its own automated release workflow. When you push changes to a mod:
+
+1. **Version is automatically incremented** (using semantic versioning)
+2. **Last Updated date is set** to the current date
+3. **Mod is packaged** into a versioned zip file
+4. **GitHub release is created** with download links
+5. **Documentation is updated** with the latest release links
+
+For more details, see [.github/MOD-RELEASE-SYSTEM.md](.github/MOD-RELEASE-SYSTEM.md).
+
+### Manual Releases
+
+You can also trigger releases manually:
+1. Go to the **Actions** tab
+2. Select your mod's workflow (e.g., "Release money-cheat")
+3. Click **Run workflow** and choose version bump type (major/minor/patch)
 
 ---
 
@@ -70,7 +113,8 @@ lua/<mod-name>/
 **metadata.yaml** - Mod metadata
 
 - Follow the schema in [mod-metadata-schema.yaml](mod-metadata-schema.yaml)
-- Must include: Name, Description, Author, Creation Date, Last Updated, Development Status, Game Version Supported, ID
+- Must include: Name, Description, Author, **Version**, Creation Date, Last Updated, Development Status, Game Version Supported, ID
+- **Version** field uses semantic versioning (e.g., "1.0.0") and is auto-incremented by release workflows
 - Parameters section defines configurable options (used by basic ModManager UI)
 
 **README.md** - User documentation

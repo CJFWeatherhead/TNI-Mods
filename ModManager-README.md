@@ -1,35 +1,66 @@
-# The Network Inc - PowerShell Mod Manager
+# The Network Inc - Mod Manager v3.0
 
-A standalone, interactive PowerShell-based mod manager that provides a user-friendly interface for configuring Tower Network Inc mods without needing to edit lua files manually.
+A modern WPF-based graphical mod manager for Tower Network Inc that can download mods directly from GitHub releases and manage local mod installations.
 
 ## Features
 
-✨ **Interactive Text UI**
-
-- Color-coded menus and status indicators
-- Easy keyboard navigation
-- Real-time config updates
+🌐 **GitHub Integration**
+- Browse and download mods directly from the TNI-Mods repository
+- Automatic version checking for installed mods
+- One-click updates when new versions are available
+- Progress bar during downloads
 
 🎮 **Full Mod Management**
-
-- View all installed mods with metadata
-- Enable/disable mods
+- View all installed and available mods
+- Visual distinction between mod sources (Downloaded, Manual, Available)
+- Enable/disable manually installed mods
+- Remove downloaded mods with one click
 - Configure all mod parameters with validation
+
+📁 **Smart Mod Handling**
+- **Downloaded mods**: Installed from GitHub releases, removed completely when uninstalled
+- **Manual mods**: Installed by hand, moved to disabled folder when disabled
+
+⌨️ **Command Aliases**
+- Create and manage in-game command shortcuts
+- Edit existing aliases or add new ones
+- Saved to game settings
 
 ## Requirements
 
 - Windows with PowerShell 5.1+ (built into Windows 10/11)
 - OR PowerShell Core 7+ (cross-platform)
+- .NET Framework 4.5+ (for WPF GUI)
+- Internet connection (for downloading mods from GitHub)
 
+## Quick Start
 
+1. **Double-click** `ModManager.bat` to launch
+2. The manager will fetch available mods from GitHub
+3. **Browse** the mod list - use filters (All/Installed/Available)
+4. **Click** on any mod to see details
+5. **Download** available mods or **configure** installed ones
+6. **Launch** the game directly from the manager
 
-## Configuration Location
+## Mod Sources
 
-The mod manager reads/writes configuration directly in each mod's `entry.lua` file:
+The manager distinguishes between three types of mods:
 
-```
-%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\<mod-name>\entry.lua
-```
+| Source | Color | Description |
+|--------|-------|-------------|
+| **Downloaded** | Blue | Installed from GitHub releases. Removed completely when uninstalled. |
+| **Manual** | Purple | Installed manually by copying files. Moved to disabled folder when disabled. |
+| **Available** | Gray | Not installed yet. Can be downloaded from GitHub. |
+
+## Configuration
+
+### Mod Parameters
+
+Each installed mod may have configurable parameters. The manager:
+
+1. Reads current values from the mod's `entry.lua` file
+2. Displays controls based on parameter type (boolean, number, select, etc.)
+3. Saves changes back to the `entry.lua` configuration section
 
 Changes update the configuration section between the markers:
 
@@ -39,83 +70,73 @@ local config = { ... }
 -- ===== MOD CONFIGURATION END =====
 ```
 
-## ## Parameter Types Supported
+### Mod Cache
 
-### Boolean
+The manager tracks which mods were downloaded vs manually installed in:
 
-- Simple yes/no toggles
-- Displays as `true` or `false`
-
-### Integer
-
-- Whole numbers only
-- Validates against Min/Max if specified
-- Example: `warranty_multiplier_min: 2`
-
-### Number (Float)
-
-- Decimal numbers
-- Validates against Min/Max if specified
-- Example: `starting_cash_multiplier: 10.5`
-
-### String
-
-- Free-form text input
-- Example: `address_format: "f%d/usr%d"`
-
-### Select (Dropdown)
-
-- Choose from predefined options
-- Example: `dhcp_mode: ["disabled", "boot_dhcp", "periodic_dhcp"]`
-
-
-
-## Advanced Usage
-
-### Run Without GUI (Command Line)
-
-You can script the mod manager for automation:
-
-```powershell
-# Load the module
-. .\ModManager.ps1
-
-# Get all mods
-$mods = Get-InstalledMods
-
-# Load config
-$config = Get-ModConfig
-
-# Enable a specific mod
-Set-ModEnabled $config "random-warranties" $true
-
-# Set a parameter
-Set-ModParameter $config "tweaktower" "starting_cash_multiplier" 20.0
-
-# Save changes
-Save-ModConfig $config
+```
+%APPDATA%\Godot\app_userdata\Tower Networking Inc\mod_cache.json
 ```
 
-### Custom Config Location
+### Game Settings
 
-Edit these lines at the top of `ModManager.ps1`:
+Command aliases are stored in the game's settings file:
 
-```powershell
-$script:ConfigDirectory = "C:\Your\Custom\Path"
-$script:ConfigFile = Join-Path $script:ConfigDirectory "mod_config.json"
+```
+%APPDATA%\Godot\app_userdata\Tower Networking Inc\settings.json
 ```
 
+## Directory Structure
 
+```
+%APPDATA%\Godot\app_userdata\Tower Networking Inc\
+├── Mods/                    # Enabled mods
+│   ├── money-cheat/
+│   ├── 2x-bandwidth-switches/
+│   └── ...
+├── Mods_Disabled/           # Disabled manual mods
+│   └── ...
+├── mod_cache.json           # Tracks mod sources and versions
+└── settings.json            # Game settings including aliases
+```
 
+## Parameter Types
 
+| Type | Control | Description |
+|------|---------|-------------|
+| `boolean` | Checkbox | True/false toggle |
+| `integer` | Slider + TextBox | Whole numbers with min/max |
+| `number` | Slider + TextBox | Decimal numbers with step |
+| `string` | TextBox | Free-form text |
+| `select` | Dropdown | Choose from predefined options |
+
+## Troubleshooting
+
+### Mods not showing up
+- Make sure mods are in the correct directory
+- Each mod needs a valid `metadata.yaml` file
+- Click "Refresh Mods" to rescan
+
+### Download fails
+- Check your internet connection
+- GitHub API may have rate limits - wait a few minutes
+- Check the console output for error details
+
+### Parameters not saving
+- Ensure the mod's `entry.lua` has the configuration markers
+- Check that the file is not read-only
+
+### GUI doesn't launch
+- Verify PowerShell version: `$PSVersionTable.PSVersion`
+- Try running directly: `powershell -File ModManagerGUI.ps1`
+- Check for error messages in the console
 
 ## Support
 
 For issues, questions, or suggestions:
-
-- Check your mod's `metadata.yaml` is valid
-- Verify PowerShell version: `$PSVersionTable`
-- Look at console output for errors
+- Check the console output for detailed error messages
+- Verify mod metadata files are valid YAML
+- Report issues on the GitHub repository
 
 ## Credits
 

@@ -5,9 +5,13 @@ name: Build with GNU RISC-V toolchain on Linux and update continuous release
 on:
   push:
     branches: [ "**" ]
-    paths-ignore:
-      - "lua/"
-      - "*.md"
+    paths:
+      - "ext/LuaJIT/**"
+      - "programs/luajit/**"
+      - "CMakeLists.txt"
+      - "cmake/**"
+      - "build.sh"
+      - ".github/workflows/build-gnu-continuous.yml"
   # NOTE: This is privileged, do not run pull_requests.
 
 jobs:

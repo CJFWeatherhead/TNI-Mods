@@ -6,6 +6,7 @@
 # - Name: Pretty name of the mod (e.g., "Double the Bandwidth on Switches")
 # - Description: Description in Markdown format
 # - Author: Author's name
+# - Version: Semantic version (e.g., "1.0.0", "0.2.1")
 # - Creation Date: Date in YYYY-MM-DD format
 # - Last Updated: Date in YYYY-MM-DD format
 # - Development Status: One of: "Active Development", "Maintenance only", "Discontinued", "Defunct"
@@ -35,6 +36,7 @@
 # Name: Random Device Warranties
 # Description: This mod randomizes the warranty periods of all spawned devices.
 # Author: CJFWeatherhead
+# Version: 1.0.0
 # Creation Date: 2026-01-01
 # Last Updated: 2026-06-01
 # Website: https://github.com/example/tni-mods

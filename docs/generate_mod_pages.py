@@ -66,6 +66,7 @@ def generate_mod_page(mod_dir):
     title = metadata.get('Name', mod_name)
     description = metadata.get('Description', '')
     author = metadata.get('Author', 'Unknown')
+    version = metadata.get('Version', '0.1.0')
     creation_date = metadata.get('Creation Date', today)
     last_updated = metadata.get('Last Updated', creation_date)
     status = metadata.get('Development Status', 'Unknown')
@@ -83,6 +84,7 @@ date: {last_updated}
 draft: false
 mod_id: "{mod_id}"
 author: "{author}"
+version: "{version}"
 status: "{status}"
 game_version: "{game_version}"
 ---
@@ -102,6 +104,7 @@ game_version: "{game_version}"
     # Add metadata section
     content += "## Mod Information\n\n"
     content += f"- **Author**: {author}\n"
+    content += f"- **Version**: {version}\n"
     content += f"- **Development Status**: {status}\n"
     content += f"- **Game Version**: {game_version}\n"
     content += f"- **Last Updated**: {last_updated}\n"
@@ -116,10 +119,19 @@ game_version: "{game_version}"
     
     # Add download section
     content += "## Download\n\n"
-    content += f"**[Download {title}](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/{mod_id})**\n\n"
+    
+    # Try to link to the latest release
+    release_tag = f"{mod_id}-v{version}"
+    release_url = f"https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/{release_tag}"
+    download_url = f"https://github.com/CJFWeatherhead/TNI-Mods/releases/download/{release_tag}/{mod_id}-{version}.zip"
+    
+    content += f"### Latest Release: v{version}\n\n"
+    content += f"**[📦 Download {mod_id}-{version}.zip]({download_url})**\n\n"
+    content += f"[View all releases on GitHub →]({release_url})\n\n"
+    
     content += "### Installation Instructions\n\n"
-    content += "1. Download or clone this repository\n"
-    content += f"2. Copy the `lua/{mod_id}/` folder to your game's mods directory:\n"
+    content += "1. Download the zip file above\n"
+    content += f"2. Extract the `{mod_id}/` folder to your game's mods directory:\n"
     content += "   - Windows: `%APPDATA%\\Godot\\app_userdata\\Tower Networking Inc\\mods\\`\n"
     content += "   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`\n"
     content += "3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed\n"
