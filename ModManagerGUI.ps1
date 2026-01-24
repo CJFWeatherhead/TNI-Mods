@@ -25,10 +25,13 @@ $script:DisabledModsDirectory = Join-Path $script:GameDataPath "Mods_Disabled"
 $script:SettingsPath = Join-Path $script:GameDataPath "settings.json"
 $script:ModCachePath = Join-Path $script:GameDataPath "mod_cache.json"
 $script:ConfigFileName = "entry.lua"
+$script:LuaJitPath = Join-Path $script:ModsDirectory "luajit.elf"
 
 # GitHub Configuration
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
 $script:GitHubApiBase = "https://api.github.com/repos/$script:GitHubRepo"
+$script:LuaJitReleaseTag = "continuous-gnu-beta"
+$script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/$script:LuaJitReleaseTag/luajit.zip"
 
 # Startup logging
 Write-Host "======================================" -ForegroundColor Cyan
@@ -70,6 +73,238 @@ $script:ModSourceType = @{
     Manual = "Manual"
     Available = "Available"
 }
+
+#region LuaJIT Management
+
+function Test-LuaJitInstalled {
+    <#
+    .SYNOPSIS
+        Checks if luajit.elf is installed in the mods directory
+    #>
+    return (Test-Path $script:LuaJitPath)
+}
+
+function Install-LuaJit {
+    <#
+    .SYNOPSIS
+        Downloads and installs luajit.elf from GitHub releases
+    #>
+    param(
+        [System.Windows.Controls.ProgressBar]$ProgressBar = $null,
+        [System.Windows.Controls.TextBlock]$StatusText = $null
+    )
+    
+    try {
+        Write-Host "Downloading LuaJIT..." -ForegroundColor Cyan
+        
+        if ($StatusText) {
+            $StatusText.Dispatcher.Invoke([Action]{
+                $StatusText.Text = "Downloading LuaJIT..."
+            })
+        }
+        
+        if ($ProgressBar) {
+            $ProgressBar.Dispatcher.Invoke([Action]{
+                $ProgressBar.IsIndeterminate = $false
+                $ProgressBar.Value = 0
+                $ProgressBar.Visibility = "Visible"
+            })
+        }
+        
+        $tempZipPath = Join-Path $env:TEMP "luajit.zip"
+        
+        # Ensure mods directory exists
+        if (-not (Test-Path $script:ModsDirectory)) {
+            New-Item -Path $script:ModsDirectory -ItemType Directory -Force | Out-Null
+        }
+        
+        # Download with progress using WebClient
+        $webClient = New-Object System.Net.WebClient
+        $webClient.Headers.Add("User-Agent", "TNI-ModManager/3.0")
+        
+        # Get file size
+        $totalBytes = 0
+        $downloadedBytes = 0
+        
+        try {
+            $request = [System.Net.WebRequest]::Create($script:LuaJitZipUrl)
+            $request.Method = "HEAD"
+            $request.UserAgent = "TNI-ModManager/3.0"
+            $response = $request.GetResponse()
+            $totalBytes = $response.ContentLength
+            $response.Close()
+        }
+        catch {
+            Write-Host "  Could not determine file size, continuing anyway..." -ForegroundColor Yellow
+        }
+        
+        # Download with progress tracking
+        $stream = $webClient.OpenRead($script:LuaJitZipUrl)
+        $fileStream = [System.IO.File]::Create($tempZipPath)
+        $buffer = New-Object byte[] 8192
+        $lastProgress = 0
+        
+        while (($read = $stream.Read($buffer, 0, $buffer.Length)) -gt 0) {
+            $fileStream.Write($buffer, 0, $read)
+            $downloadedBytes += $read
+            
+            if ($totalBytes -gt 0 -and $ProgressBar) {
+                $progress = [int](($downloadedBytes / $totalBytes) * 100)
+                if ($progress -ne $lastProgress) {
+                    $ProgressBar.Dispatcher.Invoke([Action]{
+                        $ProgressBar.Value = $progress
+                    })
+                    $lastProgress = $progress
+                }
+            }
+            
+            # Allow UI to update
+            [System.Windows.Forms.Application]::DoEvents()
+        }
+        
+        $stream.Close()
+        $fileStream.Close()
+        $webClient.Dispose()
+        
+        if ($StatusText) {
+            $StatusText.Dispatcher.Invoke([Action]{
+                $StatusText.Text = "Extracting LuaJIT..."
+            })
+        }
+        
+        if ($ProgressBar) {
+            $ProgressBar.Dispatcher.Invoke([Action]{
+                $ProgressBar.IsIndeterminate = $true
+            })
+        }
+        
+        # Extract luajit.elf from zip
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        $zip = [System.IO.Compression.ZipFile]::OpenRead($tempZipPath)
+        
+        $luajitEntry = $zip.Entries | Where-Object { $_.Name -eq "luajit.elf" } | Select-Object -First 1
+        
+        if ($luajitEntry) {
+            [System.IO.Compression.ZipFileExtensions]::ExtractToFile($luajitEntry, $script:LuaJitPath, $true)
+            Write-Host "  [OK] LuaJIT installed successfully" -ForegroundColor Green
+            $success = $true
+        }
+        else {
+            Write-Host "  [ERROR] luajit.elf not found in archive" -ForegroundColor Red
+            $success = $false
+        }
+        
+        $zip.Dispose()
+        
+        # Clean up temp file
+        Remove-Item $tempZipPath -Force -ErrorAction SilentlyContinue
+        
+        if ($StatusText) {
+            $StatusText.Dispatcher.Invoke([Action]{
+                $StatusText.Text = if ($success) { "LuaJIT installed successfully!" } else { "LuaJIT installation failed" }
+            })
+        }
+        
+        if ($ProgressBar) {
+            $ProgressBar.Dispatcher.Invoke([Action]{
+                $ProgressBar.Visibility = "Collapsed"
+            })
+        }
+        
+        return $success
+    }
+    catch {
+        Write-Host "[ERROR] LuaJIT installation failed: $_" -ForegroundColor Red
+        
+        if ($StatusText) {
+            $StatusText.Dispatcher.Invoke([Action]{
+                $StatusText.Text = "LuaJIT installation failed: $_"
+            })
+        }
+        
+        if ($ProgressBar) {
+            $ProgressBar.Dispatcher.Invoke([Action]{
+                $ProgressBar.Visibility = "Collapsed"
+            })
+        }
+        
+        return $false
+    }
+}
+
+function Show-LuaJitPrompt {
+    <#
+    .SYNOPSIS
+        Shows a prompt to the user about missing LuaJIT and offers to download it
+    #>
+    param(
+        [System.Windows.Controls.ProgressBar]$ProgressBar = $null,
+        [System.Windows.Controls.TextBlock]$StatusText = $null
+    )
+    
+    $message = @"
+LuaJIT Runtime Missing
+
+The LuaJIT runtime (luajit.elf) is required to load Lua mods.
+It was not found in your mods directory.
+
+Would you like to download and install it now?
+
+Location: $script:LuaJitPath
+"@
+    
+    $result = [System.Windows.MessageBox]::Show(
+        $message,
+        "LuaJIT Required",
+        [System.Windows.MessageBoxButton]::YesNo,
+        [System.Windows.MessageBoxImage]::Question
+    )
+    
+    if ($result -eq "Yes") {
+        $installSuccess = Install-LuaJit -ProgressBar $ProgressBar -StatusText $StatusText
+        
+        if ($installSuccess) {
+            [System.Windows.MessageBox]::Show(
+                "LuaJIT has been installed successfully!`n`nYour mods should now load correctly.",
+                "Installation Complete",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Information
+            )
+        }
+        else {
+            [System.Windows.MessageBox]::Show(
+                "Failed to install LuaJIT.`n`nPlease download luajit.zip manually from:`n$script:LuaJitZipUrl`n`nExtract luajit.elf to:`n$script:LuaJitPath",
+                "Installation Failed",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Error
+            )
+        }
+        
+        return $installSuccess
+    }
+    else {
+        $warning = @"
+Warning: Without LuaJIT, mods are unlikely to load correctly.
+
+You can install it later by downloading luajit.zip from:
+$script:LuaJitZipUrl
+
+Extract luajit.elf to:
+$script:LuaJitPath
+"@
+        
+        [System.Windows.MessageBox]::Show(
+            $warning,
+            "LuaJIT Not Installed",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Warning
+        )
+        
+        return $false
+    }
+}
+
+#endregion
 
 #region GitHub API Functions
 
@@ -2063,6 +2298,27 @@ try {
     $reader = [System.Xml.XmlReader]::Create([System.IO.StringReader]::new($xaml))
     $window = [System.Windows.Markup.XamlReader]::Load($reader)
     
+    # Get UI controls early for LuaJIT check
+    $progressBar = $window.FindName("DownloadProgressBar")
+    $downloadStatusText = $window.FindName("DownloadStatusText")
+    $statusText = $window.FindName("StatusText")
+    
+    # Check for LuaJIT installation
+    if (-not (Test-LuaJitInstalled)) {
+        Write-Host "[WARN] LuaJIT not found at: $script:LuaJitPath" -ForegroundColor Yellow
+        $statusText.Text = "LuaJIT runtime missing - prompting user..."
+        $window.Dispatcher.Invoke([Action]{}, [System.Windows.Threading.DispatcherPriority]::Background)
+        
+        # Show window first so the dialogs have a parent
+        $window.Show()
+        $window.Dispatcher.Invoke([Action]{}, [System.Windows.Threading.DispatcherPriority]::Background)
+        
+        Show-LuaJitPrompt -ProgressBar $progressBar -StatusText $downloadStatusText
+    }
+    else {
+        Write-Host "[OK] LuaJIT found at: $script:LuaJitPath" -ForegroundColor Green
+    }
+    
     # Load mod cache
     Load-ModCache
     
@@ -2074,11 +2330,8 @@ try {
     # Load settings
     $script:Settings = Get-GameSettings
     
-    # Get UI controls
+    # Get remaining UI controls
     $modListBox = $window.FindName("ModListBox")
-    $progressBar = $window.FindName("DownloadProgressBar")
-    $downloadStatusText = $window.FindName("DownloadStatusText")
-    $statusText = $window.FindName("StatusText")
     
     # Filter controls
     $filterAll = $window.FindName("FilterAll")
@@ -2354,11 +2607,17 @@ try {
     
     #endregion
     
-    # Show window
+    # Show window (if not already shown for LuaJIT prompt)
     Write-Host "======================================" -ForegroundColor Cyan
     Write-Host "Opening GUI window..." -ForegroundColor Cyan
     Write-Host "======================================" -ForegroundColor Cyan
-    $window.ShowDialog() | Out-Null
+    if (-not $window.IsVisible) {
+        $window.ShowDialog() | Out-Null
+    }
+    else {
+        # Window was already shown for LuaJIT prompt, just wait for it to close
+        $window.Dispatcher.Run()
+    }
 }
 catch {
     Write-Host "FATAL ERROR: $_" -ForegroundColor Red

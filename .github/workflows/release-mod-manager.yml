@@ -96,12 +96,56 @@ jobs:
           
           echo "Built TNI-ModManager-v$version.exe"
       
-      - name: Commit version update
+      - name: Update documentation
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $docPath = "docs/content/mods/tools/modmanager.md"
+          
+          # Read current doc
+          $content = Get-Content $docPath -Raw
+          
+          # Update download section with correct link format
+          $downloadSection = @"
+## Download
+
+### Latest Release: v$version
+
+**[📦 Download TNI-ModManager-v$version.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v$version/TNI-ModManager-v$version.exe)** *(Recommended)*
+
+**Windows Application** - Double-click to run. No PowerShell knowledge required!
+
+---
+
+**Alternative: PowerShell Script**
+
+Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/${{ github.ref_name }}/ModManagerGUI.ps1) and run:
+``````powershell
+powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1
+``````
+
+Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/${{ github.ref_name }}/ModManager.bat) for easy launching.
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v$version)
+
+"@
+          
+          # Replace the download section (everything between ## Download and the next ##)
+          $content = $content -replace '(?s)## Download.*?(?=## Quick Start)', $downloadSection
+          
+          # Also update version in the title/header
+          $content = $content -replace 'Mod Manager v\d+\.\d+(\.\d+)?', "Mod Manager v$version"
+          
+          Set-Content $docPath -Value $content -NoNewline
+          echo "Updated documentation with version $version"
+
+      - name: Commit version and docs update
         shell: pwsh
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add "ModManagerGUI.ps1"
+          git add "docs/content/mods/tools/modmanager.md"
           git diff --staged --quiet || git commit -m "chore(mod-manager): bump version to ${{ steps.version.outputs.version }}"
           
           # Retry push with rebase on conflict
@@ -202,56 +246,6 @@ jobs:
             "TNI-ModManager-v$version.exe"
           
           echo "Created release: $releaseTag"
-      
-
-      - name: Update documentation
-        shell: pwsh
-        run: |
-          $version = "${{ steps.version.outputs.version }}"
-          $docPath = "docs/content/mods/tools/modmanager.md"
-          
-          # Read current doc
-          $content = Get-Content $docPath -Raw
-          
-          # Update download section to include exe link
-          $downloadSection = @"
-          ## Download
-          
-          ### Latest Release: v$version
-          
-          **[📦 Download TNI-ModManager-v$version.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v$version/TNI-ModManager-v$version.exe)** *(Recommended)*
-          
-          **Windows Application** - Double-click to run. No PowerShell required!
-          
-          ---
-          
-          **Alternative: PowerShell Script**
-          
-          Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/${{ github.ref_name }}/ModManagerGUI.ps1) and run:
-          ``````powershell
-          powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1
-          ``````
-          
-          Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/${{ github.ref_name }}/ModManager.bat) for easy launching.
-          
-          [View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v$version)
-          
-          "@
-          
-          # Insert download section after the frontmatter and title
-          if ($content -match '(?s)(---.*?---\s*\r?\n.*?\r?\n)(.*)') {
-            $header = $matches[1]
-            $body = $matches[2]
-            
-            # Remove old download section if exists
-            $body = $body -replace '(?s)## Download.*?(?=##|$)', ''
-            
-            # Insert new download section at the beginning
-            $content = $header + $downloadSection + "`n" + $body.TrimStart()
-          }
-          
-          Set-Content $docPath -Value $content -NoNewline
-          echo "Updated documentation with version $version"
 
       - name: Summary
         shell: pwsh
