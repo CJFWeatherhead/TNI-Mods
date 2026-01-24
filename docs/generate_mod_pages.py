@@ -129,13 +129,20 @@ game_version: "{game_version}"
     content += f"**[📦 Download {mod_id}-{version}.zip]({download_url})**\n\n"
     content += f"[View all releases on GitHub →]({release_url})\n\n"
     
-    content += "### Installation Instructions\n\n"
+    content += "### Installation Options\n\n"
+    content += "#### Option 1: Using Mod Manager (Recommended)\n\n"
+    content += "1. Download the [TNI Mod Manager](/mods/tools/modmanager/)\n"
+    content += "2. Run the Mod Manager application\n"
+    content += f"3. Find **{title}** in the Available mods list\n"
+    content += "4. Click **Download** to automatically install\n"
+    content += "5. Configure parameters using the graphical interface\n\n"
+    content += "#### Option 2: Manual Installation\n\n"
     content += "1. Download the zip file above\n"
     content += f"2. Extract the `{mod_id}/` folder to your game's mods directory:\n"
     content += "   - Windows: `%APPDATA%\\Godot\\app_userdata\\Tower Networking Inc\\mods\\`\n"
     content += "   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`\n"
-    content += "3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed\n"
-    content += "4. Enable and configure using [ModManagerGUI.ps1](/mods/tools/modmanager/)\n\n"
+    content += "3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory\n"
+    content += "4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters\n\n"
     
     # Add configuration section if parameters exist
     if parameters:
