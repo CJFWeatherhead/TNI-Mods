@@ -203,12 +203,7 @@ jobs:
           
           echo "Created release: $releaseTag"
       
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v3
-        with:
-          hugo-version: '0.139.4'
-          extended: true
-      
+
       - name: Update documentation
         shell: pwsh
         run: |
@@ -257,22 +252,7 @@ jobs:
           
           Set-Content $docPath -Value $content -NoNewline
           echo "Updated documentation with version $version"
-      
-      - name: Build Hugo site
-        run: |
-          cd docs
-          hugo --minify
-      
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: tower-networking-ink
-          directory: docs/public
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
-      
+
       - name: Summary
         shell: pwsh
         run: |
