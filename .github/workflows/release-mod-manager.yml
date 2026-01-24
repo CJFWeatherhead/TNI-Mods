@@ -100,6 +100,7 @@ jobs:
         shell: pwsh
         run: |
           $version = "${{ steps.version.outputs.version }}"
+          $branchName = "${{ github.ref_name }}"
           $docPath = "docs/content/mods/tools/modmanager.md"
           
           # Read current doc
@@ -119,12 +120,12 @@ jobs:
 
 **Alternative: PowerShell Script**
 
-Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/${{ github.ref_name }}/ModManagerGUI.ps1) and run:
+Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManagerGUI.ps1) and run:
 ``````powershell
 powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1
 ``````
 
-Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/${{ github.ref_name }}/ModManager.bat) for easy launching.
+Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManager.bat) for easy launching.
 
 [View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v$version)
 
