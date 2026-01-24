@@ -65,12 +65,21 @@ A comprehensive mod for tweaking device properties in The Network Inc.
 
 ### Installation Instructions
 
-1. Download or clone this repository
-2. Copy the `lua/device-tweaker/` folder to your game's mods directory:
+#### Option 1: Using Mod Manager (Recommended)
+
+1. Download and run the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Device Tweaker** in the Available mods list
+3. Click **Download** to automatically install from GitHub releases
+4. Configure parameters using the graphical interface
+
+#### Option 2: Manual Installation
+
+1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+2. Extract to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
 3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. Enable and configure using [ModManagerGUI.ps1](/mods/tools/modmanager/)
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
 
 ## Configuration Parameters
 

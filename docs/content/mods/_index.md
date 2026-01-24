@@ -47,11 +47,22 @@ Advanced mod for tweaking device properties and behaviors.
 
 ## Installation
 
-1. **Download** the mod from its individual page
+### Option 1: Using Mod Manager (Recommended)
+
+1. **Download** the [Mod Manager](/mods/tools/modmanager/) - a Windows application for easy mod management
+2. **Run** the Mod Manager to browse available mods from GitHub releases
+3. **Click Download** on any mod to install it automatically
+4. **Configure** parameters using the graphical interface
+
+No manual file copying required! The Mod Manager handles everything.
+
+### Option 2: Manual Installation
+
+1. **Download** the mod from its individual page or [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 2. **Extract** the mod folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. **Enable** the mod using [ModManagerGUI.ps1](/mods/tools/modmanager/)
+3. **Optional**: Use the [Mod Manager](/mods/tools/modmanager/) to configure
 
 ## Requirements
 

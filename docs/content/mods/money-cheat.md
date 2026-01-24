@@ -43,12 +43,21 @@ Configure the amount in the Mod Manager settings.
 
 ### Installation Instructions
 
-1. Download or clone this repository
-2. Copy the `lua/money-cheat/` folder to your game's mods directory:
+#### Option 1: Using Mod Manager (Recommended)
+
+1. Download and run the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Money Cheat** in the Available mods list
+3. Click **Download** to automatically install from GitHub releases
+4. Configure parameters using the graphical interface
+
+#### Option 2: Manual Installation
+
+1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+2. Extract to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
 3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. Enable and configure using [ModManagerGUI.ps1](/mods/tools/modmanager/)
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
 
 ## Configuration Parameters
 
@@ -172,7 +181,7 @@ A 0.5-second cooldown prevents accidental double-activation if you hold the keys
 
 ### Configuration System
 
-This mod uses the standardized `===== MOD CONFIGURATION START/END =====` marker system, making it compatible with automated Mod Manager tools. The `ui-config.ps1` file provides UI parameter definitions for graphical configuration interfaces.
+This mod uses the standardized `===== MOD CONFIGURATION START/END =====` marker system, making it compatible with automated Mod Manager tools for graphical configuration.
 
 ## Compatibility
 

@@ -10,17 +10,20 @@ Essential tools for managing and developing Tower Networking Inc mods.
 
 ## Available Tools
 
-### [Mod Manager (ModManagerGUI.ps1)](/mods/tools/modmanager/)
+### [Mod Manager](/mods/tools/modmanager/)
 
-A PowerShell-based interactive tool for managing your mods.
+A modern Windows application for comprehensive mod management.
 
 **Features:**
-- Enable/disable mods with ease
-- Configure mod parameters through an intuitive UI
-- Real-time validation of settings
-- Cross-platform support (Windows & Linux with PowerShell Core)
+- Browse and download mods directly from GitHub releases
+- Automatic version checking and one-click updates
+- Enable/disable mods with visual feedback
+- Configure mod parameters through a graphical interface
+- Real-time download progress
+- Command alias management
+- Launch game directly from the manager
 
-[Learn more about the Mod Manager →](/mods/tools/modmanager/)
+[Download and learn more about the Mod Manager →](/mods/tools/modmanager/)
 
 ---
 

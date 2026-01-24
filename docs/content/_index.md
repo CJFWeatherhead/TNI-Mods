@@ -19,9 +19,10 @@ These pages contain both some mods of my own, and also some tools to assist both
 
 ### For Players
 
+- Download the [Mod Manager](/mods/tools/modmanager/) - a Windows application for browsing, downloading, and configuring mods
 - Browse our [Mod Collection](/mods/) to find mods that interest you
-- Learn how to use the [Mod Manager](/mods/tools/modmanager/) to install and configure mods
-- Download mods with a single click from each mod's page
+- Use the Mod Manager to download and install mods automatically from GitHub releases
+- Or download individual mods directly from each mod's page
 
 ### For Developers
 
@@ -33,7 +34,8 @@ These pages contain both some mods of my own, and also some tools to assist both
 Every mod includes:
 - Comprehensive metadata (using the schema available in mod-metadata-schema.yaml)
 - Detailed README documentation
-- Configurable parameters for customization (in powershell format)
+- Configurable parameters for customization
+- Automated releases with version tracking
 
 ## Browse Mods
 
