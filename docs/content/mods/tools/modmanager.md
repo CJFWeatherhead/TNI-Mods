@@ -52,9 +52,9 @@ A modern Windows application with a graphical interface for managing Tower Netwo
 
 ## Download
 
-### Latest Release: v3.0.0
+### Latest Release: v3.0.2
 
-**[📦 Download TNI-ModManager-v3.0.0.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/latest/download/TNI-ModManager-v3.0.0.exe)** *(Recommended)*
+**[📦 Download TNI-ModManager-v3.0.2.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/latest/download/TNI-ModManager-v3.0.2.exe)** *(Recommended)*
 
 **Windows Application** - Double-click to run. No PowerShell knowledge required!
 

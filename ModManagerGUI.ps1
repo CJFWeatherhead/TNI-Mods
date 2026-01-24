@@ -7,8 +7,8 @@
     A Windows Presentation Foundation GUI for managing TNI mods.
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
 .NOTES
-    Author: Chris
-    $13.0.1
+    Author: CJFWeatherhead
+    $13.0.2
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
