@@ -2738,8 +2738,13 @@ try {
         $window.ShowDialog() | Out-Null
     }
     else {
-        # Window was already shown for LuaJIT prompt, just wait for it to close
-        $window.Dispatcher.Run()
+        # Window was already shown for LuaJIT prompt, run message loop until closed
+        $frame = New-Object System.Windows.Threading.DispatcherFrame
+        $window.Add_Closed({
+            param($sender, $eventArgs)
+            $frame.Continue = $false
+        })
+        [System.Windows.Threading.Dispatcher]::PushFrame($frame)
     }
 }
 catch {
