@@ -40,10 +40,10 @@ Amount of money to add when SHIFT+M is pressed.
 Default: $10,000
 
 Recommended values:
-• $1,000 - Small boost for tight situations
-• $10,000 - Moderate funding (default)
-• $100,000 - Major financial injection
-• $1,000,000 - Essentially unlimited funds
+- $1,000 - Small boost for tight situations
+- $10,000 - Moderate funding (default)
+- $100,000 - Major financial injection
+- $1,000,000 - Essentially unlimited funds
 
 Press SHIFT+M during gameplay to activate the cheat.
 A confirmation message will appear in the console.
@@ -71,9 +71,9 @@ $parameters += @{
 Log detailed information to console when cheat is activated.
 
 When enabled:
-• Shows confirmation when money is added
-• Displays current configuration on load
-• Reports errors if cheat fails
+- Shows confirmation when money is added
+- Displays current configuration on load
+- Reports errors if cheat fails
 
 Recommended: Keep enabled for feedback when using the cheat.
 "@

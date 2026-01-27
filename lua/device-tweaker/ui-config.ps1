@@ -66,7 +66,7 @@ $parameters += @{
 
 $parameters += @{
     Name        = "enable_cpu"
-    Label       = "Enable CPU Modification"
+    Label       = "Enable CPU Modification (Currently not Available within API)"
     Type        = "boolean"
     Default     = $false
     Description = "Multiply device CPU power"
@@ -74,7 +74,7 @@ $parameters += @{
 
 $parameters += @{
     Name        = "enable_memory"
-    Label       = "Enable Memory Modification"
+    Label       = "Enable Memory Modification (Currently not Available within API)"
     Type        = "boolean"
     Default     = $false
     Description = "Multiply device RAM capacity"
@@ -82,7 +82,7 @@ $parameters += @{
 
 $parameters += @{
     Name        = "enable_storage"
-    Label       = "Enable Storage Modification"
+    Label       = "Enable Storage Modification (Currently not Available within API)"
     Type        = "boolean"
     Default     = $false
     Description = "Multiply device storage capacity"
@@ -111,9 +111,9 @@ if ($enableBandwidth) {
 Multiplier for device network bandwidth capacity.
 
 Examples:
-• 2.0 = Double bandwidth (10 Gbps → 20 Gbps)
-• 0.5 = Half bandwidth (10 Gbps → 5 Gbps)
-• 10.0 = Ten times bandwidth
+- 2.0 = Double bandwidth (10 Gbps -> 20 Gbps)
+- 0.5 = Half bandwidth (10 Gbps -> 5 Gbps)
+- 10.0 = Ten times bandwidth
 
 Applies to all devices with network interfaces.
 "@
@@ -140,8 +140,8 @@ if ($enableWarranty) {
         Description = @"
 Warranty modification mode:
 
-• fixed: Apply a constant multiplier to all devices
-• random: Apply a random multiplier (within range) to each device
+- fixed: Apply a constant multiplier to all devices
+- random: Apply a random multiplier (within range) to each device
 
 Use random for more varied gameplay, fixed for predictable results.
 "@
@@ -230,9 +230,9 @@ if ($enableCost) {
 Multiplier for device purchase costs.
 
 Examples:
-• 0.5 = Half price (make devices cheaper)
-• 1.0 = Normal price (no change)
-• 2.0 = Double price (make devices more expensive)
+- 0.5 = Half price (make devices cheaper)
+- 1.0 = Normal price (no change)
+- 2.0 = Double price (make devices more expensive)
 
 Useful for difficulty adjustments.
 "@

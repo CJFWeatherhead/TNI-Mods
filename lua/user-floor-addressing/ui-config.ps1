@@ -48,9 +48,9 @@ $parameters += @{
     Description = @"
 DHCP mode for user computers:
 
-• disabled: Manual configuration only, users must set addresses manually
-• boot_dhcp: DHCP requests on boot only, then static address
-• periodic_dhcp: Periodic DHCP requests, addresses may change
+- disabled: Manual configuration only, users must set addresses manually
+- boot_dhcp: DHCP requests on boot only, then static address
+- periodic_dhcp: Periodic DHCP requests, addresses may change
 
 Recommended: boot_dhcp for stable addressing after initial setup
 "@
@@ -68,9 +68,9 @@ Uses C-style printf format with two %d placeholders:
   2nd %d = user increment (counter per floor)
 
 Examples:
-• "f%d/usr%d" → f0/usr1, f0/usr2, f1/usr1, ...
-• "floor-%d/u%d" → floor-0/u1, floor-0/u2, ...
-• "%d.%d" → 0.1, 0.2, 1.1, 1.2, ...
+- "f%d/usr%d" -> f0/usr1, f0/usr2, f1/usr1, ...
+- "floor-%d/u%d" -> floor-0/u1, floor-0/u2, ...
+- "%d.%d" -> 0.1, 0.2, 1.1, 1.2, ...
 
 Must contain exactly two %d placeholders.
 "@
@@ -104,9 +104,9 @@ Format string for floor-specific DNS servers.
 One %d placeholder is replaced with floor number.
 
 Examples:
-• "@f%d/dns" → @f0/dns, @f1/dns, ...
-• "dns-floor%d" → dns-floor0, dns-floor1, ...
-• "10.0.%d.1" → 10.0.0.1, 10.0.1.1, ...
+- "@f%d/dns" -> @f0/dns, @f1/dns, ...
+- "dns-floor%d" -> dns-floor0, dns-floor1, ...
+- "10.0.%d.1" -> 10.0.0.1, 10.0.1.1, ...
 
 Must contain exactly one %d placeholder.
 "@
@@ -160,8 +160,8 @@ $parameters += @{
     Description = @"
 Control whether users refresh their hardware (MAC) addresses.
 
-• Disabled (false): Users will periodically refresh hardware addresses (game default)
-• Enabled (true): Users keep static hardware addresses (required for predictable addressing)
+- Disabled (false): Users will periodically refresh hardware addresses (game default)
+- Enabled (true): Users keep static hardware addresses (required for predictable addressing)
 
 ⚠️ Enable this to use predictable hardware addresses below.
 "@
@@ -182,10 +182,10 @@ Requires "Disable Hardware Address Refresh" to be enabled.
 Address format: {floor}{user_increment} (zero-padded)
 
 Examples:
-• Floor 0, User 1 → 0001
-• Floor 5, User 3 → 5003
-• Floor 12, User 25 → 12025
-• Floor 113, User 321 → 113321
+- Floor 0, User 1 -> 0001
+- Floor 5, User 3 -> 5003
+- Floor 12, User 25 -> 12025
+- Floor 113, User 321 -> 113321
 
 ⚠️ Useful for debugging and consistent network behavior.
 "@
@@ -230,8 +230,8 @@ Uses C-style printf format with two %d placeholders:
   2nd %d = device increment (counter per floor)
 
 Examples:
-• "@voice/f%d/%d" → @voice/f0/1, @voice/f0/2, ...
-• "phone-%d-%d" → phone-0-1, phone-0-2, ...
+- "@voice/f%d/%d" -> @voice/f0/1, @voice/f0/2, ...
+- "phone-%d-%d" -> phone-0-1, phone-0-2, ...
 
 Must contain exactly two %d placeholders.
 "@
@@ -257,8 +257,8 @@ Uses C-style printf format with two %d placeholders:
   2nd %d = device increment (counter per floor)
 
 Examples:
-• "@cam/f%d/%d" → @cam/f0/1, @cam/f0/2, ...
-• "camera-%d-%d" → camera-0-1, camera-0-2, ...
+- "@cam/f%d/%d" -> @cam/f0/1, @cam/f0/2, ...
+- "camera-%d-%d" -> camera-0-1, camera-0-2, ...
 
 Must contain exactly two %d placeholders.
 "@
