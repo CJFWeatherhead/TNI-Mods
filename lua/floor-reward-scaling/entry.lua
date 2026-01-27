@@ -15,17 +15,17 @@ local mod_id = "floor-reward-scaling"
 
 local config = {
     -- Scaling type selection
-    scaling_type = "Exponential", -- "Logarithmic", "Linear", "Exponential", or "Randomised"
+    scaling_type = "Logarithmic", -- "Logarithmic", "Linear", "Exponential", or "Randomised"
 
     -- Standard scaling factor (for non-Randomised modes)
-    factor = 3.0,
+    factor = 2.0,
 
     -- Randomised mode settings
     min_factor = 1.0,
     max_factor = 5.0,
 
     -- Advanced options
-    debug_logging = true,
+    debug_logging = false,
     apply_to_new_users_only = false
 }
 

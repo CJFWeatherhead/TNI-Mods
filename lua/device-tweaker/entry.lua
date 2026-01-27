@@ -28,9 +28,9 @@ local config = {
     enable_bandwidth = true,
     enable_warranty = true,
     enable_cost = false,
-    enable_cpu = true,
-    enable_memory = true,
-    enable_storage = true,
+    enable_cpu = false,
+    enable_memory = false,
+    enable_storage = false,
 
     -- Bandwidth settings
     bandwidth_multiplier = 2.0,
@@ -39,7 +39,7 @@ local config = {
     warranty_mode = "random", -- "fixed" or "random"
     warranty_multiplier_fixed = 1.0,
     warranty_multiplier_min = 5.0,
-    warranty_multiplier_max = 250.0,
+    warranty_multiplier_max = 100.0,
     warranty_apply_cycles = true,
     warranty_apply_remaining = true,
 
