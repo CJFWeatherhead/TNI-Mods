@@ -21,7 +21,7 @@ local config = {
     fallback_dns_2 = "@f0/dns2",
 
     -- Hardware address configuration
-    disable_hw_refresh = true,
+    disable_hw_refresh = false,
     predictable_hw_address = false,
 
     -- Device addressing
@@ -29,7 +29,7 @@ local config = {
     cctv_address_format = "@cam/f%d/%d",
 
     -- Advanced options
-    debug_logging = true,
+    debug_logging = false,
     strict_validation = false
 }
 

@@ -148,13 +148,13 @@ Provides redundancy if both floor-specific and first fallback fail.
 
 $parameters += @{
     Type = "section"
-    Label = "Hardware Address Configuration"
+    Label = "Hardware Address Configuration (Doesn't work/NO API EXPOSED)"
     Description = "Configure MAC address behavior"
 }
 
 $parameters += @{
     Name = "disable_hw_refresh"
-    Label = "Disable Hardware Address Refresh"
+    Label = "Disable Hardware Address Refresh (Doesn't work/NO API EXPOSED)"
     Type = "boolean"
     Default = $false
     Description = @"
@@ -172,7 +172,7 @@ Control whether users refresh their hardware (MAC) addresses.
 if ($disableHwRefresh) {
     $parameters += @{
         Name = "predictable_hw_address"
-        Label = "Use Predictable Hardware Addresses"
+        Label = "Use Predictable Hardware Addresses (Doesn't work/NO API EXPOSED)"
         Type = "boolean"
         Default = $false
         Description = @"
@@ -215,7 +215,7 @@ Examples:
 $parameters += @{
     Type = "section"
     Label = "Device Network Configuration"
-    Description = "Configure network addresses for phones and CCTV cameras"
+    Description = "Configure network addresses for phones and CCTV cameras [None of this works. Phone and CCTV aren't currently exposed]"
 }
 
 $parameters += @{
