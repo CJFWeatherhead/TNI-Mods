@@ -2,13 +2,13 @@
 
 <#
 .SYNOPSIS
-    The Network Inc - WPF Mod Manager v3.0
+    The Network Inc - WPF Mod Manager v3.5.2
 .DESCRIPTION
     A Windows Presentation Foundation GUI for managing TNI mods.
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
 .NOTES
     Author: CJFWeatherhead
-    $13.5.1
+    Version: 3.5.2
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
@@ -762,7 +762,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="The Network Inc - Mod Manager v3.0.1" 
+        Title="The Network Inc - Mod Manager v3.5.2" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">
