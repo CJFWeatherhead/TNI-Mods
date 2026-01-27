@@ -19,7 +19,7 @@ local config = {
     money_amount = 10000,
 
     -- Advanced options
-    debug_logging = true,
+    debug_logging = false,
     show_notification = true
 }
 
@@ -107,8 +107,10 @@ function on_player_input(event)
                 -- Optional: Show in-game notification if available
                 if config.show_notification then
                     pcall(function()
-                        if world.show_notification then
-                            world.show_notification("Money Added", string.format("$%d", money_amount), "success")
+                        local base_ui = ModApiV1.get_base_ui()
+                        if base_ui and base_ui.display_notification then
+                            -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
+                            base_ui.display_notification(string.format("Added $%d", money_amount), 1)
                         end
                     end)
                 end
