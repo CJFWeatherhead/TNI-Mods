@@ -644,6 +644,64 @@ function Save-ModCache {
 
 #region Helper Functions
 
+function Convert-MarkdownToTextBlock {
+    <#
+    .SYNOPSIS
+        Converts basic markdown (bold and links) to WPF TextBlock with Inlines
+    #>
+    param(
+        [string]$Text,
+        [System.Windows.Controls.TextBlock]$TextBlock
+    )
+    
+    if ([string]::IsNullOrWhiteSpace($Text)) {
+        return
+    }
+    
+    $TextBlock.Inlines.Clear()
+    $TextBlock.TextWrapping = "Wrap"
+    
+    # Split by markdown patterns
+    $pattern = '(\*\*.*?\*\*|\[.*?\]\(.*?\))'
+    $parts = [regex]::Split($Text, $pattern)
+    
+    foreach ($part in $parts) {
+        if ([string]::IsNullOrEmpty($part)) { continue }
+        
+        # Handle bold: **text**
+        if ($part -match '^\*\*(.*?)\*\*$') {
+            $run = New-Object System.Windows.Documents.Run
+            $run.Text = $Matches[1]
+            $run.FontWeight = "Bold"
+            $TextBlock.Inlines.Add($run)
+        }
+        # Handle links: [text](url)
+        elseif ($part -match '^\[(.*?)\]\((.*?)\)$') {
+            $linkText = $Matches[1]
+            $linkUrl = $Matches[2]
+            
+            $hyperlink = New-Object System.Windows.Documents.Hyperlink
+            $hyperlink.NavigateUri = $linkUrl
+            $run = New-Object System.Windows.Documents.Run
+            $run.Text = $linkText
+            $hyperlink.Inlines.Add($run)
+            $hyperlink.Foreground = "#FF0078D4"
+            $hyperlink.Add_RequestNavigate({
+                param($sender, $e)
+                Start-Process $e.Uri.AbsoluteUri
+                $e.Handled = $true
+            })
+            $TextBlock.Inlines.Add($hyperlink)
+        }
+        # Plain text
+        else {
+            $run = New-Object System.Windows.Documents.Run
+            $run.Text = $part
+            $TextBlock.Inlines.Add($run)
+        }
+    }
+}
+
 function Get-ModStatusColor {
     param(
         [string]$Status,
@@ -1950,7 +2008,8 @@ function Update-ModDetails {
         # Description
         if ($Mod['Description']) {
             $window.FindName("DescriptionExpander").Visibility = "Visible"
-            $window.FindName("ModDescriptionText").Text = $Mod['Description']
+            $descriptionBlock = $window.FindName("ModDescriptionText")
+            Convert-MarkdownToTextBlock $Mod['Description'] $descriptionBlock
         }
         else {
             $window.FindName("DescriptionExpander").Visibility = "Collapsed"
@@ -2140,20 +2199,51 @@ function New-ParameterControl {
             $slider.Value = $CurrentValue
             $slider.IsSnapToTickEnabled = $true
             $slider.TickFrequency = 1
-            $slider.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'integer' }
+            $slider.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'integer'; IsUpdating = $false }
             
             $valueBox = New-Object System.Windows.Controls.TextBox
             $valueBox.Text = $CurrentValue
             $valueBox.Margin = "5,0,0,0"
-            $valueBox.Tag = $slider
+            $valueBox.Tag = @{ Slider = $slider; ModId = $ModId; ParamName = $Param['Name']; IsUpdating = $false }
             
+            # Slider updates textbox and config
             $slider.Add_ValueChanged({
                 $tag = $this.Tag
+                if ($tag.IsUpdating) { return }
+                
                 $intVal = [int]$this.Value
                 if (-not $script:Config.mod_parameters.ContainsKey($tag.ModId)) {
                     $script:Config.mod_parameters[$tag.ModId] = @{}
                 }
                 $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $intVal
+                
+                # Update textbox
+                $grid = $this.Parent
+                $textBox = $grid.Children[1]
+                $textBox.Tag.IsUpdating = $true
+                $textBox.Text = $intVal.ToString()
+                $textBox.Tag.IsUpdating = $false
+            })
+            
+            # Textbox updates slider and config
+            $valueBox.Add_TextChanged({
+                $tag = $this.Tag
+                if ($tag.IsUpdating) { return }
+                
+                $value = 0
+                if ([int]::TryParse($this.Text, [ref]$value)) {
+                    $slider = $tag.Slider
+                    if ($value -ge $slider.Minimum -and $value -le $slider.Maximum) {
+                        $slider.Tag.IsUpdating = $true
+                        $slider.Value = $value
+                        $slider.Tag.IsUpdating = $false
+                        
+                        if (-not $script:Config.mod_parameters.ContainsKey($tag.ModId)) {
+                            $script:Config.mod_parameters[$tag.ModId] = @{}
+                        }
+                        $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $value
+                    }
+                }
             })
             
             [System.Windows.Controls.Grid]::SetColumn($slider, 0)
@@ -2180,18 +2270,51 @@ function New-ParameterControl {
             $step = if ($Param.ContainsKey('Step')) { $Param['Step'] } else { 0.1 }
             $slider.TickFrequency = $step
             $slider.IsSnapToTickEnabled = $true
-            $slider.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'number' }
+            $slider.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'number'; IsUpdating = $false }
             
             $valueBox = New-Object System.Windows.Controls.TextBox
             $valueBox.Text = $CurrentValue
             $valueBox.Margin = "5,0,0,0"
+            $valueBox.Tag = @{ Slider = $slider; ModId = $ModId; ParamName = $Param['Name']; IsUpdating = $false }
             
+            # Slider updates textbox and config
             $slider.Add_ValueChanged({
                 $tag = $this.Tag
+                if ($tag.IsUpdating) { return }
+                
+                $doubleVal = [double]$this.Value
                 if (-not $script:Config.mod_parameters.ContainsKey($tag.ModId)) {
                     $script:Config.mod_parameters[$tag.ModId] = @{}
                 }
-                $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = [double]$this.Value
+                $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $doubleVal
+                
+                # Update textbox
+                $grid = $this.Parent
+                $textBox = $grid.Children[1]
+                $textBox.Tag.IsUpdating = $true
+                $textBox.Text = $doubleVal.ToString("F2")
+                $textBox.Tag.IsUpdating = $false
+            })
+            
+            # Textbox updates slider and config
+            $valueBox.Add_TextChanged({
+                $tag = $this.Tag
+                if ($tag.IsUpdating) { return }
+                
+                $value = 0.0
+                if ([double]::TryParse($this.Text, [ref]$value)) {
+                    $slider = $tag.Slider
+                    if ($value -ge $slider.Minimum -and $value -le $slider.Maximum) {
+                        $slider.Tag.IsUpdating = $true
+                        $slider.Value = $value
+                        $slider.Tag.IsUpdating = $false
+                        
+                        if (-not $script:Config.mod_parameters.ContainsKey($tag.ModId)) {
+                            $script:Config.mod_parameters[$tag.ModId] = @{}
+                        }
+                        $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $value
+                    }
+                }
             })
             
             [System.Windows.Controls.Grid]::SetColumn($slider, 0)
