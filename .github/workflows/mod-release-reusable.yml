@@ -12,11 +12,6 @@ on:
         type: string
         default: 'patch'
         description: 'Version bump type: major, minor, or patch'
-    secrets:
-      CLOUDFLARE_API_TOKEN:
-        required: true
-      CLOUDFLARE_ACCOUNT_ID:
-        required: true
 
 jobs:
   release:
@@ -148,16 +143,6 @@ jobs:
         run: |
           cd docs
           hugo --minify
-      
-      - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: tower-networking-ink
-          directory: docs/public
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
       
       - name: Summary
         run: |
