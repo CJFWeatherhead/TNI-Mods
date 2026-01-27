@@ -1,19 +1,11 @@
 Name: Random Device Warranties
-Description: |
-  This mod randomizes the warranty periods of all devices in The Network Inc game.
-
-  ## Features
-  - Randomizes warranty periods for all device types
-  - Multiplier ranges from 2x to 25x
-  - Affects both base warranty days and cycles
-  - Also modifies remaining warranty period if applicable
-  - Provides console logging of changes
+Description: This mod randomizes the warranty periods of all devices in The Network Inc game. It is defunct an has been superseeded by the device-tweaker mod. Use that instead.
 Author: CJFWeatherhead
 Version: 0.1.1
 Creation Date: 2026-01-01
 Last Updated: 2026-01-24
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties
-Development Status: Active Development
+Development Status: Discontinued
 Game Version Supported: beta
 ID: random-warranties
 Dependencies: []
