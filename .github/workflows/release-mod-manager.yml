@@ -60,9 +60,13 @@ jobs:
         run: |
           $content = Get-Content "ModManagerGUI.ps1" -Raw
           $newVersion = "${{ steps.version.outputs.version }}"
+          $majorMinor = ($newVersion -split '\.')[0..1] -join '.'
           
-          # Update version in header comment
+          # Update version in .NOTES section
           $content = $content -replace '(Version:\s*)\d+\.\d+(?:\.\d+)?', "`$1$newVersion"
+          
+          # Update version in .SYNOPSIS section (major.minor only)
+          $content = $content -replace '(WPF Mod Manager v)\d+\.\d+', "`${1}$majorMinor"
           
           # Update window title
           $content = $content -replace '(Title="The Network Inc - Mod Manager v)\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
