@@ -48,7 +48,7 @@ end
 
 ## Mod Manager
 
-The PowerShell `ModManager.ps1` script provides a UI to:
+The PowerShell `ModManagerGUI.ps1` script provides a UI to:
 
 - View all installed mods
 - Configure mod parameters by modifying `entry.lua` directly
@@ -56,10 +56,6 @@ The PowerShell `ModManager.ps1` script provides a UI to:
 - Support both simple and complex parameter UIs
 
 ### Usage
-
-```powershell
-# Command-line version
-.\ModManager.ps1
 
 # GUI version
 .\ModManagerGUI.ps1
