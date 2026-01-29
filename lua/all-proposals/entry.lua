@@ -15,6 +15,17 @@
 
 print("=== All Proposals Mod v1.0 Loaded ===")
 
+-- ===== MOD CONFIGURATION START =====
+-- This section is parsed and modified by ModManager
+-- Do not remove the configuration markers
+
+local config = {
+    -- Display options
+    show_notification = true
+}
+
+-- ===== MOD CONFIGURATION END =====
+
 local shift_p_pressed = false
 local original_batch_size = nil
 local all_proposals_active = false
@@ -195,6 +206,20 @@ local function show_all_proposals()
     print("[All Proposals]   Blocked: " .. blocked_proposals)
     print("[All Proposals]   Submitted: " .. submitted_proposals)
     print("")
+
+    -- Show in-game notification if enabled
+    if config.show_notification then
+        pcall(function()
+            local base_ui = ModApiV1.get_base_ui()
+            if base_ui and base_ui.display_notification then
+                -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
+                base_ui.display_notification(
+                    string.format("Showing all %d proposals", available_proposals), 
+                    1
+                )
+            end
+        end)
+    end
 end
 
 -- Function to restore normal proposal display
@@ -227,6 +252,17 @@ local function restore_normal_proposals()
 
     all_proposals_active = false
     print("[All Proposals] Normal mode restored\n")
+
+    -- Show in-game notification if enabled
+    if config.show_notification then
+        pcall(function()
+            local base_ui = ModApiV1.get_base_ui()
+            if base_ui and base_ui.display_notification then
+                -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
+                base_ui.display_notification("Normal proposal mode restored", 0)
+            end
+        end)
+    end
 end
 
 -- Keyboard input handler for Shift+P shortcut
