@@ -11,7 +11,6 @@ Each mod in the `/lua` directory now has its own individual GitHub Actions workf
 3. **Packages the mod** into a versioned zip file
 4. **Creates a GitHub release** with the packaged mod
 5. **Regenerates documentation** with download links to the latest release
-6. **Deploys updated docs** to Cloudflare Pages
 
 ## Trigger Conditions
 
