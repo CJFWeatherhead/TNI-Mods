@@ -23,6 +23,7 @@ else
     config.max_dump_depth = 2
     config.enable_network_inspection = true
     config.track_users_for_reinspection = true
+    config.show_notification = true
 end
 
 -- Track spawned users for re-inspection
@@ -461,6 +462,20 @@ function reinspect_all_users()
     for i, user_data in ipairs(spawned_users) do
         inspect_user_network(user_data.user, "manual_reinspection")
     end
+
+    -- Show in-game notification if enabled
+    if config.show_notification then
+        pcall(function()
+            local base_ui = ModApiV1.get_base_ui()
+            if base_ui and base_ui.display_notification then
+                -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
+                base_ui.display_notification(
+                    string.format("Re-inspected %d users", #spawned_users),
+                    0
+                )
+            end
+        end)
+    end
 end
 
 -- Command to manually inspect scenes
@@ -550,6 +565,17 @@ function dump_all_world_devices()
     dump_table(world, "[DIAGNOSTIC]   ", 1)
 
     print("[DIAGNOSTIC] " .. string.rep("=", 60) .. "\n")
+
+    -- Show in-game notification if enabled
+    if config.show_notification then
+        pcall(function()
+            local base_ui = ModApiV1.get_base_ui()
+            if base_ui and base_ui.display_notification then
+                -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
+                base_ui.display_notification("Device dump complete", 0)
+            end
+        end)
+    end
 end
 
 function on_day_start()

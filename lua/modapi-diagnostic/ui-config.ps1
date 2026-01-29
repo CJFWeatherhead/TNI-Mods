@@ -122,6 +122,25 @@ $parameters += @{
     Description = "Keep references to spawned users for Shift+R re-inspection feature"
 }
 
+$parameters += @{
+    Name        = "show_notification"
+    Label       = "Show In-Game Notifications"
+    Type        = "boolean"
+    Default     = $true
+    Description = @"
+Display in-game notifications when using keyboard shortcuts.
+
+When enabled:
+• Shows a notification when re-inspecting users (Shift+R)
+• Shows a notification when dumping devices (Shift+D)
+
+Note: This feature depends on the game's notification system.
+If not supported, only console messages will appear.
+
+Console messages will always be shown regardless of this setting.
+"@
+}
+
 # ============================================================================
 # Hotkeys Information
 # ============================================================================
@@ -137,8 +156,12 @@ $parameters += @{
     Label = "Hotkeys"
     Text  = @"
 Shift+R - Re-inspect all spawned users (network configuration)
+Shift+D - Dump all devices in the world (finds phones/CCTV)
 
-You can also call reinspect_all_users() directly from the Lua console.
+You can also call these functions directly from the Lua console:
+• reinspect_all_users()
+• dump_all_world_devices()
+• inspect_scenes()
 "@
 }
 
