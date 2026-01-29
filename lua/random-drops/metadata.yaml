@@ -1,0 +1,163 @@
+Name: Random Drops
+Description: |
+  A comprehensive randomness mod that adds three configurable features to enhance gameplay variety:
+  
+  ## Features
+  
+  ### 1. Random Item Spawning
+  Periodically spawns random devices/items at configurable intervals. Control how many items spawn 
+  and how often. Filter which device types can spawn (switches, routers, firewalls, servers, etc.).
+  
+  ### 2. Extra Users on Floor Creation
+  When a new floor is created, additional random users are automatically added. Configure the 
+  minimum and maximum number of extra users per floor.
+  
+  ### 3. Purchase Multiplier
+  When you purchase an item from the shop (dmarket), receive multiple copies instead of just one.
+  Set the multiplier to control how many items you get per purchase.
+  
+  ## Usage
+  
+  All features can be independently enabled or disabled through the Mod Manager interface.
+  Configure each feature's parameters to customize the experience.
+  
+  ## Configuration
+  
+  - **Random Spawns**: Toggle on/off, set interval (seconds), item count range, device type filters
+  - **Extra Users**: Toggle on/off, set min/max users per floor
+  - **Purchase Multiplier**: Toggle on/off, set multiplier value
+  - **Debug Logging**: Enable for detailed console output
+
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-27
+Last Updated: 2026-01-27
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-drops
+Development Status: Active Development
+Game Version Supported: beta
+ID: random-drops
+Dependencies: []
+Image: 
+Notes: |
+  This mod uses on_device_spawned, on_user_spawned, on_location_spawned, and on_tick callbacks.
+  Some features depend on game API availability and may have limited functionality in certain game versions.
+
+Parameters:
+  # Feature 1: Random Item Spawning
+  - Name: enable_random_spawns
+    Label: Enable Random Item Spawning
+    Type: boolean
+    Default: true
+    Description: Periodically spawn random devices at configurable intervals
+
+  - Name: spawn_interval_seconds
+    Label: Spawn Interval (Seconds)
+    Type: integer
+    Default: 60
+    Min: 10
+    Max: 600
+    Step: 10
+    Description: Time in seconds between random spawn events
+
+  - Name: spawn_count_min
+    Label: Minimum Items Per Spawn
+    Type: integer
+    Default: 1
+    Min: 1
+    Max: 10
+    Description: Minimum number of items to spawn each interval
+
+  - Name: spawn_count_max
+    Label: Maximum Items Per Spawn
+    Type: integer
+    Default: 3
+    Min: 1
+    Max: 20
+    Description: Maximum number of items to spawn each interval
+
+  - Name: spawn_all_items
+    Label: Spawn All Item Types
+    Type: boolean
+    Default: true
+    Description: If enabled, all device types can spawn. If disabled, use the filters below.
+
+  - Name: spawn_switches
+    Label: Include Network Switches
+    Type: boolean
+    Default: true
+    Description: Allow network switches to spawn (when not using all items)
+
+  - Name: spawn_routers
+    Label: Include Routers
+    Type: boolean
+    Default: true
+    Description: Allow routers to spawn (when not using all items)
+
+  - Name: spawn_firewalls
+    Label: Include Firewalls
+    Type: boolean
+    Default: true
+    Description: Allow firewalls to spawn (when not using all items)
+
+  - Name: spawn_servers
+    Label: Include Servers
+    Type: boolean
+    Default: true
+    Description: Allow compute servers to spawn (when not using all items)
+
+  - Name: spawn_workstations
+    Label: Include Workstations
+    Type: boolean
+    Default: false
+    Description: Allow workstations/monitors to spawn (when not using all items)
+
+  - Name: spawn_misc
+    Label: Include Miscellaneous Devices
+    Type: boolean
+    Default: false
+    Description: Allow other device types to spawn (UPS, surge protectors, etc.)
+
+  # Feature 2: Extra Users on Floor Creation
+  - Name: enable_extra_users
+    Label: Enable Extra Users on Floor Creation
+    Type: boolean
+    Default: true
+    Description: Automatically add extra random users when a new floor is created
+
+  - Name: extra_users_min
+    Label: Minimum Extra Users
+    Type: integer
+    Default: 1
+    Min: 1
+    Max: 10
+    Description: Minimum number of extra users to add per floor
+
+  - Name: extra_users_max
+    Label: Maximum Extra Users
+    Type: integer
+    Default: 3
+    Min: 1
+    Max: 20
+    Description: Maximum number of extra users to add per floor
+
+  # Feature 3: Purchase Multiplier
+  - Name: enable_purchase_multiplier
+    Label: Enable Purchase Multiplier
+    Type: boolean
+    Default: true
+    Description: Receive multiple copies when purchasing items from the shop
+
+  - Name: purchase_multiplier
+    Label: Purchase Multiplier
+    Type: integer
+    Default: 2
+    Min: 1
+    Max: 10
+    Description: Number of items received per purchase (1 = normal, 2 = double, etc.)
+
+  # General Settings
+  - Name: debug_logging
+    Label: Enable Debug Logging
+    Type: boolean
+    Default: true
+    Description: Show detailed log messages in the console
