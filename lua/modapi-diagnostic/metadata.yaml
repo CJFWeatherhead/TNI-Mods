@@ -32,9 +32,9 @@ Description: |
   to view detailed logs and object structures.
   
 Author: CJFWeatherhead
-Version: 0.1.1
+Version: 0.1.2
 Creation Date: 2026-01-20
-Last Updated: 2026-01-24
+Last Updated: 2026-01-29
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic
 Development Status: Active Development
 Game Version Supported: beta
