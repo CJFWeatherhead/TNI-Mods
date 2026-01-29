@@ -29,9 +29,9 @@ Description: |
   - **Debug Logging**: Enable for detailed console output
 
 Author: CJFWeatherhead
-Version: 0.1.0
+Version: 0.1.1
 Creation Date: 2026-01-27
-Last Updated: 2026-01-27
+Last Updated: 2026-01-29
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-drops
 Development Status: Active Development
 Game Version Supported: beta
