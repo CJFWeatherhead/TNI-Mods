@@ -6,11 +6,11 @@ Description: |
   ## Features
   
   ### Keyboard Shortcuts
-  All shortcuts use CTRL+SHIFT combinations to avoid clashing with other mods:
+  All shortcuts use SHIFT combinations:
   
-  - **CTRL+SHIFT+F**: Force spawn a random floor immediately
-  - **CTRL+SHIFT+D**: Toggle Disaster Mode (increases event rates)
-  - **CTRL+SHIFT+X**: Reset all chaos settings to defaults
+  - **SHIFT+F**: Force spawn a random floor immediately
+  - **SHIFT+D**: Toggle Disaster Mode (increases event rates)
+  - **SHIFT+X**: Reset all chaos settings to defaults
   
   ### Disaster Mode
   When activated, all random event rates (device failures, power outages, power surges, 
@@ -30,9 +30,9 @@ Description: |
   ## Usage
   
   1. Load the mod and start a game
-  2. Press CTRL+SHIFT+D to activate Disaster Mode for intense chaos
-  3. Press CTRL+SHIFT+F to spawn random floors
-  4. Press CTRL+SHIFT+X to reset everything back to normal
+  2. Press SHIFT+D to activate Disaster Mode for intense chaos
+  3. Press SHIFT+F to spawn random floors
+  4. Press SHIFT+X to reset everything back to normal
 
 Author: CJFWeatherhead
 Version: 0.1.3
@@ -45,7 +45,7 @@ ID: chaos-engine
 Dependencies: []
 Image: 
 Notes: |
-  This mod uses CTRL+SHIFT key combinations to avoid hotkey conflicts.
+  This mod uses SHIFT key combinations.
   Original event rates are stored and can be restored with the reset function.
 
 Parameters:

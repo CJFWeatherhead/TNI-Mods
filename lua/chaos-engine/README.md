@@ -10,24 +10,24 @@ Chaos Engine lets you shake things up in your tower with keyboard shortcuts that
 
 ### Keyboard Shortcuts
 
-All shortcuts use **CTRL+SHIFT** combinations to avoid clashing with other mods:
+All shortcuts use **SHIFT** combinations:
 
 | Shortcut | Action |
 |----------|--------|
-| **CTRL+SHIFT+F** | Force spawn a random floor immediately |
-| **CTRL+SHIFT+D** | Toggle Disaster Mode on/off |
-| **CTRL+SHIFT+X** | Reset all chaos settings to defaults |
+| **SHIFT+F** | Force spawn a random floor immediately |
+| **SHIFT+D** | Toggle Disaster Mode on/off |
+| **SHIFT+X** | Reset all chaos settings to defaults |
 
 ### Disaster Mode
 
-When activated (CTRL+SHIFT+D), all random event rates are multiplied:
+When activated (SHIFT+D), all random event rates are multiplied:
 
 - Device failures
 - Power outages
 - Power surges  
 - Worm spawns
 
-The multiplier is configurable (default 5x). Toggle off or press CTRL+SHIFT+X to restore original rates.
+The multiplier is configurable (default 5x). Toggle off or press SHIFT+X to restore original rates.
 
 ### User Stat Randomization
 
@@ -56,9 +56,9 @@ When users spawn, their stats are randomized within configurable ranges:
 ### Quick Start
 
 1. Start a game
-2. Press **CTRL+SHIFT+D** to activate Disaster Mode - watch events increase!
-3. Press **CTRL+SHIFT+F** to spawn a random new floor
-4. Press **CTRL+SHIFT+X** to calm things down
+2. Press **SHIFT+D** to activate Disaster Mode - watch events increase!
+3. Press **SHIFT+F** to spawn a random new floor
+4. Press **SHIFT+X** to calm things down
 
 ### Gameplay Modes
 
@@ -67,7 +67,7 @@ When users spawn, their stats are randomized within configurable ranges:
 - See how long you can keep your tower running
 
 #### Expansion Challenge
-- Spam CTRL+SHIFT+F to rapidly expand
+- Spam SHIFT+F to rapidly expand
 - Try to manage the influx of random floors
 
 #### Pure Chaos
@@ -81,8 +81,8 @@ Access the Mod Manager to configure each feature:
 ### Feature Toggles
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Enable Random Floors | On | Allow CTRL+SHIFT+F |
-| Enable Disaster Mode | On | Allow CTRL+SHIFT+D |
+| Enable Random Floors | On | Allow SHIFT+F |
+| Enable Disaster Mode | On | Allow SHIFT+D |
 | Enable User Randomization | On | Randomize user stats |
 
 ### Disaster Mode
@@ -107,34 +107,29 @@ All user stats have configurable min/max ranges.
 - Disaster mode state is tracked and can be toggled
 - Reset function restores all original values
 
-### Hotkey Design
-CTRL+SHIFT combinations were chosen because:
-- SHIFT+letter is used by other mods (money-cheat, all-proposals)
-- CTRL+letter may be used by game UI
-- CTRL+SHIFT+letter is uncommon and distinctive
-
 ## Troubleshooting
 
 ### Hotkeys not working
 - Ensure the game window has focus
-- Check that CTRL and SHIFT are both held
+- Check that SHIFT is held
 - Verify the feature is enabled in config
 
 ### Disaster mode not resetting
-- Press CTRL+SHIFT+X to force reset
+- Press SHIFT+X to force reset
 - Reload mod with F11
 
 ### Floors not spawning
 - Check console for error messages
 - Some game states may prevent floor spawning
+- The mod will log detailed information about available floor builders
 
 ## Changelog
 
 ### v0.1.0 (2026-01-31)
 - Initial release
-- Random floor spawning (CTRL+SHIFT+F)
-- Disaster mode toggle (CTRL+SHIFT+D)
-- Reset function (CTRL+SHIFT+X)
+- Random floor spawning (SHIFT+F)
+- Disaster mode toggle (SHIFT+D)
+- Reset function (SHIFT+X)
 - User stat randomization (excludes daily_rate)
 
 ## License

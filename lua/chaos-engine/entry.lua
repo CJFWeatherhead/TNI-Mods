@@ -85,7 +85,8 @@ local function notify(message, tone)
         pcall(function()
             local base_ui = ModApiV1.get_base_ui()
             if base_ui and base_ui.display_notification then
-                base_ui:display_notification(message, tone or 0)
+                -- Use dot notation (function call), not colon (method call)
+                base_ui.display_notification(message, tone or 0)
             end
         end)
     end
@@ -129,23 +130,74 @@ local function trigger_random_floor()
     end
 
     local success = false
+    local method_used = "none"
+
+    -- Method 1: Try to get spawn_paths from floor builders and use add_location directly
     pcall(function()
         local size = floor_builders:size()
-        if size > 0 then
-            -- Pick a random floor builder
-            local builder_idx = math.random(0, size - 1)
-            local builder = floor_builders:get(builder_idx)
+        log(string.format("Found %d floor builders", size))
+        
+        -- Collect all available spawn paths from all builders
+        local all_spawn_paths = {}
+        for i = 0, size - 1 do
+            local builder = floor_builders:get(i)
             if builder then
-                builder:execute_random_build_option(true)  -- force_spawn = true
-                success = true
-                log(string.format("Triggered random floor from builder %d", builder_idx))
+                local disabled = builder.disabled
+                log(string.format("Builder %d: disabled=%s", i, tostring(disabled)))
+                
+                -- Get spawn_paths from this builder
+                local paths = builder.spawn_paths
+                if paths then
+                    local path_size = paths:size()
+                    log(string.format("Builder %d has %d spawn paths", i, path_size))
+                    for j = 0, path_size - 1 do
+                        local path = paths:get(j)
+                        if path then
+                            table.insert(all_spawn_paths, path)
+                            log(string.format("  Path %d: %s", j, tostring(path)))
+                        end
+                    end
+                end
             end
-        else
-            log("No floor builders available")
+        end
+        
+        -- If we found spawn paths, pick a random one and use add_location
+        if #all_spawn_paths > 0 then
+            local random_path = all_spawn_paths[math.random(1, #all_spawn_paths)]
+            log(string.format("Attempting add_location with path: %s", tostring(random_path)))
+            world_ref.add_location(random_path)
+            success = true
+            method_used = "add_location"
         end
     end)
 
-    return success
+    if success then
+        log(string.format("Floor spawned using %s", method_used))
+        return true
+    end
+
+    -- Method 2: Try execute_random_build_option on a non-disabled builder
+    pcall(function()
+        local size = floor_builders:size()
+        for i = 0, size - 1 do
+            local builder = floor_builders:get(i)
+            if builder and not builder.disabled then
+                log(string.format("Trying execute_random_build_option on builder %d", i))
+                builder.execute_random_build_option(true)  -- force_spawn = true
+                success = true
+                method_used = "execute_random_build_option"
+                break
+            end
+        end
+    end)
+
+    if success then
+        log(string.format("Floor spawned using %s", method_used))
+        return true
+    end
+
+    log("All floor spawn methods failed")
+    return false
 end
 
 -- Toggle disaster mode
