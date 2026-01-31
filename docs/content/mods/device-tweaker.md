@@ -1,16 +1,17 @@
 ---
 title: "Device Tweaker"
-date: 2026-01-18
+date: 2026-01-27
 draft: false
 mod_id: "device-tweaker"
 author: "CJFWeatherhead"
+version: "0.1.3"
 status: "Active Development"
 game_version: "beta"
 ---
 
 # Device Tweaker
 
-A comprehensive mod for tweaking device properties in The Network Inc.
+A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 ## Features
 - **Bandwidth Multiplier**: Adjust network bandwidth capacity of devices
@@ -54,32 +55,38 @@ A comprehensive mod for tweaking device properties in The Network Inc.
 ## Mod Information
 
 - **Author**: CJFWeatherhead
+- **Version**: 0.1.3
 - **Development Status**: Active Development
 - **Game Version**: beta
-- **Last Updated**: 2026-01-18
+- **Last Updated**: 2026-01-27
 - **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker)
 
 ## Download
 
-**[Download Device Tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/device-tweaker)**
+### Latest Release: v0.1.3
 
-### Installation Instructions
+**[Download device-tweaker-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.3/device-tweaker-0.1.3.zip)**
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.3)
+
+### Installation Options
 
 #### Option 1: Using Mod Manager (Recommended)
 
-1. Download and run the [Mod Manager](/mods/tools/modmanager/)
-2. Find **Device Tweaker** in the Available mods list
-3. Click **Download** to automatically install from GitHub releases
-4. Configure parameters using the graphical interface
+1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
+2. Run the Mod Manager application
+3. Find **Device Tweaker** in the Available mods list
+4. Click **Download** to automatically install
+5. Configure parameters using the graphical interface
 
 #### Option 2: Manual Installation
 
-1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
-2. Extract to your game's mods directory:
+1. Download the zip file above
+2. Extract the `device-tweaker/` folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
 
 ## Configuration Parameters
 
@@ -429,7 +436,7 @@ Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or peri
 
 # Device Tweaker Mod
 
-A comprehensive mod for The Network Inc that allows you to customize device properties including bandwidth, warranties, costs, and hardware specifications. This is an extension on the the 2x Bandwidth mod, and the random warranties mod.
+A comprehensive mod for Tower Networking Inc that allows you to customize device properties including bandwidth, warranties, costs, and hardware specifications. This is an extension of the 2x Bandwidth mod and the Random Warranties mod.
 
 ## Features
 

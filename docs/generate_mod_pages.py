@@ -16,7 +16,7 @@ DOCS_CONTENT_DIR = SCRIPT_DIR / 'content' / 'mods'
 def load_yaml(filepath):
     """Load YAML file"""
     try:
-        with open(filepath, 'r') as f:
+        with open(filepath, 'r', encoding='utf-8') as f:
             return yaml.safe_load(f)
     except yaml.scanner.ScannerError as e:
         print(f"Error parsing YAML in {filepath}: {e}")
@@ -37,7 +37,7 @@ def load_markdown(filepath):
     """Load markdown file"""
     if not filepath.exists():
         return ""
-    with open(filepath, 'r') as f:
+    with open(filepath, 'r', encoding='utf-8') as f:
         return f.read()
 
 def generate_mod_page(mod_dir):
@@ -126,7 +126,7 @@ game_version: "{game_version}"
     download_url = f"https://github.com/CJFWeatherhead/TNI-Mods/releases/download/{release_tag}/{mod_id}-{version}.zip"
     
     content += f"### Latest Release: v{version}\n\n"
-    content += f"**[📦 Download {mod_id}-{version}.zip]({download_url})**\n\n"
+    content += f"**[Download {mod_id}-{version}.zip]({download_url})**\n\n"
     content += f"[View all releases on GitHub →]({release_url})\n\n"
     
     content += "### Installation Options\n\n"
@@ -197,7 +197,7 @@ game_version: "{game_version}"
     
     # Write the Hugo page
     output_file = DOCS_CONTENT_DIR / f"{mod_id}.md"
-    with open(output_file, 'w') as f:
+    with open(output_file, 'w', encoding='utf-8') as f:
         f.write(content)
     
     print(f"Generated page for: {title} ({mod_id})")

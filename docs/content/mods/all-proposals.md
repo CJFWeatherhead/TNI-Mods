@@ -1,9 +1,10 @@
 ---
 title: "All Proposals"
-date: 2026-01-01
+date: 2026-01-31
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
+version: "0.1.3"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -16,32 +17,38 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 ## Mod Information
 
 - **Author**: CJFWeatherhead
+- **Version**: 0.1.3
 - **Development Status**: Active Development
 - **Game Version**: beta
-- **Last Updated**: 2026-01-01
+- **Last Updated**: 2026-01-31
 - **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals)
 
 ## Download
 
-**[Download All Proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/all-proposals)**
+### Latest Release: v0.1.3
 
-### Installation Instructions
+**[Download all-proposals-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.3/all-proposals-0.1.3.zip)**
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.3)
+
+### Installation Options
 
 #### Option 1: Using Mod Manager (Recommended)
 
-1. Download and run the [Mod Manager](/mods/tools/modmanager/)
-2. Find **All Proposals** in the Available mods list
-3. Click **Download** to automatically install from GitHub releases
-4. Configure parameters using the graphical interface
+1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
+2. Run the Mod Manager application
+3. Find **All Proposals** in the Available mods list
+4. Click **Download** to automatically install
+5. Configure parameters using the graphical interface
 
 #### Option 2: Manual Installation
 
-1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
-2. Extract to your game's mods directory:
+1. Download the zip file above
+2. Extract the `all-proposals/` folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
 
 ---
 
@@ -71,7 +78,7 @@ This mod enhances the proposal system in the game by allowing players to view al
 The mod will log detailed information about the proposal status in the console, including counts of total, available, blocked, and submitted proposals.
 
 ## Compatibility
-- Compatible with TNI game version beta
+- Compatible with Tower Networking Inc game version beta
 - Uses ModApiV1 for game integration
 - No known conflicts with other mods
 

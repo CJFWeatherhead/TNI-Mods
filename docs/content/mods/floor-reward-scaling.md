@@ -1,9 +1,10 @@
 ---
 title: "Floor Reward Scaling"
-date: 2026-01-17
+date: 2026-01-31
 draft: false
 mod_id: "floor-reward-scaling"
 author: "CJFWeatherhead"
+version: "0.1.3"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -22,32 +23,38 @@ game_version: "beta"
 ## Mod Information
 
 - **Author**: CJFWeatherhead
+- **Version**: 0.1.3
 - **Development Status**: Active Development
 - **Game Version**: beta
-- **Last Updated**: 2026-01-17
+- **Last Updated**: 2026-01-31
 - **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling)
 
 ## Download
 
-**[Download Floor Reward Scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/floor-reward-scaling)**
+### Latest Release: v0.1.3
 
-### Installation Instructions
+**[Download floor-reward-scaling-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.3/floor-reward-scaling-0.1.3.zip)**
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.3)
+
+### Installation Options
 
 #### Option 1: Using Mod Manager (Recommended)
 
-1. Download and run the [Mod Manager](/mods/tools/modmanager/)
-2. Find **Floor Reward Scaling** in the Available mods list
-3. Click **Download** to automatically install from GitHub releases
-4. Configure parameters using the graphical interface
+1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
+2. Run the Mod Manager application
+3. Find **Floor Reward Scaling** in the Available mods list
+4. Click **Download** to automatically install
+5. Configure parameters using the graphical interface
 
 #### Option 2: Manual Installation
 
-1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
-2. Extract to your game's mods directory:
+1. Download the zip file above
+2. Extract the `floor-reward-scaling/` folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
 
 ## Configuration Parameters
 
@@ -108,7 +115,7 @@ Maximum multiplier for Randomised mode (only used when Scaling Type is "Randomis
 
 # Floor Reward Scaling Mod
 
-Automatically scales user daily payment rates based on their floor number using a configureable progression system.
+Automatically scales user daily payment rates based on their floor number using a configurable progression system.
 
 ## Features
 

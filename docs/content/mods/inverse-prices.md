@@ -1,9 +1,10 @@
 ---
 title: "Inverse Prices"
-date: 2026-01-17
+date: 2026-01-24
 draft: false
 mod_id: "inverse-prices"
 author: "CJFWeatherhead"
+version: "0.1.1"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -25,32 +26,38 @@ This mod inverts the game's economy by making purchases pay the player instead o
 ## Mod Information
 
 - **Author**: CJFWeatherhead
+- **Version**: 0.1.1
 - **Development Status**: Active Development
 - **Game Version**: beta
-- **Last Updated**: 2026-01-17
+- **Last Updated**: 2026-01-24
 - **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices)
 
 ## Download
 
-**[Download Inverse Prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/inverse-prices)**
+### Latest Release: v0.1.1
 
-### Installation Instructions
+**[Download inverse-prices-0.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip)**
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/inverse-prices-v0.1.1)
+
+### Installation Options
 
 #### Option 1: Using Mod Manager (Recommended)
 
-1. Download and run the [Mod Manager](/mods/tools/modmanager/)
-2. Find **Inverse Prices** in the Available mods list
-3. Click **Download** to automatically install from GitHub releases
-4. Configure parameters using the graphical interface
+1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
+2. Run the Mod Manager application
+3. Find **Inverse Prices** in the Available mods list
+4. Click **Download** to automatically install
+5. Configure parameters using the graphical interface
 
 #### Option 2: Manual Installation
 
-1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
-2. Extract to your game's mods directory:
+1. Download the zip file above
+2. Extract the `inverse-prices/` folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
 
 ## Configuration Parameters
 
@@ -109,7 +116,7 @@ Whether to refund proposal costs when submitting proposals
 
 # Inverse Prices Mod
 
-A chaotic mod for The Network Inc that inverts all prices - you get PAID when you buy things!
+A chaotic mod for Tower Networking Inc that inverts all prices - you get PAID when you buy things!
 
 ## Overview
 

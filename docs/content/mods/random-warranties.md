@@ -1,54 +1,53 @@
 ---
 title: "Random Device Warranties"
-date: 2026-01-01
+date: 2026-01-31
 draft: false
 mod_id: "random-warranties"
 author: "CJFWeatherhead"
-status: "Active Development"
+version: "0.1.3"
+status: "Discontinued"
 game_version: "beta"
 ---
 
 # Random Device Warranties
 
-This mod randomizes the warranty periods of all devices in The Network Inc game.
-
-## Features
-- Randomizes warranty periods for all device types
-- Multiplier ranges from 2x to 25x
-- Affects both base warranty days and cycles
-- Also modifies remaining warranty period if applicable
-- Provides console logging of changes
-
+A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful demonstration mod for new developers.
 
 ## Mod Information
 
 - **Author**: CJFWeatherhead
-- **Development Status**: Active Development
+- **Version**: 0.1.3
+- **Development Status**: Discontinued
 - **Game Version**: beta
-- **Last Updated**: 2026-01-01
+- **Last Updated**: 2026-01-31
 - **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties)
 
 ## Download
 
-**[Download Random Device Warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-warranties)**
+### Latest Release: v0.1.3
 
-### Installation Instructions
+**[Download random-warranties-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.3/random-warranties-0.1.3.zip)**
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-warranties-v0.1.3)
+
+### Installation Options
 
 #### Option 1: Using Mod Manager (Recommended)
 
-1. Download and run the [Mod Manager](/mods/tools/modmanager/)
-2. Find **Random Warranties** in the Available mods list
-3. Click **Download** to automatically install from GitHub releases
-4. Configure parameters using the graphical interface
+1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
+2. Run the Mod Manager application
+3. Find **Random Device Warranties** in the Available mods list
+4. Click **Download** to automatically install
+5. Configure parameters using the graphical interface
 
 #### Option 2: Manual Installation
 
-1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
-2. Extract to your game's mods directory:
+1. Download the zip file above
+2. Extract the `random-warranties/` folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
 
 ## Configuration Parameters
 
@@ -96,7 +95,9 @@ Whether to also apply multiplier to warranty_period_remaining
 
 # Random Device Warranties
 
-This mod randomizes the warranty periods of all devices in The Tower Network Inc game.
+A simple example mod that randomizes the warranty periods of all devices in Tower Networking Inc.
+
+> **Note**: This mod has been superseded by the [Device Tweaker](../device-tweaker/) mod which offers more comprehensive device customization. However, this mod remains available as a simple, feature-complete example that's useful for developers learning to create mods.
 
 ## Description
 

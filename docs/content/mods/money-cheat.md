@@ -1,9 +1,10 @@
 ---
 title: "Money Cheat"
-date: 2026-01-21
+date: 2026-01-31
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
+version: "0.1.4"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -32,32 +33,38 @@ Configure the amount in the Mod Manager settings.
 ## Mod Information
 
 - **Author**: CJFWeatherhead
+- **Version**: 0.1.4
 - **Development Status**: Active Development
 - **Game Version**: beta
-- **Last Updated**: 2026-01-21
+- **Last Updated**: 2026-01-31
 - **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat)
 
 ## Download
 
-**[Download Money Cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/money-cheat)**
+### Latest Release: v0.1.4
 
-### Installation Instructions
+**[Download money-cheat-0.1.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.4/money-cheat-0.1.4.zip)**
+
+[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.4)
+
+### Installation Options
 
 #### Option 1: Using Mod Manager (Recommended)
 
-1. Download and run the [Mod Manager](/mods/tools/modmanager/)
-2. Find **Money Cheat** in the Available mods list
-3. Click **Download** to automatically install from GitHub releases
-4. Configure parameters using the graphical interface
+1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
+2. Run the Mod Manager application
+3. Find **Money Cheat** in the Available mods list
+4. Click **Download** to automatically install
+5. Configure parameters using the graphical interface
 
 #### Option 2: Manual Installation
 
-1. Download the mod from the [GitHub releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
-2. Extract to your game's mods directory:
+1. Download the zip file above
+2. Extract the `money-cheat/` folder to your game's mods directory:
    - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
    - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure
+3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
+4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
 
 ## Configuration Parameters
 
@@ -95,7 +102,7 @@ Attempt to show an in-game notification when money is added (may not be supporte
 
 # Money Cheat
 
-Simple money cheat mod for The Network Inc that adds configurable amounts of money via keyboard shortcut.
+Simple money cheat mod for Tower Networking Inc that adds configurable amounts of money via keyboard shortcut.
 
 ## Description
 
@@ -181,7 +188,7 @@ A 0.5-second cooldown prevents accidental double-activation if you hold the keys
 
 ### Configuration System
 
-This mod uses the standardized `===== MOD CONFIGURATION START/END =====` marker system, making it compatible with automated Mod Manager tools for graphical configuration.
+This mod uses the standardized `===== MOD CONFIGURATION START/END =====` marker system, making it compatible with automated Mod Manager tools. The `ui-config.ps1` file provides UI parameter definitions for graphical configuration interfaces.
 
 ## Compatibility
 
