@@ -134,7 +134,6 @@ lua/<mod-name>/
 - See [device-tweaker/ui-config.ps1](lua/device-tweaker/ui-config.ps1) for examples
 
 
-
 ### Configuration Best Practices
 
 1. **Keep it simple**: Most mods should use the Parameters section in metadata.yaml
