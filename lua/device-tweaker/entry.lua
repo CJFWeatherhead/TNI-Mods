@@ -71,7 +71,11 @@ local config = {
     enable_cctv = true,
     enable_phone = true,
     enable_printer = true,
-    enable_network_load_balancer = true
+    enable_network_load_balancer = true,
+
+    -- Merchant restock settings
+    enable_restock_hotkey = true,
+    show_restock_notification = true
 }
 
 -- ===== MOD CONFIGURATION END =====
@@ -160,6 +164,83 @@ end
 
 function on_mod_reload()
     print("[device-tweaker] Reloading configuration...")
+end
+
+-- Merchant restock functionality
+local last_restock_time = 0
+local RESTOCK_COOLDOWN = 1.0
+
+local function restock_all_merchants()
+    local world = ModApiV1.get_game_world()
+    if not world then
+        print("[device-tweaker] Cannot restock: world not available")
+        return false
+    end
+
+    local merchants = world.device_merchants
+    if not merchants then
+        print("[device-tweaker] Cannot restock: no merchants available")
+        return false
+    end
+
+    local restock_count = 0
+    pcall(function()
+        local size = merchants:size()
+        for i = 0, size - 1 do
+            local merchant = merchants:get(i)
+            if merchant and merchant.restock then
+                merchant:restock()
+                restock_count = restock_count + 1
+            end
+        end
+    end)
+
+    print(string.format("[device-tweaker] Restocked %d merchants", restock_count))
+    return restock_count > 0
+end
+
+-- Keyboard input handler for CTRL+SHIFT+R (restock)
+function on_player_input(event)
+    if not config.enable_restock_hotkey then
+        return
+    end
+
+    local event_class = nil
+    pcall(function() event_class = event:get_class() end)
+
+    if event_class ~= "InputEventKey" then
+        return
+    end
+
+    local keycode = nil
+    local is_pressed = false
+    local is_ctrl = false
+    local is_shift = false
+
+    pcall(function() keycode = event:get_keycode() end)
+    pcall(function() is_pressed = event:is_pressed() end)
+    pcall(function() is_ctrl = event:is_ctrl_pressed() end)
+    pcall(function() is_shift = event:is_shift_pressed() end)
+
+    -- CTRL+SHIFT+R (82) - Restock all merchants
+    if keycode == 82 and is_pressed and is_ctrl and is_shift then
+        local current_time = os.clock()
+        if current_time - last_restock_time < RESTOCK_COOLDOWN then
+            return
+        end
+        last_restock_time = current_time
+
+        if restock_all_merchants() then
+            if config.show_restock_notification then
+                pcall(function()
+                    local base_ui = ModApiV1.get_base_ui()
+                    if base_ui and base_ui.display_notification then
+                        base_ui.display_notification("All merchants restocked!", 1)
+                    end
+                end)
+            end
+        end
+    end
 end
 
 -- Helper function to dump device properties for debugging

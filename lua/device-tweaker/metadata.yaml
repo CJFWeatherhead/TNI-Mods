@@ -10,6 +10,7 @@ Description: |
   - **Network Addressing**: Auto-assign addresses based on floor and device type
   - **DHCP Configuration**: Set DHCP mode (disabled, boot, or periodic)
   - **Device Class Filtering**: Selectively apply modifications to specific device types
+  - **Merchant Restock**: Press CTRL+SHIFT+R to instantly restock all merchants
   
   ## Device Classes (20 types)
   - Default (0) - def
@@ -331,3 +332,18 @@ Parameters:
     Default: disabled
     Options: ["disabled", "boot_dhcp", "periodic_dhcp"]
     Description: Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or periodic_dhcp (runs periodically)
+
+  # Merchant Restock Settings
+  - Name: enable_restock_hotkey
+    Label: Enable Merchant Restock Hotkey
+    Type: boolean
+    Default: true
+    Description: |
+      Enable CTRL+SHIFT+R hotkey to instantly restock all merchants.
+      Useful when you need more devices but stock is depleted.
+
+  - Name: show_restock_notification
+    Label: Show Restock Notification
+    Type: boolean
+    Default: true
+    Description: Display an in-game notification when merchants are restocked
