@@ -1,4 +1,4 @@
-name: Release random-drops
+name: Release chaos-engine
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/random-drops/**'
+      - 'lua/chaos-engine/**'
   workflow_dispatch:
     inputs:
       bump_type:
@@ -23,5 +23,5 @@ jobs:
   release:
     uses: ./.github/workflows/mod-release-reusable.yml
     with:
-      mod_name: 'random-drops'
+      mod_name: 'chaos-engine'
       bump_type: ${{ inputs.bump_type || 'patch' }}

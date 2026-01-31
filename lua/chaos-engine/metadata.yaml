@@ -1,0 +1,183 @@
+Name: Chaos Engine
+Description: |
+  A controlled chaos mod that introduces randomness and unpredictability to Tower Networking Inc 
+  through keyboard-triggered events and automatic stat randomization.
+  
+  ## Features
+  
+  ### Keyboard Shortcuts
+  All shortcuts use CTRL+SHIFT combinations to avoid clashing with other mods:
+  
+  - **CTRL+SHIFT+F**: Force spawn a random floor immediately
+  - **CTRL+SHIFT+D**: Toggle Disaster Mode (increases event rates)
+  - **CTRL+SHIFT+X**: Reset all chaos settings to defaults
+  
+  ### Disaster Mode
+  When activated, all random event rates (device failures, power outages, power surges, 
+  worm spawns) are multiplied by a configurable factor. Toggle it off or press reset to 
+  restore original rates.
+  
+  ### User Stat Randomization
+  When users spawn, their stats are randomized within configurable ranges:
+  - Satiety SLA ratio (satisfaction threshold)
+  - Eagerness factor (how demanding they are)
+  - Base use period (how often they use services)
+  - Initial grace days (forgiveness period)
+  - Max satiety decay ratio (how fast satisfaction drops)
+  
+  Note: Daily rate is NOT modified as it may conflict with other mods.
+  
+  ## Usage
+  
+  1. Load the mod and start a game
+  2. Press CTRL+SHIFT+D to activate Disaster Mode for intense chaos
+  3. Press CTRL+SHIFT+F to spawn random floors
+  4. Press CTRL+SHIFT+X to reset everything back to normal
+
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-31
+Last Updated: 2026-01-31
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine
+Development Status: Active Development
+Game Version Supported: beta
+ID: chaos-engine
+Dependencies: []
+Image: 
+Notes: |
+  This mod uses CTRL+SHIFT key combinations to avoid hotkey conflicts.
+  Original event rates are stored and can be restored with the reset function.
+
+Parameters:
+  # Feature Toggles
+  - Name: enable_random_floors
+    Label: Enable Random Floor Spawning
+    Type: boolean
+    Default: true
+    Description: Allow CTRL+SHIFT+F to spawn random floors
+
+  - Name: enable_disaster_mode
+    Label: Enable Disaster Mode
+    Type: boolean
+    Default: true
+    Description: Allow CTRL+SHIFT+D to toggle disaster mode
+
+  - Name: enable_user_randomization
+    Label: Enable User Stat Randomization
+    Type: boolean
+    Default: true
+    Description: Randomize user stats when they spawn
+
+  # Disaster Mode Settings
+  - Name: disaster_event_multiplier
+    Label: Disaster Event Rate Multiplier
+    Type: number
+    Default: 5.0
+    Min: 1.5
+    Max: 20.0
+    Step: 0.5
+    Description: How much to multiply event rates when disaster mode is active
+
+  # User Randomization - Satiety SLA
+  - Name: user_satiety_sla_min
+    Label: Min Satiety SLA Ratio
+    Type: number
+    Default: 0.3
+    Min: 0.1
+    Max: 0.9
+    Step: 0.1
+    Description: Minimum satisfaction threshold users will accept
+
+  - Name: user_satiety_sla_max
+    Label: Max Satiety SLA Ratio
+    Type: number
+    Default: 0.9
+    Min: 0.2
+    Max: 1.0
+    Step: 0.1
+    Description: Maximum satisfaction threshold users will accept
+
+  # User Randomization - Eagerness
+  - Name: user_eagerness_min
+    Label: Min Eagerness Factor
+    Type: integer
+    Default: 1
+    Min: 1
+    Max: 5
+    Description: Minimum eagerness (lower = more patient)
+
+  - Name: user_eagerness_max
+    Label: Max Eagerness Factor
+    Type: integer
+    Default: 10
+    Min: 5
+    Max: 20
+    Description: Maximum eagerness (higher = more demanding)
+
+  # User Randomization - Use Period
+  - Name: user_use_period_min
+    Label: Min Use Period Multiplier
+    Type: number
+    Default: 0.5
+    Min: 0.1
+    Max: 1.0
+    Step: 0.1
+    Description: Minimum multiplier for base use period (lower = more frequent usage)
+
+  - Name: user_use_period_max
+    Label: Max Use Period Multiplier
+    Type: number
+    Default: 2.0
+    Min: 1.0
+    Max: 5.0
+    Step: 0.5
+    Description: Maximum multiplier for base use period (higher = less frequent usage)
+
+  # User Randomization - Grace Days
+  - Name: user_grace_days_min
+    Label: Min Grace Days
+    Type: integer
+    Default: 1
+    Min: 0
+    Max: 3
+    Description: Minimum initial grace period in days
+
+  - Name: user_grace_days_max
+    Label: Max Grace Days
+    Type: integer
+    Default: 7
+    Min: 3
+    Max: 14
+    Description: Maximum initial grace period in days
+
+  # User Randomization - Satiety Decay
+  - Name: user_max_satiety_decay_min
+    Label: Min Satiety Decay Ratio
+    Type: number
+    Default: 0.1
+    Min: 0.05
+    Max: 0.3
+    Step: 0.05
+    Description: Minimum decay rate (lower = slower satisfaction drop)
+
+  - Name: user_max_satiety_decay_max
+    Label: Max Satiety Decay Ratio
+    Type: number
+    Default: 0.5
+    Min: 0.2
+    Max: 1.0
+    Step: 0.1
+    Description: Maximum decay rate (higher = faster satisfaction drop)
+
+  # UI Settings
+  - Name: show_notifications
+    Label: Show In-Game Notifications
+    Type: boolean
+    Default: true
+    Description: Display toast notifications when chaos events trigger
+
+  - Name: debug_logging
+    Label: Enable Debug Logging
+    Type: boolean
+    Default: true
+    Description: Show detailed log messages in the console
