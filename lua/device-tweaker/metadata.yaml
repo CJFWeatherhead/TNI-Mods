@@ -41,9 +41,9 @@ Description: |
   - Network addressing format: @f{floor}/{abbrev}{increment}
   
 Author: CJFWeatherhead
-Version: 0.1.3
+Version: 0.1.4
 Creation Date: 2026-01-18
-Last Updated: 2026-01-27
+Last Updated: 2026-01-31
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker
 Development Status: Active Development
 Game Version Supported: beta
