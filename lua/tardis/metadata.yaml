@@ -1,0 +1,90 @@
+Name: TARDIS - Time Controller
+Description: |
+  Control game time like a Time Lord! This mod provides keyboard shortcuts to manipulate game speed and skip time.
+  
+  ## Features
+  - **Speed Up**: Press SHIFT+> to increase game speed
+  - **Slow Down**: Press SHIFT+< to decrease game speed  
+  - **Skip Day**: Press SHIFT++ to skip to end of current day (23:59)
+  - **Visual Feedback**: On-screen notifications for all actions
+  - **Configurable**: Adjust speed step, min/max speed, and more
+  
+  ## Why "TARDIS"?
+  Like the Doctor's famous time machine, this mod gives you control over the flow of time!
+  
+  ## Usage
+  - SHIFT+> : Speed up time (like drinking coffee)
+  - SHIFT+< : Slow down time (like drinking tea)
+  - SHIFT++ : Skip to end of day
+  
+  ## Configuration
+  - **Speed Step**: How much to change speed per keypress (default: 0.5x)
+  - **Min Speed**: Minimum speed multiplier (default: 0.25x)
+  - **Max Speed**: Maximum speed multiplier (default: 10x)
+  - **Skip To Time**: What time to skip to (default: 23:59)
+  - **Show Notifications**: Toggle in-game notifications
+  - **Debug Logging**: Enable detailed console output
+
+Author: CJFWeatherhead
+Version: 0.1.0
+Creation Date: 2026-01-31
+Last Updated: 2026-01-31
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis
+Development Status: Active Development
+Game Version Supported: beta
+ID: tardis
+Dependencies: []
+Notes: |
+  Uses GameWorld.update_server_timescale() for speed control and DayCycleController.force_day_clock() for time skipping.
+  Speed changes persist until manually changed or game restart.
+Parameters:
+  - Name: speed_step
+    Label: Speed Change Step
+    Type: number
+    Default: 0.5
+    Min: 0.1
+    Max: 2.0
+    Step: 0.1
+    Description: Amount to change the speed multiplier when pressing SHIFT+> or SHIFT+<
+  - Name: min_speed
+    Label: Minimum Speed
+    Type: number
+    Default: 0.125
+    Min: 0.125
+    Max: 1.0
+    Step: 0.125
+    Description: Minimum allowed game speed multiplier (game hard limit is 0.125x)
+  - Name: max_speed
+    Label: Maximum Speed
+    Type: number
+    Default: 8.0
+    Min: 2.0
+    Max: 8.0
+    Step: 0.5
+    Description: Maximum allowed game speed multiplier (game hard limit is 8x)
+  - Name: default_speed
+    Label: Default Speed
+    Type: number
+    Default: 1.0
+    Min: 0.25
+    Max: 5.0
+    Step: 0.25
+    Description: Default game speed to use (for reference)
+  - Name: skip_to_time
+    Label: Skip To Time (hours)
+    Type: number
+    Default: 23.99
+    Min: 0.0
+    Max: 23.99
+    Step: 0.5
+    Description: Time of day to skip to when pressing SHIFT++ (24-hour format, e.g., 23.99 = 23:59)
+  - Name: show_notifications
+    Label: Show In-Game Notifications
+    Type: boolean
+    Default: true
+    Description: Display on-screen notifications when speed changes or time skips
+  - Name: debug_logging
+    Label: Enable Debug Logging
+    Type: boolean
+    Default: false
+    Description: Show detailed debug messages in the console
