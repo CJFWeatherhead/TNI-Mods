@@ -2,8 +2,8 @@
 -- Purpose: This mod allows players to view all available proposals in the game by pressing Shift+P,
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display with Shift+O.
--- Author: Unknown
--- Version: 1.0
+-- Author: CJFWeatherhead
+-- Version: 0.1.5
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
@@ -13,7 +13,7 @@
 --        It stores the original batch size on first use and restores it when deactivating.
 --        Proposals with unmet dependencies or failed adhoc requirements are excluded from display.
 
-print("=== All Proposals Mod v1.0 Loaded ===")
+print("=== All Proposals Mod v0.1.5 Loaded ===")
 
 -- ===== MOD CONFIGURATION START =====
 -- This section is parsed and modified by ModManager
@@ -100,9 +100,23 @@ local function check_adhoc_requirements(proposal)
     return true
 end
 
+-- Helper function to get dependency name safely
+local function get_dependency_name(proposal)
+    local dep_name = nil
+    pcall(function()
+        if proposal.depends_on then
+            dep_name = proposal.depends_on:get_proposal_name()
+        end
+    end)
+    return dep_name
+end
+
 -- Function to show all available proposals
 local function show_all_proposals()
-    print("\n[All Proposals] Activating all available proposals...")
+    print("")
+    print("[All Proposals] ========================================")
+    print("[All Proposals] Activating all available proposals...")
+    print("[All Proposals] ========================================")
 
     local world = ModApiV1.get_game_world()
     if not world then
@@ -135,6 +149,11 @@ local function show_all_proposals()
     local blocked_proposals = 0
     local submitted_proposals = 0
 
+    -- Lists for organized output
+    local available_list = {}
+    local blocked_list = {}
+    local submitted_list = {}
+
     -- Count available proposals (not submitted, no unmet dependencies)
     pcall(function()
         local size = all_mods:size()
@@ -145,7 +164,10 @@ local function show_all_proposals()
             if proposal then
                 local proposal_name = "Unknown"
                 pcall(function()
-                    proposal_name = proposal:get_proposal_name()
+                    local name = proposal:get_proposal_name()
+                    if name and name ~= "" then
+                        proposal_name = name
+                    end
                 end)
 
                 -- Check if already submitted
@@ -156,35 +178,60 @@ local function show_all_proposals()
 
                 if is_submitted then
                     submitted_proposals = submitted_proposals + 1
-                    print("[All Proposals]   - Already submitted: " .. proposal_name)
+                    table.insert(submitted_list, proposal_name)
                     goto continue
                 end
 
                 -- Check for unmet dependencies
                 if has_unmet_dependencies(proposal) then
-                    print("[All Proposals]   ✗ Blocked (unmet dependency): " .. proposal_name)
+                    local dep_name = get_dependency_name(proposal)
+                    local block_reason = "unmet dependency"
+                    if dep_name then
+                        block_reason = "requires: " .. dep_name
+                    end
                     blocked_proposals = blocked_proposals + 1
+                    table.insert(blocked_list, {name = proposal_name, reason = block_reason})
                     goto continue
                 end
 
                 -- Check adhoc requirements
                 if not check_adhoc_requirements(proposal) then
-                    print("[All Proposals]   ✗ Blocked (adhoc requirement): " .. proposal_name)
                     blocked_proposals = blocked_proposals + 1
+                    table.insert(blocked_list, {name = proposal_name, reason = "adhoc requirement not met"})
                     goto continue
                 end
 
                 -- This proposal is available
-                print("[All Proposals]   ✓ Available: " .. proposal_name)
                 available_proposals = available_proposals + 1
+                table.insert(available_list, proposal_name)
             end
 
             ::continue::
         end
     end)
 
+    -- Print organized output
+    print("")
+    print("[All Proposals] --- AVAILABLE PROPOSALS (" .. #available_list .. ") ---")
+    for _, name in ipairs(available_list) do
+        print("[All Proposals]   [OK] " .. name)
+    end
+
+    print("")
+    print("[All Proposals] --- BLOCKED PROPOSALS (" .. #blocked_list .. ") ---")
+    for _, item in ipairs(blocked_list) do
+        print("[All Proposals]   [X] " .. item.name .. " (" .. item.reason .. ")")
+    end
+
+    print("")
+    print("[All Proposals] --- SUBMITTED PROPOSALS (" .. #submitted_list .. ") ---")
+    for _, name in ipairs(submitted_list) do
+        print("[All Proposals]   [DONE] " .. name)
+    end
+
     -- Set the batch size to show all available proposals
     local new_batch_size = math.max(available_proposals, 50) -- At least 50 to be safe
+    print("")
     print("[All Proposals] Setting batch size from " ..
         tostring(original_batch_size or "?") .. " to " .. new_batch_size)
 
@@ -198,13 +245,28 @@ local function show_all_proposals()
         propmod_controller:reroll_proposals()
     end)
 
+    -- Emit the new_proposals_updated signal to refresh the Secretariat UI
+    pcall(function()
+        propmod_controller:new_proposals_updated()
+        print("[All Proposals] Emitted new_proposals_updated signal")
+    end)
+
+    -- Also try ex_proposals_updated for good measure
+    pcall(function()
+        propmod_controller:ex_proposals_updated()
+        print("[All Proposals] Emitted ex_proposals_updated signal")
+    end)
+
     all_proposals_active = true
 
-    print("[All Proposals] Complete!")
+    print("")
+    print("[All Proposals] ========================================")
+    print("[All Proposals] SUMMARY")
     print("[All Proposals]   Total proposals: " .. total_proposals)
     print("[All Proposals]   Available: " .. available_proposals)
     print("[All Proposals]   Blocked: " .. blocked_proposals)
     print("[All Proposals]   Submitted: " .. submitted_proposals)
+    print("[All Proposals] ========================================")
     print("")
 
     -- Show in-game notification if enabled
@@ -214,7 +276,8 @@ local function show_all_proposals()
             if base_ui and base_ui.display_notification then
                 -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
                 base_ui.display_notification(
-                    string.format("Showing all %d proposals", available_proposals), 
+                    string.format("Showing all %d proposals (Blocked: %d, Submitted: %d)", 
+                        available_proposals, blocked_proposals, submitted_proposals), 
                     1
                 )
             end
@@ -225,18 +288,24 @@ end
 -- Function to restore normal proposal display
 local function restore_normal_proposals()
     if not all_proposals_active or not original_batch_size then
+        print("[All Proposals] Already in normal mode or no original batch size stored")
         return
     end
 
-    print("\n[All Proposals] Restoring normal proposal batch size...")
+    print("")
+    print("[All Proposals] ========================================")
+    print("[All Proposals] Restoring normal proposal batch size...")
+    print("[All Proposals] ========================================")
 
     local world = ModApiV1.get_game_world()
     if not world then
+        print("[All Proposals] ERROR - Could not get game world!")
         return
     end
 
     local propmod_controller = world.propmod_controller
     if not propmod_controller then
+        print("[All Proposals] ERROR - Could not get proposal controller!")
         return
     end
 
@@ -250,8 +319,21 @@ local function restore_normal_proposals()
         print("[All Proposals] Rerolled proposals")
     end)
 
+    -- Emit signals to refresh the Secretariat UI
+    pcall(function()
+        propmod_controller:new_proposals_updated()
+        print("[All Proposals] Emitted new_proposals_updated signal")
+    end)
+
+    pcall(function()
+        propmod_controller:ex_proposals_updated()
+        print("[All Proposals] Emitted ex_proposals_updated signal")
+    end)
+
     all_proposals_active = false
-    print("[All Proposals] Normal mode restored\n")
+    print("[All Proposals] Normal mode restored")
+    print("[All Proposals] ========================================")
+    print("")
 
     -- Show in-game notification if enabled
     if config.show_notification then
