@@ -4,7 +4,7 @@ date: 2026-01-31
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "0.1.4"
+version: "0.1.5"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 | | |
 |---|---|
-| **Version** | 0.1.4 |
+| **Version** | 0.1.5 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 <div class="download-section">
 
-**[Download all-proposals-0.1.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.4/all-proposals-0.1.4.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-0.1.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.5/all-proposals-0.1.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -74,9 +74,13 @@ This mod enhances the proposal system in the game by allowing players to view al
 ## Features
 - View all available proposals with Shift+P
 - Automatically excludes proposals with unmet dependencies
+- Shows detailed dependency information (what each blocked proposal requires)
 - Checks adhoc requirements before displaying proposals
 - Restore normal proposal display with Shift+O
-- Provides detailed logging of proposal status
+- Provides organized, categorized logging of proposal status:
+  - Available proposals
+  - Blocked proposals with reasons
+  - Already submitted proposals
 
 ## Installation
 1. Place the `all-proposals` folder in your game's `lua` mods directory.
@@ -87,7 +91,37 @@ This mod enhances the proposal system in the game by allowing players to view al
 - **Activate All Proposals**: Press `Shift+P` to show all available proposals.
 - **Restore Normal Mode**: Press `Shift+O` to return to the default proposal batch size and reroll proposals.
 
-The mod will log detailed information about the proposal status in the console, including counts of total, available, blocked, and submitted proposals.
+The mod will log detailed information about the proposal status in the console, organized into three sections:
+- **AVAILABLE PROPOSALS**: Proposals that can be selected
+- **BLOCKED PROPOSALS**: Proposals with unmet dependencies (shows what they require)
+- **SUBMITTED PROPOSALS**: Proposals already completed
+
+## Example Output
+```
+[All Proposals] ========================================
+[All Proposals] Activating all available proposals...
+[All Proposals] ========================================
+
+[All Proposals] --- AVAILABLE PROPOSALS (27) ---
+[All Proposals]   [OK] Reduce Expenses
+[All Proposals]   [OK] Overvoltage Directive
+...
+
+[All Proposals] --- BLOCKED PROPOSALS (20) ---
+[All Proposals]   [X] Advanced Research (requires: Basic Research)
+[All Proposals]   [X] Phase Two (requires: Phase One)
+...
+
+[All Proposals] --- SUBMITTED PROPOSALS (0) ---
+
+[All Proposals] ========================================
+[All Proposals] SUMMARY
+[All Proposals]   Total proposals: 47
+[All Proposals]   Available: 27
+[All Proposals]   Blocked: 20
+[All Proposals]   Submitted: 0
+[All Proposals] ========================================
+```
 
 ## Compatibility
 - Compatible with Tower Networking Inc game version beta
@@ -95,12 +129,13 @@ The mod will log detailed information about the proposal status in the console, 
 - No known conflicts with other mods
 
 ## Author
-Unknown
+CJFWeatherhead
 
 ## Notes
 - The mod safely stores and restores the original proposal batch size.
 - Proposals are filtered to ensure only truly available ones are displayed.
 - Detailed console output helps with debugging proposal availability.
+- The mod emits UI update signals to try to refresh the Secretariat display automatically.
 
 </details>
 
@@ -131,8 +166,8 @@ Unknown
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.4)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.4/all-proposals-0.1.4.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.5)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.5/all-proposals-0.1.5.zip)
 
 </details>
 

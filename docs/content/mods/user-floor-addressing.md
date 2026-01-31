@@ -4,7 +4,7 @@ date: 2026-01-31
 draft: false
 mod_id: "user-floor-addressing"
 author: "CJFWeatherhead"
-version: "0.1.4"
+version: "0.1.5"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ This mod sets DHCP mode, DNS servers, and assigns network addresses based on flo
 
 | | |
 |---|---|
-| **Version** | 0.1.4 |
+| **Version** | 0.1.5 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ This mod sets DHCP mode, DNS servers, and assigns network addresses based on flo
 
 <div class="download-section">
 
-**[Download user-floor-addressing-0.1.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.4/user-floor-addressing-0.1.4.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download user-floor-addressing-0.1.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.5/user-floor-addressing-0.1.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -185,8 +185,8 @@ DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spa
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.4)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.4/user-floor-addressing-0.1.4.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.5)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.5/user-floor-addressing-0.1.5.zip)
 
 </details>
 

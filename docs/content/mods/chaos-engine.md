@@ -4,7 +4,7 @@ date: 2026-01-31
 draft: false
 mod_id: "chaos-engine"
 author: "CJFWeatherhead"
-version: "0.1.3"
+version: "0.1.5"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 | | |
 |---|---|
-| **Version** | 0.1.3 |
+| **Version** | 0.1.5 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 <div class="download-section">
 
-**[Download chaos-engine-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.3/chaos-engine-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download chaos-engine-0.1.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.5/chaos-engine-0.1.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -295,8 +295,8 @@ Original event rates are stored and can be restored with the reset function.
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.3)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.3/chaos-engine-0.1.3.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.5)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.5/chaos-engine-0.1.5.zip)
 
 </details>
 
