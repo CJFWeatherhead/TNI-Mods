@@ -1,10 +1,10 @@
 ---
 title: "Device Tweaker"
-date: 2026-01-27
+date: 2026-01-31
 draft: false
 mod_id: "device-tweaker"
 author: "CJFWeatherhead"
-version: "0.1.3"
+version: "0.1.4"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 | | |
 |---|---|
-| **Version** | 0.1.3 |
+| **Version** | 0.1.4 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-01-27 |
+| **Last Updated** | 2026-01-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 <div class="download-section">
 
-**[Download device-tweaker-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.3/device-tweaker-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download device-tweaker-0.1.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.4/device-tweaker-0.1.4.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -110,6 +110,10 @@ srv=server, mon=monitor, dbg=debugger, ldt=load_tester, pwr=power_expansion, dcr
 spr=surge_protector, ups=ups, ine=inert, ccv=cctv, phn=phone, prt=printer, nlb=load_balancer
  |
 | **DHCP Mode** | select: disabled, boot_dhcp, periodic_dhcp | `disabled` | Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or periodic_dhcp (runs periodically) |
+| **Enable Merchant Restock Hotkey** | boolean | `True` | Enable CTRL+SHIFT+R hotkey to instantly restock all merchants.
+Useful when you need more devices but stock is depleted.
+ |
+| **Show Restock Notification** | boolean | `True` | Display an in-game notification when merchants are restocked |
 
 ---
 
@@ -125,6 +129,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 - **Network Addressing**: Auto-assign addresses based on floor and device type
 - **DHCP Configuration**: Set DHCP mode (disabled, boot, or periodic)
 - **Device Class Filtering**: Selectively apply modifications to specific device types
+- **Merchant Restock**: Press CTRL+SHIFT+R to instantly restock all merchants
 
 ## Device Classes (20 types)
 - Default (0) - def
@@ -415,14 +420,14 @@ All modifications are applied when devices spawn.
 |-------|-------|
 | Mod ID | `device-tweaker` |
 | Creation Date | 2026-01-18 |
-| Last Updated | 2026-01-27 |
+| Last Updated | 2026-01-31 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.3)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.3/device-tweaker-0.1.3.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.4)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.4/device-tweaker-0.1.4.zip)
 
 </details>
 
