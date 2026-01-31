@@ -5,7 +5,7 @@ theme = 'terminal'
 
 [params]
   # Terminal theme specific settings
-  fullWidthTheme = false
+  fullWidthTheme = true
   centerTheme = true
   
   # Site info
