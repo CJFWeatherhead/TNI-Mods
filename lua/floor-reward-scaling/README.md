@@ -1,6 +1,6 @@
 # Floor Reward Scaling Mod
 
-Automatically scales user daily payment rates based on their floor number using a configureable progression system.
+Automatically scales user daily payment rates based on their floor number using a configurable progression system.
 
 ## Features
 

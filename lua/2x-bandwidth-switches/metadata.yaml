@@ -1,10 +1,10 @@
 Name: 2x Bandwidth Switches
-Description: This mod doubles the bandwidth capacity of all switches in The Network Inc game.
+Description: This mod doubles the bandwidth capacity of all switches in the Tower Networking Inc game.
 Author: treefarmer741
 Version: 0.1.1
 Creation Date: 2025-11-20
 Last Updated: 2026-01-24
-Website: https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/tree/beta/lua/2x-bandwidth-switches
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches
 Development Status: Active Development
 Game Version Supported: beta
 ID: 2x-bandwidth-switches

@@ -1,6 +1,6 @@
 # Device Tweaker Mod
 
-A comprehensive mod for The Network Inc that allows you to customize device properties including bandwidth, warranties, costs, and hardware specifications. This is an extension on the the 2x Bandwidth mod, and the random warranties mod.
+A comprehensive mod for Tower Networking Inc that allows you to customize device properties including bandwidth, warranties, costs, and hardware specifications. This is an extension of the 2x Bandwidth mod and the Random Warranties mod.
 
 ## Features
 

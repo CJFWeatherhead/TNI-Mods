@@ -1,6 +1,6 @@
 # Random Drops
 
-A comprehensive randomness mod for The Network Inc that adds variety and unpredictability to your gameplay through configurable features.
+A comprehensive randomness mod for Tower Networking Inc that adds variety and unpredictability to your gameplay through configurable features.
 
 ## Description
 

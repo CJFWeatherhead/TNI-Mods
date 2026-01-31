@@ -4,9 +4,9 @@ date: 2026-01-24
 draft: false
 ---
 
-# Tower Network Inc - Mod Manager v3.5.3
+# Tower Networking Inc - Mod Manager v3.5.3
 
-A modern Windows application with a graphical interface for managing Tower Network Inc mods. Browse, download, install, configure, and manage all your mods in one place!
+A modern Windows application with a graphical interface for managing Tower Networking Inc mods. Browse, download, install, configure, and manage all your mods in one place!
 
 ## Features
 
@@ -217,7 +217,7 @@ Your aliases will be available in-game in the console!
 
 ### Launching the Game
 
-Click the **Launch Game** button to start Tower Network Inc directly from the mod manager. The manager will close, and your game will start with all enabled mods loaded.
+Click the **Launch Game** button to start Tower Networking Inc directly from the mod manager. The manager will close, and your game will start with all enabled mods loaded.
 
 ## Troubleshooting
 
@@ -317,7 +317,7 @@ The PowerShell version has identical features and works on Windows, Linux, and m
 
 ## Credits
 
-Created for The Tower Network Inc modding community.
+Created for the Tower Networking Inc modding community.
 Compatible with modloader v1.0+.
 
 ## License

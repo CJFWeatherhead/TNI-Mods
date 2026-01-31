@@ -1,6 +1,6 @@
 # Inverse Prices Mod
 
-A chaotic mod for The Network Inc that inverts all prices - you get PAID when you buy things!
+A chaotic mod for Tower Networking Inc that inverts all prices - you get PAID when you buy things!
 
 ## Overview
 

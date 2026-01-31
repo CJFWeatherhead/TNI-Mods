@@ -2,7 +2,7 @@
 
 THIS MOD IS FOR MOD DEVELOPERS!
 
-This mod provides comprehensive diagnostic capabilities for The Network Inc's mod system, including detailed inspection of spawned objects and their properties.
+This mod provides comprehensive diagnostic capabilities for Tower Networking Inc's mod system, including detailed inspection of spawned objects and their properties.
 
 ## Purpose
 

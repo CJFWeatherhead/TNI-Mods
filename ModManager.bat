@@ -1,5 +1,5 @@
 @echo off
-REM The Network Inc - Mod Manager Launcher
+REM Tower Networking Inc - Mod Manager Launcher
 REM This batch file launches the PowerShell mod manager with proper execution policy
 
 SET SCRIPT_DIR=%~dp0

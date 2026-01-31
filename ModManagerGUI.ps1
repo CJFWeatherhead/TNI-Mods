@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-    The Network Inc - WPF Mod Manager v3.5.2
+    Tower Networking Inc - WPF Mod Manager v3.5.2
 .DESCRIPTION
     A Windows Presentation Foundation GUI for managing TNI mods.
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
@@ -762,7 +762,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="The Network Inc - Mod Manager v3.5.3" 
+        Title="Tower Networking Inc - Mod Manager v3.5.3" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">
@@ -856,7 +856,7 @@ $xaml = @"
         
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="0,0,0,10">
-            <TextBlock Text="THE NETWORK INC - MOD MANAGER" 
+            <TextBlock Text="TOWER NETWORKING INC - MOD MANAGER" 
                        FontSize="24" 
                        FontWeight="Bold" 
                        Foreground="#FF0078D4"

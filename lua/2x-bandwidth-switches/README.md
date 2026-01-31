@@ -1,10 +1,12 @@
 # 2x Bandwidth Switches
 
-This mod doubles the bandwidth capacity of all switches in The Network Inc game.
+A simple example mod that doubles the bandwidth capacity of all switches in the Tower Networking Inc game.
+
+> **Note**: This functionality is also available in the [Device Tweaker](../device-tweaker/) mod which offers more comprehensive device customization. However, this mod remains available as a simple, feature-complete example - it was originally a template mod by [treefarmer741](https://github.com/treefarmer741) and makes an excellent starting point for new mod developers.
 
 ## Description
 
-This mod was originally a template mod by [treefarmer741](https://github.com/treefarmer741). I've made a few small adjustments. Switches in the game have a limited network bandwidth capacity. This mod increases that capacity by 2x, allowing switches to handle more network traffic without bottlenecks.
+Switches in the game have a limited network bandwidth capacity. This mod increases that capacity by 2x, allowing switches to handle more network traffic without bottlenecks.
 
 ## Features
 

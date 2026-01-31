@@ -43,9 +43,9 @@ For full documentation, see:
 
 If you want to use a Lua based mods, you will need to manually add the `luajit` support mod first. This may be improved in the future.
 
-You can find the mod in the github releases, or [click here](https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/releases/early-0) for the latest stable release. Download the luajit file and place it in your mods folder. Refer to [Loading the mod](#loading-the-mod) for further instructions.
+You can find the mod in the github releases, or [click here](https://github.com/CJFWeatherhead/TNI-Mods/releases/early-0) for the latest stable release. Download the luajit file and place it in your mods folder. Refer to [Loading the mod](#loading-the-mod) for further instructions.
 
-If you are using the `beta` branch of the game, you'll likely want to use the ["Continuous (gnu) - beta"](https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/releases/tag/continuous-gnu-beta) release instead.
+If you are using the `beta` branch of the game, you'll likely want to use the ["Continuous (gnu) - beta"](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/continuous-gnu-beta) release instead.
 
 ## Beta branch
 
@@ -159,7 +159,7 @@ For example, to install the `tni-mod-template` mod, place `.zig/tni-mod-template
 
 ### Lua mods
 
-If you'd like to use Lua instead, you can download the [pre-built luajit.elf mod](https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit/releases/download/early-0/luajit.elf) from the releases section and place it as `mods/luajit.elf` (directly in the `mods/`) directory. This enables loading of `.lua` mods.
+If you'd like to use Lua instead, you can download the [pre-built luajit.elf mod](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/early-0/luajit.elf) from the releases section and place it as `mods/luajit.elf` (directly in the `mods/`) directory. This enables loading of `.lua` mods.
 
 The engine will always first try to load the `luajit.elf` before all mods, so you do not need to worry about the naming.
 
@@ -173,7 +173,7 @@ To clone and initialize the repository locally;
 
 ```sh
 # Ensure you have `git` installed.
-git clone https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit.git --branch main
+git clone https://github.com/CJFWeatherhead/TNI-Mods.git --branch main
 git submodule update --init --recursive
 ```
 
@@ -211,5 +211,5 @@ sudo apt install git cmake ninja-build g++-riscv64-linux-gnu-14
 Then in the root of this project, run the command:
 
 ```sh
-./build.cmd
+./build.sh
 ```

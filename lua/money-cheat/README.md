@@ -1,6 +1,6 @@
 # Money Cheat
 
-Simple money cheat mod for The Network Inc that adds configurable amounts of money via keyboard shortcut.
+Simple money cheat mod for Tower Networking Inc that adds configurable amounts of money via keyboard shortcut.
 
 ## Description
 

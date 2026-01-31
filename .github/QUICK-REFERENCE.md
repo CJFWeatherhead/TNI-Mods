@@ -318,7 +318,7 @@ TNI-Mods/
 ## Support
 
 For issues or questions:
-1. Check [MOD-RELEASE-SYSTEM.md](.github/MOD-RELEASE-SYSTEM.md) for detailed docs
-2. Review [ARCHITECTURE.md](.github/ARCHITECTURE.md) for system diagrams
+1. Check [MOD-RELEASE-SYSTEM.md](MOD-RELEASE-SYSTEM.md) for detailed docs
+2. Review [ARCHITECTURE.md](ARCHITECTURE.md) for system diagrams
 3. Check workflow logs in GitHub Actions
 4. Open an issue in the repository

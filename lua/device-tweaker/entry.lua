@@ -1,5 +1,5 @@
 -- Device Tweaker Mod
--- A comprehensive mod for tweaking device properties in The Network Inc.
+-- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
 -- Version: 1.0

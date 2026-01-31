@@ -1,6 +1,6 @@
-# The Network Inc - Mod Manager v3.0
+# Tower Networking Inc - Mod Manager v3.0
 
-A modern WPF-based graphical mod manager for Tower Network Inc that can download mods directly from GitHub releases and manage local mod installations.
+A modern WPF-based graphical mod manager for Tower Networking Inc that can download mods directly from GitHub releases and manage local mod installations.
 
 ## Features
 
@@ -140,7 +140,7 @@ For issues, questions, or suggestions:
 
 ## Credits
 
-Created for The Network Inc modding community.
+Created for the Tower Networking Inc modding community.
 Compatible with modloader v1.0+.
 
 ## License

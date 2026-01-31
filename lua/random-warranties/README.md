@@ -1,6 +1,8 @@
 # Random Device Warranties
 
-This mod randomizes the warranty periods of all devices in The Tower Network Inc game.
+A simple example mod that randomizes the warranty periods of all devices in Tower Networking Inc.
+
+> **Note**: This mod has been superseded by the [Device Tweaker](../device-tweaker/) mod which offers more comprehensive device customization. However, this mod remains available as a simple, feature-complete example that's useful for developers learning to create mods.
 
 ## Description
 

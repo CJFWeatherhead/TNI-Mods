@@ -22,7 +22,7 @@ This mod enhances the proposal system in the game by allowing players to view al
 The mod will log detailed information about the proposal status in the console, including counts of total, available, blocked, and submitted proposals.
 
 ## Compatibility
-- Compatible with TNI game version beta
+- Compatible with Tower Networking Inc game version beta
 - Uses ModApiV1 for game integration
 - No known conflicts with other mods
 

@@ -69,7 +69,7 @@ jobs:
           $content = $content -replace '(WPF Mod Manager v)\d+\.\d+', "`${1}$majorMinor"
           
           # Update window title
-          $content = $content -replace '(Title="The Network Inc - Mod Manager v)\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
+          $content = $content -replace '(Title="Tower Networking Inc - Mod Manager v)\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
           
           Set-Content "ModManagerGUI.ps1" -Value $content -NoNewline
           
@@ -94,7 +94,7 @@ jobs:
                  -title "TNI Mod Manager" `
                  -version "$version" `
                  -company "TNI-Mods" `
-                 -product "Tower Network Inc Mod Manager" `
+                 -product "Tower Networking Inc Mod Manager" `
                  -copyright "MIT License" `
                  -requireAdmin
           
@@ -176,7 +176,7 @@ jobs:
           $releaseNotes = @"
           # TNI Mod Manager v$version
           
-          A modern Windows application for managing Tower Network Inc mods.
+          A modern Windows application for managing Tower Networking Inc mods.
           
           ## Features
           
