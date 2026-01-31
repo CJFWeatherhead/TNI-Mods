@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🎮 Tower Networking Inc on Steam
+    url: https://store.steampowered.com/app/1510560/Tower_Networking_Inc/
+    about: Check out the game on Steam
+  - name: 📖 Documentation
+    url: https://github.com/CJFWeatherhead/TNI-Mods/blob/main/README.md
+    about: Read the documentation before opening an issue

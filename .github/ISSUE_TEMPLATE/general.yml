@@ -1,0 +1,83 @@
+name: 💬 General Discussion / Question
+description: Ask a question, start a discussion, or share feedback that doesn't fit other categories
+title: "[General]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Have a question or want to discuss something? We're here to help!
+        
+        Before posting, please check:
+        - 📖 [README](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/README.md)
+        - 📖 [CONTRIBUTING guide](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/CONTRIBUTING.md)
+        - 📖 [ModManager README](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/ModManager-README.md)
+        - 🔍 [Existing issues](https://github.com/CJFWeatherhead/TNI-Mods/issues)
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have read the relevant documentation
+          required: true
+        - label: I have searched existing issues for similar questions
+          required: true
+        - label: I have read and agree to follow the [Code of Conduct](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/CONTRIBUTING.md#code-of-conduct)
+          required: true
+
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Topic
+      description: What is this about?
+      options:
+        - Modding Question (how to do something)
+        - ModManager Usage
+        - Development Environment Setup
+        - API/Callback Question
+        - Compatibility Question
+        - General Feedback
+        - Showcase/Share
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Describe your question, feedback, or topic of discussion
+      placeholder: |
+        Be as specific as possible. Include:
+        - What you're trying to achieve
+        - What you've already tried
+        - What resources you've consulted
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: |
+        Any additional context that might help us understand your question better.
+        - Game version
+        - Mods you're using
+        - Your experience level with modding
+        - Code snippets (if relevant)
+    validations:
+      required: false
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: Resources Consulted
+      description: What documentation or resources have you already looked at?
+      placeholder: |
+        - README.md
+        - Searched issues for "X"
+        - Looked at mod Y for examples
+    validations:
+      required: false

@@ -1,0 +1,130 @@
+name: ✨ Feature Request
+description: Suggest a new feature or enhancement for the modding framework, ModManager, or existing mods
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please provide as much detail as possible to help us understand your request.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues to ensure this feature has not already been requested
+          required: true
+        - label: I have read and agree to follow the [Code of Conduct](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/CONTRIBUTING.md#code-of-conduct)
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What area does this feature request relate to?
+      options:
+        - New Mod Idea
+        - Enhancement to Existing Mod
+        - ModManager Improvement
+        - Mod Framework/API Enhancement
+        - Documentation
+        - Build System/Tooling
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: related-mod
+    attributes:
+      label: Related Mod (if applicable)
+      description: If this relates to an existing mod, which one?
+      placeholder: "e.g., 2x-bandwidth-switches"
+    validations:
+      required: false
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem? Please describe.
+      placeholder: "I'm always frustrated when..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the solution you'd like
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any alternative solutions or features you've considered
+    validations:
+      required: false
+
+  - type: dropdown
+    id: callback-available
+    attributes:
+      label: Is a ModAPI callback available for this feature?
+      description: |
+        Use the **ModAPI-diagnostic** mod (Shift+D in-game) to check if the necessary callbacks exist.
+        If you're not sure, select "Unknown" and we'll help investigate.
+      options:
+        - "Yes - callback exists"
+        - "No - new callback needed"
+        - "Partial - some callbacks exist"
+        - "Unknown - haven't checked"
+        - "N/A - not callback related"
+    validations:
+      required: true
+
+  - type: textarea
+    id: callback-details
+    attributes:
+      label: Callback Details
+      description: |
+        If you used ModAPI-diagnostic, please provide details about available callbacks.
+        Which callbacks would be needed? What data do they provide?
+      placeholder: |
+        e.g., "on_device_spawned callback exists and provides device type and warranty info"
+        or "No callback for when a user completes a task"
+    validations:
+      required: false
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: Implementation Ideas
+      description: |
+        If you have ideas on how this could be implemented, share them here.
+        Code snippets, pseudocode, or technical approaches are welcome.
+      render: lua
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willing-to-implement
+    attributes:
+      label: Would you be willing to help implement this?
+      options:
+        - "Yes - I can submit a PR"
+        - "Yes - with guidance"
+        - "No - just suggesting"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context, screenshots, mockups, or examples about the feature request here.
+    validations:
+      required: false
