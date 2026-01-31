@@ -41,51 +41,57 @@ $parameters += @{
 }
 
 $parameters += @{
-    Name        = "enable_bandwidth"
-    Label       = "Enable Bandwidth Modification"
-    Type        = "boolean"
-    Default     = $false
-    Description = "Multiply device network bandwidth capacity"
+    Name            = "enable_bandwidth"
+    Label           = "Enable Bandwidth Modification"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = "Multiply device network bandwidth capacity"
 }
 
 $parameters += @{
-    Name        = "enable_warranty"
-    Label       = "Enable Warranty Modification"
-    Type        = "boolean"
-    Default     = $false
-    Description = "Modify device warranty periods (fixed or random)"
+    Name            = "enable_warranty"
+    Label           = "Enable Warranty Modification"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = "Modify device warranty periods (fixed or random)"
 }
 
 $parameters += @{
-    Name        = "enable_cost"
-    Label       = "Enable Cost Modification"
-    Type        = "boolean"
-    Default     = $false
-    Description = "Multiply device purchase costs"
+    Name            = "enable_cost"
+    Label           = "Enable Cost Modification"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = "Multiply device purchase costs"
 }
 
 $parameters += @{
-    Name        = "enable_cpu"
-    Label       = "Enable CPU Modification (Currently not Available within API)"
-    Type        = "boolean"
-    Default     = $false
-    Description = "Multiply device CPU power"
+    Name            = "enable_cpu"
+    Label           = "Enable CPU Modification (Currently not Available within API)"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = "Multiply device CPU power"
 }
 
 $parameters += @{
-    Name        = "enable_memory"
-    Label       = "Enable Memory Modification (Currently not Available within API)"
-    Type        = "boolean"
-    Default     = $false
-    Description = "Multiply device RAM capacity"
+    Name            = "enable_memory"
+    Label           = "Enable Memory Modification (Currently not Available within API)"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = "Multiply device RAM capacity"
 }
 
 $parameters += @{
-    Name        = "enable_storage"
-    Label       = "Enable Storage Modification (Currently not Available within API)"
-    Type        = "boolean"
-    Default     = $false
-    Description = "Multiply device storage capacity"
+    Name            = "enable_storage"
+    Label           = "Enable Storage Modification (Currently not Available within API)"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = "Multiply device storage capacity"
 }
 
 # ============================================================================
@@ -132,12 +138,13 @@ if ($enableWarranty) {
     }
     
     $parameters += @{
-        Name        = "warranty_mode"
-        Label       = "Warranty Mode"
-        Type        = "select"
-        Default     = "fixed"
-        Options     = @("fixed", "random")
-        Description = @"
+        Name            = "warranty_mode"
+        Label           = "Warranty Mode"
+        Type            = "select"
+        Default         = "fixed"
+        Options         = @("fixed", "random")
+        RefreshOnChange = $true
+        Description     = @"
 Warranty modification mode:
 
 - fixed: Apply a constant multiplier to all devices

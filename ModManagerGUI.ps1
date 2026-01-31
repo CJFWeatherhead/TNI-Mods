@@ -1163,46 +1163,149 @@ $xaml = @"
                                 <StackPanel Name="AliasEmptyState"
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Center">
-                                    <TextBlock Text="Select an alias or create a new one" 
-                                               FontSize="16"
+                                    <TextBlock Text="&#x2328; Command Aliases" 
+                                               FontSize="20"
+                                               FontWeight="Bold"
+                                               Foreground="#FF455A64"
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,10"/>
+                                    <TextBlock Text="Select an alias to edit or create a new one" 
+                                               FontSize="14"
                                                Foreground="#FF808080"
-                                               HorizontalAlignment="Center"/>
+                                               HorizontalAlignment="Center"
+                                               Margin="0,0,0,20"/>
+                                    <Border Background="#FFF5F5F5" Padding="15" CornerRadius="5" MaxWidth="400">
+                                        <StackPanel>
+                                            <TextBlock Text="Alias Types:" FontWeight="Bold" Margin="0,0,0,8" Foreground="#FF455A64"/>
+                                            <TextBlock Text="&#x2022; Plain: net dhcp disable" Foreground="#FF666666" Margin="0,2"/>
+                                            <TextBlock Text="&#x2022; Variable: net dhcp disable on $1" Foreground="#FF666666" Margin="0,2"/>
+                                            <TextBlock Text="&#x2022; Compound: cmd1;cmd2;cmd3" Foreground="#FF666666" Margin="0,2"/>
+                                            <TextBlock Text="&#x2022; Conditional: try cmd1 then cmd2 else cmd3" Foreground="#FF666666" Margin="0,2"/>
+                                        </StackPanel>
+                                    </Border>
                                 </StackPanel>
                                 
                                 <!-- Alias Editor -->
                                 <StackPanel Name="AliasEditorPanel" Visibility="Collapsed">
-                                    <TextBlock Text="Alias Editor" 
-                                               FontSize="18" 
-                                               FontWeight="Bold"
-                                               Margin="0,0,0,20"/>
+                                    <Grid Margin="0,0,0,15">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="Alias Editor" 
+                                                   FontSize="18" 
+                                                   FontWeight="Bold"
+                                                   VerticalAlignment="Center"/>
+                                        <!-- Pattern Type Badge -->
+                                        <Border Name="AliasTypeBadge" Grid.Column="1" 
+                                                Background="#FF607D8B" CornerRadius="3" Padding="8,3">
+                                            <TextBlock Name="AliasTypeText" Text="Plain" 
+                                                       Foreground="White" FontSize="11" FontWeight="SemiBold"/>
+                                        </Border>
+                                    </Grid>
                                     
                                     <TextBlock Text="Alias Name:" FontWeight="Bold" Margin="0,0,0,5"/>
                                     <TextBox Name="AliasNameBox" 
                                              Margin="0,0,0,15"
-                                             Padding="5"
-                                             FontFamily="Consolas"/>
+                                             Padding="8"
+                                             FontFamily="Consolas"
+                                             FontSize="13"/>
+                                    
+                                    <!-- Quick Insert Templates -->
+                                    <TextBlock Text="Quick Insert:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <WrapPanel Margin="0,0,0,10">
+                                        <Button Name="InsertVarBtn" Content="$n Variable" 
+                                                Background="#FFFF9800" Foreground="White" 
+                                                Padding="8,4" Margin="0,0,5,5" FontSize="11"
+                                                ToolTip="Insert a variable placeholder ($1, $2, etc.)"/>
+                                        <Button Name="InsertSemiBtn" Content="; Compound" 
+                                                Background="#FF9C27B0" Foreground="White" 
+                                                Padding="8,4" Margin="0,0,5,5" FontSize="11"
+                                                ToolTip="Insert semicolon for compound commands"/>
+                                        <Button Name="InsertTryBtn" Content="try/then/else" 
+                                                Background="#FF3F51B5" Foreground="White" 
+                                                Padding="8,4" Margin="0,0,5,5" FontSize="11"
+                                                ToolTip="Insert try/then/else conditional structure"/>
+                                        <Button Name="InsertOnBtn" Content="on $n" 
+                                                Background="#FF00897B" Foreground="White" 
+                                                Padding="8,4" Margin="0,0,5,5" FontSize="11"
+                                                ToolTip="Insert 'on' device target"/>
+                                        <Button Name="InsertUsingBtn" Content="using $n" 
+                                                Background="#FF5C6BC0" Foreground="White" 
+                                                Padding="8,4" Margin="0,0,5,5" FontSize="11"
+                                                ToolTip="Insert 'using' debugger reference"/>
+                                    </WrapPanel>
                                     
                                     <TextBlock Text="Command:" FontWeight="Bold" Margin="0,0,0,5"/>
                                     <TextBox Name="AliasCommandBox" 
                                              TextWrapping="Wrap"
                                              AcceptsReturn="True"
-                                             MinHeight="100"
-                                             Margin="0,0,0,15"
-                                             Padding="5"
+                                             MinHeight="80"
+                                             Margin="0,0,0,10"
+                                             Padding="8"
                                              FontFamily="Consolas"
+                                             FontSize="13"
                                              VerticalScrollBarVisibility="Auto"/>
                                     
-                                    <TextBlock Text="Preview:" FontWeight="Bold" Margin="0,0,0,5"/>
-                                    <Border Background="#FFF5F5F5" 
-                                            BorderBrush="#FFCCCCCC" 
+                                    <!-- Arguments Summary -->
+                                    <Border Name="ArgsSummaryPanel" Background="#FFFFF8E1" 
+                                            BorderBrush="#FFFFD54F" BorderThickness="1"
+                                            Padding="10" Margin="0,0,0,10" Visibility="Collapsed">
+                                        <StackPanel>
+                                            <TextBlock Text="&#x1F4DD; Arguments Required:" FontWeight="Bold" 
+                                                       Foreground="#FFF57C00" Margin="0,0,0,5"/>
+                                            <TextBlock Name="ArgsSummaryText" TextWrapping="Wrap" 
+                                                       FontFamily="Consolas" FontSize="11" Foreground="#FF795548"/>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                    <!-- Suffix Warning -->
+                                    <Border Name="SuffixWarningPanel" Background="#FFFFE0B2" 
+                                            BorderBrush="#FFFFB74D" BorderThickness="1"
+                                            Padding="10" Margin="0,0,0,10" Visibility="Collapsed">
+                                        <StackPanel>
+                                            <TextBlock Text="&#x26A0; Device Target Notice" FontWeight="Bold" 
+                                                       Foreground="#FFE65100" Margin="0,0,0,5"/>
+                                            <TextBlock Name="SuffixWarningText" TextWrapping="Wrap" 
+                                                       FontSize="11" Foreground="#FF795548"/>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                    <!-- Rich Preview -->
+                                    <TextBlock Text="Live Preview:" FontWeight="Bold" Margin="0,0,0,5"/>
+                                    <Border Background="#FF263238" 
+                                            BorderBrush="#FF455A64" 
                                             BorderThickness="1"
-                                            Padding="10"
-                                            Margin="0,0,0,15">
-                                        <TextBlock Name="AliasPreviewText" 
-                                                   TextWrapping="Wrap"
-                                                   FontFamily="Consolas"
-                                                   FontSize="11"
-                                                   Foreground="#FF666666"/>
+                                            CornerRadius="4"
+                                            Padding="12"
+                                            Margin="0,0,0,10">
+                                        <StackPanel Name="AliasPreviewPanel">
+                                            <!-- Invocation line -->
+                                            <TextBlock Name="AliasInvocationText" 
+                                                       TextWrapping="Wrap"
+                                                       FontFamily="Consolas"
+                                                       FontSize="12"
+                                                       Foreground="#FF4FC3F7"
+                                                       Margin="0,0,0,8"/>
+                                            <Border Height="1" Background="#FF455A64" Margin="0,0,0,8"/>
+                                            <!-- Formatted command preview -->
+                                            <TextBlock Name="AliasPreviewText" 
+                                                       TextWrapping="Wrap"
+                                                       FontFamily="Consolas"
+                                                       FontSize="11"/>
+                                        </StackPanel>
+                                    </Border>
+                                    
+                                    <!-- Usage Example -->
+                                    <Border Name="UsageExamplePanel" Background="#FFE8F5E9" 
+                                            BorderBrush="#FF81C784" BorderThickness="1"
+                                            Padding="10" Margin="0,0,0,15">
+                                        <StackPanel>
+                                            <TextBlock Text="&#x1F4A1; Full Usage:" FontWeight="Bold" 
+                                                       Foreground="#FF2E7D32" Margin="0,0,0,5"/>
+                                            <TextBlock Name="UsageExampleText" TextWrapping="Wrap" 
+                                                       FontFamily="Consolas" FontSize="12" Foreground="#FF1B5E20"/>
+                                        </StackPanel>
                                     </Border>
                                     
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
@@ -2064,9 +2167,25 @@ function Update-ModDetails {
             $paramPanel = $window.FindName("ParametersList")
             $paramPanel.Children.Clear()
             
-            $currentModConfig = Get-ModConfig $Mod['ID']
-            if (-not $script:Config.mod_parameters.ContainsKey($Mod['ID'])) {
-                $script:Config.mod_parameters[$Mod['ID']] = $currentModConfig
+            # Load saved config from file as baseline
+            $savedConfig = Get-ModConfig $Mod['ID']
+            
+            # Merge with in-memory changes (unsaved edits take precedence)
+            # This allows dynamic UI updates to reflect current selections
+            if ($script:Config.mod_parameters.ContainsKey($Mod['ID'])) {
+                $currentModConfig = @{}
+                # Start with saved values
+                foreach ($key in $savedConfig.Keys) {
+                    $currentModConfig[$key] = $savedConfig[$key]
+                }
+                # Overlay in-memory values (user's unsaved changes)
+                foreach ($key in $script:Config.mod_parameters[$Mod['ID']].Keys) {
+                    $currentModConfig[$key] = $script:Config.mod_parameters[$Mod['ID']][$key]
+                }
+            }
+            else {
+                $currentModConfig = $savedConfig
+                $script:Config.mod_parameters[$Mod['ID']] = $currentModConfig.Clone()
             }
             
             $parameters = Get-ModParameters -Mod $Mod -CurrentConfig $currentModConfig
@@ -2149,7 +2268,7 @@ function New-ParameterControl {
             $control = New-Object System.Windows.Controls.CheckBox
             $control.IsChecked = $CurrentValue
             $control.Content = if ($CurrentValue) { "Enabled" } else { "Disabled" }
-            $control.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'boolean' }
+            $control.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'boolean'; RefreshOnChange = $Param['RefreshOnChange'] }
             $control.Add_Checked({
                 $tag = $this.Tag
                 if (-not $script:Config.mod_parameters.ContainsKey($tag.ModId)) {
@@ -2157,6 +2276,15 @@ function New-ParameterControl {
                 }
                 $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $true
                 $this.Content = "Enabled"
+                
+                # If this parameter affects other UI elements, refresh the mod details
+                if ($tag.RefreshOnChange) {
+                    $this.Dispatcher.BeginInvoke([Action]{
+                        if ($script:CurrentMod) {
+                            Update-ModDetails $script:CurrentMod
+                        }
+                    }, [System.Windows.Threading.DispatcherPriority]::Background)
+                }
             })
             $control.Add_Unchecked({
                 $tag = $this.Tag
@@ -2165,6 +2293,15 @@ function New-ParameterControl {
                 }
                 $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $false
                 $this.Content = "Disabled"
+                
+                # If this parameter affects other UI elements, refresh the mod details
+                if ($tag.RefreshOnChange) {
+                    $this.Dispatcher.BeginInvoke([Action]{
+                        if ($script:CurrentMod) {
+                            Update-ModDetails $script:CurrentMod
+                        }
+                    }, [System.Windows.Threading.DispatcherPriority]::Background)
+                }
             })
         }
         
@@ -2174,13 +2311,24 @@ function New-ParameterControl {
                 $control.Items.Add($opt) | Out-Null
             }
             $control.SelectedItem = $CurrentValue
-            $control.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'select' }
+            $control.Tag = @{ ModId = $ModId; ParamName = $Param['Name']; Type = 'select'; RefreshOnChange = $Param['RefreshOnChange'] }
             $control.Add_SelectionChanged({
                 $tag = $this.Tag
                 if (-not $script:Config.mod_parameters.ContainsKey($tag.ModId)) {
                     $script:Config.mod_parameters[$tag.ModId] = @{}
                 }
                 $script:Config.mod_parameters[$tag.ModId][$tag.ParamName] = $this.SelectedItem
+                
+                # If this parameter affects other UI elements, refresh the mod details
+                # This enables dynamic parameter visibility (e.g., showing different options based on selection)
+                if ($tag.RefreshOnChange -or $tag.ParamName -eq 'scaling_type') {
+                    # Defer the refresh to allow the current event to complete
+                    $this.Dispatcher.BeginInvoke([Action]{
+                        if ($script:CurrentMod) {
+                            Update-ModDetails $script:CurrentMod
+                        }
+                    }, [System.Windows.Threading.DispatcherPriority]::Background)
+                }
             })
         }
         
@@ -2351,6 +2499,302 @@ function New-ParameterControl {
 
 #region Alias Management
 
+# Alias pattern colors
+$script:AliasColors = @{
+    Variable = "#FFFF9800"      # Orange for $1, $2, etc.
+    Keyword = "#FF9C27B0"       # Purple for try/then/else
+    Separator = "#FFE91E63"     # Pink for semicolons
+    OnUsing = "#FF00897B"       # Teal for on/using
+    Command = "#FFECEFF1"       # Light gray for regular text
+    Placeholder = "#FF78909C"   # Muted for placeholders
+}
+
+$script:AliasTypeColors = @{
+    Plain = "#FF607D8B"         # Blue-gray
+    Variable = "#FFFF9800"      # Orange
+    Compound = "#FF9C27B0"      # Purple
+    Conditional = "#FF3F51B5"   # Indigo
+    Complex = "#FFE91E63"       # Pink
+}
+
+function Get-AliasInfo {
+    <#
+    .SYNOPSIS
+        Analyzes an alias command and returns structured information about it
+    #>
+    param([string]$Command)
+    
+    $info = @{
+        Type = "Plain"
+        Variables = @()
+        HasOn = $false
+        HasUsing = $false
+        HasTryThen = $false
+        HasElse = $false
+        IsCompound = $false
+        Commands = @()
+        MaxVariable = 0
+    }
+    
+    if ([string]::IsNullOrWhiteSpace($Command)) {
+        return $info
+    }
+    
+    # Find all variables
+    $varMatches = [regex]::Matches($Command, '\$(\d+)')
+    foreach ($match in $varMatches) {
+        $varNum = [int]$match.Groups[1].Value
+        if ($varNum -notin $info.Variables) {
+            $info.Variables += $varNum
+        }
+        if ($varNum -gt $info.MaxVariable) {
+            $info.MaxVariable = $varNum
+        }
+    }
+    
+    # Check for on/using
+    $info.HasOn = $Command -match '\bon\s+\$?\d*'
+    $info.HasUsing = $Command -match '\busing\s+\$?\d*'
+    
+    # Check for try/then/else (try with either then or else is conditional)
+    $info.HasTryThen = $Command -match '\btry\b.*\bthen\b'
+    $info.HasElse = $Command -match '\belse\b'
+    $info.HasTryElse = $Command -match '\btry\b.*\belse\b'
+    
+    # Check for compound commands
+    $info.IsCompound = $Command -match ';'
+    if ($info.IsCompound) {
+        $info.Commands = $Command -split ';' | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+    } else {
+        $info.Commands = @($Command)
+    }
+    
+    # Determine type
+    # Complex: has conditionals AND compound commands
+    # Conditional: has try/then or try/else patterns
+    # Compound: has semicolon-separated commands
+    # Variable: uses $n placeholders
+    # Plain: simple command
+    $hasConditional = $info.HasTryThen -or $info.HasTryElse
+    
+    if ($hasConditional -and $info.IsCompound) {
+        $info.Type = "Complex"
+    } elseif ($hasConditional) {
+        $info.Type = "Conditional"
+    } elseif ($info.IsCompound) {
+        $info.Type = "Compound"
+    } elseif ($info.Variables.Count -gt 0) {
+        $info.Type = "Variable"
+    } else {
+        $info.Type = "Plain"
+    }
+    
+    return $info
+}
+
+function Update-AliasPreview {
+    <#
+    .SYNOPSIS
+        Updates the alias preview panel with syntax-highlighted command preview
+    #>
+    param(
+        [string]$AliasName,
+        [string]$Command
+    )
+    
+    $previewText = $window.FindName("AliasPreviewText")
+    $invocationText = $window.FindName("AliasInvocationText")
+    $typeBadge = $window.FindName("AliasTypeBadge")
+    $typeText = $window.FindName("AliasTypeText")
+    $argsSummary = $window.FindName("ArgsSummaryPanel")
+    $argsSummaryText = $window.FindName("ArgsSummaryText")
+    $suffixWarning = $window.FindName("SuffixWarningPanel")
+    $suffixWarningText = $window.FindName("SuffixWarningText")
+    $usageExample = $window.FindName("UsageExampleText")
+    
+    $previewText.Inlines.Clear()
+    
+    if ([string]::IsNullOrWhiteSpace($Command)) {
+        $run = New-Object System.Windows.Documents.Run
+        $run.Text = "Enter a command above..."
+        $run.Foreground = $script:AliasColors.Placeholder
+        $previewText.Inlines.Add($run)
+        $invocationText.Text = ""
+        $argsSummary.Visibility = "Collapsed"
+        $suffixWarning.Visibility = "Collapsed"
+        $usageExample.Text = ""
+        return
+    }
+    
+    $info = Get-AliasInfo $Command
+    
+    # Update type badge
+    $typeText.Text = $info.Type
+    $badgeBrush = New-Object System.Windows.Media.SolidColorBrush
+    $badgeBrush.Color = [System.Windows.Media.ColorConverter]::ConvertFromString($script:AliasTypeColors[$info.Type])
+    $typeBadge.Background = $badgeBrush
+    
+    # Update invocation text
+    if ($AliasName) {
+        $invocation = $AliasName
+        if ($info.MaxVariable -gt 0) {
+            for ($i = 1; $i -le $info.MaxVariable; $i++) {
+                $invocation += " <arg$i>"
+            }
+        }
+        # Add suffix hints if not present in command
+        $suffixHints = @()
+        if (-not $info.HasOn) {
+            $suffixHints += "{on <device>}"
+        }
+        if (-not $info.HasUsing) {
+            $suffixHints += "{using <debugger>}"
+        }
+        if ($suffixHints.Count -gt 0) {
+            $invocation += " " + ($suffixHints -join " ")
+        }
+        $invocationText.Text = "> $invocation"
+    } else {
+        $invocationText.Text = "> <alias_name>"
+    }
+    
+    # Build syntax-highlighted preview
+    if ($info.IsCompound) {
+        # Show each command on its own line
+        $cmdIndex = 0
+        foreach ($cmd in $info.Commands) {
+            if ($cmdIndex -gt 0) {
+                # Add line break and step indicator
+                $previewText.Inlines.Add((New-Object System.Windows.Documents.LineBreak))
+                $stepRun = New-Object System.Windows.Documents.Run
+                $stepRun.Text = "  `u{2514}`u{2500} "
+                $stepRun.Foreground = $script:AliasColors.Separator
+                $previewText.Inlines.Add($stepRun)
+            } else {
+                $stepRun = New-Object System.Windows.Documents.Run
+                $stepRun.Text = "  `u{250C}`u{2500} "
+                $stepRun.Foreground = $script:AliasColors.Separator
+                $previewText.Inlines.Add($stepRun)
+            }
+            Add-SyntaxHighlightedCommand $previewText $cmd
+            $cmdIndex++
+        }
+    } else {
+        Add-SyntaxHighlightedCommand $previewText $Command
+    }
+    
+    # Arguments summary
+    if ($info.Variables.Count -gt 0) {
+        $argsSummary.Visibility = "Visible"
+        $argsText = ""
+        $sortedVars = $info.Variables | Sort-Object
+        foreach ($v in $sortedVars) {
+            $argsText += "`$" + $v + " "
+        }
+        $argsSummaryText.Text = "This alias requires $($info.Variables.Count) argument(s): $argsText"
+    } else {
+        $argsSummary.Visibility = "Collapsed"
+    }
+    
+    # Suffix warning
+    if (-not $info.HasOn -or -not $info.HasUsing) {
+        $suffixWarning.Visibility = "Visible"
+        $warningParts = @()
+        if (-not $info.HasOn) {
+            $warningParts += "'on <device address>'"
+        }
+        if (-not $info.HasUsing) {
+            $warningParts += "'using <debugger address>'"
+        }
+        $suffixWarningText.Text = "Commands require " + ($warningParts -join " and ") + " suffix unless 'always on' or 'always using' is set by the player."
+    } else {
+        $suffixWarning.Visibility = "Collapsed"
+    }
+    
+    # Usage example
+    $exampleParts = @()
+    if ($AliasName) {
+        $exampleParts += $AliasName
+    } else {
+        $exampleParts += "<alias>"
+    }
+    for ($i = 1; $i -le $info.MaxVariable; $i++) {
+        switch ($i) {
+            1 { $exampleParts += "192.168.1.1" }
+            2 { $exampleParts += "10.0.0.2" }
+            3 { $exampleParts += "backup.conf" }
+            4 { $exampleParts += "archive.bak" }
+            default { $exampleParts += "arg$i" }
+        }
+    }
+    if (-not $info.HasOn) {
+        $exampleParts += "on 192.168.1.100"
+    }
+    if (-not $info.HasUsing) {
+        $exampleParts += "using 192.168.1.50"
+    }
+    $usageExample.Text = $exampleParts -join " "
+}
+
+function Add-SyntaxHighlightedCommand {
+    <#
+    .SYNOPSIS
+        Adds syntax-highlighted inlines to a TextBlock for a single command
+    #>
+    param(
+        [System.Windows.Controls.TextBlock]$TextBlock,
+        [string]$Command
+    )
+    
+    # Pattern to match special tokens
+    $pattern = '(\$\d+|\btry\b|\bthen\b|\belse\b|\bon\b|\busing\b)'
+    $parts = [regex]::Split($Command, $pattern)
+    
+    foreach ($part in $parts) {
+        if ([string]::IsNullOrEmpty($part)) { continue }
+        
+        $run = New-Object System.Windows.Documents.Run
+        $run.Text = $part
+        
+        if ($part -match '^\$\d+$') {
+            # Variable
+            $run.Foreground = $script:AliasColors.Variable
+            $run.FontWeight = "Bold"
+        }
+        elseif ($part -match '^(try|then|else)$') {
+            # Control keyword
+            $run.Foreground = $script:AliasColors.Keyword
+            $run.FontWeight = "Bold"
+        }
+        elseif ($part -match '^(on|using)$') {
+            # Device targeting keyword
+            $run.Foreground = $script:AliasColors.OnUsing
+            $run.FontWeight = "SemiBold"
+        }
+        else {
+            # Regular command text
+            $run.Foreground = $script:AliasColors.Command
+        }
+        
+        $TextBlock.Inlines.Add($run)
+    }
+}
+
+function Get-NextVariableNumber {
+    <#
+    .SYNOPSIS
+        Gets the next variable number to insert based on current command
+    #>
+    param([string]$Command)
+    
+    if ([string]::IsNullOrWhiteSpace($Command)) {
+        return 1
+    }
+    
+    $info = Get-AliasInfo $Command
+    return $info.MaxVariable + 1
+}
+
 function Update-AliasList {
     param($ListBox)
     
@@ -2358,9 +2802,24 @@ function Update-AliasList {
         $ListBox.Items.Clear()
         
         foreach ($alias in ($script:CmdAliases.GetEnumerator() | Sort-Object Key)) {
+            $info = Get-AliasInfo $alias.Value
+            
             $border = New-Object System.Windows.Controls.Border
             $border.Padding = "8"
             $border.Margin = "0,2"
+            $border.Background = "#FFFAFAFA"
+            $border.BorderThickness = "3,0,0,0"
+            $borderBrush = New-Object System.Windows.Media.SolidColorBrush
+            $borderBrush.Color = [System.Windows.Media.ColorConverter]::ConvertFromString($script:AliasTypeColors[$info.Type])
+            $border.BorderBrush = $borderBrush
+            
+            $grid = New-Object System.Windows.Controls.Grid
+            $col1 = New-Object System.Windows.Controls.ColumnDefinition
+            $col1.Width = "*"
+            $col2 = New-Object System.Windows.Controls.ColumnDefinition
+            $col2.Width = "Auto"
+            $grid.ColumnDefinitions.Add($col1)
+            $grid.ColumnDefinitions.Add($col2)
             
             $stack = New-Object System.Windows.Controls.StackPanel
             
@@ -2376,9 +2835,47 @@ function Update-AliasList {
             $cmdText.Foreground = "#FF666666"
             $cmdText.FontFamily = "Consolas"
             $cmdText.TextTrimming = "CharacterEllipsis"
+            $cmdText.MaxWidth = 180
             $stack.Children.Add($cmdText) | Out-Null
             
-            $border.Child = $stack
+            [System.Windows.Controls.Grid]::SetColumn($stack, 0)
+            $grid.Children.Add($stack) | Out-Null
+            
+            # Type indicator
+            $typeStack = New-Object System.Windows.Controls.StackPanel
+            $typeStack.VerticalAlignment = "Center"
+            
+            $typeBadge = New-Object System.Windows.Controls.Border
+            $typeBadge.CornerRadius = "2"
+            $typeBadge.Padding = "4,2"
+            $badgeBrush = New-Object System.Windows.Media.SolidColorBrush
+            $badgeBrush.Color = [System.Windows.Media.ColorConverter]::ConvertFromString($script:AliasTypeColors[$info.Type])
+            $typeBadge.Background = $badgeBrush
+            
+            $typeLabel = New-Object System.Windows.Controls.TextBlock
+            $typeLabel.Text = $info.Type.Substring(0,1)
+            $typeLabel.Foreground = "White"
+            $typeLabel.FontSize = 9
+            $typeLabel.FontWeight = "Bold"
+            $typeLabel.ToolTip = $info.Type
+            $typeBadge.Child = $typeLabel
+            
+            $typeStack.Children.Add($typeBadge) | Out-Null
+            
+            # Show variable count if any
+            if ($info.Variables.Count -gt 0) {
+                $varText = New-Object System.Windows.Controls.TextBlock
+                $varText.Text = "$($info.Variables.Count) arg"
+                $varText.FontSize = 9
+                $varText.Foreground = "#FF999999"
+                $varText.Margin = "0,2,0,0"
+                $typeStack.Children.Add($varText) | Out-Null
+            }
+            
+            [System.Windows.Controls.Grid]::SetColumn($typeStack, 1)
+            $grid.Children.Add($typeStack) | Out-Null
+            
+            $border.Child = $grid
             
             $item = New-Object System.Windows.Controls.ListBoxItem
             $item.Content = $border
@@ -2405,11 +2902,20 @@ function Show-AliasEditor {
     $window.FindName("AliasNameBox").Text = $AliasName
     $window.FindName("AliasCommandBox").Text = $AliasCommand
     $window.FindName("AliasNameBox").IsReadOnly = -not $IsNew
+    
+    # Update the preview
+    Update-AliasPreview $AliasName $AliasCommand
 }
 
 function Hide-AliasEditor {
     $window.FindName("AliasEmptyState").Visibility = "Visible"
     $window.FindName("AliasEditorPanel").Visibility = "Collapsed"
+    
+    # Clear state
+    $window.FindName("AliasNameBox").Text = ""
+    $window.FindName("AliasCommandBox").Text = ""
+    $window.FindName("ArgsSummaryPanel").Visibility = "Collapsed"
+    $window.FindName("SuffixWarningPanel").Visibility = "Collapsed"
 }
 
 #endregion
@@ -2546,12 +3052,24 @@ try {
     # Update button
     $updateButton.Add_Click({
         if ($script:CurrentMod -and $script:CurrentMod['ReleaseInfo']) {
+            $modId = $script:CurrentMod['ID']
             $result = Download-ModFromGitHub $script:CurrentMod['ReleaseInfo'] $progressBar $downloadStatusText
             if ($result) {
                 $script:InstalledMods = Get-InstalledMods
                 $script:AllMods = Get-AllMods $script:GitHubReleases
                 $currentFilter = if ($filterInstalled.IsChecked) { "Installed" } elseif ($filterAvailable.IsChecked) { "Available" } else { "All" }
                 Update-ModList $modListBox $currentFilter
+                
+                # Find and select the updated mod to refresh the details panel
+                $updatedMod = $script:AllMods | Where-Object { $_['ID'] -eq $modId } | Select-Object -First 1
+                if ($updatedMod) {
+                    Update-ModDetails $updatedMod
+                }
+                
+                $installedCount = ($script:AllMods | Where-Object { $_['Source'] -ne $script:ModSourceType.Available }).Count
+                $availableCount = ($script:AllMods | Where-Object { $_['Source'] -eq $script:ModSourceType.Available }).Count
+                $statusText.Text = "$installedCount installed, $availableCount available - Ready"
+                
                 [System.Windows.MessageBox]::Show("Mod updated successfully!", "Success", "OK", "Information")
             }
         }
@@ -2721,6 +3239,78 @@ try {
         $script:CmdAliases[$name] = $command
         Update-AliasList $aliasListBox
         Hide-AliasEditor
+    })
+    
+    # Live preview update when typing in command box
+    $aliasCommandBox = $window.FindName("AliasCommandBox")
+    $aliasNameBox = $window.FindName("AliasNameBox")
+    
+    $aliasCommandBox.Add_TextChanged({
+        $name = $window.FindName("AliasNameBox").Text
+        $command = $this.Text
+        Update-AliasPreview $name $command
+    })
+    
+    $aliasNameBox.Add_TextChanged({
+        $name = $this.Text
+        $command = $window.FindName("AliasCommandBox").Text
+        Update-AliasPreview $name $command
+    })
+    
+    # Quick insert buttons
+    $insertVarBtn = $window.FindName("InsertVarBtn")
+    $insertSemiBtn = $window.FindName("InsertSemiBtn")
+    $insertTryBtn = $window.FindName("InsertTryBtn")
+    $insertOnBtn = $window.FindName("InsertOnBtn")
+    $insertUsingBtn = $window.FindName("InsertUsingBtn")
+    
+    $insertVarBtn.Add_Click({
+        $cmdBox = $window.FindName("AliasCommandBox")
+        $nextVar = Get-NextVariableNumber $cmdBox.Text
+        $insertText = "`$$nextVar"
+        $caretIndex = $cmdBox.CaretIndex
+        $cmdBox.Text = $cmdBox.Text.Insert($caretIndex, $insertText)
+        $cmdBox.CaretIndex = $caretIndex + $insertText.Length
+        $cmdBox.Focus()
+    })
+    
+    $insertSemiBtn.Add_Click({
+        $cmdBox = $window.FindName("AliasCommandBox")
+        $insertText = ";"
+        $caretIndex = $cmdBox.CaretIndex
+        $cmdBox.Text = $cmdBox.Text.Insert($caretIndex, $insertText)
+        $cmdBox.CaretIndex = $caretIndex + $insertText.Length
+        $cmdBox.Focus()
+    })
+    
+    $insertTryBtn.Add_Click({
+        $cmdBox = $window.FindName("AliasCommandBox")
+        $insertText = "try  then  else "
+        $caretIndex = $cmdBox.CaretIndex
+        $cmdBox.Text = $cmdBox.Text.Insert($caretIndex, $insertText)
+        # Position caret after "try "
+        $cmdBox.CaretIndex = $caretIndex + 4
+        $cmdBox.Focus()
+    })
+    
+    $insertOnBtn.Add_Click({
+        $cmdBox = $window.FindName("AliasCommandBox")
+        $nextVar = Get-NextVariableNumber $cmdBox.Text
+        $insertText = "on `$$nextVar"
+        $caretIndex = $cmdBox.CaretIndex
+        $cmdBox.Text = $cmdBox.Text.Insert($caretIndex, $insertText)
+        $cmdBox.CaretIndex = $caretIndex + $insertText.Length
+        $cmdBox.Focus()
+    })
+    
+    $insertUsingBtn.Add_Click({
+        $cmdBox = $window.FindName("AliasCommandBox")
+        $nextVar = Get-NextVariableNumber $cmdBox.Text
+        $insertText = "using `$$nextVar"
+        $caretIndex = $cmdBox.CaretIndex
+        $cmdBox.Text = $cmdBox.Text.Insert($caretIndex, $insertText)
+        $cmdBox.CaretIndex = $caretIndex + $insertText.Length
+        $cmdBox.Focus()
     })
     
     # Exit

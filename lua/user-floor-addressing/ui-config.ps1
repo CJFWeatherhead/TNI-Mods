@@ -153,11 +153,12 @@ $parameters += @{
 }
 
 $parameters += @{
-    Name = "disable_hw_refresh"
-    Label = "Disable Hardware Address Refresh (Doesn't work/NO API EXPOSED)"
-    Type = "boolean"
-    Default = $false
-    Description = @"
+    Name            = "disable_hw_refresh"
+    Label           = "Disable Hardware Address Refresh (Doesn't work/NO API EXPOSED)"
+    Type            = "boolean"
+    Default         = $false
+    RefreshOnChange = $true
+    Description     = @"
 Control whether users refresh their hardware (MAC) addresses.
 
 - Disabled (false): Users will periodically refresh hardware addresses (game default)

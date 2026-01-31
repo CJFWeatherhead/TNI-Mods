@@ -37,12 +37,13 @@ else {
 # ============================================================================
 
 $parameters += @{
-    Name        = "scaling_type"
-    Label       = "Scaling Type"
-    Type        = "select"
-    Default     = "Logarithmic"
-    Options     = @("Logarithmic", "Linear", "Exponential", "Randomised")
-    Description = @"
+    Name            = "scaling_type"
+    Label           = "Scaling Type"
+    Type            = "select"
+    Default         = "Logarithmic"
+    Options         = @("Logarithmic", "Linear", "Exponential", "Randomised")
+    RefreshOnChange = $true  # Triggers UI refresh when changed to show/hide conditional parameters
+    Description     = @"
 Choose the reward scaling method:
 
 • Logarithmic: Diminishing returns, balanced growth

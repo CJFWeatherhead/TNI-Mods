@@ -21,22 +21,39 @@ local config = {
     -- Feature toggles
     enable_random_floors = true,
     enable_disaster_mode = true,
-    enable_user_randomization = true,
 
     -- Disaster mode settings
     disaster_event_multiplier = 5.0,  -- How much to multiply event rates in disaster mode
 
-    -- User randomization settings (excludes daily_rate)
-    user_satiety_sla_min = 0.3,
-    user_satiety_sla_max = 0.9,
+    -- User randomization toggles (individual control)
+    enable_satiety_sla_randomization = true,
+    enable_eagerness_randomization = true,
+    enable_use_period_randomization = true,
+    enable_grace_days_randomization = true,
+    enable_satiety_decay_randomization = true,
+
+    -- User randomization settings
+    -- Satiety SLA: minimum satisfaction % required (0-100% scale, stored as 0.0-1.0)
+    user_satiety_sla_min = 0.3,   -- 30% minimum satisfaction threshold
+    user_satiety_sla_max = 0.9,   -- 90% maximum satisfaction threshold
+
+    -- Eagerness: how quickly users demand service (higher = more impatient)
     user_eagerness_min = 1,
     user_eagerness_max = 10,
-    user_use_period_min = 0.5,
-    user_use_period_max = 2.0,
+
+    -- Use Period Multiplier: scales time between service requests
+    -- Values >1.0 = longer waits = LESS frequent usage
+    -- Values <1.0 = shorter waits = MORE frequent usage
+    user_use_period_min = 0.5,    -- 0.5x = half the wait time = 2x more frequent
+    user_use_period_max = 2.0,    -- 2.0x = double the wait time = half as frequent
+
+    -- Grace Days: initial forgiveness period before SLA penalties apply
     user_grace_days_min = 1,
     user_grace_days_max = 7,
-    user_max_satiety_decay_min = 0.1,
-    user_max_satiety_decay_max = 0.5,
+
+    -- Satiety Decay: % satisfaction lost per game tick when not served
+    user_max_satiety_decay_min = 0.1,   -- 10% per tick minimum
+    user_max_satiety_decay_max = 0.5,   -- 50% per tick maximum
 
     -- UI settings
     show_notifications = true,
@@ -301,8 +318,15 @@ function on_engine_load()
     if config.enable_disaster_mode then
         table.insert(features, string.format("DisasterMode(SHIFT+D, x%.1f)", config.disaster_event_multiplier))
     end
-    if config.enable_user_randomization then
-        table.insert(features, "UserRandomization")
+    -- Count enabled user randomization features
+    local user_rand_count = 0
+    if config.enable_satiety_sla_randomization then user_rand_count = user_rand_count + 1 end
+    if config.enable_eagerness_randomization then user_rand_count = user_rand_count + 1 end
+    if config.enable_use_period_randomization then user_rand_count = user_rand_count + 1 end
+    if config.enable_grace_days_randomization then user_rand_count = user_rand_count + 1 end
+    if config.enable_satiety_decay_randomization then user_rand_count = user_rand_count + 1 end
+    if user_rand_count > 0 then
+        table.insert(features, string.format("UserRandomization(%d/5)", user_rand_count))
     end
 
     if #features > 0 then
@@ -394,10 +418,6 @@ end
 
 ---@param user User
 function on_user_spawned(user)
-    if not config.enable_user_randomization then
-        return
-    end
-
     -- Update world reference if needed
     if not world_ref then
         world_ref = ModApiV1.get_game_world()
@@ -408,51 +428,63 @@ function on_user_spawned(user)
 
     local modifications = {}
 
-    -- Randomize satiety_sla_ratio (how satisfied they need to be)
-    pcall(function()
-        local min_val = config.user_satiety_sla_min or 0.3
-        local max_val = config.user_satiety_sla_max or 0.9
-        local original = user.satiety_sla_ratio
-        user.satiety_sla_ratio = min_val + math.random() * (max_val - min_val)
-        table.insert(modifications, string.format("SLA: %.2f->%.2f", original, user.satiety_sla_ratio))
-    end)
+    -- Randomize satiety_sla_ratio (minimum satisfaction % required)
+    if config.enable_satiety_sla_randomization then
+        pcall(function()
+            local min_val = config.user_satiety_sla_min or 0.3
+            local max_val = config.user_satiety_sla_max or 0.9
+            local original = user.satiety_sla_ratio
+            user.satiety_sla_ratio = min_val + math.random() * (max_val - min_val)
+            table.insert(modifications, string.format("SLA: %.0f%%->%.0f%%", original * 100, user.satiety_sla_ratio * 100))
+        end)
+    end
 
-    -- Randomize eagerness_factor
-    pcall(function()
-        local min_val = config.user_eagerness_min or 1
-        local max_val = config.user_eagerness_max or 10
-        local original = user.eagerness_factor
-        user.eagerness_factor = math.random(min_val, max_val)
-        table.insert(modifications, string.format("eager: %d->%d", original, user.eagerness_factor))
-    end)
+    -- Randomize eagerness_factor (how impatient the user is)
+    if config.enable_eagerness_randomization then
+        pcall(function()
+            local min_val = config.user_eagerness_min or 1
+            local max_val = config.user_eagerness_max or 10
+            local original = user.eagerness_factor
+            user.eagerness_factor = math.random(min_val, max_val)
+            table.insert(modifications, string.format("eager: %d->%d", original, user.eagerness_factor))
+        end)
+    end
 
-    -- Randomize base_use_period (multiply original)
-    pcall(function()
-        local min_mult = config.user_use_period_min or 0.5
-        local max_mult = config.user_use_period_max or 2.0
-        local multiplier = min_mult + math.random() * (max_mult - min_mult)
-        local original = user.base_use_period
-        user.base_use_period = original * multiplier
-        table.insert(modifications, string.format("period: %.1f->%.1f", original, user.base_use_period))
-    end)
+    -- Randomize base_use_period (time between service requests)
+    -- Multiplier >1 = longer wait = less frequent usage
+    -- Multiplier <1 = shorter wait = more frequent usage
+    if config.enable_use_period_randomization then
+        pcall(function()
+            local min_mult = config.user_use_period_min or 0.5
+            local max_mult = config.user_use_period_max or 2.0
+            local multiplier = min_mult + math.random() * (max_mult - min_mult)
+            local original = user.base_use_period
+            user.base_use_period = original * multiplier
+            table.insert(modifications, string.format("period: %.1f->%.1f (x%.2f)", original, user.base_use_period, multiplier))
+        end)
+    end
 
-    -- Randomize init_grace_days
-    pcall(function()
-        local min_val = config.user_grace_days_min or 1
-        local max_val = config.user_grace_days_max or 7
-        local original = user.init_grace_days
-        user.init_grace_days = math.random(min_val, max_val)
-        table.insert(modifications, string.format("grace: %d->%d", original, user.init_grace_days))
-    end)
+    -- Randomize init_grace_days (forgiveness period before penalties)
+    if config.enable_grace_days_randomization then
+        pcall(function()
+            local min_val = config.user_grace_days_min or 1
+            local max_val = config.user_grace_days_max or 7
+            local original = user.init_grace_days
+            user.init_grace_days = math.random(min_val, max_val)
+            table.insert(modifications, string.format("grace: %dd->%dd", original, user.init_grace_days))
+        end)
+    end
 
-    -- Randomize max_satiety_decay_ratio
-    pcall(function()
-        local min_val = config.user_max_satiety_decay_min or 0.1
-        local max_val = config.user_max_satiety_decay_max or 0.5
-        local original = user.max_satiety_decay_ratio
-        user.max_satiety_decay_ratio = min_val + math.random() * (max_val - min_val)
-        table.insert(modifications, string.format("decay: %.2f->%.2f", original, user.max_satiety_decay_ratio))
-    end)
+    -- Randomize max_satiety_decay_ratio (% satisfaction lost per tick)
+    if config.enable_satiety_decay_randomization then
+        pcall(function()
+            local min_val = config.user_max_satiety_decay_min or 0.1
+            local max_val = config.user_max_satiety_decay_max or 0.5
+            local original = user.max_satiety_decay_ratio
+            user.max_satiety_decay_ratio = min_val + math.random() * (max_val - min_val)
+            table.insert(modifications, string.format("decay: %.0f%%->%.0f%%/tick", original * 100, user.max_satiety_decay_ratio * 100))
+        end)
+    end
 
     if #modifications > 0 then
         log(string.format("User %s randomized: %s", username, table.concat(modifications, " | ")))

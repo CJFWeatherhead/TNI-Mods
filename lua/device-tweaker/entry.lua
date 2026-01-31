@@ -184,16 +184,30 @@ local function restock_all_merchants()
     end
 
     local restock_count = 0
-    pcall(function()
+    local error_msg = nil
+    local success = pcall(function()
         local size = merchants:size()
+        print(string.format("[device-tweaker] Found %d merchants to restock", size))
         for i = 0, size - 1 do
             local merchant = merchants:get(i)
-            if merchant and merchant.restock then
-                merchant:restock()
-                restock_count = restock_count + 1
+            if merchant then
+                local merchant_name = merchant.display_name or ("Merchant " .. i)
+                local restock_success, restock_err = pcall(function()
+                    merchant.restock()  -- Use dot notation for Godot method call
+                end)
+                if restock_success then
+                    restock_count = restock_count + 1
+                    print(string.format("[device-tweaker] Restocked: %s", tostring(merchant_name)))
+                else
+                    print(string.format("[device-tweaker] Failed to restock %s: %s", tostring(merchant_name), tostring(restock_err)))
+                end
             end
         end
     end)
+
+    if not success then
+        print("[device-tweaker] Error during merchant iteration")
+    end
 
     print(string.format("[device-tweaker] Restocked %d merchants", restock_count))
     return restock_count > 0
