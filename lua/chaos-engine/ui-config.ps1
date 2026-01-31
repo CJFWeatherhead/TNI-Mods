@@ -33,10 +33,10 @@ $enableUserRandomization = if ($CurrentConfig.ContainsKey('enable_user_randomiza
 $parameters += @{
     Type    = "info"
     Message = @"
-**Keyboard Shortcuts (CTRL+SHIFT combinations):**
-- **CTRL+SHIFT+F** - Spawn a random floor
-- **CTRL+SHIFT+D** - Toggle Disaster Mode
-- **CTRL+SHIFT+X** - Reset all chaos settings to defaults
+**Keyboard Shortcuts (SHIFT combinations):**
+- **SHIFT+F** - Spawn a random floor
+- **SHIFT+D** - Toggle Disaster Mode
+- **SHIFT+X** - Reset all chaos settings to defaults
 "@
 }
 
@@ -57,7 +57,7 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = @"
-Allow CTRL+SHIFT+F to spawn random floors.
+Allow SHIFT+F to spawn random floors.
 
 When pressed, a random floor builder will be triggered to 
 create a new floor immediately.
@@ -70,7 +70,7 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = @"
-Allow CTRL+SHIFT+D to toggle Disaster Mode.
+Allow SHIFT+D to toggle Disaster Mode.
 
 When active, all random event rates (device failures, power 
 outages, power surges, worm spawns) are multiplied.

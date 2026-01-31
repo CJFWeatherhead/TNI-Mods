@@ -306,9 +306,9 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = @"
-Enable CTRL+SHIFT+R hotkey to instantly restock all merchants.
+Enable SHIFT+R hotkey to instantly restock all merchants.
 
-When enabled, pressing CTRL+SHIFT+R will refresh the inventory
+When enabled, pressing SHIFT+R will refresh the inventory
 of all device merchants in the game world.
 "@
 }
