@@ -13,45 +13,52 @@ game_version: "beta"
 
 This mod doubles the bandwidth capacity of all switches in the Tower Networking Inc game.
 
-## Mod Information
+<div class="mod-header-info">
 
-- **Author**: treefarmer741
-- **Version**: 0.1.1
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-24
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches)
+| | |
+|---|---|
+| **Version** | 0.1.1 |
+| **Author** | treefarmer741 |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-24 |
 
-## Download
-
-### Latest Release: v0.1.1
-
-**[Download 2x-bandwidth-switches-0.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.1/2x-bandwidth-switches-0.1.1.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/2x-bandwidth-switches-v0.1.1)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **2x Bandwidth Switches** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `2x-bandwidth-switches/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
+</div>
 
 ---
 
-## Detailed Documentation
+## Download
+
+<div class="download-section">
+
+**[Download 2x-bandwidth-switches-0.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.1/2x-bandwidth-switches-0.1.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **2x Bandwidth Switches** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `2x-bandwidth-switches/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # 2x Bandwidth Switches
 
@@ -92,12 +99,37 @@ No additional configuration required. The mod activates automatically when devic
 
 This mod only affects switches and does not modify other device types.
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 This mod only affects switches and does not modify other device types.
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `2x-bandwidth-switches` |
+| Creation Date | 2025-11-20 |
+| Last Updated | 2026-01-24 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/2x-bandwidth-switches-v0.1.1)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.1/2x-bandwidth-switches-0.1.1.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

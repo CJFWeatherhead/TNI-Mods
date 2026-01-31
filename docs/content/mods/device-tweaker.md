@@ -13,6 +13,110 @@ game_version: "beta"
 
 A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.3 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-27 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download device-tweaker-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.3/device-tweaker-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Device Tweaker** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `device-tweaker/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Enable for Default Devices** | boolean | `True` | Apply modifications to default devices (class 0) |
+| **Enable for Network Switches** | boolean | `True` | Apply modifications to network switch devices (class 1) |
+| **Enable for Network Routers** | boolean | `True` | Apply modifications to network router devices (class 2) |
+| **Enable for Network Taps** | boolean | `True` | Apply modifications to network tap devices (class 3) |
+| **Enable for Network Firewalls** | boolean | `True` | Apply modifications to network firewall devices (class 4) |
+| **Enable for Media Line Simplex** | boolean | `True` | Apply modifications to media line simplex devices (class 5) |
+| **Enable for Media Line Duplex** | boolean | `True` | Apply modifications to media line duplex devices (class 6) |
+| **Enable for Compute Servers** | boolean | `True` | Apply modifications to compute server devices (class 7) |
+| **Enable for Display Monitors** | boolean | `True` | Apply modifications to display monitor devices (class 8) |
+| **Enable for Debuggers** | boolean | `True` | Apply modifications to debugger devices (class 9) |
+| **Enable for Load Testers** | boolean | `True` | Apply modifications to load tester devices (class 10) |
+| **Enable for Power Expansion** | boolean | `True` | Apply modifications to power expansion devices (class 11) |
+| **Enable for Decentro Rigs** | boolean | `True` | Apply modifications to decentro rig devices (class 12) |
+| **Enable for Surge Protectors** | boolean | `True` | Apply modifications to surge protector devices (class 13) |
+| **Enable for UPS Devices** | boolean | `True` | Apply modifications to UPS devices (class 14) |
+| **Enable for Inert Devices** | boolean | `True` | Apply modifications to inert devices (class 15) |
+| **Enable for CCTV** | boolean | `True` | Apply modifications to CCTV devices (class 16) |
+| **Enable for Phones** | boolean | `True` | Apply modifications to phone devices (class 17) |
+| **Enable for Printers** | boolean | `True` | Apply modifications to printer devices (class 18) |
+| **Enable for Network Load Balancers** | boolean | `True` | Apply modifications to network load balancer devices (class 19) |
+| **Enable Bandwidth Modification** | boolean | `False` | Enable bandwidth capacity modifications |
+| **Bandwidth Multiplier** | number (0.1-100.0) | `2.0` | Multiplier for device network bandwidth (e.g., 2.0 = double bandwidth) |
+| **Enable Warranty Modification** | boolean | `False` | Enable warranty period modifications |
+| **Warranty Mode** | select: fixed, random | `fixed` | Use a fixed multiplier or random range for warranties |
+| **Fixed Warranty Multiplier** | number (0.1-100.0) | `1.0` | Fixed multiplier for warranties (used when mode is 'fixed') |
+| **Min Random Warranty Multiplier** | number (0.1-100.0) | `2.0` | Minimum multiplier for random warranties (used when mode is 'random') |
+| **Max Random Warranty Multiplier** | number (0.1-100.0) | `25.0` | Maximum multiplier for random warranties (used when mode is 'random') |
+| **Apply to Warranty Cycles** | boolean | `True` | Whether to also multiply warranty cycles (in addition to days) |
+| **Apply to Remaining Warranty** | boolean | `True` | Whether to also apply multiplier to remaining warranty period |
+| **Enable Cost Modification** | boolean | `False` | Enable device cost modifications |
+| **Cost Multiplier** | number (0.01-100.0) | `1.0` | Multiplier for device purchase costs (e.g., 0.5 = half price, 2.0 = double price) |
+| **Enable CPU Modification** | boolean | `False` | Enable CPU power modifications |
+| **CPU Power Multiplier** | number (0.1-100.0) | `1.0` | Multiplier for device CPU power |
+| **Enable Memory Modification** | boolean | `False` | Enable RAM modifications |
+| **Memory (RAM) Multiplier** | number (0.1-100.0) | `1.0` | Multiplier for device installed RAM |
+| **Enable Storage Modification** | boolean | `False` | Enable storage capacity modifications |
+| **Storage Multiplier** | number (0.1-100.0) | `1.0` | Multiplier for device storage capacity |
+| **Enable Auto Network Addressing** | boolean | `False` | Automatically assign network addresses based on floor and device class.
+Format: @f{floor}/{class}{increment}
+Examples: @f4/srv1 (compute server on floor 4), @f2/swt1 (switch on floor 2), @f18/nlb2 (load balancer on floor 18)
+
+Device class abbreviations (3 letters):
+def=default, swt=switch, rtr=router, tap=tap, fwr=firewall, mls=media_simplex, mld=media_duplex,
+srv=server, mon=monitor, dbg=debugger, ldt=load_tester, pwr=power_expansion, dcr=decentro_rigs,
+spr=surge_protector, ups=ups, ine=inert, ccv=cctv, phn=phone, prt=printer, nlb=load_balancer
+ |
+| **DHCP Mode** | select: disabled, boot_dhcp, periodic_dhcp | `disabled` | Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or periodic_dhcp (runs periodically) |
+
+---
+
+## About This Mod
+
+A comprehensive mod for tweaking device properties in Tower Networking Inc.
+
 ## Features
 - **Bandwidth Multiplier**: Adjust network bandwidth capacity of devices
 - **Warranty Modifications**: Set fixed or random warranty multipliers
@@ -51,388 +155,10 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 - Disable device classes you don't want to modify
 - Network addressing format: @f{floor}/{abbrev}{increment}
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.3
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-27
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker)
-
-## Download
-
-### Latest Release: v0.1.3
-
-**[Download device-tweaker-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.3/device-tweaker-0.1.3.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.3)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **Device Tweaker** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `device-tweaker/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Enable for Default Devices
-
-- **Parameter Name**: `enable_default`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to default devices (class 0)
-
-### Enable for Network Switches
-
-- **Parameter Name**: `enable_network_switch`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to network switch devices (class 1)
-
-### Enable for Network Routers
-
-- **Parameter Name**: `enable_network_router`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to network router devices (class 2)
-
-### Enable for Network Taps
-
-- **Parameter Name**: `enable_network_tap`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to network tap devices (class 3)
-
-### Enable for Network Firewalls
-
-- **Parameter Name**: `enable_network_firewall`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to network firewall devices (class 4)
-
-### Enable for Media Line Simplex
-
-- **Parameter Name**: `enable_media_line_simplex`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to media line simplex devices (class 5)
-
-### Enable for Media Line Duplex
-
-- **Parameter Name**: `enable_media_line_duplex`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to media line duplex devices (class 6)
-
-### Enable for Compute Servers
-
-- **Parameter Name**: `enable_compute_server`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to compute server devices (class 7)
-
-### Enable for Display Monitors
-
-- **Parameter Name**: `enable_display_monitor`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to display monitor devices (class 8)
-
-### Enable for Debuggers
-
-- **Parameter Name**: `enable_debugger`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to debugger devices (class 9)
-
-### Enable for Load Testers
-
-- **Parameter Name**: `enable_load_tester`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to load tester devices (class 10)
-
-### Enable for Power Expansion
-
-- **Parameter Name**: `enable_power_expansion`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to power expansion devices (class 11)
-
-### Enable for Decentro Rigs
-
-- **Parameter Name**: `enable_decentro_rigs`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to decentro rig devices (class 12)
-
-### Enable for Surge Protectors
-
-- **Parameter Name**: `enable_surge_protector`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to surge protector devices (class 13)
-
-### Enable for UPS Devices
-
-- **Parameter Name**: `enable_ups`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to UPS devices (class 14)
-
-### Enable for Inert Devices
-
-- **Parameter Name**: `enable_inert`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to inert devices (class 15)
-
-### Enable for CCTV
-
-- **Parameter Name**: `enable_cctv`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to CCTV devices (class 16)
-
-### Enable for Phones
-
-- **Parameter Name**: `enable_phone`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to phone devices (class 17)
-
-### Enable for Printers
-
-- **Parameter Name**: `enable_printer`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to printer devices (class 18)
-
-### Enable for Network Load Balancers
-
-- **Parameter Name**: `enable_network_load_balancer`
-- **Type**: boolean
-- **Default**: `True`
-
-Apply modifications to network load balancer devices (class 19)
-
-### Enable Bandwidth Modification
-
-- **Parameter Name**: `enable_bandwidth`
-- **Type**: boolean
-- **Default**: `False`
-
-Enable bandwidth capacity modifications
-
-### Bandwidth Multiplier
-
-- **Parameter Name**: `bandwidth_multiplier`
-- **Type**: number
-- **Default**: `2.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Multiplier for device network bandwidth (e.g., 2.0 = double bandwidth)
-
-### Enable Warranty Modification
-
-- **Parameter Name**: `enable_warranty`
-- **Type**: boolean
-- **Default**: `False`
-
-Enable warranty period modifications
-
-### Warranty Mode
-
-- **Parameter Name**: `warranty_mode`
-- **Type**: select
-- **Default**: `fixed`
-- **Options**: `fixed`, `random`
-
-Use a fixed multiplier or random range for warranties
-
-### Fixed Warranty Multiplier
-
-- **Parameter Name**: `warranty_multiplier_fixed`
-- **Type**: number
-- **Default**: `1.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Fixed multiplier for warranties (used when mode is 'fixed')
-
-### Min Random Warranty Multiplier
-
-- **Parameter Name**: `warranty_multiplier_min`
-- **Type**: number
-- **Default**: `2.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Minimum multiplier for random warranties (used when mode is 'random')
-
-### Max Random Warranty Multiplier
-
-- **Parameter Name**: `warranty_multiplier_max`
-- **Type**: number
-- **Default**: `25.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Maximum multiplier for random warranties (used when mode is 'random')
-
-### Apply to Warranty Cycles
-
-- **Parameter Name**: `warranty_apply_cycles`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to also multiply warranty cycles (in addition to days)
-
-### Apply to Remaining Warranty
-
-- **Parameter Name**: `warranty_apply_remaining`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to also apply multiplier to remaining warranty period
-
-### Enable Cost Modification
-
-- **Parameter Name**: `enable_cost`
-- **Type**: boolean
-- **Default**: `False`
-
-Enable device cost modifications
-
-### Cost Multiplier
-
-- **Parameter Name**: `cost_multiplier`
-- **Type**: number
-- **Default**: `1.0`
-- **Min**: 0.01
-- **Max**: 100.0
-
-Multiplier for device purchase costs (e.g., 0.5 = half price, 2.0 = double price)
-
-### Enable CPU Modification
-
-- **Parameter Name**: `enable_cpu`
-- **Type**: boolean
-- **Default**: `False`
-
-Enable CPU power modifications
-
-### CPU Power Multiplier
-
-- **Parameter Name**: `cpu_multiplier`
-- **Type**: number
-- **Default**: `1.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Multiplier for device CPU power
-
-### Enable Memory Modification
-
-- **Parameter Name**: `enable_memory`
-- **Type**: boolean
-- **Default**: `False`
-
-Enable RAM modifications
-
-### Memory (RAM) Multiplier
-
-- **Parameter Name**: `memory_multiplier`
-- **Type**: number
-- **Default**: `1.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Multiplier for device installed RAM
-
-### Enable Storage Modification
-
-- **Parameter Name**: `enable_storage`
-- **Type**: boolean
-- **Default**: `False`
-
-Enable storage capacity modifications
-
-### Storage Multiplier
-
-- **Parameter Name**: `storage_multiplier`
-- **Type**: number
-- **Default**: `1.0`
-- **Min**: 0.1
-- **Max**: 100.0
-
-Multiplier for device storage capacity
-
-### Enable Auto Network Addressing
-
-- **Parameter Name**: `enable_netaddr`
-- **Type**: boolean
-- **Default**: `False`
-
-Automatically assign network addresses based on floor and device class.
-Format: @f{floor}/{class}{increment}
-Examples: @f4/srv1 (compute server on floor 4), @f2/swt1 (switch on floor 2), @f18/nlb2 (load balancer on floor 18)
-
-Device class abbreviations (3 letters):
-def=default, swt=switch, rtr=router, tap=tap, fwr=firewall, mls=media_simplex, mld=media_duplex,
-srv=server, mon=monitor, dbg=debugger, ldt=load_tester, pwr=power_expansion, dcr=decentro_rigs,
-spr=surge_protector, ups=ups, ine=inert, ccv=cctv, phn=phone, prt=printer, nlb=load_balancer
-
-
-### DHCP Mode
-
-- **Parameter Name**: `dhcp_mode`
-- **Type**: select
-- **Default**: `disabled`
-- **Options**: `disabled`, `boot_dhcp`, `periodic_dhcp`
-
-Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or periodic_dhcp (runs periodically)
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # Device Tweaker Mod
 
@@ -667,14 +393,39 @@ For issues, questions, or suggestions, please refer to the main TNI-Mods reposit
 See the LICENSE file in the main repository.
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 This mod combines and extends functionality from 2x-bandwidth-switches and random-warranties mods.
 All modifications are applied when devices spawn.
 
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `device-tweaker` |
+| Creation Date | 2026-01-18 |
+| Last Updated | 2026-01-27 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.3/device-tweaker-0.1.3.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

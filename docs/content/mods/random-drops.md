@@ -13,6 +13,80 @@ game_version: "beta"
 
 A comprehensive randomness mod that adds three configurable features to enhance gameplay variety:
 
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.2 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-31 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download random-drops-0.1.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-drops-v0.1.2/random-drops-0.1.2.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Random Drops** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `random-drops/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Enable Random Item Spawning** | boolean | `True` | Periodically spawn random devices at configurable intervals |
+| **Spawn Interval (Seconds)** | integer (10-600) | `60` | Time in seconds between random spawn events |
+| **Minimum Items Per Spawn** | integer (1-10) | `1` | Minimum number of items to spawn each interval |
+| **Maximum Items Per Spawn** | integer (1-20) | `3` | Maximum number of items to spawn each interval |
+| **Spawn All Item Types** | boolean | `True` | If enabled, all device types can spawn. If disabled, use the filters below. |
+| **Include Network Switches** | boolean | `True` | Allow network switches to spawn (when not using all items) |
+| **Include Routers** | boolean | `True` | Allow routers to spawn (when not using all items) |
+| **Include Firewalls** | boolean | `True` | Allow firewalls to spawn (when not using all items) |
+| **Include Servers** | boolean | `True` | Allow compute servers to spawn (when not using all items) |
+| **Include Workstations** | boolean | `False` | Allow workstations/monitors to spawn (when not using all items) |
+| **Include Miscellaneous Devices** | boolean | `False` | Allow other device types to spawn (UPS, surge protectors, etc.) |
+| **Enable Extra Users on Floor Creation** | boolean | `True` | Automatically add extra random users when a new floor is created |
+| **Minimum Extra Users** | integer (1-10) | `1` | Minimum number of extra users to add per floor |
+| **Maximum Extra Users** | integer (1-20) | `3` | Maximum number of extra users to add per floor |
+| **Enable Purchase Multiplier** | boolean | `True` | Receive multiple copies when purchasing items from the shop |
+| **Purchase Multiplier** | integer (1-10) | `2` | Number of items received per purchase (1 = normal, 2 = double, etc.) |
+| **Enable Debug Logging** | boolean | `True` | Show detailed log messages in the console |
+
+---
+
+## About This Mod
+
+A comprehensive randomness mod that adds three configurable features to enhance gameplay variety:
+
 ## Features
 
 ### 1. Random Item Spawning
@@ -39,198 +113,10 @@ Configure each feature's parameters to customize the experience.
 - **Purchase Multiplier**: Toggle on/off, set multiplier value
 - **Debug Logging**: Enable for detailed console output
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.2
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-31
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-drops](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-drops)
-
-## Download
-
-### Latest Release: v0.1.2
-
-**[Download random-drops-0.1.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-drops-v0.1.2/random-drops-0.1.2.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-drops-v0.1.2)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **Random Drops** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `random-drops/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Enable Random Item Spawning
-
-- **Parameter Name**: `enable_random_spawns`
-- **Type**: boolean
-- **Default**: `True`
-
-Periodically spawn random devices at configurable intervals
-
-### Spawn Interval (Seconds)
-
-- **Parameter Name**: `spawn_interval_seconds`
-- **Type**: integer
-- **Default**: `60`
-- **Min**: 10
-- **Max**: 600
-
-Time in seconds between random spawn events
-
-### Minimum Items Per Spawn
-
-- **Parameter Name**: `spawn_count_min`
-- **Type**: integer
-- **Default**: `1`
-- **Min**: 1
-- **Max**: 10
-
-Minimum number of items to spawn each interval
-
-### Maximum Items Per Spawn
-
-- **Parameter Name**: `spawn_count_max`
-- **Type**: integer
-- **Default**: `3`
-- **Min**: 1
-- **Max**: 20
-
-Maximum number of items to spawn each interval
-
-### Spawn All Item Types
-
-- **Parameter Name**: `spawn_all_items`
-- **Type**: boolean
-- **Default**: `True`
-
-If enabled, all device types can spawn. If disabled, use the filters below.
-
-### Include Network Switches
-
-- **Parameter Name**: `spawn_switches`
-- **Type**: boolean
-- **Default**: `True`
-
-Allow network switches to spawn (when not using all items)
-
-### Include Routers
-
-- **Parameter Name**: `spawn_routers`
-- **Type**: boolean
-- **Default**: `True`
-
-Allow routers to spawn (when not using all items)
-
-### Include Firewalls
-
-- **Parameter Name**: `spawn_firewalls`
-- **Type**: boolean
-- **Default**: `True`
-
-Allow firewalls to spawn (when not using all items)
-
-### Include Servers
-
-- **Parameter Name**: `spawn_servers`
-- **Type**: boolean
-- **Default**: `True`
-
-Allow compute servers to spawn (when not using all items)
-
-### Include Workstations
-
-- **Parameter Name**: `spawn_workstations`
-- **Type**: boolean
-- **Default**: `False`
-
-Allow workstations/monitors to spawn (when not using all items)
-
-### Include Miscellaneous Devices
-
-- **Parameter Name**: `spawn_misc`
-- **Type**: boolean
-- **Default**: `False`
-
-Allow other device types to spawn (UPS, surge protectors, etc.)
-
-### Enable Extra Users on Floor Creation
-
-- **Parameter Name**: `enable_extra_users`
-- **Type**: boolean
-- **Default**: `True`
-
-Automatically add extra random users when a new floor is created
-
-### Minimum Extra Users
-
-- **Parameter Name**: `extra_users_min`
-- **Type**: integer
-- **Default**: `1`
-- **Min**: 1
-- **Max**: 10
-
-Minimum number of extra users to add per floor
-
-### Maximum Extra Users
-
-- **Parameter Name**: `extra_users_max`
-- **Type**: integer
-- **Default**: `3`
-- **Min**: 1
-- **Max**: 20
-
-Maximum number of extra users to add per floor
-
-### Enable Purchase Multiplier
-
-- **Parameter Name**: `enable_purchase_multiplier`
-- **Type**: boolean
-- **Default**: `True`
-
-Receive multiple copies when purchasing items from the shop
-
-### Purchase Multiplier
-
-- **Parameter Name**: `purchase_multiplier`
-- **Type**: integer
-- **Default**: `2`
-- **Min**: 1
-- **Max**: 10
-
-Number of items received per purchase (1 = normal, 2 = double, etc.)
-
-### Enable Debug Logging
-
-- **Parameter Name**: `debug_logging`
-- **Type**: boolean
-- **Default**: `True`
-
-Show detailed log messages in the console
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # Random Drops
 
@@ -395,14 +281,39 @@ See the main repository LICENSE file.
 - Part of the TNI-Mods collection
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 This mod uses on_device_spawned, on_user_spawned, on_location_spawned, and on_tick callbacks.
 Some features depend on game API availability and may have limited functionality in certain game versions.
 
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `random-drops` |
+| Creation Date | 2026-01-27 |
+| Last Updated | 2026-01-31 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-drops](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-drops) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-drops-v0.1.2)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-drops-v0.1.2/random-drops-0.1.2.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

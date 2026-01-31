@@ -11,87 +11,73 @@ game_version: "beta"
 
 # Random Device Warranties
 
-A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful demonstration mod for new developers.
+A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful de...
 
-## Mod Information
+<div class="mod-header-info">
 
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.3
-- **Development Status**: Discontinued
-- **Game Version**: beta
-- **Last Updated**: 2026-01-31
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties)
+| | |
+|---|---|
+| **Version** | 0.1.3 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🔴 Discontinued |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-31 |
 
-## Download
-
-### Latest Release: v0.1.3
-
-**[Download random-warranties-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.3/random-warranties-0.1.3.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-warranties-v0.1.3)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **Random Device Warranties** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `random-warranties/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Minimum Warranty Multiplier
-
-- **Parameter Name**: `warranty_multiplier_min`
-- **Type**: integer
-- **Default**: `2`
-- **Min**: 1
-- **Max**: 100
-
-Minimum multiplier for device warranties (e.g., 2 = 2x base warranty)
-
-### Maximum Warranty Multiplier
-
-- **Parameter Name**: `warranty_multiplier_max`
-- **Type**: integer
-- **Default**: `25`
-- **Min**: 1
-- **Max**: 100
-
-Maximum multiplier for device warranties (e.g., 25 = 25x base warranty)
-
-### Apply to Warranty Cycles
-
-- **Parameter Name**: `apply_to_cycles`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to also multiply warranty cycles (in addition to days)
-
-### Apply to Remaining Warranty
-
-- **Parameter Name**: `apply_to_remaining`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to also apply multiplier to warranty_period_remaining
+</div>
 
 ---
 
-## Detailed Documentation
+## Download
+
+<div class="download-section">
+
+**[Download random-warranties-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.3/random-warranties-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Random Device Warranties** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `random-warranties/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Minimum Warranty Multiplier** | integer (1-100) | `2` | Minimum multiplier for device warranties (e.g., 2 = 2x base warranty) |
+| **Maximum Warranty Multiplier** | integer (1-100) | `25` | Maximum multiplier for device warranties (e.g., 25 = 25x base warranty) |
+| **Apply to Warranty Cycles** | boolean | `True` | Whether to also multiply warranty cycles (in addition to days) |
+| **Apply to Remaining Warranty** | boolean | `True` | Whether to also apply multiplier to warranty_period_remaining |
+
+---
+
+## About This Mod
+
+A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful demonstration mod for new developers.
+
+---
+
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # Random Device Warranties
 
@@ -134,12 +120,37 @@ CJFWeatherhead
 
 Each device gets its own random multiplier, so warranties vary widely. Some devices may have very short warranties, others extremely long ones.
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 Each device gets its own random multiplier, so warranties vary widely.
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `random-warranties` |
+| Creation Date | 2026-01-01 |
+| Last Updated | 2026-01-31 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-warranties-v0.1.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.3/random-warranties-0.1.3.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

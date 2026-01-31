@@ -11,6 +11,77 @@ game_version: "beta"
 
 # Floor Reward Scaling
 
+**Floor Reward Scaling Mod** automatically scales user daily payment rates based on their floor number using configurable progression systems. Choo...
+
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.3 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-31 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download floor-reward-scaling-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.3/floor-reward-scaling-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Floor Reward Scaling** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `floor-reward-scaling/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Scaling Type** | select: Logarithmic, Linear, Exponential, Randomised | `Logarithmic` | Choose the reward scaling method:
+- Logarithmic: Diminishing returns, balanced growth (1 + log₂(floor+2) × factor)
+- Linear: Constant rate increase per floor (1 + floor × factor)
+- Exponential: Rapid compound growth (factor ^ floor)
+- Randomised: Random multiplier per user (between min and max)
+ |
+| **Scaling Factor** | number (1.0-5.0) | `2.0` | Multiplier factor for scaling (not used in Randomised mode).
+Higher values = stronger scaling effect.
+Logarithmic: Factor of 2.0 gives ~4x at floor 5
+Linear: Factor of 2.0 gives 11x at floor 5
+Exponential: Factor of 2.0 gives 32x at floor 5
+ |
+| **Minimum Random Factor** | number (1.0-100.0) | `1.0` | Minimum multiplier for Randomised mode (only used when Scaling Type is "Randomised") |
+| **Maximum Random Factor** | number (1.0-100.0) | `5.0` | Maximum multiplier for Randomised mode (only used when Scaling Type is "Randomised") |
+
+---
+
+## About This Mod
+
 **Floor Reward Scaling Mod** automatically scales user daily payment rates based on their floor number using configurable progression systems. Choose from logarithmic, linear, exponential, or randomised scaling to customize reward progression.
 
 ## Scaling Types
@@ -19,99 +90,10 @@ game_version: "beta"
 - **Exponential**: Rapid growth - rewards increase dramatically on higher floors
 - **Randomised**: Unpredictable rewards - each user gets a random multiplier within configured range
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.3
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-31
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling)
-
-## Download
-
-### Latest Release: v0.1.3
-
-**[Download floor-reward-scaling-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.3/floor-reward-scaling-0.1.3.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.3)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **Floor Reward Scaling** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `floor-reward-scaling/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Scaling Type
-
-- **Parameter Name**: `scaling_type`
-- **Type**: select
-- **Default**: `Logarithmic`
-- **Options**: `Logarithmic`, `Linear`, `Exponential`, `Randomised`
-
-Choose the reward scaling method:
-- Logarithmic: Diminishing returns, balanced growth (1 + log₂(floor+2) × factor)
-- Linear: Constant rate increase per floor (1 + floor × factor)
-- Exponential: Rapid compound growth (factor ^ floor)
-- Randomised: Random multiplier per user (between min and max)
-
-
-### Scaling Factor
-
-- **Parameter Name**: `factor`
-- **Type**: number
-- **Default**: `2.0`
-- **Min**: 1.0
-- **Max**: 5.0
-
-Multiplier factor for scaling (not used in Randomised mode).
-Higher values = stronger scaling effect.
-Logarithmic: Factor of 2.0 gives ~4x at floor 5
-Linear: Factor of 2.0 gives 11x at floor 5
-Exponential: Factor of 2.0 gives 32x at floor 5
-
-
-### Minimum Random Factor
-
-- **Parameter Name**: `min_factor`
-- **Type**: number
-- **Default**: `1.0`
-- **Min**: 1.0
-- **Max**: 100.0
-
-Minimum multiplier for Randomised mode (only used when Scaling Type is "Randomised")
-
-### Maximum Random Factor
-
-- **Parameter Name**: `max_factor`
-- **Type**: number
-- **Default**: `5.0`
-- **Min**: 1.0
-- **Max**: 100.0
-
-Maximum multiplier for Randomised mode (only used when Scaling Type is "Randomised")
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # Floor Reward Scaling Mod
 
@@ -182,9 +164,12 @@ CJFWeatherhead
 - Console logs show the scaling applied for each user
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 - Tested with game version 0.10.0
 - Compatible with other mods
@@ -192,6 +177,28 @@ CJFWeatherhead
 - Console logging for scaling confirmation
 
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `floor-reward-scaling` |
+| Creation Date | 2026-01-01 |
+| Last Updated | 2026-01-31 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.3/floor-reward-scaling-0.1.3.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

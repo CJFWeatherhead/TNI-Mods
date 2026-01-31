@@ -13,6 +13,66 @@ game_version: "beta"
 
 Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.
 
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.4 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-31 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download money-cheat-0.1.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.4/money-cheat-0.1.4.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Money Cheat** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `money-cheat/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Money Amount** | integer (100-10000000) | `10000` | Amount of money to add when SHIFT+M is pressed |
+| **Enable Debug Logging** | boolean | `True` | Log detailed information to console when cheat is activated |
+| **Show In-Game Notification** | boolean | `True` | Attempt to show an in-game notification when money is added (may not be supported by all game versions) |
+
+---
+
+## About This Mod
+
+Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.
+
 ## Features
 - Instant money injection via keyboard shortcut (SHIFT+M)
 - Configurable amount (default: $10,000)
@@ -29,76 +89,10 @@ Configure the amount in the Mod Manager settings.
 - **Debug Logging**: Show detailed console messages
 - **Show Notification**: Attempt to display in-game notification
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.4
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-31
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat)
-
-## Download
-
-### Latest Release: v0.1.4
-
-**[Download money-cheat-0.1.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.4/money-cheat-0.1.4.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.4)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **Money Cheat** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `money-cheat/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Money Amount
-
-- **Parameter Name**: `money_amount`
-- **Type**: integer
-- **Default**: `10000`
-- **Min**: 100
-- **Max**: 10000000
-
-Amount of money to add when SHIFT+M is pressed
-
-### Enable Debug Logging
-
-- **Parameter Name**: `debug_logging`
-- **Type**: boolean
-- **Default**: `True`
-
-Log detailed information to console when cheat is activated
-
-### Show In-Game Notification
-
-- **Parameter Name**: `show_notification`
-- **Type**: boolean
-- **Default**: `True`
-
-Attempt to show an in-game notification when money is added (may not be supported by all game versions)
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # Money Cheat
 
@@ -234,12 +228,37 @@ See LICENSE file in the root directory.
 This mod is intended for fun and experimentation. Using cheats may impact your gameplay experience and sense of achievement. Use responsibly!
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s cooldown to prevent accidental double-activation.
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `money-cheat` |
+| Creation Date | 2026-01-21 |
+| Last Updated | 2026-01-31 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.4)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.4/money-cheat-0.1.4.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

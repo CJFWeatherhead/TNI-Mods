@@ -13,6 +13,72 @@ game_version: "beta"
 
 This mod inverts the game's economy by making purchases pay the player instead of costing money.
 
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.1 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-24 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download inverse-prices-0.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **Inverse Prices** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `inverse-prices/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Refund Amount** | select: Free, Double, Custom | `Double` | Choose the refund multiplier:
+- Free (1x Refund): Get back what you paid, making purchases free
+- Double (2x Refund): Get back double what you paid, earning profit
+- Custom: Set your own multiplier value
+ |
+| **Custom Refund Multiplier** | integer (1-100) | `2` | Custom refund multiplier (only used when Refund Amount is set to "Custom") |
+| **Affect Devices** | boolean | `True` | Whether to refund device purchases |
+| **Affect Sockets** | boolean | `True` | Whether to refund socket and link expenses |
+| **Affect Proposals** | boolean | `True` | Whether to refund proposal costs when submitting proposals |
+
+---
+
+## About This Mod
+
+This mod inverts the game's economy by making purchases pay the player instead of costing money.
+
 ## Features
 - Device purchases refund money based on configured multiplier
 - Proposal costs are refunded when submitted
@@ -22,97 +88,10 @@ This mod inverts the game's economy by making purchases pay the player instead o
 - Uses proper transaction system for refunds
 - Real-time monitoring of expenses and proposals
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.1
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-24
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices)
-
-## Download
-
-### Latest Release: v0.1.1
-
-**[Download inverse-prices-0.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/inverse-prices-v0.1.1)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **Inverse Prices** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `inverse-prices/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Refund Amount
-
-- **Parameter Name**: `refund_type`
-- **Type**: select
-- **Default**: `Double`
-- **Options**: `Free`, `Double`, `Custom`
-
-Choose the refund multiplier:
-- Free (1x Refund): Get back what you paid, making purchases free
-- Double (2x Refund): Get back double what you paid, earning profit
-- Custom: Set your own multiplier value
-
-
-### Custom Refund Multiplier
-
-- **Parameter Name**: `custom_refund_amount`
-- **Type**: integer
-- **Default**: `2`
-- **Min**: 1
-- **Max**: 100
-
-Custom refund multiplier (only used when Refund Amount is set to "Custom")
-
-### Affect Devices
-
-- **Parameter Name**: `effects_devices`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to refund device purchases
-
-### Affect Sockets
-
-- **Parameter Name**: `effects_sockets`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to refund socket and link expenses
-
-### Affect Proposals
-
-- **Parameter Name**: `effects_proposals`
-- **Type**: boolean
-- **Default**: `True`
-
-Whether to refund proposal costs when submitting proposals
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # Inverse Prices Mod
 
@@ -211,12 +190,37 @@ This is a fun/experimental mod that breaks game balance completely. It's great f
 Same as TNI-Mods project
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 Configure refund multiplier and what to affect via Mod Manager settings. Uses on_device_spawned and on_tick hooks for real-time monitoring.
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `inverse-prices` |
+| Creation Date | 2026-01-01 |
+| Last Updated | 2026-01-24 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/inverse-prices-v0.1.1)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

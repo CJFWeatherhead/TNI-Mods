@@ -13,6 +13,54 @@ game_version: "beta"
 
 Comprehensive diagnostic and inspection tool for TNI game engine callbacks and API endpoints.
 
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.3 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-31 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download modapi-diagnostic-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v0.1.3/modapi-diagnostic-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **ModAPI Diagnostic Tool** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `modapi-diagnostic/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## About This Mod
+
+Comprehensive diagnostic and inspection tool for TNI game engine callbacks and API endpoints.
+
 ## Features
 - **Engine Event Logging**: Tracks engine load, mod reload, and game lifecycle events
 - **Device Spawn Inspection**: Logs detailed device properties and network configuration
@@ -42,46 +90,10 @@ Comprehensive diagnostic and inspection tool for TNI game engine callbacks and A
 All diagnostic information is printed to the game console. Use the in-game console
 to view detailed logs and object structures.
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.3
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-31
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic)
-
-## Download
-
-### Latest Release: v0.1.3
-
-**[Download modapi-diagnostic-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v0.1.3/modapi-diagnostic-0.1.3.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v0.1.3)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **ModAPI Diagnostic Tool** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `modapi-diagnostic/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # ModAPI Diagnostic Tool
 
@@ -156,12 +168,37 @@ Users are tracked in memory, allowing re-inspection after manual configuration c
 - When play_options becomes accessible
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 This is a developer tool for mod creators. No gameplay impact.
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `modapi-diagnostic` |
+| Creation Date | 2026-01-20 |
+| Last Updated | 2026-01-31 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v0.1.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v0.1.3/modapi-diagnostic-0.1.3.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)

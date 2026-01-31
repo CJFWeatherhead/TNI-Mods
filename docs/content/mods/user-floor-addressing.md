@@ -13,129 +13,82 @@ game_version: "beta"
 
 This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
 
+<div class="mod-header-info">
+
+| | |
+|---|---|
+| **Version** | 0.1.3 |
+| **Author** | CJFWeatherhead |
+| **Status** | 🟢 Active Development |
+| **Game Version** | beta |
+| **Last Updated** | 2026-01-27 |
+
+</div>
+
+---
+
+## Download
+
+<div class="download-section">
+
+**[Download user-floor-addressing-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.3/user-floor-addressing-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+
+</div>
+
+<details>
+<summary><strong>Installation Instructions</strong></summary>
+
+### Using Mod Manager (Recommended)
+
+1. Download the [Mod Manager](/mods/tools/modmanager/)
+2. Find **User Floor-Based Addressing** in the Available mods list
+3. Click **Download** to install automatically
+4. Configure parameters in the GUI
+
+### Manual Installation
+
+1. Download the zip file above
+2. Extract the `user-floor-addressing/` folder to your mods directory:
+   - **Windows:** `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
+   - **Linux:** `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
+3. Ensure [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) is in the mods directory
+
+</details>
+
+---
+
+## Configuration
+
+Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edit `entry.lua` directly.
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| **Network Address Format** | string | `f%d/usr%d` | Format string for network addresses. %d placeholders are replaced with floor number and user increment (e.g., "f%d/usr%d" becomes "f0/usr1") |
+| **DHCP Mode** | select: disabled, boot_dhcp, periodic_dhcp | `boot_dhcp` | DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only |
+| **Floor DNS Server Format** | string | `@f%d/dns` | Format string for floor-specific DNS servers. %d is replaced with floor number (e.g., "@f%d/dns" becomes "@f0/dns") |
+| **Fallback DNS Server 1** | string | `@f0/dns1` | First fallback DNS server if floor-specific DNS is unavailable |
+| **Fallback DNS Server 2** | string | `@f0/dns2` | Second fallback DNS server |
+| **Disable Hardware Address Refresh** | boolean | `False` | If enabled, users will not refresh their hardware addresses |
+| **Use Predictable Hardware Addresses** | boolean | `False` | If enabled (requires Disable Hardware Address Refresh), hardware addresses will be floor + increment (e.g., floor 5 user 3 = 5003, floor 113 user 321 = 113321) |
+| **Phone Address Format** | string | `@voice/f%d/%d` | Format string for phone network addresses. First %d is floor number, second %d is device increment (e.g., "@voice/f%d/%d" becomes "@voice/f0/1") |
+| **CCTV Address Format** | string | `@cam/f%d/%d` | Format string for CCTV camera network addresses. First %d is floor number, second %d is device increment (e.g., "@cam/f%d/%d" becomes "@cam/f0/1") |
+
+---
+
+## About This Mod
+
+This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
+
 ## Features
 - Sets DHCP mode to "boot_dhcp" for all users
 - Assigns addresses like "f{floor}/usr{increment}"
 - Configures DNS servers with floor-specific primary and floor 0 fallbacks
 - Tracks user count per floor for incremental addressing
 
-
-## Mod Information
-
-- **Author**: CJFWeatherhead
-- **Version**: 0.1.3
-- **Development Status**: Active Development
-- **Game Version**: beta
-- **Last Updated**: 2026-01-27
-- **Website**: [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing)
-
-## Download
-
-### Latest Release: v0.1.3
-
-**[Download user-floor-addressing-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.3/user-floor-addressing-0.1.3.zip)**
-
-[View all releases on GitHub →](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.3)
-
-### Installation Options
-
-#### Option 1: Using Mod Manager (Recommended)
-
-1. Download the [TNI Mod Manager](/mods/tools/modmanager/)
-2. Run the Mod Manager application
-3. Find **User Floor-Based Addressing** in the Available mods list
-4. Click **Download** to automatically install
-5. Configure parameters using the graphical interface
-
-#### Option 2: Manual Installation
-
-1. Download the zip file above
-2. Extract the `user-floor-addressing/` folder to your game's mods directory:
-   - Windows: `%APPDATA%\Godot\app_userdata\Tower Networking Inc\mods\`
-   - Linux: `~/.local/share/godot/app_userdata/Tower Networking Inc/mods/`
-3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed in the mods directory
-4. (Optional) Use [Mod Manager](/mods/tools/modmanager/) to configure parameters
-
-## Configuration Parameters
-
-This mod can be configured using the [Mod Manager](/mods/tools/modmanager/). Available parameters:
-
-### Network Address Format
-
-- **Parameter Name**: `address_format`
-- **Type**: string
-- **Default**: `f%d/usr%d`
-
-Format string for network addresses. %d placeholders are replaced with floor number and user increment (e.g., "f%d/usr%d" becomes "f0/usr1")
-
-### DHCP Mode
-
-- **Parameter Name**: `dhcp_mode`
-- **Type**: select
-- **Default**: `boot_dhcp`
-- **Options**: `disabled`, `boot_dhcp`, `periodic_dhcp`
-
-DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only
-
-### Floor DNS Server Format
-
-- **Parameter Name**: `dns_format`
-- **Type**: string
-- **Default**: `@f%d/dns`
-
-Format string for floor-specific DNS servers. %d is replaced with floor number (e.g., "@f%d/dns" becomes "@f0/dns")
-
-### Fallback DNS Server 1
-
-- **Parameter Name**: `fallback_dns_1`
-- **Type**: string
-- **Default**: `@f0/dns1`
-
-First fallback DNS server if floor-specific DNS is unavailable
-
-### Fallback DNS Server 2
-
-- **Parameter Name**: `fallback_dns_2`
-- **Type**: string
-- **Default**: `@f0/dns2`
-
-Second fallback DNS server
-
-### Disable Hardware Address Refresh
-
-- **Parameter Name**: `disable_hw_refresh`
-- **Type**: boolean
-- **Default**: `False`
-
-If enabled, users will not refresh their hardware addresses
-
-### Use Predictable Hardware Addresses
-
-- **Parameter Name**: `predictable_hw_address`
-- **Type**: boolean
-- **Default**: `False`
-
-If enabled (requires Disable Hardware Address Refresh), hardware addresses will be floor + increment (e.g., floor 5 user 3 = 5003, floor 113 user 321 = 113321)
-
-### Phone Address Format
-
-- **Parameter Name**: `phone_address_format`
-- **Type**: string
-- **Default**: `@voice/f%d/%d`
-
-Format string for phone network addresses. First %d is floor number, second %d is device increment (e.g., "@voice/f%d/%d" becomes "@voice/f0/1")
-
-### CCTV Address Format
-
-- **Parameter Name**: `cctv_address_format`
-- **Type**: string
-- **Default**: `@cam/f%d/%d`
-
-Format string for CCTV camera network addresses. First %d is floor number, second %d is device increment (e.g., "@cam/f%d/%d" becomes "@cam/f0/1")
-
 ---
 
-## Detailed Documentation
+<details>
+<summary><strong>Full Documentation</strong></summary>
 
 # User Floor-Based Addressing Mod
 
@@ -205,13 +158,38 @@ Addresses follow the pattern `f<floor>/usr<count>` where:
 - Works alongside device modification mods and reward scaling mods (like `floor-reward-scaling`)
 
 
+</details>
+
 ---
 
-## Additional Notes
+<details>
+<summary><strong>Additional Notes</strong></summary>
 
 DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
 
 
+</details>
+
 ---
 
-[← Back to All Mods](/mods/)
+<details>
+<summary><strong>Technical Details</strong></summary>
+
+| Field | Value |
+|-------|-------|
+| Mod ID | `user-floor-addressing` |
+| Creation Date | 2026-01-01 |
+| Last Updated | 2026-01-27 |
+| Game Version | beta |
+| Dependencies | None |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing) |
+
+**Release URLs:**
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.3/user-floor-addressing-0.1.3.zip)
+
+</details>
+
+---
+
+[Back to All Mods](/mods/)
