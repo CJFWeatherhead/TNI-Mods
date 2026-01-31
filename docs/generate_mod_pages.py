@@ -108,8 +108,8 @@ Browse and download community-created mods. All mods are open-source Lua scripts
 
 ## Available Mods
 
-| Mod | Description | Version | Author | Status |
-|-----|-------------|---------|--------|--------|
+| Mod | Description | Version | Author | Status | Download |
+|-----|-------------|---------|--------|--------|----------|
 """
     
     # Add each mod to the table
@@ -117,8 +117,12 @@ Browse and download community-created mods. All mods are open-source Lua scripts
         status_info = STATUS_INFO.get(mod['status'], STATUS_INFO['Unknown'])
         status_display = f"{status_info['icon']} {status_info['label']}"
         
+        # Construct download URL
+        release_tag = f"{mod['id']}-v{mod['version']}"
+        download_url = f"https://github.com/{GITHUB_REPO}/releases/download/{release_tag}/{mod['id']}-{mod['version']}.zip"
+        
         # Create table row
-        content += f"| **[{mod['name']}](/mods/{mod['id']}/)** | {mod['description']} | `{mod['version']}` | {mod['author']} | {status_display} |\n"
+        content += f"| **[{mod['name']}](/mods/{mod['id']}/)** | {mod['description']} | `{mod['version']}` | {mod['author']} | {status_display} | <a href=\"{download_url}\" class=\"button inline\">Download</a> |\n"
     
     content += f"""
 ---
