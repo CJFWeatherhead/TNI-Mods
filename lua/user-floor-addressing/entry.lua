@@ -17,8 +17,8 @@ local config = {
 
     -- DNS configuration
     dns_format = "@f%d/dns",
-    fallback_dns_1 = "@f0/dns1",
-    fallback_dns_2 = "@f0/dns2",
+    fallback_dns_1 = "@srv/dns1",
+    fallback_dns_2 = "@srv/dns2",
 
     -- Hardware address configuration
     disable_hw_refresh = false,
@@ -219,11 +219,27 @@ function on_user_spawned(user)
             dns1 = string.format("@f%d/dns", floor_num)
         end
     end
+    
+    -- Format fallback DNS servers (supports %d placeholders)
+    local fb_dns1, fb_dns2
+    do
+        local ok, result = pcall(function()
+            return string.format(fallback_dns_1, floor_num)
+        end)
+        fb_dns1 = ok and result or fallback_dns_1
+    end
+    do
+        local ok, result = pcall(function()
+            return string.format(fallback_dns_2, floor_num)
+        end)
+        fb_dns2 = ok and result or fallback_dns_2
+    end
+    
     local success, err = pcall(function()
         local dns_array = Array.create()
         dns_array:append(dns1)
-        dns_array:append(fallback_dns_1)
-        dns_array:append(fallback_dns_2)
+        dns_array:append(fb_dns1)
+        dns_array:append(fb_dns2)
         networkctl.set_designated_dns_servers(dns_array)
     end)
 
@@ -242,7 +258,7 @@ function on_user_spawned(user)
     ))
     print(string.format("  Address: %s", network_address))
     print(string.format("  DHCP: %s", dhcp_mode))
-    print(string.format("  DNS: %s, %s, %s", dns1, fallback_dns_1, fallback_dns_2))
+    print(string.format("  DNS: %s, %s, %s", dns1, fb_dns1, fb_dns2))
     -- Hardware addresses are RNG-generated at device creation and cannot be controlled by mods
 end
 
@@ -390,11 +406,26 @@ function on_device_spawned(device)
         end
     end
 
+    -- Format fallback DNS servers (supports %d placeholders)
+    local fb_dns1, fb_dns2
+    do
+        local ok, result = pcall(function()
+            return string.format(fallback_dns_1, floor_num)
+        end)
+        fb_dns1 = ok and result or fallback_dns_1
+    end
+    do
+        local ok, result = pcall(function()
+            return string.format(fallback_dns_2, floor_num)
+        end)
+        fb_dns2 = ok and result or fallback_dns_2
+    end
+
     local success, err = pcall(function()
         local dns_array = Array.create()
         dns_array:append(dns1)
-        dns_array:append(fallback_dns_1)
-        dns_array:append(fallback_dns_2)
+        dns_array:append(fb_dns1)
+        dns_array:append(fb_dns2)
         networkctl.set_designated_dns_servers(dns_array)
     end)
 
@@ -413,7 +444,7 @@ function on_device_spawned(device)
     ))
     print(string.format("  Address: %s", network_address))
     print(string.format("  DHCP: %s", dhcp_mode))
-    print(string.format("  DNS: %s, %s, %s", dns1, fallback_dns_1, fallback_dns_2))
+    print(string.format("  DNS: %s, %s, %s", dns1, fb_dns1, fb_dns2))
     -- Hardware addresses are RNG-generated at device creation and cannot be controlled by mods
 end
 
