@@ -199,7 +199,7 @@ local function restock_all_merchants()
     return restock_count > 0
 end
 
--- Keyboard input handler for CTRL+SHIFT+R (restock)
+-- Keyboard input handler for SHIFT+R (restock)
 function on_player_input(event)
     if not config.enable_restock_hotkey then
         return
@@ -214,16 +214,14 @@ function on_player_input(event)
 
     local keycode = nil
     local is_pressed = false
-    local is_ctrl = false
     local is_shift = false
 
     pcall(function() keycode = event:get_keycode() end)
     pcall(function() is_pressed = event:is_pressed() end)
-    pcall(function() is_ctrl = event:is_ctrl_pressed() end)
     pcall(function() is_shift = event:is_shift_pressed() end)
 
-    -- CTRL+SHIFT+R (82) - Restock all merchants
-    if keycode == 82 and is_pressed and is_ctrl and is_shift then
+    -- SHIFT+R (82) - Restock all merchants
+    if keycode == 82 and is_pressed and is_shift then
         local current_time = os.clock()
         if current_time - last_restock_time < RESTOCK_COOLDOWN then
             return

@@ -4,12 +4,12 @@
 -- Author: CJFWeatherhead
 -- Version: 0.1.0
 -- Description: This mod provides keyboard shortcuts to trigger chaos events:
---              - CTRL+SHIFT+F: Force spawn a random floor
---              - CTRL+SHIFT+D: Toggle disaster mode (increased event rates)
---              - CTRL+SHIFT+X: Reset all chaos settings to defaults
+--              - SHIFT+F: Force spawn a random floor
+--              - SHIFT+D: Toggle disaster mode (increased event rates)
+--              - SHIFT+X: Reset all chaos settings to defaults
 --              Additionally, user stats are randomized on spawn for varied gameplay.
 -- Usage: Use keyboard shortcuts during gameplay. Configure features in Mod Manager.
--- Notes: Uses CTRL+SHIFT combinations to avoid hotkey clashes with other mods.
+-- Notes: Uses SHIFT combinations for easy access during gameplay.
 
 local mod_id = "chaos-engine"
 
@@ -244,10 +244,10 @@ function on_engine_load()
     -- Log configuration
     local features = {}
     if config.enable_random_floors then
-        table.insert(features, "RandomFloors(CTRL+SHIFT+F)")
+        table.insert(features, "RandomFloors(SHIFT+F)")
     end
     if config.enable_disaster_mode then
-        table.insert(features, string.format("DisasterMode(CTRL+SHIFT+D, x%.1f)", config.disaster_event_multiplier))
+        table.insert(features, string.format("DisasterMode(SHIFT+D, x%.1f)", config.disaster_event_multiplier))
     end
     if config.enable_user_randomization then
         table.insert(features, "UserRandomization")
@@ -259,7 +259,7 @@ function on_engine_load()
         log_important("No features enabled")
     end
 
-    log_important("Reset hotkey: CTRL+SHIFT+X")
+    log_important("Reset hotkey: SHIFT+X")
 end
 
 function on_mod_reload()
@@ -286,16 +286,14 @@ function on_player_input(event)
 
     local keycode = nil
     local is_pressed = false
-    local is_ctrl = false
     local is_shift = false
 
     pcall(function() keycode = event:get_keycode() end)
     pcall(function() is_pressed = event:is_pressed() end)
-    pcall(function() is_ctrl = event:is_ctrl_pressed() end)
     pcall(function() is_shift = event:is_shift_pressed() end)
 
-    -- We need CTRL+SHIFT+<key> combinations
-    if not (is_ctrl and is_shift) then
+    -- We need SHIFT+<key> combinations
+    if not is_shift then
         return
     end
 
@@ -310,7 +308,7 @@ function on_player_input(event)
         world_ref = ModApiV1.get_game_world()
     end
 
-    -- CTRL+SHIFT+F (70) - Random Floor
+    -- SHIFT+F (70) - Random Floor
     if keycode == 70 and is_pressed and config.enable_random_floors then
         last_action_time = current_time
         if trigger_random_floor() then
@@ -321,7 +319,7 @@ function on_player_input(event)
         return
     end
 
-    -- CTRL+SHIFT+D (68) - Disaster Mode Toggle
+    -- SHIFT+D (68) - Disaster Mode Toggle
     if keycode == 68 and is_pressed and config.enable_disaster_mode then
         last_action_time = current_time
         local is_active = toggle_disaster_mode()
@@ -333,7 +331,7 @@ function on_player_input(event)
         return
     end
 
-    -- CTRL+SHIFT+X (88) - Reset to Defaults
+    -- SHIFT+X (88) - Reset to Defaults
     if keycode == 88 and is_pressed then
         last_action_time = current_time
         reset_to_defaults()
