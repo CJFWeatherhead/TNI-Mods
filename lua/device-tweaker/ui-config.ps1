@@ -111,8 +111,8 @@ if ($enableBandwidth) {
 Multiplier for device network bandwidth capacity.
 
 Examples:
-- 2.0 = Double bandwidth (10 Gbps -> 20 Gbps)
-- 0.5 = Half bandwidth (10 Gbps -> 5 Gbps)
+- 2.0 = Double bandwidth
+- 0.5 = Half bandwidth
 - 10.0 = Ten times bandwidth
 
 Applies to all devices with network interfaces.
