@@ -42,8 +42,8 @@ Only proposals with unmet dependencies are excluded.
 It temporarily increases the proposal batch size to display all eligible proposals.
 
 Keyboard Shortcuts:
-• Shift+P - Show all available proposals
-• Shift+O - Restore normal proposal batch size
+- Shift+P - Show all available proposals
+- Shift+O - Restore normal proposal batch size
 
 The mod safely checks for dependencies and adhoc requirements before including proposals.
 "@
@@ -68,8 +68,8 @@ $parameters += @{
 Display in-game notifications when activating or deactivating the mod.
 
 When enabled:
-• Shows a notification when all proposals are displayed (Shift+P)
-• Shows a notification when normal mode is restored (Shift+O)
+- Shows a notification when all proposals are displayed (Shift+P)
+- Shows a notification when normal mode is restored (Shift+O)
 
 Note: This feature depends on the game's notification system.
 If not supported, only console messages will appear.
