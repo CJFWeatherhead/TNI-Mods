@@ -8,7 +8,7 @@
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
 .NOTES
     Author: CJFWeatherhead
-    Version: 3.5.3
+    Version: 3.5.4
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
@@ -762,7 +762,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tower Networking Inc - Mod Manager v3.5.3" 
+        Title="Tower Networking Inc - Mod Manager v3.5.4" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">
