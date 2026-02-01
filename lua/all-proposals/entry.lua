@@ -3,7 +3,7 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display with Shift+O.
 -- Author: CJFWeatherhead
--- Version: 0.1.5
+-- Version: 0.1.6
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
@@ -13,7 +13,7 @@
 --        It stores the original batch size on first use and restores it when deactivating.
 --        Proposals with unmet dependencies or failed adhoc requirements are excluded from display.
 
-print("=== All Proposals Mod v0.1.5 Loaded ===")
+print("=== All Proposals Mod v0.1.6 Loaded ===")
 
 -- ===== MOD CONFIGURATION START =====
 -- This section is parsed and modified by ModManager
@@ -105,7 +105,12 @@ local function get_dependency_name(proposal)
     local dep_name = nil
     pcall(function()
         if proposal.depends_on then
+            -- Try get_proposal_name() first
             dep_name = proposal.depends_on:get_proposal_name()
+            -- If that fails or is empty, try name property
+            if not dep_name or dep_name == "" then
+                dep_name = proposal.depends_on.name
+            end
         end
     end)
     return dep_name
@@ -164,9 +169,16 @@ local function show_all_proposals()
             if proposal then
                 local proposal_name = "Unknown"
                 pcall(function()
+                    -- Try get_proposal_name() first
                     local name = proposal:get_proposal_name()
                     if name and name ~= "" then
                         proposal_name = name
+                    else
+                        -- Fall back to name property
+                        name = proposal.name
+                        if name and name ~= "" then
+                            proposal_name = name
+                        end
                     end
                 end)
 
@@ -245,16 +257,53 @@ local function show_all_proposals()
         propmod_controller:reroll_proposals()
     end)
 
-    -- Emit the new_proposals_updated signal to refresh the Secretariat UI
+    -- Emit signals to refresh the Secretariat UI
+    -- Try both direct call and emit_signal approaches
     pcall(function()
-        propmod_controller:new_proposals_updated()
-        print("[All Proposals] Emitted new_proposals_updated signal")
+        if propmod_controller.emit_signal then
+            propmod_controller:emit_signal("new_proposals_updated")
+            print("[All Proposals] Emitted new_proposals_updated signal via emit_signal")
+        else
+            propmod_controller:new_proposals_updated()
+            print("[All Proposals] Called new_proposals_updated directly")
+        end
     end)
 
-    -- Also try ex_proposals_updated for good measure
     pcall(function()
-        propmod_controller:ex_proposals_updated()
-        print("[All Proposals] Emitted ex_proposals_updated signal")
+        if propmod_controller.emit_signal then
+            propmod_controller:emit_signal("ex_proposals_updated")
+            print("[All Proposals] Emitted ex_proposals_updated signal via emit_signal")
+        else
+            propmod_controller:ex_proposals_updated()
+            print("[All Proposals] Called ex_proposals_updated directly")
+        end
+    end)
+
+    -- Try to find and refresh the Secretariat app if it's open
+    pcall(function()
+        local base_ui = ModApiV1.get_base_ui()
+        if base_ui and base_ui.get_node then
+            -- Try to find the Secretariat node in the scene tree
+            local secretariat = base_ui:get_node_or_null("/root/BaseUI/TheSecretariat")
+            if not secretariat then
+                secretariat = base_ui:get_node_or_null("TheSecretariat")
+            end
+            
+            if secretariat then
+                print("[All Proposals] Found Secretariat, attempting refresh...")
+                -- Try various refresh methods
+                if secretariat.clear_dynamic then
+                    secretariat:clear_dynamic()
+                    print("[All Proposals] Called clear_dynamic()")
+                end
+                if secretariat.launch then
+                    secretariat:launch()
+                    print("[All Proposals] Called launch() to refresh")
+                end
+            else
+                print("[All Proposals] Secretariat not found in scene tree (may not be open)")
+            end
+        end
     end)
 
     all_proposals_active = true
@@ -321,13 +370,41 @@ local function restore_normal_proposals()
 
     -- Emit signals to refresh the Secretariat UI
     pcall(function()
-        propmod_controller:new_proposals_updated()
-        print("[All Proposals] Emitted new_proposals_updated signal")
+        if propmod_controller.emit_signal then
+            propmod_controller:emit_signal("new_proposals_updated")
+            print("[All Proposals] Emitted new_proposals_updated signal via emit_signal")
+        else
+            propmod_controller:new_proposals_updated()
+            print("[All Proposals] Called new_proposals_updated directly")
+        end
     end)
 
     pcall(function()
-        propmod_controller:ex_proposals_updated()
-        print("[All Proposals] Emitted ex_proposals_updated signal")
+        if propmod_controller.emit_signal then
+            propmod_controller:emit_signal("ex_proposals_updated")
+            print("[All Proposals] Emitted ex_proposals_updated signal via emit_signal")
+        else
+            propmod_controller:ex_proposals_updated()
+            print("[All Proposals] Called ex_proposals_updated directly")
+        end
+    end)
+
+    -- Try to refresh Secretariat if open
+    pcall(function()
+        local base_ui = ModApiV1.get_base_ui()
+        if base_ui and base_ui.get_node then
+            local secretariat = base_ui:get_node_or_null("/root/BaseUI/TheSecretariat")
+            if not secretariat then
+                secretariat = base_ui:get_node_or_null("TheSecretariat")
+            end
+            if secretariat and secretariat.clear_dynamic then
+                secretariat:clear_dynamic()
+                if secretariat.launch then
+                    secretariat:launch()
+                end
+                print("[All Proposals] Refreshed Secretariat UI")
+            end
+        end
     end)
 
     all_proposals_active = false

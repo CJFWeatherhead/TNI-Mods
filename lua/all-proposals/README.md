@@ -28,6 +28,13 @@ The mod will log detailed information about the proposal status in the console, 
 - **BLOCKED PROPOSALS**: Proposals with unmet dependencies (shows what they require)
 - **SUBMITTED PROPOSALS**: Proposals already completed
 
+**Note about UI refresh**: The mod attempts to automatically refresh the Secretariat app when toggling modes. If the proposals don't update immediately in the Secretariat, try:
+1. Close and reopen the Secretariat app
+2. Wait for the next automatic proposal refresh cycle
+3. Click the reroll button in the Secretariat (if available)
+
+The proposals are definitely updated in the game's memory - the UI just may need a manual refresh.
+
 ## Example Output
 ```
 [All Proposals] ========================================
