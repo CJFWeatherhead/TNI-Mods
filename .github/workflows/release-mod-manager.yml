@@ -146,15 +146,19 @@ jobs:
           $maxRetries = 5
           $retryCount = 0
           while ($retryCount -lt $maxRetries) {
-            try {
-              git push
+            git push
+            if ($LASTEXITCODE -eq 0) {
               echo "Push successful"
               break
-            } catch {
+            } else {
               $retryCount++
               if ($retryCount -lt $maxRetries) {
                 echo "Push failed, attempt $retryCount of $maxRetries. Pulling with rebase..."
                 git pull --rebase origin ${{ github.ref_name }}
+                if ($LASTEXITCODE -ne 0) {
+                  echo "Rebase failed, aborting rebase and trying again..."
+                  git rebase --abort 2>$null
+                }
                 Start-Sleep -Seconds ($retryCount * 2)
               } else {
                 echo "Push failed after $maxRetries attempts"
