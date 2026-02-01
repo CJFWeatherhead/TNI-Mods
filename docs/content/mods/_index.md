@@ -1,6 +1,6 @@
 ---
 title: "Available Mods"
-date: 2026-01-31
+date: 2026-02-01
 draft: false
 ---
 
@@ -27,7 +27,7 @@ Browse and download community-created mods. All mods are open-source Lua scripts
 | Mod | Description | Version | Author | Status | Download |
 |-----|-------------|---------|--------|--------|----------|
 | **[2x Bandwidth Switches](/mods/2x-bandwidth-switches/)** | This mod doubles the bandwidth capacity of all switches in the Tower Networking Inc game. | `0.1.2` | treefarmer741 | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.2/2x-bandwidth-switches-0.1.2.zip" class="button inline">Download</a> |
-| **[All Proposals](/mods/all-proposals/)** | All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily in... | `0.1.5` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.5/all-proposals-0.1.5.zip" class="button inline">Download</a> |
+| **[All Proposals](/mods/all-proposals/)** | All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily in... | `0.1.6` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.6/all-proposals-0.1.6.zip" class="button inline">Download</a> |
 | **[Chaos Engine](/mods/chaos-engine/)** | A controlled chaos mod that introduces randomness and unpredictability to Tower Networking Inc | `0.1.5` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.5/chaos-engine-0.1.5.zip" class="button inline">Download</a> |
 | **[Device Tweaker](/mods/device-tweaker/)** | A comprehensive mod for tweaking device properties in Tower Networking Inc. | `0.1.9` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.9/device-tweaker-0.1.9.zip" class="button inline">Download</a> |
 | **[Floor Reward Scaling](/mods/floor-reward-scaling/)** | **Floor Reward Scaling Mod** automatically scales user daily payment rates based on their floor number using configurable progression systems. Choo... | `0.1.4` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.4/floor-reward-scaling-0.1.4.zip" class="button inline">Download</a> |
@@ -75,4 +75,4 @@ Interested in modding? Check out the [GitHub repository](https://github.com/CJFW
 
 ---
 
-*Last updated: 2026-01-31 | 11 mods available*
+*Last updated: 2026-02-01 | 11 mods available*
