@@ -71,6 +71,22 @@ create a new floor immediately.
 }
 
 $parameters += @{
+    Name        = "enable_initial_floor_randomization"
+    Label       = "Randomize Initial Floors"
+    Type        = "boolean"
+    Default     = $false
+    Description = @"
+Randomize the 3 initial floors when starting a new game session.
+
+Instead of the pre-defined starting floors, 3 random floors 
+will be generated using the same logic as SHIFT+F.
+
+Note: This happens during game initialization and may result 
+in unexpected starting conditions!
+"@
+}
+
+$parameters += @{
     Name            = "enable_disaster_mode"
     Label           = "Enable Disaster Mode"
     Type            = "boolean"

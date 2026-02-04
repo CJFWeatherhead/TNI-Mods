@@ -21,6 +21,7 @@ local config = {
     -- Feature toggles
     enable_random_floors = true,
     enable_disaster_mode = true,
+    enable_initial_floor_randomization = false,
 
     -- Disaster mode settings
     disaster_event_multiplier = 5.0,  -- How much to multiply event rates in disaster mode
@@ -315,6 +316,9 @@ function on_engine_load()
     if config.enable_random_floors then
         table.insert(features, "RandomFloors(SHIFT+F)")
     end
+    if config.enable_initial_floor_randomization then
+        table.insert(features, "InitialFloorRandom")
+    end
     if config.enable_disaster_mode then
         table.insert(features, string.format("DisasterMode(SHIFT+D, x%.1f)", config.disaster_event_multiplier))
     end
@@ -336,6 +340,19 @@ function on_engine_load()
     end
 
     log_important("Reset hotkey: SHIFT+X")
+
+    -- Randomize initial floors if enabled
+    if config.enable_initial_floor_randomization and world_ref then
+        log_important("Attempting to randomize initial floors...")
+        -- Spawn 3 random floors to replace the initial ones
+        for i = 1, 3 do
+            if trigger_random_floor() then
+                log(string.format("Randomized initial floor %d/3", i))
+            else
+                log(string.format("Failed to randomize initial floor %d/3", i))
+            end
+        end
+    end
 end
 
 function on_mod_reload()
