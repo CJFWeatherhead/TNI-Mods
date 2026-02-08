@@ -509,11 +509,19 @@ local function export_game_state_json()
         return nil
     end
     
+    -- Safe timestamp (os.time/os.date may be restricted in sandbox)
+    local timestamp = nil
+    local datestr = nil
+    pcall(function()
+        timestamp = os.time()
+        datestr = os.date("%Y-%m-%dT%H:%M:%S")
+    end)
+    
     local game_state = {
         _metadata = {
             mod_version = "3.0",
-            export_timestamp = os.time(),
-            export_date = os.date("%Y-%m-%dT%H:%M:%S")
+            export_timestamp = timestamp,
+            export_date = datestr
         }
     }
     
