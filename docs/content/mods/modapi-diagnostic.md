@@ -120,10 +120,10 @@ This mod provides comprehensive diagnostic capabilities for Tower Networking Inc
 
 ## What's New in v3.0
 
-- **JSON Game State Export (Shift+J)**: Export complete game state to a JSON file for external tools
+- **JSON Game State Export (Shift+J)**: Export complete game state to logs for external tools
 - **API Test Suite (Shift+Q)**: Comprehensive testing of all documented API endpoints
 - **Enhanced Configuration**: UI config with selectable data sections and test categories
-- **Terraform/OpenTofu Ready**: Designed to support external infrastructure-as-code integrations
+- **In-Game Notifications**: Visual feedback for all operations
 
 ## Purpose
 
@@ -149,7 +149,7 @@ This mod provides comprehensive diagnostic capabilities for Tower Networking Inc
 |----------|----------|-------------|
 | **Shift+R** | Re-inspect Users | Re-inspect all spawned users' network configs |
 | **Shift+D** | Dump Devices | List all devices in the world |
-| **Shift+J** | Export JSON | Export game state to `game_state.json` |
+| **Shift+J** | Export JSON | Export game state to logs (copy from console) |
 | **Shift+Q** | API Test Suite | Run comprehensive API endpoint tests |
 
 ### Console Commands
@@ -167,7 +167,11 @@ export_test_results_json() -- Export test results as JSON
 
 ## JSON Export (Shift+J)
 
-The JSON export feature creates a comprehensive snapshot of game state including:
+The JSON export feature outputs a comprehensive snapshot of game state to the game logs. The output appears between `=== JSON GAME STATE START ===` and `=== JSON GAME STATE END ===` markers.
+
+**Note**: Due to sandbox restrictions, mods cannot write files to disk. Copy the JSON from the game logs/console instead.
+
+Includes:
 
 - **World Info**: Day count, cash balance, scenario name, difficulty
 - **Devices**: All devices with hardware class, network config, specs
