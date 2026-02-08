@@ -100,7 +100,7 @@ $parameters += @{
 $parameters += @{
     Type        = "section"
     Label       = "JSON Export Options (Shift+J)"
-    Description = "Configure what data is included in JSON exports for external tools (Terraform, REST API, etc.)"
+    Description = "Configure what data is included in JSON export to game logs"
 }
 
 $parameters += @{
@@ -108,15 +108,7 @@ $parameters += @{
     Label       = "Enable JSON Export"
     Type        = "boolean"
     Default     = $true
-    Description = "Enable the Shift+J JSON export feature"
-}
-
-$parameters += @{
-    Name        = "json_export_path"
-    Label       = "JSON Export Filename"
-    Type        = "string"
-    Default     = "game_state.json"
-    Description = "Filename for JSON export (saved in mod directory)"
+    Description = "Enable the Shift+J JSON export feature (exports to log output)"
 }
 
 $parameters += @{
