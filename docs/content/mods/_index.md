@@ -1,6 +1,6 @@
 ---
 title: "Available Mods"
-date: 2026-02-01
+date: 2026-02-08
 draft: false
 ---
 
@@ -27,12 +27,12 @@ Browse and download community-created mods. All mods are open-source Lua scripts
 | Mod | Description | Version | Author | Status | Download |
 |-----|-------------|---------|--------|--------|----------|
 | **[2x Bandwidth Switches](/mods/2x-bandwidth-switches/)** | This mod doubles the bandwidth capacity of all switches in the Tower Networking Inc game. | `0.1.2` | treefarmer741 | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.2/2x-bandwidth-switches-0.1.2.zip" class="button inline">Download</a> |
-| **[All Proposals](/mods/all-proposals/)** | All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily in... | `0.1.6` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.6/all-proposals-0.1.6.zip" class="button inline">Download</a> |
-| **[Chaos Engine](/mods/chaos-engine/)** | A controlled chaos mod that introduces randomness and unpredictability to Tower Networking Inc | `0.1.5` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.5/chaos-engine-0.1.5.zip" class="button inline">Download</a> |
+| **[All Proposals](/mods/all-proposals/)** | All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily in... | `0.1.7` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.7/all-proposals-0.1.7.zip" class="button inline">Download</a> |
+| **[Chaos Engine](/mods/chaos-engine/)** | A controlled chaos mod that introduces randomness and unpredictability to Tower Networking Inc | `0.1.6` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.6/chaos-engine-0.1.6.zip" class="button inline">Download</a> |
 | **[Device Tweaker](/mods/device-tweaker/)** | A comprehensive mod for tweaking device properties in Tower Networking Inc. | `0.1.9` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.9/device-tweaker-0.1.9.zip" class="button inline">Download</a> |
 | **[Floor Reward Scaling](/mods/floor-reward-scaling/)** | **Floor Reward Scaling Mod** automatically scales user daily payment rates based on their floor number using configurable progression systems. Choo... | `0.1.4` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.4/floor-reward-scaling-0.1.4.zip" class="button inline">Download</a> |
 | **[Inverse Prices](/mods/inverse-prices/)** | This mod inverts the game's economy by making purchases pay the player instead of costing money. | `0.1.1` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip" class="button inline">Download</a> |
-| **[ModAPI Diagnostic Tool](/mods/modapi-diagnostic/)** | Comprehensive diagnostic and inspection tool for TNI game engine callbacks and API endpoints. | `0.1.3` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v0.1.3/modapi-diagnostic-0.1.3.zip" class="button inline">Download</a> |
+| **[ModAPI Diagnostic Tool](/mods/modapi-diagnostic/)** | Comprehensive diagnostic, inspection, and API testing tool for TNI game engine. | `3.0.0` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.0/modapi-diagnostic-3.0.0.zip" class="button inline">Download</a> |
 | **[Money Cheat](/mods/money-cheat/)** | Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M. | `0.1.5` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.5/money-cheat-0.1.5.zip" class="button inline">Download</a> |
 | **[TARDIS - Time Controller](/mods/tardis/)** | Control game time like a Time Lord! This mod provides keyboard shortcuts to manipulate game speed and skip time. | `0.1.1` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.1/tardis-0.1.1.zip" class="button inline">Download</a> |
 | **[User Floor-Based Addressing](/mods/user-floor-addressing/)** | This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment. | `0.1.5` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.5/user-floor-addressing-0.1.5.zip" class="button inline">Download</a> |
@@ -75,4 +75,4 @@ Interested in modding? Check out the [GitHub repository](https://github.com/CJFW
 
 ---
 
-*Last updated: 2026-02-01 | 11 mods available*
+*Last updated: 2026-02-08 | 11 mods available*

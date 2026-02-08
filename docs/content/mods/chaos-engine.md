@@ -1,10 +1,10 @@
 ---
 title: "Chaos Engine"
-date: 2026-01-31
+date: 2026-02-04
 draft: false
 mod_id: "chaos-engine"
 author: "CJFWeatherhead"
-version: "0.1.5"
+version: "0.1.6"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 | | |
 |---|---|
-| **Version** | 0.1.5 |
+| **Version** | 0.1.6 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-01-31 |
+| **Last Updated** | 2026-02-04 |
 
 </div>
 
@@ -31,7 +31,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 <div class="download-section">
 
-**[Download chaos-engine-0.1.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.5/chaos-engine-0.1.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download chaos-engine-0.1.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.6/chaos-engine-0.1.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -289,14 +289,14 @@ Original event rates are stored and can be restored with the reset function.
 |-------|-------|
 | Mod ID | `chaos-engine` |
 | Creation Date | 2026-01-31 |
-| Last Updated | 2026-01-31 |
+| Last Updated | 2026-02-04 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.5)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.5/chaos-engine-0.1.5.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.6)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.6/chaos-engine-0.1.6.zip)
 
 </details>
 
