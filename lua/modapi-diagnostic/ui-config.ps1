@@ -18,30 +18,23 @@
 #>
 
 param(
-    [hashtable]$CurrentConfig
+    [hashtable]$CurrentConfig = @{}
 )
 
 # Initialize parameters array
 $parameters = @()
-
-# Ensure CurrentConfig is initialized
-if ($null -eq $CurrentConfig) {
-    $CurrentConfig = @{}
-}
 
 # ============================================================================
 # Diagnostic Tool Information
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_about"
     Type        = "section"
     Label       = "About ModAPI Diagnostic Tool v3.0"
     Description = "Developer tool for inspecting game engine callbacks, exporting game state, and testing API endpoints"
 }
 
 $parameters += @{
-    Name  = "_info_purpose"
     Type  = "info"
     Label = "Purpose"
     Text  = @"
@@ -63,7 +56,6 @@ All output goes to the game console. Use this tool to understand game object str
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_event_logging"
     Type        = "section"
     Label       = "Event Logging Options"
     Description = "Control what events are logged to the console"
@@ -106,7 +98,6 @@ $parameters += @{
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_json_export"
     Type        = "section"
     Label       = "JSON Export Options (Shift+J)"
     Description = "Configure what data is included in JSON exports for external tools (Terraform, REST API, etc.)"
@@ -213,7 +204,6 @@ $parameters += @{
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_api_tests"
     Type        = "section"
     Label       = "API Test Suite Options (Shift+Q)"
     Description = "Configure which API endpoints to test for documentation and debugging"
@@ -288,7 +278,6 @@ $parameters += @{
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_advanced"
     Type        = "section"
     Label       = "Advanced Settings"
     Description = "Control diagnostic behavior"
@@ -335,14 +324,12 @@ Console messages will always be shown regardless of this setting.
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_hotkeys"
     Type        = "section"
     Label       = "Keyboard Shortcuts"
     Description = "Available hotkeys while in-game"
 }
 
 $parameters += @{
-    Name  = "_info_hotkeys"
     Type  = "info"
     Label = "Hotkeys"
     Text  = @"
@@ -366,14 +353,12 @@ You can also call these functions directly from the Lua console:
 # ============================================================================
 
 $parameters += @{
-    Name        = "_section_usage"
     Type        = "section"
     Label       = "Usage Tips"
     Description = "How to use this diagnostic tool effectively"
 }
 
 $parameters += @{
-    Name  = "_info_getting_started"
     Type  = "info"
     Label = "Getting Started"
     Text  = @"
@@ -406,7 +391,4 @@ Common Use Cases:
 }
 
 # Return the configuration
-return @{
-    Parameters = $parameters
-    Version    = "3.0"
-}
+return $parameters
