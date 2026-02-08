@@ -18,17 +18,15 @@
 #>
 
 param(
-    [hashtable]$CurrentConfig = @{}
+    [hashtable]$CurrentConfig
 )
 
 # Initialize parameters array
 $parameters = @()
 
-# Helper function to get config value with default
-function Get-ConfigValue {
-    param([string]$Key, $Default)
-    if ($CurrentConfig.ContainsKey($Key)) { return $CurrentConfig[$Key] }
-    return $Default
+# Ensure CurrentConfig is initialized
+if ($null -eq $CurrentConfig) {
+    $CurrentConfig = @{}
 }
 
 # ============================================================================
