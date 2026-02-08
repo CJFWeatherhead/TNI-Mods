@@ -1,44 +1,67 @@
 Name: ModAPI Diagnostic Tool
 Description: |
-  Comprehensive diagnostic and inspection tool for TNI game engine callbacks and API endpoints.
+  Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
   
-  ## Features
+  ## Features v3.0
+  
+  ### Event Logging
   - **Engine Event Logging**: Tracks engine load, mod reload, and game lifecycle events
   - **Device Spawn Inspection**: Logs detailed device properties and network configuration
   - **User Spawn Analysis**: Comprehensive user property inspection with network/DNS details
-  - **Re-inspection Capability**: Press Shift+R to re-inspect all spawned users
   - **Network Configuration Monitoring**: Track DHCP settings, IP addresses, and DNS servers
-  - **Safe Error Handling**: Protected table dumps and property access
-  - **Console Integration**: Call `reinspect_all_users()` from Lua console
+  
+  ### JSON Game State Export (Shift+J)
+  - Export complete game state to JSON file
+  - Configurable data sections (devices, users, finances, network, etc.)
+  - Designed for external tool integration (Terraform, REST APIs)
+  - Human-readable formatted output
+  
+  ### API Test Suite (Shift+Q)
+  - Comprehensive testing of all ModApiV1 endpoints
+  - Tests GameWorld, DeviceUnit, User, NetworkControl APIs
+  - Reports passed/failed/skipped with detailed output
+  - Export test results as JSON for documentation
+  
+  ### Keyboard Shortcuts
+  - **Shift+R**: Re-inspect all spawned users
+  - **Shift+D**: Dump all devices in the world
+  - **Shift+J**: Export game state to JSON
+  - **Shift+Q**: Run API test suite (Query)
+  
+  ### Lua Console Commands
+  - `reinspect_all_users()` - Re-inspect user network configs
+  - `dump_all_world_devices()` - List all devices
+  - `inspect_scenes()` - Inspect available floors
+  - `export_to_json_file()` - Export JSON state
+  - `run_api_test_suite()` - Run API tests
+  - `export_test_results_json()` - Export test results
   
   ## Use Cases
   - Debug mod development issues
+  - Export game state for external automation tools
+  - Test and document API endpoint availability
   - Understand game object structures
-  - Inspect network configurations
-  - Track user and device properties
-  - Test API endpoints and callbacks
-  - Learn the game engine's behavior
-  
-  ## Logged Events
-  - `on_engine_load()` - Initial engine startup
-  - `on_mod_reload()` - When F11 is pressed
-  - `on_device_spawned()` - Device creation with full network config
-  - `on_user_spawned()` - User creation with location and network details
-  - `on_day_start()` / `on_day_end()` - Day cycle events
-  - Input events (Shift+R hotkey)
+  - Track network configurations
+  - Build Terraform/OpenTofu providers
   
   ## Output
-  All diagnostic information is printed to the game console. Use the in-game console
-  to view detailed logs and object structures.
+  All diagnostic information is printed to the game console. JSON exports are
+  saved to files in the mod directory.
   
 Author: CJFWeatherhead
-Version: 0.1.3
+Version: 3.0.0
 Creation Date: 2026-01-20
-Last Updated: 2026-01-31
+Last Updated: 2026-02-01
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic
 Development Status: Active Development
 Game Version Supported: beta
 ID: modapi-diagnostic
 Dependencies: []
 Image: 
-Notes: This is a developer tool for mod creators. No gameplay impact.
+Notes: |
+  This is a developer tool for mod creators and external tool integrations.
+  No gameplay impact. Ideal for:
+  - Mod developers learning the API
+  - Building REST API bridges
+  - Terraform/OpenTofu provider development
+  - Game state analysis and automation
