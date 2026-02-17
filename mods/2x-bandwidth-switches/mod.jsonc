@@ -12,9 +12,11 @@
 	},
 	"dependencies": {
 		// See https://devhints.io/semver for syntax.
-		"tower-networking-inc": "0.10.0 - 0.10.2",
+		"tower-networking-inc": "^0.10.7",
 		"luajit-support": "~0.2.0"
 	},
 	"dependencies_optional": {
+	},
+	"incompatibilities": {
 	}
 }
