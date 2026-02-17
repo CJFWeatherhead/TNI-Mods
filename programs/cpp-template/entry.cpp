@@ -39,9 +39,11 @@ static Variant on_mod_load() {
 	return Nil;
 }
 
-static Variant on_engine_load() {
+static Variant on_mods_loaded() {
 	fetch_mod_api();
 	printf("All mods have been loaded...\n");
+
+	printf("Game version: %s\n", api_v1.get_game_version().to_version_string().utf8().c_str());
 
 	std::string classname = "AcceptDialog";
 	std::string path = "";
@@ -78,7 +80,7 @@ static Variant on_player_input(InputEvent event) {
 
 			print_scenario_name();
         } else if (!key->is_pressed() && key->get_keycode() == 32) {
-            print("NO SPACE :(");
+            print("NO SPACE :(\n");
         }
     }
 	
@@ -100,8 +102,15 @@ static Variant on_game_host_eod() {
 
 static Variant on_device_spawned(DeviceUnit device) {
 	fetch_mod_api();
-	// this is called when a device is spawned.
-	return Nil;
+    // this is called when a device is spawned.
+	if ((int64_t)device.device_hardware_class() == DeviceUnit::DeviceHardwareClass::NETWORK_SWITCH) {
+		LogicController lc = device.logic_controller();
+		int64_t original_nbw = lc.installed_nbw();
+		int64_t new_nbw = original_nbw * 2;
+		lc.installed_nbw() = new_nbw;
+        printf("modified bandwidth of %s from %ld to %ld\n", ((String)device.product_name()).utf8().c_str(), original_nbw, new_nbw);
+	}
+    return Nil;
 }
 
 static void test() {
@@ -114,7 +123,7 @@ int main() {
 
 	// These are the various optional callbacks that TNI provides to modders.
 	ADD_API_FUNCTION(on_mod_load, "", "", "Called immediately after the mod is loaded (after main())");
-	ADD_API_FUNCTION(on_engine_load, "", "", "Called when all mods have been loaded");
+	ADD_API_FUNCTION(on_mods_loaded, "", "", "Called when all mods have been loaded");
 	ADD_API_FUNCTION(on_game_state_ready, "", "", "Called when the game is ready");
 	ADD_API_FUNCTION(on_game_host_eod, "", "", "Called when the end-of-day occurs on the host");
 	ADD_API_FUNCTION(on_game_tick, "", "", "Called every game tick");

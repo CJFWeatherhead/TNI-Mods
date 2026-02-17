@@ -76,7 +76,7 @@ static Variant set_lua_source(String code, String path) {
     }
 
 DEFINE_LUA_CALLBACK_0(on_mod_load)
-DEFINE_LUA_CALLBACK_0(on_engine_load)
+DEFINE_LUA_CALLBACK_0(on_mods_loaded)
 DEFINE_LUA_CALLBACK_0(on_game_state_ready)
 DEFINE_LUA_CALLBACK_0(on_game_host_eod)
 
@@ -155,7 +155,7 @@ int main() {
     ADD_API_FUNCTION(set_lua_source, "", "");
 
     ADD_API_FUNCTION(on_mod_load, "", "", "");
-    ADD_API_FUNCTION(on_engine_load, "", "", "");
+    ADD_API_FUNCTION(on_mods_loaded, "", "", "");
     ADD_API_FUNCTION(on_game_state_ready, "", "", "");
     ADD_API_FUNCTION(on_game_host_eod, "", "", "");
 
