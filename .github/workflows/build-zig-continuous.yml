@@ -55,10 +55,7 @@ jobs:
         RELEASE_TAG="continuous-zig-${{github.ref_name}}"
         RELEASE_NAME="Continuous (zig) - ${{github.ref_name}}"
         RELEASE_NOTES_PATH=".github/workflows/continuous-zig-release-notes.md"
-        if gh release list --json tagName | grep -q "$RELEASE_TAG"; then
-          gh release edit --target "${{github.sha}}" --title "$RELEASE_NAME" --notes-file "$RELEASE_NOTES_PATH" --draft --prerelease "$RELEASE_TAG"
-        else
-          gh release create --target "${{github.sha}}" --title "$RELEASE_NAME" --notes-file "$RELEASE_NOTES_PATH" --draft --prerelease "$RELEASE_TAG"
-        fi
-        find ./artifact -name '*.zip' -exec gh release upload "$RELEASE_TAG" "{}" \;
+        gh release delete --cleanup-tag --yes "$RELEASE_TAG"
+        gh release create --target "${{github.sha}}" --title "$RELEASE_NAME" --notes-file "$RELEASE_NOTES_PATH" --draft --prerelease "$RELEASE_TAG"
+        find ./artifact -name '*.zip' -exec gh release upload --clobber "$RELEASE_TAG" "{}" \;
         gh release edit "$RELEASE_TAG" --draft=false
