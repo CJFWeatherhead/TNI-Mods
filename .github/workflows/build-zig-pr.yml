@@ -36,8 +36,8 @@ jobs:
       shell: bash
       run: |
         mkdir ./artifact
-        find ./mods/ -name '*.elf' -exec cp "{}" ./artifact \;
-        ${{github.ref_name}}
+        # For every directory containing a .elf file, zip it into ./artifact
+        find ./mods/ -name '*.elf' -execdir bash -c "MOD_NAME=\"\$(basename \$(realpath .))\" && cd .. && zip -r \"${PWD}/artifact/\$MOD_NAME.zip\" \"./\$MOD_NAME\"" \;
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
