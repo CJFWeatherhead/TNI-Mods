@@ -1,11 +1,12 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Memento : Container
 ---@field main_tab TabContainer
 ---@field dns_entries_ctl Container
 ---@field netaddr_assigns Container
 ---@field devunit_tracker Container
+---@field cntop OptionButton
 ---@field ri_scn PackedScene
 ---@field dut_scn PackedScene
 ---@field main_pane MainPane

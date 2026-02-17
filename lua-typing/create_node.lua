@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@param classname "AESContext"
 ---@param param string
@@ -696,16 +696,6 @@ function create_node(classname, param) end
 ---@return ButtonGroup
 function create_node(classname, param) end
 
----@param classname "CPPScript"
----@param param string
----@return CPPScript
-function create_node(classname, param) end
-
----@param classname "CPPScriptLanguage"
----@param param string
----@return CPPScriptLanguage
-function create_node(classname, param) end
-
 ---@param classname "CPUParticles2D"
 ---@param param string
 ---@return CPUParticles2D
@@ -831,6 +821,11 @@ function create_node(classname, param) end
 ---@return CanvasItemEditor
 function create_node(classname, param) end
 
+---@param classname "CanvasItemEditorSelectedItem"
+---@param param string
+---@return CanvasItemEditorSelectedItem
+function create_node(classname, param) end
+
 ---@param classname "CanvasItemEditorViewport"
 ---@param param string
 ---@return CanvasItemEditorViewport
@@ -909,11 +904,6 @@ function create_node(classname, param) end
 ---@param classname "CircleShape2D"
 ---@param param string
 ---@return CircleShape2D
-function create_node(classname, param) end
-
----@param classname "ClassDB"
----@param param string
----@return ClassDB
 function create_node(classname, param) end
 
 ---@param classname "CodeEdit"
@@ -1081,11 +1071,6 @@ function create_node(classname, param) end
 ---@return ConeTwistJoint3D
 function create_node(classname, param) end
 
----@param classname "ConfigFile"
----@param param string
----@return ConfigFile
-function create_node(classname, param) end
-
 ---@param classname "ConfirmationDialog"
 ---@param param string
 ---@return ConfirmationDialog
@@ -1134,6 +1119,11 @@ function create_node(classname, param) end
 ---@param classname "ControlEditorToolbar"
 ---@param param string
 ---@return ControlEditorToolbar
+function create_node(classname, param) end
+
+---@param classname "ControlPositioningWarning"
+---@param param string
+---@return ControlPositioningWarning
 function create_node(classname, param) end
 
 ---@param classname "ConvertTransformModifier3D"
@@ -1266,11 +1256,6 @@ function create_node(classname, param) end
 ---@return DependencyRemoveDialog
 function create_node(classname, param) end
 
----@param classname "DirAccess"
----@param param string
----@return DirAccess
-function create_node(classname, param) end
-
 ---@param classname "DirectionalLight2D"
 ---@param param string
 ---@return DirectionalLight2D
@@ -1309,16 +1294,6 @@ function create_node(classname, param) end
 ---@param classname "DynamicFontImportSettingsDialog"
 ---@param param string
 ---@return DynamicFontImportSettingsDialog
-function create_node(classname, param) end
-
----@param classname "ELFScript"
----@param param string
----@return ELFScript
-function create_node(classname, param) end
-
----@param classname "ELFScriptLanguage"
----@param param string
----@return ELFScriptLanguage
 function create_node(classname, param) end
 
 ---@param classname "ENetConnection"
@@ -1526,11 +1501,6 @@ function create_node(classname, param) end
 ---@return EditorImportBlendRunner
 function create_node(classname, param) end
 
----@param classname "EditorImportPlugin"
----@param param string
----@return EditorImportPlugin
-function create_node(classname, param) end
-
 ---@param classname "EditorInspector"
 ---@param param string
 ---@return EditorInspector
@@ -1621,11 +1591,6 @@ function create_node(classname, param) end
 ---@return EditorPerformanceProfiler
 function create_node(classname, param) end
 
----@param classname "EditorPlugin"
----@param param string
----@return EditorPlugin
-function create_node(classname, param) end
-
 ---@param classname "EditorPluginSettings"
 ---@param param string
 ---@return EditorPluginSettings
@@ -1641,9 +1606,19 @@ function create_node(classname, param) end
 ---@return EditorProperty
 function create_node(classname, param) end
 
+---@param classname "EditorPropertyArrayObject"
+---@param param string
+---@return EditorPropertyArrayObject
+function create_node(classname, param) end
+
 ---@param classname "EditorPropertyDictionaryObject"
 ---@param param string
 ---@return EditorPropertyDictionaryObject
+function create_node(classname, param) end
+
+---@param classname "EditorPropertyLayersGrid"
+---@param param string
+---@return EditorPropertyLayersGrid
 function create_node(classname, param) end
 
 ---@param classname "EditorPropertyNameProcessor"
@@ -1714,11 +1689,6 @@ function create_node(classname, param) end
 ---@param classname "EditorSceneTabs"
 ---@param param string
 ---@return EditorSceneTabs
-function create_node(classname, param) end
-
----@param classname "EditorScript"
----@param param string
----@return EditorScript
 function create_node(classname, param) end
 
 ---@param classname "EditorSelection"
@@ -1796,6 +1766,11 @@ function create_node(classname, param) end
 ---@return EditorVariantTypeOptionButton
 function create_node(classname, param) end
 
+---@param classname "EditorVariantTypePopupMenu"
+---@param param string
+---@return EditorVariantTypePopupMenu
+function create_node(classname, param) end
+
 ---@param classname "EditorVersionButton"
 ---@param param string
 ---@return EditorVersionButton
@@ -1831,16 +1806,6 @@ function create_node(classname, param) end
 ---@return Engine
 function create_node(classname, param) end
 
----@param classname "EngineDebugger"
----@param param string
----@return EngineDebugger
-function create_node(classname, param) end
-
----@param classname "EngineProfiler"
----@param param string
----@return EngineProfiler
-function create_node(classname, param) end
-
 ---@param classname "Environment"
 ---@param param string
 ---@return Environment
@@ -1856,19 +1821,9 @@ function create_node(classname, param) end
 ---@return ExportTemplateManager
 function create_node(classname, param) end
 
----@param classname "Expression"
----@param param string
----@return Expression
-function create_node(classname, param) end
-
 ---@param classname "ExternalTexture"
 ---@param param string
 ---@return ExternalTexture
-function create_node(classname, param) end
-
----@param classname "FBXDocument"
----@param param string
----@return FBXDocument
 function create_node(classname, param) end
 
 ---@param classname "FBXImporterManager"
@@ -1884,11 +1839,6 @@ function create_node(classname, param) end
 ---@param classname "FastNoiseLite"
 ---@param param string
 ---@return FastNoiseLite
-function create_node(classname, param) end
-
----@param classname "FileAccess"
----@param param string
----@return FileAccess
 function create_node(classname, param) end
 
 ---@param classname "FileDialog"
@@ -2021,29 +1971,9 @@ function create_node(classname, param) end
 ---@return FramebufferCacheRD
 function create_node(classname, param) end
 
----@param classname "GDExtension"
----@param param string
----@return GDExtension
-function create_node(classname, param) end
-
----@param classname "GDExtensionManager"
----@param param string
----@return GDExtensionManager
-function create_node(classname, param) end
-
----@param classname "GDScript"
----@param param string
----@return GDScript
-function create_node(classname, param) end
-
 ---@param classname "GDScriptLanguageProtocol"
 ---@param param string
 ---@return GDScriptLanguageProtocol
-function create_node(classname, param) end
-
----@param classname "GDScriptNativeClass"
----@param param string
----@return GDScriptNativeClass
 function create_node(classname, param) end
 
 ---@param classname "GDScriptTextDocument"
@@ -2054,11 +1984,6 @@ function create_node(classname, param) end
 ---@param classname "GDScriptWorkspace"
 ---@param param string
 ---@return GDScriptWorkspace
-function create_node(classname, param) end
-
----@param classname "GDShaderSyntaxHighlighter"
----@param param string
----@return GDShaderSyntaxHighlighter
 function create_node(classname, param) end
 
 ---@param classname "GLTFAccessor"
@@ -2079,36 +2004,6 @@ function create_node(classname, param) end
 ---@param classname "GLTFCamera"
 ---@param param string
 ---@return GLTFCamera
-function create_node(classname, param) end
-
----@param classname "GLTFDocument"
----@param param string
----@return GLTFDocument
-function create_node(classname, param) end
-
----@param classname "GLTFDocumentExtension"
----@param param string
----@return GLTFDocumentExtension
-function create_node(classname, param) end
-
----@param classname "GLTFDocumentExtensionConvertImporterMesh"
----@param param string
----@return GLTFDocumentExtensionConvertImporterMesh
-function create_node(classname, param) end
-
----@param classname "GLTFDocumentExtensionPhysics"
----@param param string
----@return GLTFDocumentExtensionPhysics
-function create_node(classname, param) end
-
----@param classname "GLTFDocumentExtensionTextureKTX"
----@param param string
----@return GLTFDocumentExtensionTextureKTX
-function create_node(classname, param) end
-
----@param classname "GLTFDocumentExtensionTextureWebP"
----@param param string
----@return GLTFDocumentExtensionTextureWebP
 function create_node(classname, param) end
 
 ---@param classname "GLTFLight"
@@ -2606,44 +2501,9 @@ function create_node(classname, param) end
 ---@return ItemList
 function create_node(classname, param) end
 
----@param classname "JNISingleton"
----@param param string
----@return JNISingleton
-function create_node(classname, param) end
-
----@param classname "JSON"
----@param param string
----@return JSON
-function create_node(classname, param) end
-
 ---@param classname "JSONRPC"
 ---@param param string
 ---@return JSONRPC
-function create_node(classname, param) end
-
----@param classname "JavaClass"
----@param param string
----@return JavaClass
-function create_node(classname, param) end
-
----@param classname "JavaClassWrapper"
----@param param string
----@return JavaClassWrapper
-function create_node(classname, param) end
-
----@param classname "JavaObject"
----@param param string
----@return JavaObject
-function create_node(classname, param) end
-
----@param classname "JavaScriptBridge"
----@param param string
----@return JavaScriptBridge
-function create_node(classname, param) end
-
----@param classname "JavaScriptObject"
----@param param string
----@return JavaScriptObject
 function create_node(classname, param) end
 
 ---@param classname "Joint2D"
@@ -3134,11 +2994,6 @@ function create_node(classname, param) end
 ---@param classname "ORMMaterial3D"
 ---@param param string
 ---@return ORMMaterial3D
-function create_node(classname, param) end
-
----@param classname "OS"
----@param param string
----@return OS
 function create_node(classname, param) end
 
 ---@param classname "Object"
@@ -3776,11 +3631,6 @@ function create_node(classname, param) end
 ---@return ProjectExportTextureFormatError
 function create_node(classname, param) end
 
----@param classname "ProjectSettings"
----@param param string
----@return ProjectSettings
-function create_node(classname, param) end
-
 ---@param classname "ProjectSettingsEditor"
 ---@param param string
 ---@return ProjectSettingsEditor
@@ -4076,164 +3926,9 @@ function create_node(classname, param) end
 ---@return Resource
 function create_node(classname, param) end
 
----@param classname "ResourceFormatImporterSaver"
----@param param string
----@return ResourceFormatImporterSaver
-function create_node(classname, param) end
-
----@param classname "ResourceFormatLoader"
----@param param string
----@return ResourceFormatLoader
-function create_node(classname, param) end
-
----@param classname "ResourceFormatLoaderCPP"
----@param param string
----@return ResourceFormatLoaderCPP
-function create_node(classname, param) end
-
----@param classname "ResourceFormatLoaderELF"
----@param param string
----@return ResourceFormatLoaderELF
-function create_node(classname, param) end
-
----@param classname "ResourceFormatLoaderRust"
----@param param string
----@return ResourceFormatLoaderRust
-function create_node(classname, param) end
-
----@param classname "ResourceFormatLoaderZig"
----@param param string
----@return ResourceFormatLoaderZig
-function create_node(classname, param) end
-
----@param classname "ResourceFormatSaver"
----@param param string
----@return ResourceFormatSaver
-function create_node(classname, param) end
-
----@param classname "ResourceFormatSaverCPP"
----@param param string
----@return ResourceFormatSaverCPP
-function create_node(classname, param) end
-
----@param classname "ResourceFormatSaverELF"
----@param param string
----@return ResourceFormatSaverELF
-function create_node(classname, param) end
-
----@param classname "ResourceFormatSaverRust"
----@param param string
----@return ResourceFormatSaverRust
-function create_node(classname, param) end
-
----@param classname "ResourceFormatSaverZig"
----@param param string
----@return ResourceFormatSaverZig
-function create_node(classname, param) end
-
----@param classname "ResourceImporter"
----@param param string
----@return ResourceImporter
-function create_node(classname, param) end
-
----@param classname "ResourceImporterBMFont"
----@param param string
----@return ResourceImporterBMFont
-function create_node(classname, param) end
-
----@param classname "ResourceImporterBitMap"
----@param param string
----@return ResourceImporterBitMap
-function create_node(classname, param) end
-
----@param classname "ResourceImporterCSVTranslation"
----@param param string
----@return ResourceImporterCSVTranslation
-function create_node(classname, param) end
-
----@param classname "ResourceImporterDynamicFont"
----@param param string
----@return ResourceImporterDynamicFont
-function create_node(classname, param) end
-
----@param classname "ResourceImporterImage"
----@param param string
----@return ResourceImporterImage
-function create_node(classname, param) end
-
----@param classname "ResourceImporterImageFont"
----@param param string
----@return ResourceImporterImageFont
-function create_node(classname, param) end
-
----@param classname "ResourceImporterLayeredTexture"
----@param param string
----@return ResourceImporterLayeredTexture
-function create_node(classname, param) end
-
----@param classname "ResourceImporterMP3"
----@param param string
----@return ResourceImporterMP3
-function create_node(classname, param) end
-
----@param classname "ResourceImporterOBJ"
----@param param string
----@return ResourceImporterOBJ
-function create_node(classname, param) end
-
----@param classname "ResourceImporterOggVorbis"
----@param param string
----@return ResourceImporterOggVorbis
-function create_node(classname, param) end
-
----@param classname "ResourceImporterSVG"
----@param param string
----@return ResourceImporterSVG
-function create_node(classname, param) end
-
----@param classname "ResourceImporterScene"
----@param param string
----@return ResourceImporterScene
-function create_node(classname, param) end
-
----@param classname "ResourceImporterShaderFile"
----@param param string
----@return ResourceImporterShaderFile
-function create_node(classname, param) end
-
----@param classname "ResourceImporterTexture"
----@param param string
----@return ResourceImporterTexture
-function create_node(classname, param) end
-
----@param classname "ResourceImporterTextureAtlas"
----@param param string
----@return ResourceImporterTextureAtlas
-function create_node(classname, param) end
-
----@param classname "ResourceImporterWAV"
----@param param string
----@return ResourceImporterWAV
-function create_node(classname, param) end
-
----@param classname "ResourceLoader"
----@param param string
----@return ResourceLoader
-function create_node(classname, param) end
-
----@param classname "ResourcePreloader"
----@param param string
----@return ResourcePreloader
-function create_node(classname, param) end
-
 ---@param classname "ResourcePreloaderEditor"
 ---@param param string
 ---@return ResourcePreloaderEditor
-function create_node(classname, param) end
-
----@param classname "ResourceSaver"
----@param param string
----@return ResourceSaver
 function create_node(classname, param) end
 
 ---@param classname "ResourceUID"
@@ -4279,21 +3974,6 @@ function create_node(classname, param) end
 ---@param classname "RunInstancesDialog"
 ---@param param string
 ---@return RunInstancesDialog
-function create_node(classname, param) end
-
----@param classname "RustScript"
----@param param string
----@return RustScript
-function create_node(classname, param) end
-
----@param classname "RustScriptLanguage"
----@param param string
----@return RustScriptLanguage
-function create_node(classname, param) end
-
----@param classname "Sandbox"
----@param param string
----@return Sandbox
 function create_node(classname, param) end
 
 ---@param classname "SceneCacheInterface"
@@ -4376,16 +4056,6 @@ function create_node(classname, param) end
 ---@return ScreenSelect
 function create_node(classname, param) end
 
----@param classname "Script"
----@param param string
----@return Script
-function create_node(classname, param) end
-
----@param classname "ScriptBacktrace"
----@param param string
----@return ScriptBacktrace
-function create_node(classname, param) end
-
 ---@param classname "ScriptCreateDialog"
 ---@param param string
 ---@return ScriptCreateDialog
@@ -4409,21 +4079,6 @@ function create_node(classname, param) end
 ---@param classname "ScriptEditorQuickOpen"
 ---@param param string
 ---@return ScriptEditorQuickOpen
-function create_node(classname, param) end
-
----@param classname "ScriptExtension"
----@param param string
----@return ScriptExtension
-function create_node(classname, param) end
-
----@param classname "ScriptLanguage"
----@param param string
----@return ScriptLanguage
-function create_node(classname, param) end
-
----@param classname "ScriptLanguageExtension"
----@param param string
----@return ScriptLanguageExtension
 function create_node(classname, param) end
 
 ---@param classname "ScrollBar"
@@ -4481,6 +4136,11 @@ function create_node(classname, param) end
 ---@return ShaderBakerExportPluginPlatform
 function create_node(classname, param) end
 
+---@param classname "ShaderBakerExportPluginPlatformD3D12"
+---@param param string
+---@return ShaderBakerExportPluginPlatformD3D12
+function create_node(classname, param) end
+
 ---@param classname "ShaderBakerExportPluginPlatformVulkan"
 ---@param param string
 ---@return ShaderBakerExportPluginPlatformVulkan
@@ -4489,11 +4149,6 @@ function create_node(classname, param) end
 ---@param classname "ShaderCreateDialog"
 ---@param param string
 ---@return ShaderCreateDialog
-function create_node(classname, param) end
-
----@param classname "ShaderEditor"
----@param param string
----@return ShaderEditor
 function create_node(classname, param) end
 
 ---@param classname "ShaderFileEditor"
@@ -4529,11 +4184,6 @@ function create_node(classname, param) end
 ---@param classname "ShaderMaterial"
 ---@param param string
 ---@return ShaderMaterial
-function create_node(classname, param) end
-
----@param classname "ShaderTextEditor"
----@param param string
----@return ShaderTextEditor
 function create_node(classname, param) end
 
 ---@param classname "Shape2D"
@@ -4806,11 +4456,6 @@ function create_node(classname, param) end
 ---@return StatusIndicator
 function create_node(classname, param) end
 
----@param classname "Steam"
----@param param string
----@return Steam
-function create_node(classname, param) end
-
 ---@param classname "StreamPeer"
 ---@param param string
 ---@return StreamPeer
@@ -4959,11 +4604,6 @@ function create_node(classname, param) end
 ---@param classname "TextServerManager"
 ---@param param string
 ---@return TextServerManager
-function create_node(classname, param) end
-
----@param classname "TextShaderEditor"
----@param param string
----@return TextShaderEditor
 function create_node(classname, param) end
 
 ---@param classname "Texture"
@@ -5254,16 +4894,6 @@ function create_node(classname, param) end
 ---@param classname "UDPServer"
 ---@param param string
 ---@return UDPServer
-function create_node(classname, param) end
-
----@param classname "UPNP"
----@param param string
----@return UPNP
-function create_node(classname, param) end
-
----@param classname "UPNPDevice"
----@param param string
----@return UPNPDevice
 function create_node(classname, param) end
 
 ---@param classname "UndoRedo"
@@ -6159,14 +5789,4 @@ function create_node(classname, param) end
 ---@param classname "ZIPReader"
 ---@param param string
 ---@return ZIPReader
-function create_node(classname, param) end
-
----@param classname "ZigScript"
----@param param string
----@return ZigScript
-function create_node(classname, param) end
-
----@param classname "ZigScriptLanguage"
----@param param string
----@return ZigScriptLanguage
 function create_node(classname, param) end

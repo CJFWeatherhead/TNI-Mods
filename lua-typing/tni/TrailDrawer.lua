@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class TrailDrawer : Node3D
 ---@field enabled boolean
@@ -12,7 +12,13 @@
 ---@field sampling_timer Timer
 ---@field trails_mesh ImmediateMesh
 ---@field points_by_tracked_nodes table<any,any>
+---@field enable_on_ready boolean
+---@field is_enabled boolean
 local TrailDrawer = {}
+
+function TrailDrawer.disable() end
+
+function TrailDrawer.enable() end
 
 function TrailDrawer.clear_all_trails() end
 

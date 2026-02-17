@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class AsyncLoader : Node
 ---@field async_cache_queue Array<any>

@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_AUTOGRAPH
 #define TNI_API_HEADER_AUTOGRAPH
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Autograph : public Container {
@@ -32,6 +32,8 @@ struct Autograph : public Container {
 	PROPERTY(gd2, OptionButton);
 	PROPERTY(gd1, OptionButton);
 	PROPERTY(scnex, OptionButton);
+	PROPERTY(lblpg, Container);
+	PROPERTY(lblpg_lbl, Label);
 	PROPERTY(selected_dbg, DeviceUnit);
 	PROPERTY(autoscan_state, bool);
 	PROPERTY(graph_node_data, Variant);

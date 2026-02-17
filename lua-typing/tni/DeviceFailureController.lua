@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class DeviceFailureController : Node
 ---@field max_concurrent_fails integer
@@ -9,6 +9,9 @@
 ---@field enabled boolean
 ---@field trial_timer Timer
 local DeviceFailureController = {}
+
+---@param dev DeviceUnit
+function DeviceFailureController.try_fail_device(dev) end
 
 function DeviceFailureController.start() end
 

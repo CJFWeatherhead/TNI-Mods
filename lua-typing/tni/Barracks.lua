@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Barracks : Container
 ---@field rack_removal_price integer # Constant value: 25

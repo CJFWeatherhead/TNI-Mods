@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_CRONCONTROLLER
 #define TNI_API_HEADER_CRONCONTROLLER
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct CronController : public Node {
@@ -32,6 +32,7 @@ struct CronController : public Node {
 	inline void print_error(Variant s);
 	inline void print_warn(Variant s);
 	inline void print_highlight(Variant s);
+	inline void put_s(Variant _c);
 	inline void print_line(Variant s);
 	inline void rotate_output();
 	inline void clear_display();
@@ -46,6 +47,7 @@ inline void CronController::print_success(Variant s) { voidcall("print_success",
 inline void CronController::print_error(Variant s) { voidcall("print_error", s); }
 inline void CronController::print_warn(Variant s) { voidcall("print_warn", s); }
 inline void CronController::print_highlight(Variant s) { voidcall("print_highlight", s); }
+inline void CronController::put_s(Variant _c) { voidcall("put_s", _c); }
 inline void CronController::print_line(Variant s) { voidcall("print_line", s); }
 inline void CronController::rotate_output() { voidcall("rotate_output"); }
 inline void CronController::clear_display() { voidcall("clear_display"); }

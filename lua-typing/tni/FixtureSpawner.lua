@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class FixtureSpawner : Node2D
 ---@field RACK_Z_INDEX integer # Constant value: 10

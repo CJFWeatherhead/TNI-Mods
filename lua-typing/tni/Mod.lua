@@ -1,10 +1,11 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Mod : Sandbox
 ---@field mod_entry_binary string
 ---@field mod_dir string
 ---@field mod_type string
+---@field manifest ModManifest
 ---@field filesystem ModFileSystem
 ---@field api_v1 ModApiV1
 local Mod = {}
@@ -29,6 +30,7 @@ function Mod.callable_args_to_array(c) end
 function Mod.array_value_allowed(array, idx) end
 
 ---@param id integer
+---@return Object
 function Mod.instance_from_id_(id) end
 
 ---@param e Error

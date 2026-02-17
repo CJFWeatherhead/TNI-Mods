@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class SaveMenu : Container
 ---@field is_in_game_menu boolean
@@ -14,9 +14,17 @@
 ---@field scon SaveController
 ---@field mphost_button Button
 ---@field filter_textin TextEdit
+---@field schooser ItemList
 ---@field current_selected_save string
+---@field current_selected_savegroup string
 ---@field existing_saves Array<string>
 local SaveMenu = {}
 
+---@param group_name string
+function SaveMenu.populate_group_saves(group_name) end
+
 ---@param contain_s string?  # Default = 
-function SaveMenu.rescan_saves(contain_s) end
+function SaveMenu.enum_save_groups(contain_s) end
+
+---@param contain_s string?  # Default = 
+function SaveMenu.refresh_ui(contain_s) end

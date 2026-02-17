@@ -1,9 +1,12 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class MainMenu : Control
+---@field miniann Control
 ---@field hide_whitelist Object
 local MainMenu = {}
+
+function MainMenu.initialize() end
 
 function MainMenu.show_announcements() end
 
@@ -14,6 +17,8 @@ function MainMenu.show_play_menu() end
 function MainMenu.show_load_menu() end
 
 function MainMenu.show_settings_menu() end
+
+function MainMenu.show_mod_manager_menu() end
 
 function MainMenu.show_steam_lobby_menu() end
 

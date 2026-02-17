@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class VersionUtils : Object
 ---@field ELEVATION_KEY_FILE string # Constant value: elevation.txt
@@ -44,3 +44,7 @@ function VersionUtils.get_semantic_version_part_number(semvs, part_n) end
 ---@param min_minor_version integer
 ---@return string
 function VersionUtils.test_version_incompatibility(semvs, min_major_version, min_minor_version) end
+
+---@param onetime_key string
+---@return Object
+function VersionUtils.onetime_todo_valid(onetime_key) end

@@ -1,13 +1,15 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class NetRoutine : Node
 ---@field ADDR_SUBCOM Array<any> # Constant value: ["address", "addr", "a"]
 ---@field DNS_SUBCOM Array<any> # Constant value: ["dns"]
 ---@field DHCP_SUBCOM Array<any> # Constant value: ["dhcp"]
 ---@field PORT_SUBCOM Array<any> # Constant value: ["port", "ports", "p"]
+---@field TIME_SUBCOM Array<any> # Constant value: ["timeout", "time", "t"]
 ---@field enabled boolean
 ---@field shell TerminalShell
+---@field wide_output_shell boolean
 local NetRoutine = {}
 
 ---@param stdout Object

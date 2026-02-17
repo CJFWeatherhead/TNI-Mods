@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class LogicControllerUser : Node
 ---@field logic_controller LogicController
@@ -29,6 +29,7 @@
 ---@field vsr number
 ---@field visitor_reset_modulo_n integer
 ---@field consumption_total_last_tick integer
+---@field consumption_satiety_last_tick integer
 ---@field description string
 ---@field user_profile_name string
 ---@field base_use_period number

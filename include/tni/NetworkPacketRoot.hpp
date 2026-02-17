@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_NETWORKPACKETROOT
 #define TNI_API_HEADER_NETWORKPACKETROOT
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct NetworkPacketRoot : public RefCounted {
@@ -15,7 +15,7 @@ struct NetworkPacketRoot : public RefCounted {
 	NetworkPacketRoot(Variant variant) : NetworkPacketRoot{variant.as_object().address()} {}
 
 	static constexpr int64_t default_ttl = 32;  // NOTE: You should recompile your mod if this value changes!
-	static constexpr double default_request_timeout = 3.3;  // NOTE: You should recompile your mod if this value changes!
+	static constexpr double default_request_timeout = 4.0;  // NOTE: You should recompile your mod if this value changes!
 	enum Err : int64_t {  // NOTE: You should recompile your mod if this enum changes!
 		NO_ERROR = 0,
 		NO_DNS_SERVER = 1,
@@ -63,6 +63,7 @@ struct NetworkPacketRoot : public RefCounted {
 	inline void set_no_termination_on_match();
 	inline Variant get_packet_drop_reason_sa();
 	inline void account_packet_drop_reason(String reason_str);
+	inline void start_synchronous_timer();
 	inline Variant asynchronous_send_packet(Variant pkt, Variant enable_timeout);
 	inline Variant send_sync_desigdns_request(String domain_name);
 	inline Variant get_hop_count(Variant pkt);
@@ -85,6 +86,7 @@ inline void NetworkPacketRoot::sync_root_termination() { voidcall("sync_root_ter
 inline void NetworkPacketRoot::set_no_termination_on_match() { voidcall("set_no_termination_on_match"); }
 inline Variant NetworkPacketRoot::get_packet_drop_reason_sa() { return operator()("get_packet_drop_reason_sa"); }
 inline void NetworkPacketRoot::account_packet_drop_reason(String reason_str) { voidcall("account_packet_drop_reason", reason_str); }
+inline void NetworkPacketRoot::start_synchronous_timer() { voidcall("start_synchronous_timer"); }
 inline Variant NetworkPacketRoot::asynchronous_send_packet(Variant pkt, Variant enable_timeout) { return operator()("asynchronous_send_packet", pkt, enable_timeout); }
 inline Variant NetworkPacketRoot::send_sync_desigdns_request(String domain_name) { return operator()("send_sync_desigdns_request", domain_name); }
 inline Variant NetworkPacketRoot::get_hop_count(Variant pkt) { return operator()("get_hop_count", pkt); }

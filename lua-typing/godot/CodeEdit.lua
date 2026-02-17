@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class CodeEdit : TextEdit
 ---@field symbol_lookup_on_click boolean

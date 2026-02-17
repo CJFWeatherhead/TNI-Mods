@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Location : Node2D
 ---@field max_height integer # Constant value: 5000
@@ -10,11 +10,11 @@
 ---@field object_entry Vector2
 ---@field fixture_outlet_serials Array<string>
 ---@field link_outlets Array<LinkOutlet>
----@field builder_weight integer
 ---@field display_name string
 ---@field wall_texture Texture2D
 ---@field end_wall_scn PackedScene
 ---@field disable_events_at_ready boolean
+---@field builder_weight integer
 ---@field spawn_limit integer
 ---@field will_not_spawn_before_day integer
 ---@field location_prerequisite_scn PackedScene
@@ -47,9 +47,9 @@ function Location.get_floor_idx_from_global_point(gpoint) end
 ---@return Object
 function Location.debug_monitor_callback() end
 
----@param newsock LinkOutlet
+---@param newsock FixtureOutlet
 ---@param sockpos Vector2
-function Location.add_link_outlet(newsock, sockpos) end
+function Location.add_fixture_outlet(newsock, sockpos) end
 
 ---@param payment_breakdown table<any,any>
 ---@param power_fee_waiver boolean?  # Default = false

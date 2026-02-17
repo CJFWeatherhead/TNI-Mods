@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class GameOptions : VBoxContainer
 ---@field startcash_in Slider
@@ -34,6 +34,8 @@
 ---@field userhwr_in Slider
 ---@field drdfee_in Slider
 ---@field sttech_in OptionButton
+---@field default_user_dhcp OptionButton
+---@field default_device_dhcp OptionButton
 local GameOptions = {}
 
 function GameOptions.do_localize() end

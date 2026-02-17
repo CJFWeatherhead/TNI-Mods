@@ -1,9 +1,10 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class DeviceUnit : RigidBody2D
 ---@field ZINDEX integer # Constant value: 200
 ---@field MAX_PRICE integer # Constant value: 1000000
+---@field SNAP_MARGIN number # Constant value: 2.0
 ---@field product_name string
 ---@field description string
 ---@field text string
@@ -28,6 +29,7 @@
 ---@field auto_servicing_enabled boolean
 ---@field auto_replacement_cost integer
 ---@field current_floor_num integer
+---@field device_application_unlocks Array<any>
 ---@field device_hardware_class DeviceUnit.DeviceHardwareClass
 ---@field condition DeviceUnit.Condition
 ---@field mount_type DeviceUnit.MountType
@@ -79,6 +81,7 @@ DeviceUnit.DeviceHardwareClass = {
 	["PHONE"] = 17,
 	["PRINTER"] = 18,
 	["NETWORK_LOAD_BALANCER"] = 19,
+	["NETWORK_STORAGE"] = 20,
 }
 ---@enum DeviceUnit.ExtraDescriptionType
 DeviceUnit.ExtraDescriptionType = {
@@ -103,6 +106,15 @@ function DeviceUnit.reposition(new_pos) end
 
 ---@param new_pos Vector2
 function DeviceUnit.elevator_move(new_pos) end
+
+---@return number
+function DeviceUnit.get_device_bounding_height() end
+
+---@return Vector2
+function DeviceUnit.get_global_y_range() end
+
+---@return Vector2
+function DeviceUnit.get_local_y_range() end
 
 ---@return Object
 function DeviceUnit.debug_monitor_callback() end

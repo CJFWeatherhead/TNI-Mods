@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class MultiplayerUtils : Object
 ---@field SYNCHRONIZER_PROHIBITION_METATAG string # Constant value: pocosia_multiplayer_synchronizer_prohibited

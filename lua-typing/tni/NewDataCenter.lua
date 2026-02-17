@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class NewDataCenter : Node
 ---@field admin_perc_increase number # Constant value: 0.1

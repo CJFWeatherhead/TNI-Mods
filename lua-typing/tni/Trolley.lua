@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Trolley : Area2D
 ---@field ZINDEX integer # Constant value: 1500

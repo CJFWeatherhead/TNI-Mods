@@ -1,8 +1,9 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class FixtureOutlet : Area2D
 ---@field socket Socket
+---@field floor_num integer
 local FixtureOutlet = {}
 
 ---@return Object

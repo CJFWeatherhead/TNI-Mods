@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_LINKOUTLET
 #define TNI_API_HEADER_LINKOUTLET
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct LinkOutlet : public Area2D {
@@ -24,8 +24,8 @@ struct LinkOutlet : public Area2D {
 	PROPERTY(tower_link, TowerNetworkLink);
 	PROPERTY(serial_num, String);
 	PROPERTY(linked, bool);
-	PROPERTY(floor_num, int64_t);
 	PROPERTY(socket, Socket);
+	PROPERTY(floor_num, int64_t);
 
 	inline void get_link_type_string(LinkOutlet lo);
 	inline void update_link_outlet_labels();

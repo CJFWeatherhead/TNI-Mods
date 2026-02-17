@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class NetworkHub : Node
 ---@field cpu_load integer
@@ -20,6 +20,7 @@ local NetworkHub = {}
 
 ---@param pktctl PacketControlModule
 ---@param packet table<any,any>
+---@return boolean
 function NetworkHub.process_network_packet(pktctl, packet) end
 
 function NetworkHub.tick() end
@@ -41,4 +42,9 @@ function NetworkHub.tick() end
 
 ---@param pktctl PacketControlModule
 ---@param packet table<any,any>
+---@return boolean
 function NetworkHub.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function NetworkHub.is_pkt_for_self(packet) end

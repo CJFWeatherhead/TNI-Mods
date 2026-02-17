@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class RouteControlModule : Node
 ---@field MAX_PORT_GROUPS integer # Constant value: 10

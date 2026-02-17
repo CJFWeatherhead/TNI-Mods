@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class PacketControlModule : Node
 ---@field default_clock_period number # Constant value: 0.1
@@ -32,12 +32,18 @@ function PacketControlModule.refresh() end
 
 function PacketControlModule.stop() end
 
+function PacketControlModule.on_os_boot() end
+
 function PacketControlModule.reset() end
 
 function PacketControlModule.flush_out_queue() end
 
 ---@param pkt Object
 function PacketControlModule.broadcast_pkt_as_hub(pkt) end
+
+---@param packet table<any,any>
+---@return boolean
+function PacketControlModule.is_pkt_for_self(packet) end
 
 ---@param save_obj Object
 function PacketControlModule.handle_save(save_obj) end

@@ -1,11 +1,12 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class NetworkControlModule : Node
 ---@field DHCP_BASE_PERIOD number # Constant value: 10.0
 ---@field BACK_PORT string # Constant value: backend
 ---@field STP_BLOCKED string # Constant value: stp-blocked
 ---@field parent_controller LogicController
+---@field local_dns_mapping boolean
 ---@field hwaddr_fixed boolean
 ---@field hardware_address string
 ---@field network_address string
@@ -16,6 +17,8 @@
 ---@field port_met table<any,any>
 ---@field stp_state table<any,any>
 ---@field netw_priority table<any,any>
+---@field mbox_cfg table<any,any>
+---@field timeout_s table<any,any>
 ---@field dhcp_timer Timer
 ---@field stp_timer Timer
 ---@field is_dhcp_enabled boolean
@@ -37,16 +40,9 @@ function NetworkControlModule.request_dhcp_options() end
 ---@param domain_name Object
 function NetworkControlModule.dns_cache_request(domain_name) end
 
----@param traversal_ctx TraversalContext
----@param cache_to_etchosts boolean?  # Default = false
-function NetworkControlModule.resolve_ctx_domain(traversal_ctx, cache_to_etchosts) end
-
 ---@param laddr string
 ---@return Object
 function NetworkControlModule.get_resolved_addr(laddr) end
-
----@param laddr string
-function NetworkControlModule.request_dns_cache(laddr) end
 
 function NetworkControlModule.reset_hwaddr() end
 
@@ -77,6 +73,10 @@ function NetworkControlModule.try_schedule_dhcp_request() end
 function NetworkControlModule.set_etc_host_entry(entry, val) end
 
 function NetworkControlModule.clear_etc_host() end
+
+---@param cat string
+---@param new_timeout number
+function NetworkControlModule.set_timeout(cat, new_timeout) end
 
 ---@return string
 function NetworkControlModule.get_etchost_str() end
@@ -116,6 +116,26 @@ function NetworkControlModule.os_startup() end
 function NetworkControlModule.os_shutdown() end
 
 function NetworkControlModule.unblock_all_stp_blocks() end
+
+---@param is_en boolean
+function NetworkControlModule.set_mbox_hairpin(is_en) end
+
+---@param new_ttl string
+function NetworkControlModule.set_mbox_ttl(new_ttl) end
+
+---@param new_rule table<any,any>
+function NetworkControlModule.add_mbox_rules(new_rule) end
+
+---@param rule_id integer
+function NetworkControlModule.remove_mbox_rule(rule_id) end
+
+function NetworkControlModule.clear_mbox_cfg() end
+
+---@return string
+function NetworkControlModule.get_mbox_str() end
+
+---@param cfgs string
+function NetworkControlModule.set_mbox_cfgstr(cfgs) end
 
 ---@return Array<any>
 function NetworkControlModule.get_stp_local_bid() end

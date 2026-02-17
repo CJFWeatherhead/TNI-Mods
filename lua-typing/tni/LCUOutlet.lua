@@ -1,10 +1,11 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class LCUOutlet : Area2D
 ---@field user LogicControllerUser
 ---@field logic_controller LogicController
 ---@field socket Socket
+---@field floor_num integer
 local LCUOutlet = {}
 
 ---@return Object

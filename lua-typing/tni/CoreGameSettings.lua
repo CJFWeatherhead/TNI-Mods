@@ -1,11 +1,13 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class CoreGameSettings : Object
 ---@field mouse_pan_speed number
 ---@field keyboard_pan_speed number
 ---@field drag_pan_speed number
 ---@field rgb_shift_factor number
+---@field autosave_freq_min number
+---@field autosave_retention integer
 ---@field perf_phy_sim_mode integer
 ---@field show_announcements boolean
 ---@field shift_panning_enabled boolean
@@ -16,6 +18,8 @@
 ---@field show_username boolean
 ---@field show_help_guides boolean
 ---@field player_set_name string
+---@field show_packet_animations boolean
+---@field addr_copy_mode integer
 ---@field last_sel_diffindex integer
 ---@field has_shown_difficulty_sel boolean
 ---@field cmd_alias table<any,any>

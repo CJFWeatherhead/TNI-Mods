@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_TRAVERSALHISTORYPRODUCE
 #define TNI_API_HEADER_TRAVERSALHISTORYPRODUCE
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct TraversalHistoryProduce : public Node {
@@ -47,6 +47,7 @@ struct TraversalHistoryProduce : public Node {
 	inline void uninstall();
 	inline void install(Variant _install_opts);
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "UseConfig.hpp"
@@ -63,5 +64,6 @@ inline void TraversalHistoryProduce::stop() { voidcall("stop"); }
 inline void TraversalHistoryProduce::uninstall() { voidcall("uninstall"); }
 inline void TraversalHistoryProduce::install(Variant _install_opts) { voidcall("install", _install_opts); }
 inline bool TraversalHistoryProduce::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool TraversalHistoryProduce::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

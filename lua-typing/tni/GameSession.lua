@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class GameSession : Node
 ---@field MAX_BGM_HEAT integer # Constant value: 3
@@ -57,6 +57,8 @@ function GameSession.start_master_timer() end
 function GameSession.start_s5_timer() end
 
 function GameSession.init_game_cursors() end
+
+function GameSession.init_bgm_players() end
 
 ---@param rpath string
 ---@return Location

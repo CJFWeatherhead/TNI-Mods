@@ -1,7 +1,8 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class LogicControllerSocket : Area2D
+---@field PacketPlaceholderScene string # Constant value: <PackedScene>
 ---@field is_back_port boolean
 ---@field link_ind Node2D
 ---@field act_ind_rcache Node2D
@@ -15,6 +16,7 @@
 ---@field port_num integer
 ---@field port_id string
 ---@field bliptimer Timer
+---@field onscr_notifier VisibleOnScreenNotifier2D
 ---@field top_traffic_classes Array<any>
 ---@field connection Object
 ---@field opposite_socket Socket
@@ -31,9 +33,8 @@
 local LogicControllerSocket = {}
 
 ---@param is_tx_dir boolean
----@param traffic_class string
----@param _request_data string
-function LogicControllerSocket.network_activity(is_tx_dir, traffic_class, _request_data) end
+---@param packet Object
+function LogicControllerSocket.network_activity(is_tx_dir, packet) end
 
 function LogicControllerSocket.reset_netw_stats() end
 

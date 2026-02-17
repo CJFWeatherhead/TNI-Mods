@@ -1,10 +1,11 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class AliasRoutine : Node
 ---@field reserved_keywords Array<any>
 ---@field enabled boolean
 ---@field shell TerminalShell
+---@field wide_output_shell boolean
 local AliasRoutine = {}
 
 ---@param stdout Object

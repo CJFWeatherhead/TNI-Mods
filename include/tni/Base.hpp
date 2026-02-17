@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_BASE
 #define TNI_API_HEADER_BASE
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Base : public Node {
@@ -17,6 +17,8 @@ struct Base : public Node {
 
 	PROPERTY(logic_controller, LogicController);
 	PROPERTY(behaviors, Variant);
+	PROPERTY(hosting_behaviors, Variant);
+	PROPERTY(public_client_behaviors, Variant);
 	PROPERTY(user_application_unlocks, Variant);
 	PROPERTY(consumption_payment_scaling, double);
 	PROPERTY(allow_hwreset, bool);
@@ -40,6 +42,7 @@ struct Base : public Node {
 	PROPERTY(vsr, double);
 	PROPERTY(visitor_reset_modulo_n, int64_t);
 	PROPERTY(consumption_total_last_tick, int64_t);
+	PROPERTY(consumption_satiety_last_tick, int64_t);
 	PROPERTY(description, String);
 	PROPERTY(user_profile_name, String);
 	PROPERTY(base_use_period, double);
@@ -74,8 +77,8 @@ struct Base : public Node {
 	inline Variant debug_monitor_callback();
 	inline void account_intent(UserTraversal utc);
 	inline void unaccount_intent(UserTraversal utc);
-	inline void account_consumption(UserTraversal utc, TraversalContext _context);
-	inline void account_visitation(Program vprog, TraversalContext context, LogicControllerUser _visitor);
+	inline void account_consumption(UserTraversal utc, Variant _ctx_or_pkt);
+	inline void account_visitation(Program vprog, Variant ctx_or_pkt, LogicControllerUser _visitor);
 	inline void time_mult_updated(double time_mult_delta);
 	inline void finish_setup();
 	inline void first_use();
@@ -86,7 +89,6 @@ struct Base : public Node {
 #include "LogicController.hpp"
 #include "Location.hpp"
 #include "UserTraversal.hpp"
-#include "TraversalContext.hpp"
 #include "Program.hpp"
 #include "LogicControllerUser.hpp"
 
@@ -95,8 +97,8 @@ inline double Base::get_manifest_roll(String release_name) { return operator()("
 inline Variant Base::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
 inline void Base::account_intent(UserTraversal utc) { voidcall("account_intent", utc); }
 inline void Base::unaccount_intent(UserTraversal utc) { voidcall("unaccount_intent", utc); }
-inline void Base::account_consumption(UserTraversal utc, TraversalContext _context) { voidcall("account_consumption", utc, _context); }
-inline void Base::account_visitation(Program vprog, TraversalContext context, LogicControllerUser _visitor) { voidcall("account_visitation", vprog, context, _visitor); }
+inline void Base::account_consumption(UserTraversal utc, Variant _ctx_or_pkt) { voidcall("account_consumption", utc, _ctx_or_pkt); }
+inline void Base::account_visitation(Program vprog, Variant ctx_or_pkt, LogicControllerUser _visitor) { voidcall("account_visitation", vprog, ctx_or_pkt, _visitor); }
 inline void Base::time_mult_updated(double time_mult_delta) { voidcall("time_mult_updated", time_mult_delta); }
 inline void Base::finish_setup() { voidcall("finish_setup"); }
 inline void Base::first_use() { voidcall("first_use"); }

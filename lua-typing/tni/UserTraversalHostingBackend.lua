@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class UserTraversalHostingBackend : Node
 ---@field user_hosting_frontend UserHosting
@@ -61,6 +61,9 @@ function UserTraversalHostingBackend.compute_produce_limit(_node) end
 
 function UserTraversalHostingBackend.tick() end
 
+---@return NetworkPacketRoot
+function UserTraversalHostingBackend.make_packet_root() end
+
 ---@param proot NetworkPacketRoot
 ---@return Object
 function UserTraversalHostingBackend.make_traversal_packet(proot) end
@@ -102,32 +105,6 @@ function UserTraversalHostingBackend.make_packet_root() end
 ---@return Object
 function UserTraversalHostingBackend.make_traversal_packet(proot) end
 
----@param from_node LogicController
----@param via_port LogicControllerSocket
----@param context TraversalContext
----@return boolean
-function UserTraversalHostingBackend.check_routability(from_node, via_port, context) end
-
----@param next_node LogicController
----@param context TraversalContext
----@return Object
-function UserTraversalHostingBackend.check_filter_passage(next_node, context) end
-
----@param context TraversalContext
----@param from_node LogicController
----@param via_port Object
----@param current_depth Object
----@return boolean
-function UserTraversalHostingBackend.check_traversibility(context, from_node, via_port, current_depth) end
-
----@param context TraversalContext
----@param node LogicController
----@param via_port Object
----@param current_index Object
----@param current_depth Object
----@return GraphController.Traversal
-function UserTraversalHostingBackend.precallback_process(context, node, via_port, current_index, current_depth) end
-
 ---@return NetworkPacketRoot
 function UserTraversalHostingBackend.make_packet_root() end
 
@@ -156,3 +133,7 @@ function UserTraversalHostingBackend.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function UserTraversalHostingBackend.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function UserTraversalHostingBackend.is_pkt_for_self(packet) end

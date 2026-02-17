@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_VERSIONUTILS
 #define TNI_API_HEADER_VERSIONUTILS
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct VersionUtils : public Object {
@@ -29,6 +29,7 @@ struct VersionUtils : public Object {
 	inline String get_semantic_version();
 	inline int64_t get_semantic_version_part_number(String semvs, int64_t part_n);
 	inline String test_version_incompatibility(String semvs, int64_t min_major_version, int64_t min_minor_version);
+	inline Variant onetime_todo_valid(String onetime_key);
 };
 
 
@@ -43,5 +44,6 @@ inline String VersionUtils::get_build_version() { return operator()("get_build_v
 inline String VersionUtils::get_semantic_version() { return operator()("get_semantic_version"); }
 inline int64_t VersionUtils::get_semantic_version_part_number(String semvs, int64_t part_n) { return operator()("get_semantic_version_part_number", semvs, part_n); }
 inline String VersionUtils::test_version_incompatibility(String semvs, int64_t min_major_version, int64_t min_minor_version) { return operator()("test_version_incompatibility", semvs, min_major_version, min_minor_version); }
+inline Variant VersionUtils::onetime_todo_valid(String onetime_key) { return operator()("onetime_todo_valid", onetime_key); }
 
 #endif

@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_BOTMACHINE
 #define TNI_API_HEADER_BOTMACHINE
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct BotMachine : public Node {
@@ -47,6 +47,7 @@ struct BotMachine : public Node {
 	inline Variant deserialize_from_str(int64_t _sz, String fdats, LogicController target_controller);
 	inline String colorize_description(String ds);
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "LogicController.hpp"
@@ -64,5 +65,6 @@ inline Variant BotMachine::serialize_as_str() { return operator()("serialize_as_
 inline Variant BotMachine::deserialize_from_str(int64_t _sz, String fdats, LogicController target_controller) { return operator()("deserialize_from_str", _sz, fdats, target_controller); }
 inline String BotMachine::colorize_description(String ds) { return operator()("colorize_description", ds); }
 inline bool BotMachine::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool BotMachine::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class UserTraversal : Node
 ---@field user LogicControllerUser
@@ -91,32 +91,6 @@ function UserTraversal.make_packet_root() end
 ---@return Object
 function UserTraversal.make_traversal_packet(proot) end
 
----@param from_node LogicController
----@param via_port LogicControllerSocket
----@param context TraversalContext
----@return boolean
-function UserTraversal.check_routability(from_node, via_port, context) end
-
----@param next_node LogicController
----@param context TraversalContext
----@return Object
-function UserTraversal.check_filter_passage(next_node, context) end
-
----@param context TraversalContext
----@param from_node LogicController
----@param via_port Object
----@param current_depth Object
----@return boolean
-function UserTraversal.check_traversibility(context, from_node, via_port, current_depth) end
-
----@param context TraversalContext
----@param node LogicController
----@param via_port Object
----@param current_index Object
----@param current_depth Object
----@return GraphController.Traversal
-function UserTraversal.precallback_process(context, node, via_port, current_index, current_depth) end
-
 ---@return NetworkPacketRoot
 function UserTraversal.make_packet_root() end
 
@@ -145,3 +119,7 @@ function UserTraversal.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function UserTraversal.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function UserTraversal.is_pkt_for_self(packet) end

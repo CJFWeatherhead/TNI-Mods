@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class PowerController : Node
 ---@field MAX_DEPTH integer # Constant value: 99999
@@ -20,6 +20,7 @@
 ---@field charges integer
 ---@field charge_ratio number
 ---@field total_supplying_time_s number
+---@field charge_timer Timer
 ---@field current_load integer
 ---@field displayed_load integer
 ---@field can_supply_power boolean
@@ -35,6 +36,8 @@ local PowerController = {}
 ---@param obj Object
 ---@return Object
 function PowerController.is_friend_class(obj) end
+
+function PowerController.start_charge_timer() end
 
 ---@param newv Object
 function PowerController.set_sus_val(newv) end

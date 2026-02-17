@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class BaseUI : CanvasLayer
 ---@field is_fully_unfaded boolean
@@ -7,6 +7,7 @@
 ---@field game_menu Object
 ---@field wiki Object
 ---@field feedback Object
+---@field mod_manager Object
 ---@field catalog Object
 ---@field screen_fader Object
 ---@field jumbotron_flasher Object
@@ -29,7 +30,7 @@
 ---@field loading_screen_is_hidden boolean
 local BaseUI = {}
 
----@return Node
+---@return BaseUI
 function BaseUI.get_instance() end
 
 function BaseUI.show_game_menu() end
@@ -43,6 +44,10 @@ function BaseUI.hide_wiki() end
 function BaseUI.show_feedback() end
 
 function BaseUI.hide_feedback() end
+
+function BaseUI.show_mod_manager() end
+
+function BaseUI.hide_mod_manager() end
 
 function BaseUI.show_catalog() end
 

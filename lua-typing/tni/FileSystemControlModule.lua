@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class FileSystemControlModule : Node
 ---@field RESTRICTED_FILENAMES Array<any> # Constant value: ["on", "to", "rename", "using"]
@@ -8,7 +8,8 @@
 ---@field FW_CONF_FILE string # Constant value: /etc/nftables.conf
 ---@field DNS_ZONE_FILE string # Constant value: /etc/dns.zone
 ---@field VLAN_CONF_FILE string # Constant value: /etc/vlan.tags
----@field CONFIG_FILENAMES Array<any> # Constant value: ["/etc/routes.conf", "/etc/dhcpd.conf", "/etc/nftables.conf", "/etc/dns.zone", "/etc/vlan.tags"]
+---@field MBOX_CONF_FILE string # Constant value: /etc/mangling.conf
+---@field CONFIG_FILENAMES Array<any> # Constant value: ["/etc/routes.conf", "/etc/dhcpd.conf", "/etc/nftables.conf", "/etc/dns.zone", "/etc/vlan.tags", "/etc/mangling.conf"]
 ---@field files table<any,any>
 ---@field total_used_size integer
 ---@field host_controller LogicController

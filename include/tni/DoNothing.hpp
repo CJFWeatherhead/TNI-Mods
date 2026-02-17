@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_DONOTHING
 #define TNI_API_HEADER_DONOTHING
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct DoNothing : public Node {
@@ -37,6 +37,7 @@ struct DoNothing : public Node {
 	inline void uninstall();
 	inline void install(Variant _install_opts);
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "LogicController.hpp"
@@ -49,5 +50,6 @@ inline void DoNothing::stop() { voidcall("stop"); }
 inline void DoNothing::uninstall() { voidcall("uninstall"); }
 inline void DoNothing::install(Variant _install_opts) { voidcall("install", _install_opts); }
 inline bool DoNothing::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool DoNothing::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

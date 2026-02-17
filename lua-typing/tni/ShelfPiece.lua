@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class ShelfPiece : RigidBody2D
 ---@field product_name string
@@ -26,6 +26,7 @@
 ---@field auto_servicing_enabled boolean
 ---@field auto_replacement_cost integer
 ---@field current_floor_num integer
+---@field device_application_unlocks Array<any>
 ---@field device_hardware_class DeviceUnit.DeviceHardwareClass
 ---@field condition DeviceUnit.Condition
 ---@field mount_type DeviceUnit.MountType
@@ -57,6 +58,15 @@ function ShelfPiece.reposition(new_pos) end
 
 ---@param new_pos Vector2
 function ShelfPiece.elevator_move(new_pos) end
+
+---@return number
+function ShelfPiece.get_device_bounding_height() end
+
+---@return Vector2
+function ShelfPiece.get_global_y_range() end
+
+---@return Vector2
+function ShelfPiece.get_local_y_range() end
 
 ---@return Object
 function ShelfPiece.debug_monitor_callback() end

@@ -1,11 +1,11 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class GameWorld : Node2D
----@field mobile_os_scn Object # Constant value: <PackedScene#-9223369052137631579>
+---@field mobile_os_scn string # Constant value: <PackedScene>
 ---@field BASE_ACCL Array<any> # Constant value: ["using", "from", "with", "rename", "traffic", "/etc/routes.conf", "/etc/dhcpd.conf", "/etc/nftables.conf", "/etc/dns.zone", "/etc/vlan.tags", "/bin/rtkernel", "/bin/vlanfirm", "/bin/wirerat", "/bin/firewatcher"]
----@field phctl_scn Object # Constant value: <PackedScene#-9223369050275361657>
----@field dmctl_scn Object # Constant value: <PackedScene#-9223369049772045160>
+---@field phctl_scn string # Constant value: <PackedScene>
+---@field dmctl_scn string # Constant value: <PackedScene>
 ---@field is_state_restored boolean
 ---@field play_options PlayOptions
 ---@field game_stats GameStatistics
@@ -30,8 +30,8 @@
 ---@field app_licenses Array<any>
 ---@field day_opening_balance integer
 ---@field auto_complete_candidate_list Array<any>
----@field just_loaded_in_on_this_day boolean
 ---@field migration_srack_c integer
+---@field fbcntr integer
 ---@field difficulty_hash integer
 ---@field unlocks_or_achievements_allowed boolean
 ---@field difficulty_level string
@@ -70,7 +70,6 @@
 ---@field menuconf Object
 ---@field base_engine_tsms integer
 ---@field engine_tsms_since_base integer
----@field msand Sandbox
 ---@field payment_due_today integer
 ---@field base_payment_breakdown table<any,any>
 ---@field admin_fee_mult number

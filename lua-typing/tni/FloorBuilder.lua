@@ -1,9 +1,9 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class FloorBuilder : Node
 ---@field onboarding_controller OnboardingController
----@field build_options Array<any>
+---@field build_options Array<FloorBuildOptionItem>
 ---@field build_events Array<any>
 ---@field disabled boolean
 ---@field skip_interval_builds boolean
@@ -15,9 +15,9 @@
 ---@field spawn_paths Array<any>
 local FloorBuilder = {}
 
----@param floor_candidate Location
+---@param candid Object
 ---@return boolean
-function FloorBuilder.floor_requirements_satisfied(floor_candidate) end
+function FloorBuilder.floor_requirements_satisfied(candid) end
 
 ---@param force_spawn boolean?  # Default = false
 function FloorBuilder.execute_random_build_option(force_spawn) end

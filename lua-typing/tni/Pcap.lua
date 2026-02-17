@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Pcap : Node
 ---@field MAX_LIVE_TRAFFIC_DISPLAY integer # Constant value: 15
@@ -11,6 +11,7 @@
 ---@field traffic_list Array<any>
 ---@field enabled boolean
 ---@field shell TerminalShell
+---@field wide_output_shell boolean
 local Pcap = {}
 
 ---@param stdout Object
@@ -39,19 +40,6 @@ function Pcap.run_with_args(_stdout, _args) end
 ---@param _stdout TerminalOutputDisplay
 function Pcap.foreground_process(_stdout) end
 
----@param debugger_lgctl Object
----@param traffic_type Object
----@param request_data Object
----@return TraversalContext
-function Pcap.create_debugger_ctx(debugger_lgctl, traffic_type, request_data) end
-
----@param stdout Object
----@param debugger Object
----@param node_addr Object
----@param allow_user_nodes boolean?  # Default = false
----@return TraversalContext
-function Pcap.access_node_from_debugger(stdout, debugger, node_addr, allow_user_nodes) end
-
 ---@param stdout Object
 ---@param deb_addr string
 function Pcap.print_debugger_inacessible_error(stdout, deb_addr) end
@@ -70,6 +58,10 @@ function Pcap.print_invalid_device_type(stdout, dev_addr, req_type) end
 ---@param stdout Object
 ---@param dst_laddr Object
 function Pcap.print_no_dns_entry_error(stdout, dst_laddr) end
+
+---@param stdout Object
+---@param d_addr Object
+function Pcap.print_no_dns_server_error(stdout, d_addr) end
 
 ---@param context Object
 ---@param stdout Object
@@ -99,3 +91,21 @@ function Pcap.format_load_string(load_last_tick, max_load) end
 ---@param stdout Object
 ---@param p Program
 function Pcap.print_prog_load(stdout, p) end
+
+---@param stdout Object
+---@param async_send_resultd table<any,any>
+function Pcap.print_send_packet_error(stdout, async_send_resultd) end
+
+---@return integer
+function Pcap.get_debugger_pkt_weight() end
+
+---@param stdout Object
+---@param debugger DeviceUnit
+---@param node_addr string
+---@param allow_user_nodes boolean?  # Default = false
+---@param rc_tc_type string?  # Default = tcp/23
+---@param rc_tc_rd string?  # Default = debugger access
+---@param matcher_callback Object?  # Default = <null>
+---@param clear_scrn_after_event boolean?  # Default = false
+---@return Object
+function Pcap.send_remote_command(stdout, debugger, node_addr, allow_user_nodes, rc_tc_type, rc_tc_rd, matcher_callback, clear_scrn_after_event) end

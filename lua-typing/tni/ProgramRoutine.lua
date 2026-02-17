@@ -1,9 +1,10 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class ProgramRoutine : Node
 ---@field enabled boolean
 ---@field shell TerminalShell
+---@field wide_output_shell boolean
 local ProgramRoutine = {}
 
 ---@param stdout Object

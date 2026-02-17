@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_USERTRAVERSALHOSTINGBACKEND
 #define TNI_API_HEADER_USERTRAVERSALHOSTINGBACKEND
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct UserTraversalHostingBackend : public Node {
@@ -69,23 +69,20 @@ struct UserTraversalHostingBackend : public Node {
 
 	inline Variant compute_produce_limit(LogicController _node);
 	inline void tick();
+	inline NetworkPacketRoot make_packet_root();
 	inline Variant make_traversal_packet(NetworkPacketRoot proot);
 	inline void add_surveyor_msg(String msg);
 	inline Variant get_compatible_hostings();
 	inline Variant filter_acceptable_hostings(Variant initial_candids);
 	inline void select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method);
 	inline Variant produce_limit_reached(LogicController node);
-	inline NetworkPacketRoot make_packet_root();
-	inline bool check_routability(LogicController from_node, LogicControllerSocket via_port, TraversalContext context);
-	inline Variant check_filter_passage(LogicController next_node, TraversalContext context);
-	inline bool check_traversibility(TraversalContext context, LogicController from_node, Variant via_port, Variant current_depth);
-	inline int64_t precallback_process(TraversalContext context, LogicController node, Variant via_port, Variant current_index, Variant current_depth);
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "UserHosting.hpp"
@@ -94,28 +91,23 @@ struct UserTraversalHostingBackend : public Node {
 #include "UseConfig.hpp"
 #include "LogicController.hpp"
 #include "NetworkPacketRoot.hpp"
-#include "LogicControllerSocket.hpp"
-#include "TraversalContext.hpp"
 #include "PacketControlModule.hpp"
 
 inline Variant UserTraversalHostingBackend::compute_produce_limit(LogicController _node) { return operator()("compute_produce_limit", _node); }
 inline void UserTraversalHostingBackend::tick() { voidcall("tick"); }
+inline NetworkPacketRoot UserTraversalHostingBackend::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
 inline Variant UserTraversalHostingBackend::make_traversal_packet(NetworkPacketRoot proot) { return operator()("make_traversal_packet", proot); }
 inline void UserTraversalHostingBackend::add_surveyor_msg(String msg) { voidcall("add_surveyor_msg", msg); }
 inline Variant UserTraversalHostingBackend::get_compatible_hostings() { return operator()("get_compatible_hostings"); }
 inline Variant UserTraversalHostingBackend::filter_acceptable_hostings(Variant initial_candids) { return operator()("filter_acceptable_hostings", initial_candids); }
 inline void UserTraversalHostingBackend::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
 inline Variant UserTraversalHostingBackend::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
-inline NetworkPacketRoot UserTraversalHostingBackend::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
-inline bool UserTraversalHostingBackend::check_routability(LogicController from_node, LogicControllerSocket via_port, TraversalContext context) { return operator()("check_routability", from_node, via_port, context); }
-inline Variant UserTraversalHostingBackend::check_filter_passage(LogicController next_node, TraversalContext context) { return operator()("check_filter_passage", next_node, context); }
-inline bool UserTraversalHostingBackend::check_traversibility(TraversalContext context, LogicController from_node, Variant via_port, Variant current_depth) { return operator()("check_traversibility", context, from_node, via_port, current_depth); }
-inline int64_t UserTraversalHostingBackend::precallback_process(TraversalContext context, LogicController node, Variant via_port, Variant current_index, Variant current_depth) { return operator()("precallback_process", context, node, via_port, current_index, current_depth); }
 inline String UserTraversalHostingBackend::colorize_description(String ds) { return operator()("colorize_description", ds); }
 inline void UserTraversalHostingBackend::start() { voidcall("start"); }
 inline void UserTraversalHostingBackend::stop() { voidcall("stop"); }
 inline void UserTraversalHostingBackend::uninstall() { voidcall("uninstall"); }
 inline void UserTraversalHostingBackend::install(Variant _install_opts) { voidcall("install", _install_opts); }
 inline bool UserTraversalHostingBackend::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool UserTraversalHostingBackend::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

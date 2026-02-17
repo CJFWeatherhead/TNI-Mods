@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class LinkOutlet : Area2D
 ---@field link_type LinkOutlet.LinkOutletType
@@ -7,8 +7,8 @@
 ---@field tower_link TowerNetworkLink
 ---@field serial_num string
 ---@field linked boolean
----@field floor_num integer
 ---@field socket Socket
+---@field floor_num integer
 local LinkOutlet = {}
 ---@enum LinkOutlet.LinkOutletType
 LinkOutlet.LinkOutletType = {

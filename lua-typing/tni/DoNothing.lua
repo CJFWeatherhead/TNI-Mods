@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class DoNothing : Node
 ---@field cpu_load integer
@@ -39,3 +39,7 @@ function DoNothing.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function DoNothing.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function DoNothing.is_pkt_for_self(packet) end

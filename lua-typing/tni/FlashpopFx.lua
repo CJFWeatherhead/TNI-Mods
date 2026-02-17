@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class FlashpopFx : Node2D
 ---@field effects_group AudioVisualEffects2D.EffectsGroup

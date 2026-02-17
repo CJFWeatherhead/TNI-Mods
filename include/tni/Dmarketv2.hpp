@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_DMARKETV2
 #define TNI_API_HEADER_DMARKETV2
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Dmarketv2 : public Container {
@@ -30,6 +30,7 @@ struct Dmarketv2 : public Container {
 	PROPERTY(fwd_button, Button);
 	PROPERTY(clr_button, Button);
 	PROPERTY(current_local_cart, Variant);
+	PROPERTY(dlist, Variant);
 	PROPERTY(main_pane, MainPane);
 	PROPERTY(dynamic_container_path, NodePath);
 	PROPERTY(dynamic_container, Container);

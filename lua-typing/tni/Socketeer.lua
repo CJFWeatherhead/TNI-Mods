@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Socketeer : Container
 ---@field placeable_outlets Array<any>
@@ -8,9 +8,9 @@
 ---@field placebutton Button
 ---@field sviewport SubViewport
 ---@field cfmrmbutton Button
----@field curr_ghost LinkOutlet
----@field placed_ghost LinkOutlet
----@field rm_target LinkOutlet
+---@field curr_ghost FixtureOutlet
+---@field placed_ghost FixtureOutlet
+---@field rm_target FixtureOutlet
 ---@field main_pane MainPane
 ---@field dynamic_container_path string
 ---@field dynamic_container Container

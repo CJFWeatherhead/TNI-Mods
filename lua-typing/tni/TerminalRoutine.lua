@@ -1,11 +1,12 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class TerminalRoutine : Node
 ---@field INVALID_CMD_MAN_HELP0 string # Constant value: invalid command, type '{man}' for help.
 ---@field LOAD_COLOR_LEVELS Array<any> # Constant value: ["green", "yellow", "red"]
 ---@field enabled boolean
 ---@field shell TerminalShell
+---@field wide_output_shell boolean
 local TerminalRoutine = {}
 
 ---@param stdout Object

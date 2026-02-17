@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class UseStorage : Node
 ---@field stored_use_stack table<any,any>
@@ -42,3 +42,7 @@ function UseStorage.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function UseStorage.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function UseStorage.is_pkt_for_self(packet) end

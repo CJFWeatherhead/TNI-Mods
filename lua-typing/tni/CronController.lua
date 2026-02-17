@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class CronController : Node
 ---@field MINUTES_IN_DAY integer # Constant value: 1440
@@ -35,6 +35,9 @@ function CronController.print_warn(s) end
 
 ---@param s Object
 function CronController.print_highlight(s) end
+
+---@param _c Object?  # Default = 
+function CronController.put_s(_c) end
 
 ---@param s Object?  # Default = 
 function CronController.print_line(s) end

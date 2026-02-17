@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class TraversalContextRule : RefCounted
 ---@field RESTRICTED_WORDS Array<any> # Constant value: ["any", "to", "from", "on", "using", "traffic", "via", "*", "."]

@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_MODLUA
 #define TNI_API_HEADER_MODLUA
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct ModLua : public Sandbox {
@@ -19,6 +19,7 @@ struct ModLua : public Sandbox {
 	PROPERTY(mod_entry_binary, String);
 	PROPERTY(mod_dir, String);
 	PROPERTY(mod_type, String);
+	PROPERTY(manifest, ModManifest);
 	PROPERTY(filesystem, ModFileSystem);
 	PROPERTY(api_v1, ModApiV1);
 
@@ -28,10 +29,11 @@ struct ModLua : public Sandbox {
 	inline void handle_stdout(String s);
 	inline Variant callable_args_to_array(Variant c);
 	inline bool array_value_allowed(Variant array, int64_t idx);
-	inline void instance_from_id_(int64_t id);
+	inline Variant instance_from_id_(int64_t id);
 	inline String error_string_(int64_t e);
 };
 
+#include "ModManifest.hpp"
 #include "ModFileSystem.hpp"
 #include "ModApiV1.hpp"
 
@@ -41,7 +43,7 @@ inline void ModLua::mod_log(String s) { voidcall("mod_log", s); }
 inline void ModLua::handle_stdout(String s) { voidcall("handle_stdout", s); }
 inline Variant ModLua::callable_args_to_array(Variant c) { return operator()("callable_args_to_array", c); }
 inline bool ModLua::array_value_allowed(Variant array, int64_t idx) { return operator()("array_value_allowed", array, idx); }
-inline void ModLua::instance_from_id_(int64_t id) { voidcall("instance_from_id_", id); }
+inline Variant ModLua::instance_from_id_(int64_t id) { return operator()("instance_from_id_", id); }
 inline String ModLua::error_string_(int64_t e) { return operator()("error_string_", e); }
 
 #endif

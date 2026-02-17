@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_GAMESESSION
 #define TNI_API_HEADER_GAMESESSION
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct GameSession : public Node {
@@ -55,6 +55,7 @@ struct GameSession : public Node {
 	inline void start_master_timer();
 	inline void start_s5_timer();
 	inline void init_game_cursors();
+	inline void init_bgm_players();
 	inline Location get_floor_ref_from_path(String rpath);
 	inline void cleanup();
 	inline void pause_bgm();
@@ -86,6 +87,7 @@ inline void GameSession::start_artifact_timer() { voidcall("start_artifact_timer
 inline void GameSession::start_master_timer() { voidcall("start_master_timer"); }
 inline void GameSession::start_s5_timer() { voidcall("start_s5_timer"); }
 inline void GameSession::init_game_cursors() { voidcall("init_game_cursors"); }
+inline void GameSession::init_bgm_players() { voidcall("init_bgm_players"); }
 inline Location GameSession::get_floor_ref_from_path(String rpath) { return Location(operator()("get_floor_ref_from_path", rpath).as_object().address()); }
 inline void GameSession::cleanup() { voidcall("cleanup"); }
 inline void GameSession::pause_bgm() { voidcall("pause_bgm"); }

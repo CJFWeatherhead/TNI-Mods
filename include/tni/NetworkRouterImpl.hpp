@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_NETWORKROUTERIMPL
 #define TNI_API_HEADER_NETWORKROUTERIMPL
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct NetworkRouterImpl : public Node {
@@ -14,6 +14,7 @@ struct NetworkRouterImpl : public Node {
 	constexpr NetworkRouterImpl(Object obj) : NetworkRouterImpl{obj.address()} {}
 	NetworkRouterImpl(Variant variant) : NetworkRouterImpl{variant.as_object().address()} {}
 
+	inline static const String SCAN_BYPASS_RDATA = "debugger scan with bypass";  // NOTE: You should recompile your mod if this value changes!
 
 	PROPERTY(routectl, RouteControlModule);
 	PROPERTY(cpu_load, int64_t);
@@ -40,6 +41,7 @@ struct NetworkRouterImpl : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "RouteControlModule.hpp"
@@ -55,5 +57,6 @@ inline void NetworkRouterImpl::start() { voidcall("start"); }
 inline void NetworkRouterImpl::stop() { voidcall("stop"); }
 inline void NetworkRouterImpl::uninstall() { voidcall("uninstall"); }
 inline void NetworkRouterImpl::install(Variant _install_opts) { voidcall("install", _install_opts); }
+inline bool NetworkRouterImpl::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

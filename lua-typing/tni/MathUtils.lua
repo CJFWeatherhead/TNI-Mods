@@ -1,12 +1,28 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class MathUtils : Object
 local MathUtils = {}
 
+---@param hue_min number
+---@param hue_max number
+---@param cint integer
+---@param mix_sat boolean?  # Default = true
+---@param mix_val boolean?  # Default = true
+---@return Color
+function MathUtils.color_from_int(hue_min, hue_max, cint, mix_sat, mix_val) end
+
+---@return number
+function MathUtils.get_detfloat_from_snum() end
+
+---@param d table<any,any>
+---@param leq number?  # Default = 0.0
+function MathUtils.remove_elements_leq_than(d, leq) end
+
 ---@param minu integer
+---@param with_colon boolean?  # Default = true
 ---@return Object
-function MathUtils.get_hhmm_from_minutes_of_day(minu) end
+function MathUtils.get_hhmm_from_minutes_of_day(minu, with_colon) end
 
 ---@param weights Array<integer>
 ---@param rng RandomNumberGenerator?  # Default = <null>
@@ -52,3 +68,9 @@ function MathUtils.get_color_hue_from_int(n) end
 ---@param n integer
 ---@return Color
 function MathUtils.get_color_from_int(n) end
+
+---@param shuffle_bag Array<any>
+---@param n integer
+---@param rng_seed Object?  # Default = <null>
+---@return Array<any>
+function MathUtils.uniform_random_multi_selection_with_seed(shuffle_bag, n, rng_seed) end

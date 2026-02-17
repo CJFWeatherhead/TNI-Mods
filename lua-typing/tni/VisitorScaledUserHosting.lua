@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class VisitorScaledUserHosting : Node
 ---@field min_visitors integer
@@ -74,3 +74,7 @@ function VisitorScaledUserHosting.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function VisitorScaledUserHosting.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function VisitorScaledUserHosting.is_pkt_for_self(packet) end

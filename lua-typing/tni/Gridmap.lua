@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Gridmap : GridMap
 ---@field DIRECTIONS_V Array<any> # Constant value: [(0, -1), (1, 0), (0, 1), (-1, 0)]

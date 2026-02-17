@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class VLANControlModule : Node
 ---@field MAX_VLANTAG_CHARS integer # Constant value: 10

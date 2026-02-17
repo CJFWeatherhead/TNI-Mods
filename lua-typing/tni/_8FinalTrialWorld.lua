@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class _8FinalTrialWorld : Node2D
 ---@field last_tutorial_name string
@@ -22,6 +22,7 @@
 ---@field default_application_unlocks Array<any>
 ---@field netsh_default_always boolean
 ---@field autosave_enabled boolean
+---@field consumer_goes_easy_due_to_producer_grace boolean
 ---@field main_scon SaveController
 ---@field time_mult number
 ---@field dns_lookup table<any,any>
@@ -36,8 +37,8 @@
 ---@field app_licenses Array<any>
 ---@field day_opening_balance integer
 ---@field auto_complete_candidate_list Array<any>
----@field just_loaded_in_on_this_day boolean
 ---@field migration_srack_c integer
+---@field fbcntr integer
 ---@field difficulty_hash integer
 ---@field unlocks_or_achievements_allowed boolean
 ---@field difficulty_level string
@@ -76,7 +77,6 @@
 ---@field menuconf Object
 ---@field base_engine_tsms integer
 ---@field engine_tsms_since_base integer
----@field msand Sandbox
 ---@field payment_due_today integer
 ---@field base_payment_breakdown table<any,any>
 ---@field admin_fee_mult number

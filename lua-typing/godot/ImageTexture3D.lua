@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class ImageTexture3D : Texture3D
 local ImageTexture3D = {}

@@ -1,9 +1,9 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class NetworkPacketRoot : RefCounted
 ---@field default_ttl integer # Constant value: 32
----@field default_request_timeout number # Constant value: 3.3
+---@field default_request_timeout number # Constant value: 4.0
 ---@field timeout_seconds number
 ---@field src_controller LogicController
 ---@field src_packetctl PacketControlModule
@@ -75,6 +75,8 @@ function NetworkPacketRoot.get_packet_drop_reason_sa() end
 
 ---@param reason_str string
 function NetworkPacketRoot.account_packet_drop_reason(reason_str) end
+
+function NetworkPacketRoot.start_synchronous_timer() end
 
 ---@param pkt table<any,any>
 ---@param enable_timeout Object?  # Default = true

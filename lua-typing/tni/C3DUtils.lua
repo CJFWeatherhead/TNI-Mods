@@ -1,8 +1,12 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class C3DUtils : Object
 local C3DUtils = {}
+
+---@param n Node
+---@return Array<RID>
+function C3DUtils.get_recursive_rids(n) end
 
 ---@param packing_area Area3D
 ---@param to_pack Array<any>

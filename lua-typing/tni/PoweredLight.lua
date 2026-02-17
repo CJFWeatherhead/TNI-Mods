@@ -1,8 +1,8 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class PoweredLight : Node2D
----@field pointlight2d PointLight2D
+---@field pointlight2d Object
 ---@field physical_state boolean
 ---@field energy number
 ---@field current_load integer

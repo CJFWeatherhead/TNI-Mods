@@ -1,9 +1,9 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Autograph : Container
----@field white256txt Object # Constant value: <CompressedTexture2D#-9223369087369785403>
----@field green256txt Object # Constant value: <CompressedTexture2D#-9223369087000686785>
+---@field white256txt Object # Constant value: <CompressedTexture2D#-9223369070508683227>
+---@field green256txt Object # Constant value: <CompressedTexture2D#-9223369070139584741>
 ---@field bw_load_color Array<any> # Constant value: [(1.0, 0.0, 0.0, 1.0), (1.0, 0.6, 0.0, 1.0), (1.0, 1.0, 0.0, 1.0), (0.8, 1.0, 0.2, 1.0), (0.6, 1.0, 0.2, 1.0), (0.4, 1.0, 0.2, 1.0), (0.2, 0.8, 0.2, 1.0), (0.0, 1.0, 0.0, 1.0), (0.0, 1.0, 0.6, 1.0), (0.0, 1.0, 0.8, 1.0), (0.2, 0.8, 0.8, 1.0), (0.0, 0.8, 0.9333, 1.0)]
 ---@field togcfgbtn Button
 ---@field cfgpage Container
@@ -19,6 +19,8 @@
 ---@field gd2 OptionButton
 ---@field gd1 OptionButton
 ---@field scnex OptionButton
+---@field lblpg Container
+---@field lblpg_lbl Label
 ---@field selected_dbg DeviceUnit
 ---@field autoscan_state boolean
 ---@field graph_node_data table<any,any>

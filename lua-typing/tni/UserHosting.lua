@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class UserHosting : Node
 ---@field user LogicControllerUser
@@ -66,3 +66,7 @@ function UserHosting.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function UserHosting.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function UserHosting.is_pkt_for_self(packet) end

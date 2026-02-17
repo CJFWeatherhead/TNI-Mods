@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class PlayOptions : Resource
 ---@field rng_seed_str string
@@ -44,6 +44,8 @@
 ---@field floor_build_period_multiplier number
 ---@field tenabolt_penalty integer
 ---@field start_amount_override integer
+---@field tower_wide_user_dhcp_default string
+---@field tower_wide_device_dhcp_default string
 local PlayOptions = {}
 
 ---@param pod table<any,any>

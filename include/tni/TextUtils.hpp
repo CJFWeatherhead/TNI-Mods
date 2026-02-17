@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_TEXTUTILS
 #define TNI_API_HEADER_TEXTUTILS
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct TextUtils : public Object {
@@ -23,6 +23,7 @@ struct TextUtils : public Object {
 	inline String get_whitelistchar_prefix(String inp, String whitelist);
 	inline Variant get_int_suffix(String inp);
 	inline String fill_pattstr_with_rand(String pattstr, RandomNumberGenerator rng);
+	inline String get_shortcut_keystr(Variant shortcut);
 };
 
 
@@ -31,5 +32,6 @@ inline Variant TextUtils::get_random_letters(int64_t count, String symbol_array)
 inline String TextUtils::get_whitelistchar_prefix(String inp, String whitelist) { return operator()("get_whitelistchar_prefix", inp, whitelist); }
 inline Variant TextUtils::get_int_suffix(String inp) { return operator()("get_int_suffix", inp); }
 inline String TextUtils::fill_pattstr_with_rand(String pattstr, RandomNumberGenerator rng) { return operator()("fill_pattstr_with_rand", pattstr, rng); }
+inline String TextUtils::get_shortcut_keystr(Variant shortcut) { return operator()("get_shortcut_keystr", shortcut); }
 
 #endif

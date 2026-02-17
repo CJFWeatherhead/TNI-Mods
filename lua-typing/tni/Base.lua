@@ -1,9 +1,11 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Base : Node
 ---@field logic_controller LogicController
 ---@field behaviors Array<Program>
+---@field hosting_behaviors Array<Program>
+---@field public_client_behaviors Array<Program>
 ---@field user_application_unlocks Array<any>
 ---@field consumption_payment_scaling number
 ---@field allow_hwreset boolean
@@ -27,6 +29,7 @@
 ---@field vsr number
 ---@field visitor_reset_modulo_n integer
 ---@field consumption_total_last_tick integer
+---@field consumption_satiety_last_tick integer
 ---@field description string
 ---@field user_profile_name string
 ---@field base_use_period number
@@ -74,13 +77,13 @@ function Base.account_intent(utc) end
 function Base.unaccount_intent(utc) end
 
 ---@param utc UserTraversal
----@param _context TraversalContext
-function Base.account_consumption(utc, _context) end
+---@param _ctx_or_pkt Object
+function Base.account_consumption(utc, _ctx_or_pkt) end
 
 ---@param vprog Program
----@param context TraversalContext
+---@param ctx_or_pkt Object
 ---@param _visitor LogicControllerUser
-function Base.account_visitation(vprog, context, _visitor) end
+function Base.account_visitation(vprog, ctx_or_pkt, _visitor) end
 
 ---@param time_mult_delta number
 function Base.time_mult_updated(time_mult_delta) end

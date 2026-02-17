@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class RandomEvent : Node
 ---@field ABS_MIN_RATE number # Constant value: 0.001

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class PickableRigidBody2D : RigidBody2D
 ---@field PZINDEX integer # Constant value: 2000

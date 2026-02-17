@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_VISITORSCALEDUSERHOSTING
 #define TNI_API_HEADER_VISITORSCALEDUSERHOSTING
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct VisitorScaledUserHosting : public Node {
@@ -60,6 +60,7 @@ struct VisitorScaledUserHosting : public Node {
 	inline void uninstall();
 	inline void install(Variant _install_opts);
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "LogicControllerUser.hpp"
@@ -80,5 +81,6 @@ inline void VisitorScaledUserHosting::stop() { voidcall("stop"); }
 inline void VisitorScaledUserHosting::uninstall() { voidcall("uninstall"); }
 inline void VisitorScaledUserHosting::install(Variant _install_opts) { voidcall("install", _install_opts); }
 inline bool VisitorScaledUserHosting::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool VisitorScaledUserHosting::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

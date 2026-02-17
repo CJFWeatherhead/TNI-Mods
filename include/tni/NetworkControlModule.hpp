@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_NETWORKCONTROLMODULE
 #define TNI_API_HEADER_NETWORKCONTROLMODULE
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct NetworkControlModule : public Node {
@@ -19,6 +19,7 @@ struct NetworkControlModule : public Node {
 	inline static const String STP_BLOCKED = "stp-blocked";  // NOTE: You should recompile your mod if this value changes!
 
 	PROPERTY(parent_controller, LogicController);
+	PROPERTY(local_dns_mapping, bool);
 	PROPERTY(hwaddr_fixed, bool);
 	PROPERTY(hardware_address, String);
 	PROPERTY(network_address, String);
@@ -29,6 +30,8 @@ struct NetworkControlModule : public Node {
 	PROPERTY(port_met, Variant);
 	PROPERTY(stp_state, Variant);
 	PROPERTY(netw_priority, Variant);
+	PROPERTY(mbox_cfg, Variant);
+	PROPERTY(timeout_s, Variant);
 	PROPERTY(dhcp_timer, Timer);
 	PROPERTY(stp_timer, Timer);
 	PROPERTY(is_dhcp_enabled, bool);
@@ -40,9 +43,7 @@ struct NetworkControlModule : public Node {
 	inline Variant dhcp_matcher(Variant node, Variant _curr_pkt);
 	inline Variant request_dhcp_options();
 	inline void dns_cache_request(Variant domain_name);
-	inline void resolve_ctx_domain(TraversalContext traversal_ctx, bool cache_to_etchosts);
 	inline Variant get_resolved_addr(String laddr);
-	inline void request_dns_cache(String laddr);
 	inline void reset_hwaddr();
 	inline void reset_all();
 	inline void set_network_address(String nwaddr);
@@ -54,6 +55,7 @@ struct NetworkControlModule : public Node {
 	inline void try_schedule_dhcp_request();
 	inline void set_etc_host_entry(Variant entry, Variant val);
 	inline void clear_etc_host();
+	inline void set_timeout(String cat, double new_timeout);
 	inline String get_etchost_str();
 	inline void set_etchost_with_configstr(String cfgs);
 	inline void set_stp_mode(bool is_en);
@@ -66,6 +68,13 @@ struct NetworkControlModule : public Node {
 	inline void os_startup();
 	inline void os_shutdown();
 	inline void unblock_all_stp_blocks();
+	inline void set_mbox_hairpin(bool is_en);
+	inline void set_mbox_ttl(String new_ttl);
+	inline void add_mbox_rules(Variant new_rule);
+	inline void remove_mbox_rule(int64_t rule_id);
+	inline void clear_mbox_cfg();
+	inline String get_mbox_str();
+	inline void set_mbox_cfgstr(String cfgs);
 	inline Variant get_stp_local_bid();
 	inline void set_as_stp_root();
 	inline void set_new_stp_root(NodePath root_np, String root_port_id, int64_t path_cost);
@@ -79,15 +88,12 @@ struct NetworkControlModule : public Node {
 };
 
 #include "LogicController.hpp"
-#include "TraversalContext.hpp"
 
 inline void NetworkControlModule::deallocate_addresses() { voidcall("deallocate_addresses"); }
 inline Variant NetworkControlModule::dhcp_matcher(Variant node, Variant _curr_pkt) { return operator()("dhcp_matcher", node, _curr_pkt); }
 inline Variant NetworkControlModule::request_dhcp_options() { return operator()("request_dhcp_options"); }
 inline void NetworkControlModule::dns_cache_request(Variant domain_name) { voidcall("dns_cache_request", domain_name); }
-inline void NetworkControlModule::resolve_ctx_domain(TraversalContext traversal_ctx, bool cache_to_etchosts) { voidcall("resolve_ctx_domain", traversal_ctx, cache_to_etchosts); }
 inline Variant NetworkControlModule::get_resolved_addr(String laddr) { return operator()("get_resolved_addr", laddr); }
-inline void NetworkControlModule::request_dns_cache(String laddr) { voidcall("request_dns_cache", laddr); }
 inline void NetworkControlModule::reset_hwaddr() { voidcall("reset_hwaddr"); }
 inline void NetworkControlModule::reset_all() { voidcall("reset_all"); }
 inline void NetworkControlModule::set_network_address(String nwaddr) { voidcall("set_network_address", nwaddr); }
@@ -99,6 +105,7 @@ inline void NetworkControlModule::handle_load(Variant save_obj) { voidcall("hand
 inline void NetworkControlModule::try_schedule_dhcp_request() { voidcall("try_schedule_dhcp_request"); }
 inline void NetworkControlModule::set_etc_host_entry(Variant entry, Variant val) { voidcall("set_etc_host_entry", entry, val); }
 inline void NetworkControlModule::clear_etc_host() { voidcall("clear_etc_host"); }
+inline void NetworkControlModule::set_timeout(String cat, double new_timeout) { voidcall("set_timeout", cat, new_timeout); }
 inline String NetworkControlModule::get_etchost_str() { return operator()("get_etchost_str"); }
 inline void NetworkControlModule::set_etchost_with_configstr(String cfgs) { voidcall("set_etchost_with_configstr", cfgs); }
 inline void NetworkControlModule::set_stp_mode(bool is_en) { voidcall("set_stp_mode", is_en); }
@@ -111,6 +118,13 @@ inline bool NetworkControlModule::test_port_stp_blocked(String port_id) { return
 inline void NetworkControlModule::os_startup() { voidcall("os_startup"); }
 inline void NetworkControlModule::os_shutdown() { voidcall("os_shutdown"); }
 inline void NetworkControlModule::unblock_all_stp_blocks() { voidcall("unblock_all_stp_blocks"); }
+inline void NetworkControlModule::set_mbox_hairpin(bool is_en) { voidcall("set_mbox_hairpin", is_en); }
+inline void NetworkControlModule::set_mbox_ttl(String new_ttl) { voidcall("set_mbox_ttl", new_ttl); }
+inline void NetworkControlModule::add_mbox_rules(Variant new_rule) { voidcall("add_mbox_rules", new_rule); }
+inline void NetworkControlModule::remove_mbox_rule(int64_t rule_id) { voidcall("remove_mbox_rule", rule_id); }
+inline void NetworkControlModule::clear_mbox_cfg() { voidcall("clear_mbox_cfg"); }
+inline String NetworkControlModule::get_mbox_str() { return operator()("get_mbox_str"); }
+inline void NetworkControlModule::set_mbox_cfgstr(String cfgs) { voidcall("set_mbox_cfgstr", cfgs); }
 inline Variant NetworkControlModule::get_stp_local_bid() { return operator()("get_stp_local_bid"); }
 inline void NetworkControlModule::set_as_stp_root() { voidcall("set_as_stp_root"); }
 inline void NetworkControlModule::set_new_stp_root(NodePath root_np, String root_port_id, int64_t path_cost) { voidcall("set_new_stp_root", root_np, root_port_id, path_cost); }

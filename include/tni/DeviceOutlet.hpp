@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_DEVICEOUTLET
 #define TNI_API_HEADER_DEVICEOUTLET
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct DeviceOutlet : public Area2D {
@@ -20,6 +20,7 @@ struct DeviceOutlet : public Area2D {
 	PROPERTY(logic_controller, LogicController);
 	PROPERTY(device_hardware_class, int64_t);
 	PROPERTY(socket, Socket);
+	PROPERTY(floor_num, int64_t);
 
 	inline Variant debug_monitor_callback();
 };

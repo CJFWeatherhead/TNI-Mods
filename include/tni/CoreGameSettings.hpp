@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_COREGAMESETTINGS
 #define TNI_API_HEADER_COREGAMESETTINGS
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct CoreGameSettings : public Object {
@@ -18,6 +18,8 @@ struct CoreGameSettings : public Object {
 	PROPERTY(keyboard_pan_speed, double);
 	PROPERTY(drag_pan_speed, double);
 	PROPERTY(rgb_shift_factor, double);
+	PROPERTY(autosave_freq_min, double);
+	PROPERTY(autosave_retention, int64_t);
 	PROPERTY(perf_phy_sim_mode, int64_t);
 	PROPERTY(show_announcements, bool);
 	PROPERTY(shift_panning_enabled, bool);
@@ -28,6 +30,8 @@ struct CoreGameSettings : public Object {
 	PROPERTY(show_username, bool);
 	PROPERTY(show_help_guides, bool);
 	PROPERTY(player_set_name, String);
+	PROPERTY(show_packet_animations, bool);
+	PROPERTY(addr_copy_mode, int64_t);
 	PROPERTY(last_sel_diffindex, int64_t);
 	PROPERTY(has_shown_difficulty_sel, bool);
 	PROPERTY(cmd_alias, Variant);

@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_MEMENTO
 #define TNI_API_HEADER_MEMENTO
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Memento : public Container {
@@ -19,6 +19,7 @@ struct Memento : public Container {
 	PROPERTY(dns_entries_ctl, Container);
 	PROPERTY(netaddr_assigns, Container);
 	PROPERTY(devunit_tracker, Container);
+	PROPERTY(cntop, OptionButton);
 	PROPERTY(ri_scn, PackedScene);
 	PROPERTY(dut_scn, PackedScene);
 	PROPERTY(main_pane, MainPane);

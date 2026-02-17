@@ -1,11 +1,15 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class BalanceCalc : Object
 ---@field GLOBAL_USER_DAILY_RATE_MULTIPLIER number # Constant value: 1.3
 ---@field GLOBAL_WARRANTY_PERIOD_DAYS_PER_CYCLE integer # Constant value: 7
 ---@field GLOBAL_HWGENERATION_DAYS_PER_CYCLE integer # Constant value: 7
 ---@field GLOBAL_SLOTPACK_MIN integer # Constant value: 3
+---@field GLOBAL_TRAVERSAL_PROGRAM_BW_MULTIPLIER number # Constant value: 1.0
+---@field GLOBAL_DEVICE_BW_MULTIPLIER number # Constant value: 1.0
+---@field GLOBAL_TOWERLINK_BW_MULTIPLIER number # Constant value: 1.0
+---@field GLOBAL_DEVICE_POWERLOAD_MULTIPLIER number # Constant value: 1.0
 local BalanceCalc = {}
 
 ---@param device_hardware_class DeviceUnit.DeviceHardwareClass

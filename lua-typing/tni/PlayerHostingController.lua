@@ -1,8 +1,8 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class PlayerHostingController : Node
----@field ph_scn Object # Constant value: <PackedScene#-9223369050426355617>
+---@field ph_scn string # Constant value: <PackedScene>
 ---@field mpspawn MultiplayerSpawner
 ---@field registered_fqdns Array<string>
 ---@field player_hostings Array<PlayerHosting>

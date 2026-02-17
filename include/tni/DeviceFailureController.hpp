@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_DEVICEFAILURECONTROLLER
 #define TNI_API_HEADER_DEVICEFAILURECONTROLLER
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct DeviceFailureController : public Node {
@@ -22,11 +22,14 @@ struct DeviceFailureController : public Node {
 	PROPERTY(enabled, bool);
 	PROPERTY(trial_timer, Timer);
 
+	inline void try_fail_device(DeviceUnit dev);
 	inline void start();
 	inline void pause();
 };
 
+#include "DeviceUnit.hpp"
 
+inline void DeviceFailureController::try_fail_device(DeviceUnit dev) { voidcall("try_fail_device", dev); }
 inline void DeviceFailureController::start() { voidcall("start"); }
 inline void DeviceFailureController::pause() { voidcall("pause"); }
 

@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_PACKETCONTROLMODULE
 #define TNI_API_HEADER_PACKETCONTROLMODULE
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct PacketControlModule : public Node {
@@ -31,9 +31,11 @@ struct PacketControlModule : public Node {
 	inline void put_packet_to_out_queue(Variant packet, String port_id);
 	inline void refresh();
 	inline void stop();
+	inline void on_os_boot();
 	inline void reset();
 	inline void flush_out_queue();
 	inline void broadcast_pkt_as_hub(Variant pkt);
+	inline bool is_pkt_for_self(Variant packet);
 	inline void handle_save(Variant save_obj);
 	inline void handle_load(Variant save_obj);
 	inline Variant get_save_var_list();
@@ -47,9 +49,11 @@ inline void PacketControlModule::copy_packet_to_out_queue(Variant packet, String
 inline void PacketControlModule::put_packet_to_out_queue(Variant packet, String port_id) { voidcall("put_packet_to_out_queue", packet, port_id); }
 inline void PacketControlModule::refresh() { voidcall("refresh"); }
 inline void PacketControlModule::stop() { voidcall("stop"); }
+inline void PacketControlModule::on_os_boot() { voidcall("on_os_boot"); }
 inline void PacketControlModule::reset() { voidcall("reset"); }
 inline void PacketControlModule::flush_out_queue() { voidcall("flush_out_queue"); }
 inline void PacketControlModule::broadcast_pkt_as_hub(Variant pkt) { voidcall("broadcast_pkt_as_hub", pkt); }
+inline bool PacketControlModule::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 inline void PacketControlModule::handle_save(Variant save_obj) { voidcall("handle_save", save_obj); }
 inline void PacketControlModule::handle_load(Variant save_obj) { voidcall("handle_load", save_obj); }
 inline Variant PacketControlModule::get_save_var_list() { return operator()("get_save_var_list"); }

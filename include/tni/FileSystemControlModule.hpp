@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_FILESYSTEMCONTROLMODULE
 #define TNI_API_HEADER_FILESYSTEMCONTROLMODULE
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct FileSystemControlModule : public Node {
@@ -20,6 +20,7 @@ struct FileSystemControlModule : public Node {
 	inline static const String FW_CONF_FILE = "/etc/nftables.conf";  // NOTE: You should recompile your mod if this value changes!
 	inline static const String DNS_ZONE_FILE = "/etc/dns.zone";  // NOTE: You should recompile your mod if this value changes!
 	inline static const String VLAN_CONF_FILE = "/etc/vlan.tags";  // NOTE: You should recompile your mod if this value changes!
+	inline static const String MBOX_CONF_FILE = "/etc/mangling.conf";  // NOTE: You should recompile your mod if this value changes!
 	PROPERTY(CONFIG_FILENAMES, Variant);  // Const value type was not supported.
 
 	PROPERTY(files, Variant);

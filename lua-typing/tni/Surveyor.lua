@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Surveyor : Container
 ---@field satiety_per_color_level number # Constant value: 3.0

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class InertBox : RigidBody2D
 ---@field tear_sfx AudioStreamPlayer2D
@@ -27,6 +27,7 @@
 ---@field auto_servicing_enabled boolean
 ---@field auto_replacement_cost integer
 ---@field current_floor_num integer
+---@field device_application_unlocks Array<any>
 ---@field device_hardware_class DeviceUnit.DeviceHardwareClass
 ---@field condition DeviceUnit.Condition
 ---@field mount_type DeviceUnit.MountType
@@ -68,6 +69,15 @@ function InertBox.reposition(new_pos) end
 
 ---@param new_pos Vector2
 function InertBox.elevator_move(new_pos) end
+
+---@return number
+function InertBox.get_device_bounding_height() end
+
+---@return Vector2
+function InertBox.get_global_y_range() end
+
+---@return Vector2
+function InertBox.get_local_y_range() end
 
 ---@return Object
 function InertBox.debug_monitor_callback() end

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class BotMachine : Node
 ---@field VISIT_TRAFFIC string # Constant value: tcp/80
@@ -71,3 +71,7 @@ function BotMachine.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function BotMachine.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function BotMachine.is_pkt_for_self(packet) end

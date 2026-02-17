@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_BALANCECALC
 #define TNI_API_HEADER_BALANCECALC
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct BalanceCalc : public Object {
@@ -17,6 +17,10 @@ struct BalanceCalc : public Object {
 	static constexpr int64_t GLOBAL_WARRANTY_PERIOD_DAYS_PER_CYCLE = 7;  // NOTE: You should recompile your mod if this value changes!
 	static constexpr int64_t GLOBAL_HWGENERATION_DAYS_PER_CYCLE = 7;  // NOTE: You should recompile your mod if this value changes!
 	static constexpr int64_t GLOBAL_SLOTPACK_MIN = 3;  // NOTE: You should recompile your mod if this value changes!
+	static constexpr double GLOBAL_TRAVERSAL_PROGRAM_BW_MULTIPLIER = 1.0;  // NOTE: You should recompile your mod if this value changes!
+	static constexpr double GLOBAL_DEVICE_BW_MULTIPLIER = 1.0;  // NOTE: You should recompile your mod if this value changes!
+	static constexpr double GLOBAL_TOWERLINK_BW_MULTIPLIER = 1.0;  // NOTE: You should recompile your mod if this value changes!
+	static constexpr double GLOBAL_DEVICE_POWERLOAD_MULTIPLIER = 1.0;  // NOTE: You should recompile your mod if this value changes!
 
 
 	inline int64_t auto_calculate_logic_controller_powerload(int64_t device_hardware_class, LogicController target_controller);

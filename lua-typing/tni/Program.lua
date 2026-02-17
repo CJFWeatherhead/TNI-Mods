@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Program : Node
 ---@field CONFIG_SIZE integer # Constant value: 1
@@ -34,6 +34,7 @@ Program.ControllerModifiers = {
 	["ALLOW_VLAN_TAGGING"] = 10,
 	["ALLOW_TRAFFIC_SPLITTING"] = 11,
 	["ALLOW_STP_PORT_CONTROL"] = 12,
+	["ALLOW_PACKET_TRANSLATION"] = 13,
 }
 
 ---@param ds string
@@ -55,3 +56,7 @@ function Program.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function Program.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function Program.is_pkt_for_self(packet) end

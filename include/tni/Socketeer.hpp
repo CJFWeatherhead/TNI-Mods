@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_SOCKETEER
 #define TNI_API_HEADER_SOCKETEER
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Socketeer : public Container {
@@ -21,9 +21,9 @@ struct Socketeer : public Container {
 	PROPERTY(placebutton, Button);
 	PROPERTY(sviewport, SubViewport);
 	PROPERTY(cfmrmbutton, Button);
-	PROPERTY(curr_ghost, LinkOutlet);
-	PROPERTY(placed_ghost, LinkOutlet);
-	PROPERTY(rm_target, LinkOutlet);
+	PROPERTY(curr_ghost, FixtureOutlet);
+	PROPERTY(placed_ghost, FixtureOutlet);
+	PROPERTY(rm_target, FixtureOutlet);
 	PROPERTY(main_pane, MainPane);
 	PROPERTY(dynamic_container_path, NodePath);
 	PROPERTY(dynamic_container, Container);
@@ -38,7 +38,7 @@ struct Socketeer : public Container {
 	inline Variant get_main_pane();
 };
 
-#include "LinkOutlet.hpp"
+#include "FixtureOutlet.hpp"
 #include "MainPane.hpp"
 
 inline void Socketeer::launch() { voidcall("launch"); }

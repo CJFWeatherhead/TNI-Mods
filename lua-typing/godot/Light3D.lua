@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Light3D : VisualInstance3D
 ---@field light_intensity_lumens number

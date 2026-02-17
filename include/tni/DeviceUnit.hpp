@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_DEVICEUNIT
 #define TNI_API_HEADER_DEVICEUNIT
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct DeviceUnit : public RigidBody2D {
@@ -42,6 +42,7 @@ struct DeviceUnit : public RigidBody2D {
 		PHONE = 17,
 		PRINTER = 18,
 		NETWORK_LOAD_BALANCER = 19,
+		NETWORK_STORAGE = 20,
 	};
 	enum ExtraDescriptionType : int64_t {  // NOTE: You should recompile your mod if this enum changes!
 		NODESCRIPT = 0,
@@ -56,6 +57,7 @@ struct DeviceUnit : public RigidBody2D {
 		R930 = 2,
 		R630 = 3,
 	};
+	static constexpr double SNAP_MARGIN = 2.0;  // NOTE: You should recompile your mod if this value changes!
 
 	PROPERTY(product_name, String);
 	PROPERTY(description, String);
@@ -81,6 +83,7 @@ struct DeviceUnit : public RigidBody2D {
 	PROPERTY(auto_servicing_enabled, bool);
 	PROPERTY(auto_replacement_cost, int64_t);
 	PROPERTY(current_floor_num, int64_t);
+	PROPERTY(device_application_unlocks, Variant);
 	PROPERTY(device_hardware_class, int64_t);
 	PROPERTY(condition, int64_t);
 	PROPERTY(mount_type, int64_t);
@@ -107,6 +110,9 @@ struct DeviceUnit : public RigidBody2D {
 	inline void apply_autoconfig();
 	inline void reposition(Variant new_pos);
 	inline void elevator_move(Variant new_pos);
+	inline double get_device_bounding_height();
+	inline Variant get_global_y_range();
+	inline Variant get_local_y_range();
 	inline Variant debug_monitor_callback();
 	inline Variant debug_mux_setup();
 	inline Variant update_in_trolley_state();
@@ -127,6 +133,9 @@ struct DeviceUnit : public RigidBody2D {
 inline void DeviceUnit::apply_autoconfig() { voidcall("apply_autoconfig"); }
 inline void DeviceUnit::reposition(Variant new_pos) { voidcall("reposition", new_pos); }
 inline void DeviceUnit::elevator_move(Variant new_pos) { voidcall("elevator_move", new_pos); }
+inline double DeviceUnit::get_device_bounding_height() { return operator()("get_device_bounding_height"); }
+inline Variant DeviceUnit::get_global_y_range() { return operator()("get_global_y_range"); }
+inline Variant DeviceUnit::get_local_y_range() { return operator()("get_local_y_range"); }
 inline Variant DeviceUnit::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
 inline Variant DeviceUnit::debug_mux_setup() { return operator()("debug_mux_setup"); }
 inline Variant DeviceUnit::update_in_trolley_state() { return operator()("update_in_trolley_state"); }

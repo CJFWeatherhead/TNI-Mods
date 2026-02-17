@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_ROCKETSTORE
 #define TNI_API_HEADER_ROCKETSTORE
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Rocketstore : public Container {

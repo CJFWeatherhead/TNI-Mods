@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Power : Node
 ---@field manifest_intent boolean
@@ -10,6 +10,8 @@
 ---@field can_manifest boolean
 ---@field is_powered boolean
 local Power = {}
+
+function Power.world_load() end
 
 function Power.broadcast_restored() end
 

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class MobileOSLayer : CanvasLayer
 ---@field TILT_RAD number # Constant value: 0.17453292519943

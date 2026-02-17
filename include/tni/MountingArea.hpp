@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_MOUNTINGAREA
 #define TNI_API_HEADER_MOUNTINGAREA
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct MountingArea : public Area2D {
@@ -27,6 +27,7 @@ struct MountingArea : public Area2D {
 	inline void show_hr();
 	inline void hide_hr();
 	inline Variant compatible_with(DeviceUnit du);
+	inline Variant get_valid_y_bounds();
 };
 
 #include "DeviceUnit.hpp"
@@ -37,5 +38,6 @@ inline void MountingArea::play_sfx_slide_out() { voidcall("play_sfx_slide_out");
 inline void MountingArea::show_hr() { voidcall("show_hr"); }
 inline void MountingArea::hide_hr() { voidcall("hide_hr"); }
 inline Variant MountingArea::compatible_with(DeviceUnit du) { return operator()("compatible_with", du); }
+inline Variant MountingArea::get_valid_y_bounds() { return operator()("get_valid_y_bounds"); }
 
 #endif

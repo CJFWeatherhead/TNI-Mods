@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class Dmarketv2 : Container
 ---@field lstv2scn PackedScene
@@ -17,6 +17,7 @@
 ---@field fwd_button Button
 ---@field clr_button Button
 ---@field current_local_cart table<any,any>
+---@field dlist Array<any>
 ---@field main_pane MainPane
 ---@field dynamic_container_path string
 ---@field dynamic_container Container

@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER__9FIREWALLCONFIGURATIONWORLD
 #define TNI_API_HEADER__9FIREWALLCONFIGURATIONWORLD
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct _9FirewallConfigurationWorld : public Node2D {
@@ -27,6 +27,7 @@ struct _9FirewallConfigurationWorld : public Node2D {
 	PROPERTY(default_application_unlocks, Variant);
 	PROPERTY(netsh_default_always, bool);
 	PROPERTY(autosave_enabled, bool);
+	PROPERTY(consumer_goes_easy_due_to_producer_grace, bool);
 	PROPERTY(main_scon, SaveController);
 	PROPERTY(time_mult, double);
 	PROPERTY(dns_lookup, Variant);
@@ -41,8 +42,8 @@ struct _9FirewallConfigurationWorld : public Node2D {
 	PROPERTY(app_licenses, Variant);
 	PROPERTY(day_opening_balance, int64_t);
 	PROPERTY(auto_complete_candidate_list, Variant);
-	PROPERTY(just_loaded_in_on_this_day, bool);
 	PROPERTY(migration_srack_c, int64_t);
+	PROPERTY(fbcntr, int64_t);
 	PROPERTY(difficulty_hash, int64_t);
 	PROPERTY(unlocks_or_achievements_allowed, bool);
 	PROPERTY(difficulty_level, String);
@@ -81,7 +82,6 @@ struct _9FirewallConfigurationWorld : public Node2D {
 	PROPERTY(menuconf, Variant);
 	PROPERTY(base_engine_tsms, int64_t);
 	PROPERTY(engine_tsms_since_base, int64_t);
-	PROPERTY(msand, Sandbox);
 	PROPERTY(payment_due_today, int64_t);
 	PROPERTY(base_payment_breakdown, Variant);
 	PROPERTY(admin_fee_mult, double);

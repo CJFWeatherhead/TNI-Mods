@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_ALWAYSPRODUCE
 #define TNI_API_HEADER_ALWAYSPRODUCE
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct AlwaysProduce : public Node {
@@ -52,6 +52,7 @@ struct AlwaysProduce : public Node {
 	inline void uninstall();
 	inline void install(Variant _install_opts);
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "UseConfig.hpp"
@@ -67,5 +68,6 @@ inline void AlwaysProduce::stop() { voidcall("stop"); }
 inline void AlwaysProduce::uninstall() { voidcall("uninstall"); }
 inline void AlwaysProduce::install(Variant _install_opts) { voidcall("install", _install_opts); }
 inline bool AlwaysProduce::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool AlwaysProduce::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

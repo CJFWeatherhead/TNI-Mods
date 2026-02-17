@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class LogicController : Node
 ---@field default_tick_period number
@@ -45,6 +45,7 @@
 ---@field is_remote_debugger boolean
 ---@field is_network_switch boolean
 ---@field is_network_router boolean
+---@field is_network_middlebox boolean
 ---@field is_hardware_nlb boolean
 ---@field is_network_lb boolean
 ---@field is_ha_enabled boolean
@@ -78,8 +79,8 @@
 ---@field is_user_host boolean
 ---@field is_link_host boolean
 ---@field is_device_host boolean
+---@field is_outlet_host boolean
 ---@field installed_program_sfps Array<any>
----@field lbcounter integer
 ---@field logicport_add_count integer
 ---@field sorted_packet_processors Array<any>
 ---@field universal_print_name string
@@ -96,6 +97,7 @@ LogicController.TraversalHistory = {
 	["REQUEST_DATA"] = 4,
 	["ADDITIONAL_FLAGS"] = 5,
 	["PORT_ID"] = 6,
+	["DST_LADDR"] = 7,
 }
 ---@enum LogicController.TableType
 LogicController.TableType = {
@@ -177,14 +179,6 @@ function LogicController.run_cycle() end
 ---@return boolean
 function LogicController.default_traversal_rule(_context, _from_node, _from_port, _current_depth) end
 
----@param traversal_ctx Object
----@param traversal_callback Object?  # Default = <null>
-function LogicController.network_traversal(traversal_ctx, traversal_callback) end
-
----@param context TraversalContext
----@param via_port LogicControllerSocket
-function LogicController.record_traversal_history(context, via_port) end
-
 ---@return Object
 function LogicController.debug_monitor_callback() end
 
@@ -231,11 +225,7 @@ function LogicController.is_friend_class(obj) end
 ---@param msg string
 function LogicController.show_hint(msg) end
 
-function LogicController.restore_default_programs() end
-
----@param traversal_ctx Object
----@param traversal_callback Object?  # Default = <null>
-function LogicController.dfs_port_traversal(traversal_ctx, traversal_callback) end
+function LogicController.restore_default_configs() end
 
 ---@param socket Socket
 function LogicController.add_port(socket) end

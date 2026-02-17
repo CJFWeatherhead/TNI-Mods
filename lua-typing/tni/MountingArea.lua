@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class MountingArea : Area2D
 ---@field compatible_mounting DeviceUnit.MountType
@@ -24,3 +24,6 @@ function MountingArea.hide_hr() end
 ---@param du DeviceUnit
 ---@return Object
 function MountingArea.compatible_with(du) end
+
+---@return Vector2
+function MountingArea.get_valid_y_bounds() end

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class Viewport3DUtils : Object
 ---@field MAX_RAY_DEFAULT number # Constant value: 1000.0

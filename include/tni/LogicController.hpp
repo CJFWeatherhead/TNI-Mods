@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_LOGICCONTROLLER
 #define TNI_API_HEADER_LOGICCONTROLLER
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct LogicController : public Node {
@@ -22,6 +22,7 @@ struct LogicController : public Node {
 		REQUEST_DATA = 4,
 		ADDITIONAL_FLAGS = 5,
 		PORT_ID = 6,
+		DST_LADDR = 7,
 	};
 	enum TableType : int64_t {  // NOTE: You should recompile your mod if this enum changes!
 		ROUTING = 0,
@@ -71,6 +72,7 @@ struct LogicController : public Node {
 	PROPERTY(is_remote_debugger, bool);
 	PROPERTY(is_network_switch, bool);
 	PROPERTY(is_network_router, bool);
+	PROPERTY(is_network_middlebox, bool);
 	PROPERTY(is_hardware_nlb, bool);
 	PROPERTY(is_network_lb, bool);
 	PROPERTY(is_ha_enabled, bool);
@@ -104,8 +106,8 @@ struct LogicController : public Node {
 	PROPERTY(is_user_host, bool);
 	PROPERTY(is_link_host, bool);
 	PROPERTY(is_device_host, bool);
+	PROPERTY(is_outlet_host, bool);
 	PROPERTY(installed_program_sfps, Variant);
-	PROPERTY(lbcounter, int64_t);
 	PROPERTY(logicport_add_count, int64_t);
 	PROPERTY(sorted_packet_processors, Variant);
 	PROPERTY(universal_print_name, String);
@@ -134,8 +136,6 @@ struct LogicController : public Node {
 	inline void shutdown_os();
 	inline void run_cycle();
 	inline bool default_traversal_rule(Variant _context, Variant _from_node, Variant _from_port, Variant _current_depth);
-	inline void network_traversal(Variant traversal_ctx, Variant traversal_callback);
-	inline void record_traversal_history(TraversalContext context, LogicControllerSocket via_port);
 	inline Variant debug_monitor_callback();
 	inline void remove_table_entry(String re, int64_t tt);
 	inline void clear_table(int64_t tt);
@@ -148,8 +148,7 @@ struct LogicController : public Node {
 	inline void push_to_use_stack(String new_use, int64_t count);
 	inline Variant is_friend_class(Variant obj);
 	inline void show_hint(String msg);
-	inline void restore_default_programs();
-	inline void dfs_port_traversal(Variant traversal_ctx, Variant traversal_callback);
+	inline void restore_default_configs();
 	inline void add_port(Socket socket);
 	inline void remove_port(Variant socket);
 	inline void update_pkt_processors();
@@ -175,7 +174,6 @@ struct LogicController : public Node {
 #include "LogicController.hpp"
 #include "Program.hpp"
 #include "TraversalContext.hpp"
-#include "LogicControllerSocket.hpp"
 #include "Socket.hpp"
 #include "GraphController.hpp"
 
@@ -200,8 +198,6 @@ inline void LogicController::boot_os() { voidcall("boot_os"); }
 inline void LogicController::shutdown_os() { voidcall("shutdown_os"); }
 inline void LogicController::run_cycle() { voidcall("run_cycle"); }
 inline bool LogicController::default_traversal_rule(Variant _context, Variant _from_node, Variant _from_port, Variant _current_depth) { return operator()("default_traversal_rule", _context, _from_node, _from_port, _current_depth); }
-inline void LogicController::network_traversal(Variant traversal_ctx, Variant traversal_callback) { voidcall("network_traversal", traversal_ctx, traversal_callback); }
-inline void LogicController::record_traversal_history(TraversalContext context, LogicControllerSocket via_port) { voidcall("record_traversal_history", context, via_port); }
 inline Variant LogicController::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
 inline void LogicController::remove_table_entry(String re, int64_t tt) { voidcall("remove_table_entry", re, tt); }
 inline void LogicController::clear_table(int64_t tt) { voidcall("clear_table", tt); }
@@ -214,8 +210,7 @@ inline bool LogicController::has_network_port_id(Variant port_id_or_num) { retur
 inline void LogicController::push_to_use_stack(String new_use, int64_t count) { voidcall("push_to_use_stack", new_use, count); }
 inline Variant LogicController::is_friend_class(Variant obj) { return operator()("is_friend_class", obj); }
 inline void LogicController::show_hint(String msg) { voidcall("show_hint", msg); }
-inline void LogicController::restore_default_programs() { voidcall("restore_default_programs"); }
-inline void LogicController::dfs_port_traversal(Variant traversal_ctx, Variant traversal_callback) { voidcall("dfs_port_traversal", traversal_ctx, traversal_callback); }
+inline void LogicController::restore_default_configs() { voidcall("restore_default_configs"); }
 inline void LogicController::add_port(Socket socket) { voidcall("add_port", socket); }
 inline void LogicController::remove_port(Variant socket) { voidcall("remove_port", socket); }
 inline void LogicController::update_pkt_processors() { voidcall("update_pkt_processors"); }

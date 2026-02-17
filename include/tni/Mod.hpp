@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_MOD
 #define TNI_API_HEADER_MOD
-// Generated API for game version 0.10.2
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Mod : public Sandbox {
@@ -18,6 +18,7 @@ struct Mod : public Sandbox {
 	PROPERTY(mod_entry_binary, String);
 	PROPERTY(mod_dir, String);
 	PROPERTY(mod_type, String);
+	PROPERTY(manifest, ModManifest);
 	PROPERTY(filesystem, ModFileSystem);
 	PROPERTY(api_v1, ModApiV1);
 
@@ -31,6 +32,7 @@ struct Mod : public Sandbox {
 	inline String error_string_(int64_t e);
 };
 
+#include "ModManifest.hpp"
 #include "ModFileSystem.hpp"
 #include "ModApiV1.hpp"
 

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class DeviceOutlet : Area2D
 ---@field condition integer # Constant value: 0
@@ -7,6 +7,7 @@
 ---@field logic_controller LogicController
 ---@field device_hardware_class DeviceUnit.DeviceHardwareClass
 ---@field socket Socket
+---@field floor_num integer
 local DeviceOutlet = {}
 
 ---@return Object

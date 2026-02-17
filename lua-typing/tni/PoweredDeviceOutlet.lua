@@ -1,11 +1,12 @@
 ---@meta _
--- Generated API for game version 0.9.1
+-- Generated API for game version 0.10.7
 
 ---@class PoweredDeviceOutlet : Area2D
 ---@field outlet_name string
 ---@field logic_controller LogicController
 ---@field device_hardware_class DeviceUnit.DeviceHardwareClass
 ---@field socket Socket
+---@field floor_num integer
 local PoweredDeviceOutlet = {}
 
 ---@return Object

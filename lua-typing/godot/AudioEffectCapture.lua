@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class AudioEffectCapture : AudioEffect
 ---@field buffer_length number

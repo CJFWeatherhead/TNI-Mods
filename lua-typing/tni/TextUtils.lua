@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class TextUtils : Object
 ---@field LOWERCASE_ALPHABETS string # Constant value: abcdefghijklmnopqrstuvwxyz
@@ -30,3 +30,7 @@ function TextUtils.get_int_suffix(inp) end
 ---@param rng RandomNumberGenerator?  # Default = <null>
 ---@return string
 function TextUtils.fill_pattstr_with_rand(pattstr, rng) end
+
+---@param shortcut Object
+---@return string
+function TextUtils.get_shortcut_keystr(shortcut) end

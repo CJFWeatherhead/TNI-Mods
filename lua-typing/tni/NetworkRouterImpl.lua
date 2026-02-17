@@ -1,7 +1,8 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class NetworkRouterImpl : Node
+---@field SCAN_BYPASS_RDATA string # Constant value: debugger scan with bypass
 ---@field routectl RouteControlModule
 ---@field cpu_load integer
 ---@field code_size integer
@@ -58,3 +59,7 @@ function NetworkRouterImpl.tick() end
 ---@param packet table<any,any>
 ---@return boolean
 function NetworkRouterImpl.process_network_packet(pktctl, packet) end
+
+---@param packet table<any,any>
+---@return boolean
+function NetworkRouterImpl.is_pkt_for_self(packet) end

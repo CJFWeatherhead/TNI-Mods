@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class XRInterface : RefCounted
 ---@field interface_is_primary boolean

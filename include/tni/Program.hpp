@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_PROGRAM
 #define TNI_API_HEADER_PROGRAM
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct Program : public Node {
@@ -30,6 +30,7 @@ struct Program : public Node {
 		ALLOW_VLAN_TAGGING = 10,
 		ALLOW_TRAFFIC_SPLITTING = 11,
 		ALLOW_STP_PORT_CONTROL = 12,
+		ALLOW_PACKET_TRANSLATION = 13,
 	};
 
 	PROPERTY(cpu_load, int64_t);
@@ -54,6 +55,7 @@ struct Program : public Node {
 	inline void install(Variant _install_opts);
 	inline void tick();
 	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "LogicController.hpp"
@@ -66,5 +68,6 @@ inline void Program::uninstall() { voidcall("uninstall"); }
 inline void Program::install(Variant _install_opts) { voidcall("install", _install_opts); }
 inline void Program::tick() { voidcall("tick"); }
 inline bool Program::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
+inline bool Program::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
 
 #endif

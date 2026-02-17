@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.0
+-- Generated API for game version 0.10.7
 
 ---@class VisualShaderNodeTexture3D : VisualShaderNodeSample3D
 ---@field texture Texture3D

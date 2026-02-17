@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_POWERCONTROLLER
 #define TNI_API_HEADER_POWERCONTROLLER
-// Generated API for game version 0.10.0
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct PowerController : public Node {
@@ -33,6 +33,7 @@ struct PowerController : public Node {
 	PROPERTY(charges, int64_t);
 	PROPERTY(charge_ratio, double);
 	PROPERTY(total_supplying_time_s, double);
+	PROPERTY(charge_timer, Timer);
 	PROPERTY(current_load, int64_t);
 	PROPERTY(displayed_load, int64_t);
 	PROPERTY(can_supply_power, bool);
@@ -45,6 +46,7 @@ struct PowerController : public Node {
 	PROPERTY(reversed_ports, Variant);
 
 	inline Variant is_friend_class(Variant obj);
+	inline void start_charge_timer();
 	inline void set_sus_val(Variant newv);
 	inline void add_local(Power lc);
 	inline void remove_local(Power lc);
@@ -71,6 +73,7 @@ struct PowerController : public Node {
 #include "GraphController.hpp"
 
 inline Variant PowerController::is_friend_class(Variant obj) { return operator()("is_friend_class", obj); }
+inline void PowerController::start_charge_timer() { voidcall("start_charge_timer"); }
 inline void PowerController::set_sus_val(Variant newv) { voidcall("set_sus_val", newv); }
 inline void PowerController::add_local(Power lc) { voidcall("add_local", lc); }
 inline void PowerController::remove_local(Power lc) { voidcall("remove_local", lc); }

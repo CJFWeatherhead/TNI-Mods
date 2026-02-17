@@ -1,9 +1,9 @@
 #ifndef TNI_API_HEADER_DEBUGCONSOLEHELPER
 #define TNI_API_HEADER_DEBUGCONSOLEHELPER
-// Generated API for game version 0.9.1
+// Generated API for game version 0.10.7
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
-#include <api.hpp>
+#include <generated_api.hpp>
 #include "structs.hpp"
 
 struct DebugConsoleHelper : public Node {
@@ -21,6 +21,12 @@ struct DebugConsoleHelper : public Node {
 	inline void in_game_notify(Variant args);
 	inline Variant get_game_opts(Variant _args);
 	inline Variant get_acquired_techs(Variant _args);
+	inline void maximize_user_lowest_sat_now(Variant _args);
+	inline void trigger_devfail(Variant args);
+	inline Variant restock_merchants(Variant _a);
+	inline Variant unlock_tech(Variant args);
+	inline Variant set_local_dns(Variant args);
+	inline Variant reload_console_funcs(Variant _args);
 };
 
 
@@ -29,5 +35,11 @@ inline Variant DebugConsoleHelper::count_users(Variant _args) { return operator(
 inline void DebugConsoleHelper::in_game_notify(Variant args) { voidcall("in_game_notify", args); }
 inline Variant DebugConsoleHelper::get_game_opts(Variant _args) { return operator()("get_game_opts", _args); }
 inline Variant DebugConsoleHelper::get_acquired_techs(Variant _args) { return operator()("get_acquired_techs", _args); }
+inline void DebugConsoleHelper::maximize_user_lowest_sat_now(Variant _args) { voidcall("maximize_user_lowest_sat_now", _args); }
+inline void DebugConsoleHelper::trigger_devfail(Variant args) { voidcall("trigger_devfail", args); }
+inline Variant DebugConsoleHelper::restock_merchants(Variant _a) { return operator()("restock_merchants", _a); }
+inline Variant DebugConsoleHelper::unlock_tech(Variant args) { return operator()("unlock_tech", args); }
+inline Variant DebugConsoleHelper::set_local_dns(Variant args) { return operator()("set_local_dns", args); }
+inline Variant DebugConsoleHelper::reload_console_funcs(Variant _args) { return operator()("reload_console_funcs", _args); }
 
 #endif
