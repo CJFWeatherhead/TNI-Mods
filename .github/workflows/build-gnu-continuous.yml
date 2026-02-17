@@ -18,7 +18,7 @@ jobs:
       GH_TOKEN: ${{ github.token }}
 
     steps:
-    - uses: actions/checkout@v6.0.1
+    - uses: actions/checkout@v6.0.2
       with:
         submodules: recursive
 
@@ -37,7 +37,7 @@ jobs:
       run: |
         mkdir ./artifact
         # For every directory containing a .elf file, zip it into ./artifact
-        find ./mods/ -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
+        find ./mods/ -name '*.elf' -execdir bash -c "MOD_NAME=\"\$(basename \$(realpath .))\" && cd .. && zip -r \"${PWD}/artifact/\$MOD_NAME.zip\" \"./\$MOD_NAME\"" \;
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
