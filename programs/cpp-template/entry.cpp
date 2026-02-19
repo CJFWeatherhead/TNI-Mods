@@ -113,10 +113,6 @@ static Variant on_device_spawned(DeviceUnit device) {
     return Nil;
 }
 
-static void test() {
-	printf("atexit\n");
-}
-
 int main() {
     // stdout line buffering, to match TNI mod output buffering.
     setvbuf(stdout, NULL, _IOLBF, BUFSIZ);
@@ -129,8 +125,6 @@ int main() {
 	ADD_API_FUNCTION(on_game_tick, "", "", "Called every game tick");
 	ADD_API_FUNCTION(on_player_input, "", "", "Called when player input");
 	ADD_API_FUNCTION(on_device_spawned, "", "", "Called when device spawned");
-
-	atexit(test);
 
 	halt();
 }
