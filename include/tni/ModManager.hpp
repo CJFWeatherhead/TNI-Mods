@@ -23,10 +23,12 @@ struct ModManager : public Control {
 
 	PROPERTY(mod_list, VBoxContainer);
 	PROPERTY(mod_preset_label, Label);
+	PROPERTY(preset_save_load_button, MenuButton);
 	PROPERTY(mod_info_container, VBoxContainer);
-	PROPERTY(mod_info_name, Label);
+	PROPERTY(mod_name_label, RichTextLabel);
+	PROPERTY(mod_tabs, TabContainer);
+	PROPERTY(mod_info, VBoxContainer);
 	PROPERTY(mod_info_description, RichTextLabel);
-	PROPERTY(mod_info_version, Label);
 	PROPERTY(mod_info_dependencies_spacer, Separator);
 	PROPERTY(mod_info_dependencies_label, Label);
 	PROPERTY(mod_info_dependencies, HFlowContainer);
@@ -36,9 +38,16 @@ struct ModManager : public Control {
 	PROPERTY(mod_info_incompatibilities_spacer, Separator);
 	PROPERTY(mod_info_incompatibilities_label, Label);
 	PROPERTY(mod_info_incompatibilities, HFlowContainer);
+	PROPERTY(mod_info_load_before_spacer, Separator);
+	PROPERTY(mod_info_load_before_label, Label);
+	PROPERTY(mod_info_load_before, HFlowContainer);
+	PROPERTY(mod_info_load_after_spacer, Separator);
+	PROPERTY(mod_info_load_after_label, Label);
+	PROPERTY(mod_info_load_after, HFlowContainer);
 	PROPERTY(mod_info_authors, Label);
 	PROPERTY(mod_info_links, HBoxContainer);
-	PROPERTY(preset_save_load_button, MenuButton);
+	PROPERTY(mod_config, VBoxContainer);
+	PROPERTY(mod_config_no_options_label, Label);
 	PROPERTY(mod_info_manifest, ModManifest);
 	PROPERTY(preset, ModPreset);
 	PROPERTY(preset_modified, bool);
@@ -47,7 +56,9 @@ struct ModManager : public Control {
 	inline void fade_out();
 	inline void update_preset_label();
 	inline void update_mod_list();
-	inline void set_mod_info(ModManifest manifest);
+	inline void update_mod_tabs(ModManifest manifest);
+	inline void update_mod_info_tab(ModManifest manifest);
+	inline void update_mod_config_tab(ModManifest manifest);
 };
 
 #include "ModManifest.hpp"
@@ -57,6 +68,8 @@ inline void ModManager::fade_in() { voidcall("fade_in"); }
 inline void ModManager::fade_out() { voidcall("fade_out"); }
 inline void ModManager::update_preset_label() { voidcall("update_preset_label"); }
 inline void ModManager::update_mod_list() { voidcall("update_mod_list"); }
-inline void ModManager::set_mod_info(ModManifest manifest) { voidcall("set_mod_info", manifest); }
+inline void ModManager::update_mod_tabs(ModManifest manifest) { voidcall("update_mod_tabs", manifest); }
+inline void ModManager::update_mod_info_tab(ModManifest manifest) { voidcall("update_mod_info_tab", manifest); }
+inline void ModManager::update_mod_config_tab(ModManifest manifest) { voidcall("update_mod_config_tab", manifest); }
 
 #endif

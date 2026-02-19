@@ -27,13 +27,16 @@ struct ModManifest : public RefCounted {
 	PROPERTY(dependencies, Variant);
 	PROPERTY(dependencies_optional, Variant);
 	PROPERTY(incompatibilities, Variant);
+	PROPERTY(load_before, PackedArray<std::string>);
+	PROPERTY(load_after, PackedArray<std::string>);
 
 	inline ModManifest from_jsonc_string(String mod_id, String jsonc);
 	inline bool is_functionally_same(ModManifest other);
-	inline void try_load_icon(String mod_dir);
+	inline void try_load_icon();
 	inline ModManifest as_minified_manifest();
 	inline bool is_dependency_satisfied(ModManifest other);
 	inline bool is_incompatible(ModManifest other);
+	inline int64_t get_expected_order(String addition_id);
 };
 
 #include "SemVerVersion.hpp"
@@ -41,9 +44,10 @@ struct ModManifest : public RefCounted {
 
 inline ModManifest ModManifest::from_jsonc_string(String mod_id, String jsonc) { return ModManifest(operator()("from_jsonc_string", mod_id, jsonc).as_object().address()); }
 inline bool ModManifest::is_functionally_same(ModManifest other) { return operator()("is_functionally_same", other); }
-inline void ModManifest::try_load_icon(String mod_dir) { voidcall("try_load_icon", mod_dir); }
+inline void ModManifest::try_load_icon() { voidcall("try_load_icon"); }
 inline ModManifest ModManifest::as_minified_manifest() { return ModManifest(operator()("as_minified_manifest").as_object().address()); }
 inline bool ModManifest::is_dependency_satisfied(ModManifest other) { return operator()("is_dependency_satisfied", other); }
 inline bool ModManifest::is_incompatible(ModManifest other) { return operator()("is_incompatible", other); }
+inline int64_t ModManifest::get_expected_order(String addition_id) { return operator()("get_expected_order", addition_id); }
 
 #endif

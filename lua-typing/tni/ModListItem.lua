@@ -3,6 +3,7 @@
 
 ---@class ModListItem : Panel
 ---@field manifest ModManifest
+---@field icon TextureRect
 ---@field name_label Label
 ---@field enable_check CheckButton
 ---@field mod_enabled boolean

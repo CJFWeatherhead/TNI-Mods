@@ -16,6 +16,7 @@ struct ModListItem : public Panel {
 
 
 	PROPERTY(manifest, ModManifest);
+	PROPERTY(icon, TextureRect);
 	PROPERTY(name_label, Label);
 	PROPERTY(enable_check, CheckButton);
 	PROPERTY(mod_enabled, bool);

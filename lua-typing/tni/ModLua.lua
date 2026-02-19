@@ -37,3 +37,7 @@ function ModLua.instance_from_id_(id) end
 ---@param e Error
 ---@return string
 function ModLua.error_string_(e) end
+
+---@param value Object
+---@return string
+function ModLua.str_(value) end

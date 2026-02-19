@@ -14,6 +14,8 @@
 ---@field dependencies table<string,RefCounted>
 ---@field dependencies_optional table<string,RefCounted>
 ---@field incompatibilities table<string,RefCounted>
+---@field load_before PackedStringArray
+---@field load_after PackedStringArray
 local ModManifest = {}
 
 ---@param mod_id string
@@ -25,8 +27,7 @@ function ModManifest.from_jsonc_string(mod_id, jsonc) end
 ---@return boolean
 function ModManifest.is_functionally_same(other) end
 
----@param mod_dir string
-function ModManifest.try_load_icon(mod_dir) end
+function ModManifest.try_load_icon() end
 
 ---@return ModManifest
 function ModManifest.as_minified_manifest() end
@@ -38,3 +39,7 @@ function ModManifest.is_dependency_satisfied(other) end
 ---@param other ModManifest
 ---@return boolean
 function ModManifest.is_incompatible(other) end
+
+---@param addition_id string
+---@return integer
+function ModManifest.get_expected_order(addition_id) end

@@ -28,4 +28,7 @@ function ModApiV1.get_devices() end
 function ModApiV1.get_users() end
 
 ---@return Array<any>
+function ModApiV1.get_locations() end
+
+---@return Array<any>
 function ModApiV1.get_merchants() end

@@ -2,12 +2,12 @@
 -- Generated API for game version 0.10.7
 
 ---@class SemVer : Object
----@field Version Object # Constant value: <GDScript#-9223369184560198357>
----@field VersionRange Object # Constant value: <GDScript#-9223369184543421140>
----@field VersionComparatorUnary Object # Constant value: <GDScript#-9223369184526643923>
----@field VersionComparatorRange Object # Constant value: <GDScript#-9223369184509866706>
----@field VersionComparatorBinary Object # Constant value: <GDScript#-9223369184493089489>
----@field SemVerParsing Object # Constant value: <GDScript#-9223369184476312272>
+---@field Version Object # Constant value: <GDScript#-9223369184241431247>
+---@field VersionRange Object # Constant value: <GDScript#-9223369184224654030>
+---@field VersionComparatorUnary Object # Constant value: <GDScript#-9223369184207876813>
+---@field VersionComparatorRange Object # Constant value: <GDScript#-9223369184191099596>
+---@field VersionComparatorBinary Object # Constant value: <GDScript#-9223369184174322379>
+---@field SemVerParsing Object # Constant value: <GDScript#-9223369184157545162>
 local SemVer = {}
 ---@enum SemVer.VersionComparatorUnaryOp
 SemVer.VersionComparatorUnaryOp = {

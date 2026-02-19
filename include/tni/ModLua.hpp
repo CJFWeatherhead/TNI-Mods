@@ -31,6 +31,7 @@ struct ModLua : public Sandbox {
 	inline bool array_value_allowed(Variant array, int64_t idx);
 	inline Variant instance_from_id_(int64_t id);
 	inline String error_string_(int64_t e);
+	inline String str_(Variant value);
 };
 
 #include "ModManifest.hpp"
@@ -45,5 +46,6 @@ inline Variant ModLua::callable_args_to_array(Variant c) { return operator()("ca
 inline bool ModLua::array_value_allowed(Variant array, int64_t idx) { return operator()("array_value_allowed", array, idx); }
 inline Variant ModLua::instance_from_id_(int64_t id) { return operator()("instance_from_id_", id); }
 inline String ModLua::error_string_(int64_t e) { return operator()("error_string_", e); }
+inline String ModLua::str_(Variant value) { return operator()("str_", value); }
 
 #endif

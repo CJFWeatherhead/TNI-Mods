@@ -30,6 +30,10 @@ function ModPreset.update_with_discovered() end
 ---@return integer
 function ModPreset.find(mod) end
 
+---@param mod_id string
+---@return integer
+function ModPreset.find_mod_id(mod_id) end
+
 ---@param mod ModManifest
 ---@return boolean
 function ModPreset.add(mod) end
@@ -42,7 +46,16 @@ function ModPreset.remove(mod) end
 function ModPreset.lower_order_position(mod) end
 
 ---@param mod ModManifest
+---@param position integer
+function ModPreset.reinsert_mod(mod, position) end
+
+---@param mod ModManifest
 function ModPreset.raise_order_position(mod) end
+
+---@param base ModManifest
+---@param addition_id string
+---@return integer
+function ModPreset.get_actual_order_offset(base, addition_id) end
 
 function ModPreset.auto_sort() end
 

@@ -26,10 +26,13 @@ struct ModPreset : public RefCounted {
 	inline bool is_functionally_same(ModPreset other);
 	inline void update_with_discovered();
 	inline int64_t find(ModManifest mod);
+	inline int64_t find_mod_id(String mod_id);
 	inline bool add(ModManifest mod);
 	inline bool remove(ModManifest mod);
 	inline void lower_order_position(ModManifest mod);
+	inline void reinsert_mod(ModManifest mod, int64_t position);
 	inline void raise_order_position(ModManifest mod);
+	inline int64_t get_actual_order_offset(ModManifest base, String addition_id);
 	inline void auto_sort();
 	inline PackedArray<std::string> get_mod_issues(ModManifest addition);
 };
@@ -44,10 +47,13 @@ inline ModPreset ModPreset::with_minified_manifests() { return ModPreset(operato
 inline bool ModPreset::is_functionally_same(ModPreset other) { return operator()("is_functionally_same", other); }
 inline void ModPreset::update_with_discovered() { voidcall("update_with_discovered"); }
 inline int64_t ModPreset::find(ModManifest mod) { return operator()("find", mod); }
+inline int64_t ModPreset::find_mod_id(String mod_id) { return operator()("find_mod_id", mod_id); }
 inline bool ModPreset::add(ModManifest mod) { return operator()("add", mod); }
 inline bool ModPreset::remove(ModManifest mod) { return operator()("remove", mod); }
 inline void ModPreset::lower_order_position(ModManifest mod) { voidcall("lower_order_position", mod); }
+inline void ModPreset::reinsert_mod(ModManifest mod, int64_t position) { voidcall("reinsert_mod", mod, position); }
 inline void ModPreset::raise_order_position(ModManifest mod) { voidcall("raise_order_position", mod); }
+inline int64_t ModPreset::get_actual_order_offset(ModManifest base, String addition_id) { return operator()("get_actual_order_offset", base, addition_id); }
 inline void ModPreset::auto_sort() { voidcall("auto_sort"); }
 inline PackedArray<std::string> ModPreset::get_mod_issues(ModManifest addition) { return operator()("get_mod_issues", addition); }
 

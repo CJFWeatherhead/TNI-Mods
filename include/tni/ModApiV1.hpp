@@ -25,6 +25,7 @@ struct ModApiV1 : public Node {
 	inline BaseUI get_base_ui();
 	inline Variant get_devices();
 	inline Variant get_users();
+	inline Variant get_locations();
 	inline Variant get_merchants();
 };
 
@@ -41,6 +42,7 @@ inline std::optional<MyCustomCamera> ModApiV1::get_player_camera() { Variant val
 inline BaseUI ModApiV1::get_base_ui() { return BaseUI(operator()("get_base_ui").as_object().address()); }
 inline Variant ModApiV1::get_devices() { return operator()("get_devices"); }
 inline Variant ModApiV1::get_users() { return operator()("get_users"); }
+inline Variant ModApiV1::get_locations() { return operator()("get_locations"); }
 inline Variant ModApiV1::get_merchants() { return operator()("get_merchants"); }
 
 #endif

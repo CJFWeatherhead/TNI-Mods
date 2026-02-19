@@ -36,3 +36,7 @@ function Mod.instance_from_id_(id) end
 ---@param e Error
 ---@return string
 function Mod.error_string_(e) end
+
+---@param value Object
+---@return string
+function Mod.str_(value) end

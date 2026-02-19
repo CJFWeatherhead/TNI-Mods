@@ -4,10 +4,12 @@
 ---@class ModManager : Control
 ---@field mod_list VBoxContainer
 ---@field mod_preset_label Label
+---@field preset_save_load_button MenuButton
 ---@field mod_info_container VBoxContainer
----@field mod_info_name Label
+---@field mod_name_label RichTextLabel
+---@field mod_tabs TabContainer
+---@field mod_info VBoxContainer
 ---@field mod_info_description RichTextLabel
----@field mod_info_version Label
 ---@field mod_info_dependencies_spacer Separator
 ---@field mod_info_dependencies_label Label
 ---@field mod_info_dependencies HFlowContainer
@@ -17,9 +19,16 @@
 ---@field mod_info_incompatibilities_spacer Separator
 ---@field mod_info_incompatibilities_label Label
 ---@field mod_info_incompatibilities HFlowContainer
+---@field mod_info_load_before_spacer Separator
+---@field mod_info_load_before_label Label
+---@field mod_info_load_before HFlowContainer
+---@field mod_info_load_after_spacer Separator
+---@field mod_info_load_after_label Label
+---@field mod_info_load_after HFlowContainer
 ---@field mod_info_authors Label
 ---@field mod_info_links HBoxContainer
----@field preset_save_load_button MenuButton
+---@field mod_config VBoxContainer
+---@field mod_config_no_options_label Label
 ---@field mod_info_manifest ModManifest
 ---@field preset ModPreset
 ---@field preset_modified boolean
@@ -41,4 +50,10 @@ function ModManager.update_preset_label() end
 function ModManager.update_mod_list() end
 
 ---@param manifest ModManifest
-function ModManager.set_mod_info(manifest) end
+function ModManager.update_mod_tabs(manifest) end
+
+---@param manifest ModManifest
+function ModManager.update_mod_info_tab(manifest) end
+
+---@param manifest ModManifest
+function ModManager.update_mod_config_tab(manifest) end
