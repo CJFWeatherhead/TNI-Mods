@@ -16,7 +16,7 @@
 EXTERN_SYSCALL(uint64_t, sys_node_create, Node_Create_Shortlist, const char *, size_t, const char *, size_t);
 
 
-static lua_State *L;
+static lua_State *L = NULL;
 
 static Variant set_lua_source(String code, String path) {
     if (L == NULL) {
@@ -45,6 +45,7 @@ static Variant set_lua_source(String code, String path) {
 
 #define DEFINE_LUA_CALLBACK_0(name) \
     static Variant name() { \
+        if (L == NULL) return Nil; \
         lua_settop(L, 0); \
         lua_getglobal(L, #name); \
         if (!lua_isfunction(L, -1)) { \
@@ -60,6 +61,7 @@ static Variant set_lua_source(String code, String path) {
     }
 #define DEFINE_LUA_CALLBACK_1(name, type1, param1) \
     static Variant name(type1 param1) { \
+        if (L == NULL) return Nil; \
         lua_settop(L, 0); \
         lua_getglobal(L, #name); \
         if (!lua_isfunction(L, -1)) { \
