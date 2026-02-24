@@ -6,11 +6,12 @@
 #include <generated_api.hpp>
 #include "structs.hpp"
 
-struct ModFileAccess : public Object {
-	using Object::Object;
+struct ModFileAccess : public RefCounted {
+	using RefCounted::RefCounted;
 
-	constexpr ModFileAccess(Object base) : Object{base} {}
-	constexpr ModFileAccess(uint64_t addr) : Object{addr} {}
+	constexpr ModFileAccess(RefCounted base) : RefCounted{base} {}
+	constexpr ModFileAccess(uint64_t addr) : RefCounted{addr} {}
+	constexpr ModFileAccess(Object obj) : ModFileAccess{obj.address()} {}
 	ModFileAccess(Variant variant) : ModFileAccess{variant.as_object().address()} {}
 
 

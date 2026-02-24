@@ -22,6 +22,7 @@ struct ModLoader : public Node {
 	PROPERTY(discovered_mods, Variant);
 	PROPERTY(preset, ModPreset);
 	PROPERTY(loaded_mods, Variant);
+	PROPERTY(loaded_mods_ids, Variant);
 	PROPERTY(mod_restrictions, Object);
 	PROPERTY(has_reloaded, bool);
 

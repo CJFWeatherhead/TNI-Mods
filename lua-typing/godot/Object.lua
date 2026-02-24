@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.7
 
----@class Object
+---@class Object : userdata
 local Object = {}
 
 function Object.free() end

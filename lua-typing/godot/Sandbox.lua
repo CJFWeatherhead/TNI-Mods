@@ -2,14 +2,8 @@
 -- Generated API for game version 0.10.7
 
 ---@class Sandbox : Node
----@field references_max integer
----@field memory_max integer
----@field execution_timeout integer
----@field allocations_max integer
----@field unboxed_arguments boolean
 ---@field precise_simulation boolean
 ---@field profiling boolean
----@field restrictions boolean
 ---@field program ELFScript
 ---@field monitor_heap_usage integer
 ---@field monitor_heap_chunk_count integer

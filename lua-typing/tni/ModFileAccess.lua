@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.7
 
----@class ModFileAccess : Object
+---@class ModFileAccess : RefCounted
 local ModFileAccess = {}
 
 ---@return boolean

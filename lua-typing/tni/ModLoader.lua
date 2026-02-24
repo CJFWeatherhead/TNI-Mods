@@ -9,6 +9,7 @@
 ---@field discovered_mods Array<ModManifest>
 ---@field preset ModPreset
 ---@field loaded_mods Array<Mod>
+---@field loaded_mods_ids table<string,integer>
 ---@field mod_restrictions ModRestrictions
 ---@field has_reloaded boolean
 local ModLoader = {}

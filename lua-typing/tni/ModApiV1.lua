@@ -21,14 +21,14 @@ function ModApiV1.get_player_camera() end
 ---@return BaseUI
 function ModApiV1.get_base_ui() end
 
----@return Array<any>
+---@return Array<Node>
 function ModApiV1.get_devices() end
 
----@return Array<any>
+---@return Array<Node>
 function ModApiV1.get_users() end
 
----@return Array<any>
+---@return Array<Node>
 function ModApiV1.get_locations() end
 
----@return Array<any>
+---@return Array<Node>
 function ModApiV1.get_merchants() end

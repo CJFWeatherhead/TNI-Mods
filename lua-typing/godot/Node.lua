@@ -4,6 +4,7 @@
 ---@class Node : Object
 ---@field name string
 ---@field unique_name_in_owner boolean
+---@field scene_file_path string
 ---@field owner Node
 ---@field multiplayer MultiplayerAPI
 ---@field process_mode integer
