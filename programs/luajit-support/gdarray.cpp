@@ -34,21 +34,42 @@ void push_gd_array_metatable(lua_State *L) {
 
         lua_pushstring(L, "iter");
         lua_pushcfunction(L, [](lua_State *L) -> int {
-            // Stack: gdarray
+            // Stack: gdarray, value_for_banned_object?
             check_gdarray(L, 1);
-            lua_pushcfunction(L, [](lua_State *L) -> int {
+            if (lua_gettop(L) > 1) {
+                lua_pushboolean(L, true);
+                lua_insert(L, -2);
+                // Stack: gdarray, true, value_for_banned_object
+            } else {
+                lua_pushboolean(L, lua_gettop(L) > 1);
+                // Stack: gdarray, false
+            }
+            // Stack: gdarray, boolean, value_for_banned_object?
+            int nups = lua_gettop(L)-1;
+            lua_pushcclosure(L, [](lua_State *L) -> int {
                 // Stack: gdarray, i
                 Array* array = check_gdarray(L, 1);
                 int i = lua_tointeger(L, 2) + 1;
-                if (i >= array->size())
-                    return 0;
                 lua_pushinteger(L, i);
                 // Stack: gdarray, i, i+1
-                Variant value = array->at(i);
-                int nvalue = push_gd_variant(L, value);
-                // Stack: gdarray, i, i+1, value
-                return 1+nvalue;
-            });
+                if (i >= array->size())
+                    return 0;
+                int nvals = 1;
+                if (!((Mod)get_node()).array_value_allowed(*array, i)) {
+                    if (lua_toboolean(L, lua_upvalueindex(1))) {
+                        lua_pushvalue(L, lua_upvalueindex(2));
+                        // Stack: gdarray, i, i+1, value
+                        nvals += 1;
+                    } else {
+                        return luaL_error(L, "Object is not allowed: GDArray[%d]", i);  // This does not return!
+                    }
+                } else {
+                    Variant value = array->at(i);
+                    nvals += push_gd_variant(L, value);
+                    // Stack: gdarray, i, i+1, value
+                }
+                return nvals;
+            }, nups);
             // Stack: gdarray, iterator
             lua_insert(L, -2);
             // Stack: iterator, gdarray
