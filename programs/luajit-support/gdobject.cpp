@@ -33,6 +33,10 @@ int push_gd_object(lua_State *L, Object object) {
     push_gd_object_metatable(L);
     lua_setmetatable(L, -2);
 
+    if (object.is_class("RefCounted")) {
+        object("reference");
+    }
+
     return 1;
 }
 
@@ -87,6 +91,16 @@ void push_gd_object_metatable(lua_State *L) {
                 lua_pushfstring(L, "GDObject: '%s'", s.utf8().c_str());
             }
             return 1;
+        });
+        lua_settable(L, -3);
+
+        lua_pushstring(L, "__gc");
+        lua_pushcfunction(L, [](lua_State *L) -> int {
+            Object obj = test_gdobject(L, 1);
+            if (obj.is_class("RefCounted")) {
+                obj("unreference");
+            }
+            return 0;
         });
         lua_settable(L, -3);
     }
