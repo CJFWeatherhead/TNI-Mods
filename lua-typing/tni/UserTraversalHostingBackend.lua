@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class UserTraversalHostingBackend : Node
 ---@field user_hosting_frontend UserHosting
@@ -113,6 +113,8 @@ function UserTraversalHostingBackend.make_packet_root() end
 function UserTraversalHostingBackend.make_traversal_packet(proot) end
 
 function UserTraversalHostingBackend.tick() end
+
+function UserTraversalHostingBackend.client_sim() end
 
 ---@param ds string
 ---@return string

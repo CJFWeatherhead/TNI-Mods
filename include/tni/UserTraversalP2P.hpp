@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_USERTRAVERSALP2P
 #define TNI_API_HEADER_USERTRAVERSALP2P
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -77,6 +77,7 @@ struct UserTraversalP2P : public Node {
 	inline Variant produce_limit_reached(LogicController node);
 	inline Variant compute_produce_limit(LogicController node);
 	inline NetworkPacketRoot make_packet_root();
+	inline void client_sim();
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -102,6 +103,7 @@ inline Variant UserTraversalP2P::make_traversal_packet(NetworkPacketRoot proot) 
 inline Variant UserTraversalP2P::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
 inline Variant UserTraversalP2P::compute_produce_limit(LogicController node) { return operator()("compute_produce_limit", node); }
 inline NetworkPacketRoot UserTraversalP2P::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
+inline void UserTraversalP2P::client_sim() { voidcall("client_sim"); }
 inline String UserTraversalP2P::colorize_description(String ds) { return operator()("colorize_description", ds); }
 inline void UserTraversalP2P::start() { voidcall("start"); }
 inline void UserTraversalP2P::stop() { voidcall("stop"); }

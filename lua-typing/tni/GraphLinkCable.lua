@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class GraphLinkCable : Node2D
 ---@field MAX_PRICE integer # Constant value: 1000000

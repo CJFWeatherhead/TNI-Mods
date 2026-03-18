@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class ModManager : Control
 ---@field mod_list VBoxContainer
@@ -29,7 +29,9 @@
 ---@field mod_info_links HBoxContainer
 ---@field mod_config VBoxContainer
 ---@field mod_config_no_options_label Label
----@field mod_info_manifest ModManifest
+---@field mod_stats VBoxContainer
+---@field mod_stats_stats_label RichTextLabel
+---@field selected_manifest ModManifest
 ---@field preset ModPreset
 ---@field preset_modified boolean
 local ModManager = {}
@@ -49,11 +51,10 @@ function ModManager.update_preset_label() end
 
 function ModManager.update_mod_list() end
 
----@param manifest ModManifest
-function ModManager.update_mod_tabs(manifest) end
+function ModManager.update_mod_tabs() end
 
----@param manifest ModManifest
-function ModManager.update_mod_info_tab(manifest) end
+function ModManager.update_mod_info_tab() end
 
----@param manifest ModManifest
-function ModManager.update_mod_config_tab(manifest) end
+function ModManager.update_mod_config_tab() end
+
+function ModManager.update_mod_stats_tab() end

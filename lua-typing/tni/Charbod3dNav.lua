@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class Charbod3dNav : NavigationAgent3D
 ---@field sproto_controls_enabled boolean

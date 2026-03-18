@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class RemovableStorageDevice : RigidBody2D
 ---@field available_sto integer
@@ -55,8 +55,9 @@ function RemovableStorageDevice.apply_color(color_val) end
 function RemovableStorageDevice.plug_in(a) end
 
 ---@param impulse Object?  # Default = (0.0, 0.0)
+---@param skip_autoplug boolean?  # Default = false
 ---@return boolean
-function RemovableStorageDevice.drop(impulse) end
+function RemovableStorageDevice.drop(impulse, skip_autoplug) end
 
 ---@param a Socket
 function RemovableStorageDevice.srv_handle_pickup(a) end

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class FixedCameraPossessableArea : Area3D
 ---@field fpv_camera_detection_name string

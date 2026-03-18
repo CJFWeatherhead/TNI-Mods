@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_MODMANIFEST
 #define TNI_API_HEADER_MODMANIFEST
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -37,10 +37,12 @@ struct ModManifest : public RefCounted {
 	inline bool is_dependency_satisfied(ModManifest other);
 	inline bool is_incompatible(ModManifest other);
 	inline int64_t get_expected_order(String addition_id);
+	inline PackedArray<std::string> get_issues_with_preset(ModPreset preset, bool check_dependencies);
 };
 
 #include "SemVerVersion.hpp"
 #include "ModManifest.hpp"
+#include "ModPreset.hpp"
 
 inline ModManifest ModManifest::from_jsonc_string(String mod_id, String jsonc) { return ModManifest(operator()("from_jsonc_string", mod_id, jsonc).as_object().address()); }
 inline bool ModManifest::is_functionally_same(ModManifest other) { return operator()("is_functionally_same", other); }
@@ -49,5 +51,6 @@ inline ModManifest ModManifest::as_minified_manifest() { return ModManifest(oper
 inline bool ModManifest::is_dependency_satisfied(ModManifest other) { return operator()("is_dependency_satisfied", other); }
 inline bool ModManifest::is_incompatible(ModManifest other) { return operator()("is_incompatible", other); }
 inline int64_t ModManifest::get_expected_order(String addition_id) { return operator()("get_expected_order", addition_id); }
+inline PackedArray<std::string> ModManifest::get_issues_with_preset(ModPreset preset, bool check_dependencies) { return operator()("get_issues_with_preset", preset, check_dependencies); }
 
 #endif

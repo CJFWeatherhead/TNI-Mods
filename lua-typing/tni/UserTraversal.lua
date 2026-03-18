@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class UserTraversal : Node
 ---@field user LogicControllerUser
@@ -99,6 +99,8 @@ function UserTraversal.make_packet_root() end
 function UserTraversal.make_traversal_packet(proot) end
 
 function UserTraversal.tick() end
+
+function UserTraversal.client_sim() end
 
 ---@param ds string
 ---@return string

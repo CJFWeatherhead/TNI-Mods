@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class Mod : Sandbox
 ---@field mod_entry_binary string
@@ -11,6 +11,9 @@
 local Mod = {}
 
 function Mod.reload() end
+
+---@return boolean
+function Mod.has_critical_error() end
 
 function Mod.call_if_has() end
 

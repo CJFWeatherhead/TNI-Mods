@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_LOGICCONTROLLER
 #define TNI_API_HEADER_LOGICCONTROLLER
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -23,6 +23,8 @@ struct LogicController : public Node {
 		ADDITIONAL_FLAGS = 5,
 		PORT_ID = 6,
 		DST_LADDR = 7,
+		HIST_TTL = 8,
+		HIST_OFFSET = 9,
 	};
 	enum TableType : int64_t {  // NOTE: You should recompile your mod if this enum changes!
 		ROUTING = 0,
@@ -42,6 +44,9 @@ struct LogicController : public Node {
 	PROPERTY(skip_autoconfig_cpu, bool);
 	PROPERTY(allow_storage_mods, bool);
 	PROPERTY(allow_process_mods, bool);
+	PROPERTY(auto_config_additional_cpu, int64_t);
+	PROPERTY(auto_config_additional_sto, int64_t);
+	PROPERTY(auto_config_additional_mem, int64_t);
 	PROPERTY(initialize_peripherals, Variant);
 	PROPERTY(auto_configured_programs, Variant);
 	PROPERTY(use_stack, Variant);
@@ -98,8 +103,6 @@ struct LogicController : public Node {
 	PROPERTY(free_nbw, int64_t);
 	PROPERTY(nbw_wasted_last_tick, int64_t);
 	PROPERTY(nbw_used_last_tick, int64_t);
-	PROPERTY(traversal_history_last_tick_nbw, int64_t);
-	PROPERTY(pcap_history_marker, int64_t);
 	PROPERTY(pmodset, Variant);
 	PROPERTY(nw_or_hw_addr, String);
 	PROPERTY(system_messages, Variant);

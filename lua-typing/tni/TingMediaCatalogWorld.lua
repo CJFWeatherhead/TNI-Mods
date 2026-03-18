@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class TingMediaCatalogWorld : Node2D
 ---@field is_state_restored boolean
@@ -112,7 +112,8 @@ function TingMediaCatalogWorld.test_merchant_existence(merchant_sfp) end
 function TingMediaCatalogWorld.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function TingMediaCatalogWorld.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function TingMediaCatalogWorld.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function TingMediaCatalogWorld.add_autocomplete_candidate(candid) end

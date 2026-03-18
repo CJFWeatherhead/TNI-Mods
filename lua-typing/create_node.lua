@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@param classname "AESContext"
 ---@param param string
@@ -1476,19 +1476,9 @@ function create_node(classname, param) end
 ---@return EditorFileSystemImportFormatSupportQuery
 function create_node(classname, param) end
 
----@param classname "EditorHelp"
----@param param string
----@return EditorHelp
-function create_node(classname, param) end
-
 ---@param classname "EditorHelpBit"
 ---@param param string
 ---@return EditorHelpBit
-function create_node(classname, param) end
-
----@param classname "EditorHelpBitTooltip"
----@param param string
----@return EditorHelpBitTooltip
 function create_node(classname, param) end
 
 ---@param classname "EditorHelpSearch"
@@ -1579,6 +1569,11 @@ function create_node(classname, param) end
 ---@param classname "EditorObjectSelector"
 ---@param param string
 ---@return EditorObjectSelector
+function create_node(classname, param) end
+
+---@param classname "EditorPaginator"
+---@param param string
+---@return EditorPaginator
 function create_node(classname, param) end
 
 ---@param classname "EditorPaths"
@@ -1854,11 +1849,6 @@ function create_node(classname, param) end
 ---@param classname "FileSystemList"
 ---@param param string
 ---@return FileSystemList
-function create_node(classname, param) end
-
----@param classname "FindBar"
----@param param string
----@return FindBar
 function create_node(classname, param) end
 
 ---@param classname "FindInFiles"

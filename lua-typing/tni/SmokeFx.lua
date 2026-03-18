@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class SmokeFx : Node2D
 ---@field effects_group AudioVisualEffects2D.EffectsGroup

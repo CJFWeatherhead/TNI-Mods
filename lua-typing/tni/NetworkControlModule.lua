@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class NetworkControlModule : Node
 ---@field DHCP_BASE_PERIOD number # Constant value: 10.0

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class Pcap : Node
 ---@field MAX_LIVE_TRAFFIC_DISPLAY integer # Constant value: 15
@@ -9,6 +9,7 @@
 ---@field dev_addr Object
 ---@field exclusion boolean
 ---@field traffic_list Array<any>
+---@field runtime_seen_offset table<any,any>
 ---@field enabled boolean
 ---@field shell TerminalShell
 ---@field wide_output_shell boolean

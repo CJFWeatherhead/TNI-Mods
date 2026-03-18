@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_DECENTROMETER
 #define TNI_API_HEADER_DECENTROMETER
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -28,8 +28,10 @@ struct Decentrometer : public Container {
 	PROPERTY(ex_amt_slider, HSlider);
 	PROPERTY(ex_refresh_tim, Timer);
 	PROPERTY(ex_ordcd_tim, Timer);
+	PROPERTY(ex_sell_intent_tim, Timer);
 	PROPERTY(ndsel_button, OptionButton);
 	PROPERTY(ndtot_label, Label);
+	PROPERTY(ex_status_label, Label);
 	PROPERTY(main_pane, MainPane);
 	PROPERTY(dynamic_container_path, NodePath);
 	PROPERTY(dynamic_container, Container);

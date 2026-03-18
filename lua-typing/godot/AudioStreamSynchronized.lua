@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class AudioStreamSynchronized : AudioStream
 ---@field stream_count Streams,stream_,unfoldable,page_size=999,add_button_text=Add Stream

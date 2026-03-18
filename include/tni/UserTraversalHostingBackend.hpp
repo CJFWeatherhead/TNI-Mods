@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_USERTRAVERSALHOSTINGBACKEND
 #define TNI_API_HEADER_USERTRAVERSALHOSTINGBACKEND
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -76,6 +76,7 @@ struct UserTraversalHostingBackend : public Node {
 	inline Variant filter_acceptable_hostings(Variant initial_candids);
 	inline void select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method);
 	inline Variant produce_limit_reached(LogicController node);
+	inline void client_sim();
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -102,6 +103,7 @@ inline Variant UserTraversalHostingBackend::get_compatible_hostings() { return o
 inline Variant UserTraversalHostingBackend::filter_acceptable_hostings(Variant initial_candids) { return operator()("filter_acceptable_hostings", initial_candids); }
 inline void UserTraversalHostingBackend::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
 inline Variant UserTraversalHostingBackend::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
+inline void UserTraversalHostingBackend::client_sim() { voidcall("client_sim"); }
 inline String UserTraversalHostingBackend::colorize_description(String ds) { return operator()("colorize_description", ds); }
 inline void UserTraversalHostingBackend::start() { voidcall("start"); }
 inline void UserTraversalHostingBackend::stop() { voidcall("stop"); }

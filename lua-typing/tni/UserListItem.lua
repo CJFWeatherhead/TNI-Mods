@@ -1,9 +1,9 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class UserListItem : HBoxContainer
----@field view_icon_texture Object # Constant value: <CompressedTexture2D#-9223369145620279905>
----@field offline_icon_texture Object # Constant value: <CompressedTexture2D#-9223369145267958549>
+---@field view_icon_texture Object # Constant value: <CompressedTexture2D#-9223369143875449431>
+---@field offline_icon_texture Object # Constant value: <CompressedTexture2D#-9223369143523128075>
 ---@field is_header boolean
 ---@field user User
 ---@field usn_lbl Label

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class PowerManagement : Node
 ---@field techv string # Constant value: powermanage_v1

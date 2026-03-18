@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_ROUTECONTROLMODULE
 #define TNI_API_HEADER_ROUTECONTROLMODULE
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -14,6 +14,7 @@ struct RouteControlModule : public Node {
 	constexpr RouteControlModule(Object obj) : RouteControlModule{obj.address()} {}
 	RouteControlModule(Variant variant) : RouteControlModule{variant.as_object().address()} {}
 
+	inline static const String DEFAULT_DROP_CS = "drop";  // NOTE: You should recompile your mod if this value changes!
 	static constexpr int64_t MAX_PORT_GROUPS = 10;  // NOTE: You should recompile your mod if this value changes!
 	enum RVID : int64_t {  // NOTE: You should recompile your mod if this enum changes!
 		DST_PORT_ID = 0,
@@ -54,7 +55,6 @@ struct RouteControlModule : public Node {
 	inline void add_rip_config(int64_t type_s, String entry);
 	inline void remove_rip_config(int64_t type_s, String entry);
 	inline void set_rip_mode(bool new_mode);
-	inline int64_t rip_update_remote_router(Variant context, Variant node, Variant via_port, Variant _current_index, Variant current_depth);
 	inline void refresh_route(String rte);
 	inline Variant is_route_expired(String rte);
 	inline void refresh();
@@ -84,7 +84,6 @@ inline void RouteControlModule::set_broadcast_policy(bool new_mode) { voidcall("
 inline void RouteControlModule::add_rip_config(int64_t type_s, String entry) { voidcall("add_rip_config", type_s, entry); }
 inline void RouteControlModule::remove_rip_config(int64_t type_s, String entry) { voidcall("remove_rip_config", type_s, entry); }
 inline void RouteControlModule::set_rip_mode(bool new_mode) { voidcall("set_rip_mode", new_mode); }
-inline int64_t RouteControlModule::rip_update_remote_router(Variant context, Variant node, Variant via_port, Variant _current_index, Variant current_depth) { return operator()("rip_update_remote_router", context, node, via_port, _current_index, current_depth); }
 inline void RouteControlModule::refresh_route(String rte) { voidcall("refresh_route", rte); }
 inline Variant RouteControlModule::is_route_expired(String rte) { return operator()("is_route_expired", rte); }
 inline void RouteControlModule::refresh() { voidcall("refresh"); }

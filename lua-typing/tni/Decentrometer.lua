@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class Decentrometer : Container
 ---@field node_item_scn PackedScene
@@ -15,8 +15,10 @@
 ---@field ex_amt_slider HSlider
 ---@field ex_refresh_tim Timer
 ---@field ex_ordcd_tim Timer
+---@field ex_sell_intent_tim Timer
 ---@field ndsel_button OptionButton
 ---@field ndtot_label Label
+---@field ex_status_label Label
 ---@field main_pane MainPane
 ---@field dynamic_container_path string
 ---@field dynamic_container Container

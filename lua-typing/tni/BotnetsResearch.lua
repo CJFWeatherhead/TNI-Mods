@@ -1,9 +1,9 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class BotnetsResearch : Node
 ---@field techv string # Constant value: botnets
----@field prereq_ps Array<any> # Constant value: [<PackedScene#-9223350915547681831>]
+---@field prereq_ps Array<any> # Constant value: [<PackedScene#-9223365941574653958>]
 ---@field cost integer
 ---@field submitted boolean
 ---@field locked boolean

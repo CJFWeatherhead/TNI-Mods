@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class TutorialScenario : Node2D
 ---@field last_tutorial_name string
@@ -113,7 +113,8 @@ function TutorialScenario.test_merchant_existence(merchant_sfp) end
 function TutorialScenario.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function TutorialScenario.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function TutorialScenario.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function TutorialScenario.add_autocomplete_candidate(candid) end

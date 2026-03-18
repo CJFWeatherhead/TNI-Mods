@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_BARRACKS
 #define TNI_API_HEADER_BARRACKS
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -20,9 +20,9 @@ struct Barracks : public Container {
 	PROPERTY(r_remove, Container);
 	PROPERTY(cfmbutton, Button);
 	PROPERTY(optcontainer, Container);
-	PROPERTY(curr_ghost, StaticBody2D);
+	PROPERTY(curr_ghost, CollisionObject2D);
 	PROPERTY(curr_rack, Container);
-	PROPERTY(placed_ghost, StaticBody2D);
+	PROPERTY(placed_ghost, CollisionObject2D);
 	PROPERTY(curr_removal_target, Rack);
 	PROPERTY(main_pane, MainPane);
 	PROPERTY(dynamic_container_path, NodePath);

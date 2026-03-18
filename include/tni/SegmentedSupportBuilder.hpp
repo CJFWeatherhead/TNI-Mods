@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_SEGMENTEDSUPPORTBUILDER
 #define TNI_API_HEADER_SEGMENTEDSUPPORTBUILDER
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -28,7 +28,8 @@ struct SegmentedSupportBuilder : public Area3D {
 	PROPERTY(min_support_margin, double);
 	PROPERTY(min_segment_length, double);
 	PROPERTY(horizontal_bend_deviation, double);
-	PROPERTY(vertical_bend_deviation, double);
+	PROPERTY(vertical_up_bend_deviation, double);
+	PROPERTY(vertical_down_bend_deviation, double);
 	PROPERTY(ground_reference, Node3D);
 	PROPERTY(ground_direction, Variant);
 	PROPERTY(ground_mask, int64_t);
@@ -43,6 +44,7 @@ struct SegmentedSupportBuilder : public Area3D {
 	PROPERTY(default_segment_sag_count, int64_t);
 	PROPERTY(default_segment_sag_ratio, double);
 	PROPERTY(max_support_height, double);
+	PROPERTY(is_building, bool);
 
 	inline void build();
 	inline void stop_build();

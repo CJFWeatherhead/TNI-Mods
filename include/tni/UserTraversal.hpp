@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_USERTRAVERSAL
 #define TNI_API_HEADER_USERTRAVERSAL
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -76,6 +76,7 @@ struct UserTraversal : public Node {
 	inline Variant produce_limit_reached(LogicController node);
 	inline Variant compute_produce_limit(LogicController node);
 	inline NetworkPacketRoot make_packet_root();
+	inline void client_sim();
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -101,6 +102,7 @@ inline Variant UserTraversal::make_traversal_packet(NetworkPacketRoot proot) { r
 inline Variant UserTraversal::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
 inline Variant UserTraversal::compute_produce_limit(LogicController node) { return operator()("compute_produce_limit", node); }
 inline NetworkPacketRoot UserTraversal::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
+inline void UserTraversal::client_sim() { voidcall("client_sim"); }
 inline String UserTraversal::colorize_description(String ds) { return operator()("colorize_description", ds); }
 inline void UserTraversal::start() { voidcall("start"); }
 inline void UserTraversal::stop() { voidcall("stop"); }

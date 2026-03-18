@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class TraversalBase : Node
 ---@field traffic_class string
@@ -39,6 +39,8 @@ function TraversalBase.make_packet_root() end
 function TraversalBase.make_traversal_packet(proot) end
 
 function TraversalBase.tick() end
+
+function TraversalBase.client_sim() end
 
 ---@param ds string
 ---@return string

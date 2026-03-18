@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class ConstrainedTile : Node3D
 ---@field Z_POS Vector2i # Constant value: (0, 1)

@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_MODMANAGER
 #define TNI_API_HEADER_MODMANAGER
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -48,7 +48,9 @@ struct ModManager : public Control {
 	PROPERTY(mod_info_links, HBoxContainer);
 	PROPERTY(mod_config, VBoxContainer);
 	PROPERTY(mod_config_no_options_label, Label);
-	PROPERTY(mod_info_manifest, ModManifest);
+	PROPERTY(mod_stats, VBoxContainer);
+	PROPERTY(mod_stats_stats_label, RichTextLabel);
+	PROPERTY(selected_manifest, ModManifest);
 	PROPERTY(preset, ModPreset);
 	PROPERTY(preset_modified, bool);
 
@@ -56,9 +58,10 @@ struct ModManager : public Control {
 	inline void fade_out();
 	inline void update_preset_label();
 	inline void update_mod_list();
-	inline void update_mod_tabs(ModManifest manifest);
-	inline void update_mod_info_tab(ModManifest manifest);
-	inline void update_mod_config_tab(ModManifest manifest);
+	inline void update_mod_tabs();
+	inline void update_mod_info_tab();
+	inline void update_mod_config_tab();
+	inline void update_mod_stats_tab();
 };
 
 #include "ModManifest.hpp"
@@ -68,8 +71,9 @@ inline void ModManager::fade_in() { voidcall("fade_in"); }
 inline void ModManager::fade_out() { voidcall("fade_out"); }
 inline void ModManager::update_preset_label() { voidcall("update_preset_label"); }
 inline void ModManager::update_mod_list() { voidcall("update_mod_list"); }
-inline void ModManager::update_mod_tabs(ModManifest manifest) { voidcall("update_mod_tabs", manifest); }
-inline void ModManager::update_mod_info_tab(ModManifest manifest) { voidcall("update_mod_info_tab", manifest); }
-inline void ModManager::update_mod_config_tab(ModManifest manifest) { voidcall("update_mod_config_tab", manifest); }
+inline void ModManager::update_mod_tabs() { voidcall("update_mod_tabs"); }
+inline void ModManager::update_mod_info_tab() { voidcall("update_mod_info_tab"); }
+inline void ModManager::update_mod_config_tab() { voidcall("update_mod_config_tab"); }
+inline void ModManager::update_mod_stats_tab() { voidcall("update_mod_stats_tab"); }
 
 #endif

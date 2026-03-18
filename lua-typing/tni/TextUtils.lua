@@ -1,11 +1,15 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class TextUtils : Object
 ---@field LOWERCASE_ALPHABETS string # Constant value: abcdefghijklmnopqrstuvwxyz
 ---@field UPPERCASE_ALPHABETS string # Constant value: ABCDEFGHIJKLMNOPQRSTUVWXYZ
 ---@field DIGITS string # Constant value: 0123456789
 local TextUtils = {}
+
+---@param inp string
+---@return string
+function TextUtils.capitalize_first_char(inp) end
 
 ---@param inp string
 ---@param n integer?  # Default = 100

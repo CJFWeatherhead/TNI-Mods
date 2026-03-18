@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class Plug : RigidBody2D
 ---@field ZINDEX integer # Constant value: 500
@@ -31,8 +31,9 @@ function Plug.apply_color(color_val) end
 function Plug.plug_in(a) end
 
 ---@param impulse Object?  # Default = (0.0, 0.0)
+---@param skip_autoplug boolean?  # Default = false
 ---@return boolean
-function Plug.drop(impulse) end
+function Plug.drop(impulse, skip_autoplug) end
 
 ---@param a Socket
 function Plug.srv_handle_pickup(a) end

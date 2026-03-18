@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class PocosiaInputNode3DOrbiter : Node3D
 ---@field target_mindrag_sens_mult number
@@ -12,6 +12,7 @@
 ---@field wasd_rate_min number
 ---@field wasd_rate_max number
 ---@field inverted_mouse boolean
+---@field input_disabled boolean
 ---@field ref_drag_pixels number
 ---@field drags_per_rotation_min number
 ---@field drags_per_rotation_max number
@@ -29,7 +30,6 @@
 ---@field input_type string
 ---@field focus_lerp_speed number
 ---@field focus_zoom_margin number
----@field input_disabled boolean
 ---@field orbital_point Vector3
 ---@field radius number
 ---@field target_radius number

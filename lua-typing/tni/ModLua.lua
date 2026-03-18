@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class ModLua : Sandbox
 ---@field lua_entry_file string
@@ -12,6 +12,9 @@
 local ModLua = {}
 
 function ModLua.reload() end
+
+---@return boolean
+function ModLua.has_critical_error() end
 
 function ModLua.call_if_has() end
 

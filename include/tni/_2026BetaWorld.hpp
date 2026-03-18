@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER__2026BETAWORLD
 #define TNI_API_HEADER__2026BETAWORLD
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -104,7 +104,7 @@ struct _2026BetaWorld : public Node2D {
 	inline Variant lookup_domain(Variant domain);
 	inline Variant test_merchant_existence(Variant merchant_sfp);
 	inline void try_add_merchant(Variant merchant_sfp);
-	inline void try_release_program(PackedScene prog_scene);
+	inline void try_release_program(PackedScene prog_scene, Variant notifprogstack);
 	inline void add_autocomplete_candidate(String candid);
 	inline void remove_autocomplete_candidate(String candid);
 	inline Variant get_loc_index(Location loc);
@@ -162,7 +162,7 @@ inline Variant _2026BetaWorld::get_transactional_sum(Variant n_date, Variant cou
 inline Variant _2026BetaWorld::lookup_domain(Variant domain) { return operator()("lookup_domain", domain); }
 inline Variant _2026BetaWorld::test_merchant_existence(Variant merchant_sfp) { return operator()("test_merchant_existence", merchant_sfp); }
 inline void _2026BetaWorld::try_add_merchant(Variant merchant_sfp) { voidcall("try_add_merchant", merchant_sfp); }
-inline void _2026BetaWorld::try_release_program(PackedScene prog_scene) { voidcall("try_release_program", prog_scene); }
+inline void _2026BetaWorld::try_release_program(PackedScene prog_scene, Variant notifprogstack) { voidcall("try_release_program", prog_scene, notifprogstack); }
 inline void _2026BetaWorld::add_autocomplete_candidate(String candid) { voidcall("add_autocomplete_candidate", candid); }
 inline void _2026BetaWorld::remove_autocomplete_candidate(String candid) { voidcall("remove_autocomplete_candidate", candid); }
 inline Variant _2026BetaWorld::get_loc_index(Location loc) { return operator()("get_loc_index", loc); }

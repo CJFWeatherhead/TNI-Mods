@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class _1BasicGameControlWorld : Node2D
 ---@field last_tutorial_name string
@@ -114,7 +114,8 @@ function _1BasicGameControlWorld.test_merchant_existence(merchant_sfp) end
 function _1BasicGameControlWorld.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function _1BasicGameControlWorld.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function _1BasicGameControlWorld.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function _1BasicGameControlWorld.add_autocomplete_candidate(candid) end

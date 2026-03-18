@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class UserTraversalP2P : Node
 ---@field p2p_method UserTraversalP2P.P2PMethod
@@ -102,6 +102,8 @@ function UserTraversalP2P.make_packet_root() end
 function UserTraversalP2P.make_traversal_packet(proot) end
 
 function UserTraversalP2P.tick() end
+
+function UserTraversalP2P.client_sim() end
 
 ---@param ds string
 ---@return string

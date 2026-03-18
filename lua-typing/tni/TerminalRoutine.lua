@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class TerminalRoutine : Node
 ---@field INVALID_CMD_MAN_HELP0 string # Constant value: invalid command, type '{man}' for help.

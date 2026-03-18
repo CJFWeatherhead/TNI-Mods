@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class WormBase : Node
 ---@field release_name_template string
@@ -43,6 +43,8 @@ function WormBase.make_packet_root() end
 function WormBase.make_traversal_packet(proot) end
 
 function WormBase.tick() end
+
+function WormBase.client_sim() end
 
 ---@param ds string
 ---@return string

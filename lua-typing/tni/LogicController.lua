@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class LogicController : Node
 ---@field default_tick_period number
@@ -15,6 +15,9 @@
 ---@field skip_autoconfig_cpu boolean
 ---@field allow_storage_mods boolean
 ---@field allow_process_mods boolean
+---@field auto_config_additional_cpu integer
+---@field auto_config_additional_sto integer
+---@field auto_config_additional_mem integer
 ---@field initialize_peripherals Array<any>
 ---@field auto_configured_programs Array<any>
 ---@field use_stack table<any,any>
@@ -71,8 +74,6 @@
 ---@field free_nbw integer
 ---@field nbw_wasted_last_tick integer
 ---@field nbw_used_last_tick integer
----@field traversal_history_last_tick_nbw integer
----@field pcap_history_marker integer
 ---@field pmodset Array<any>
 ---@field nw_or_hw_addr string
 ---@field system_messages table<any,any>
@@ -98,6 +99,8 @@ LogicController.TraversalHistory = {
 	["ADDITIONAL_FLAGS"] = 5,
 	["PORT_ID"] = 6,
 	["DST_LADDR"] = 7,
+	["HIST_TTL"] = 8,
+	["HIST_OFFSET"] = 9,
 }
 ---@enum LogicController.TableType
 LogicController.TableType = {

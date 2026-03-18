@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class MediaWorld : Node2D
 ---@field is_state_restored boolean
@@ -112,7 +112,8 @@ function MediaWorld.test_merchant_existence(merchant_sfp) end
 function MediaWorld.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function MediaWorld.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function MediaWorld.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function MediaWorld.add_autocomplete_candidate(candid) end

@@ -1,7 +1,12 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class Sandbox : Node
+---@field references_max integer
+---@field memory_max integer
+---@field execution_timeout integer
+---@field allocations_max integer
+---@field unboxed_arguments boolean
 ---@field precise_simulation boolean
 ---@field profiling boolean
 ---@field program ELFScript

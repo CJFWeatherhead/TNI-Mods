@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_SOCKET
 #define TNI_API_HEADER_SOCKET
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -31,6 +31,7 @@ struct Socket : public Area2D {
 		DDR3_SLOT = 110,
 		DDR4_SLOT = 111,
 		STORAGE_SLOT = 200,
+		SPOOL_HOOK = 250,
 	};
 
 	PROPERTY(connection, Variant);

@@ -1,7 +1,8 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class RouteControlModule : Node
+---@field DEFAULT_DROP_CS string # Constant value: drop
 ---@field MAX_PORT_GROUPS integer # Constant value: 10
 ---@field ADR_CYTL_DEFAULT integer # Constant value: 4
 ---@field routing_table table<any,any>
@@ -88,14 +89,6 @@ function RouteControlModule.remove_rip_config(type_s, entry) end
 
 ---@param new_mode boolean
 function RouteControlModule.set_rip_mode(new_mode) end
-
----@param context Object
----@param node Object
----@param via_port Object
----@param _current_index Object
----@param current_depth Object
----@return GraphController.Traversal
-function RouteControlModule.rip_update_remote_router(context, node, via_port, _current_index, current_depth) end
 
 ---@param rte string
 function RouteControlModule.refresh_route(rte) end

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class SegmentedSupportBuilder : Area3D
 ---@field point_a Node3D
@@ -11,7 +11,8 @@
 ---@field min_support_margin number
 ---@field min_segment_length number
 ---@field horizontal_bend_deviation number
----@field vertical_bend_deviation number
+---@field vertical_up_bend_deviation number
+---@field vertical_down_bend_deviation number
 ---@field ground_reference Node3D
 ---@field ground_direction Vector3
 ---@field ground_mask integer
@@ -26,6 +27,7 @@
 ---@field default_segment_sag_count integer
 ---@field default_segment_sag_ratio number
 ---@field max_support_height number
+---@field is_building boolean
 local SegmentedSupportBuilder = {}
 ---@enum SegmentedSupportBuilder.default_build_mode
 SegmentedSupportBuilder.default_build_mode = {

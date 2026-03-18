@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class PowerController : Node
 ---@field MAX_DEPTH integer # Constant value: 99999

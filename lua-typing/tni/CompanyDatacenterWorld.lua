@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class CompanyDatacenterWorld : Node2D
 ---@field disable_interval_days integer
@@ -115,7 +115,8 @@ function CompanyDatacenterWorld.test_merchant_existence(merchant_sfp) end
 function CompanyDatacenterWorld.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function CompanyDatacenterWorld.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function CompanyDatacenterWorld.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function CompanyDatacenterWorld.add_autocomplete_candidate(candid) end

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class UserTraversalFQDN : Node
 ---@field manifest_probability number
@@ -102,6 +102,8 @@ function UserTraversalFQDN.make_packet_root() end
 function UserTraversalFQDN.make_traversal_packet(proot) end
 
 function UserTraversalFQDN.tick() end
+
+function UserTraversalFQDN.client_sim() end
 
 ---@param ds string
 ---@return string

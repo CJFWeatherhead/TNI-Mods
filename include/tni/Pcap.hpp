@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_PCAP
 #define TNI_API_HEADER_PCAP
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -22,6 +22,7 @@ struct Pcap : public Node {
 	PROPERTY(dev_addr, Variant);
 	PROPERTY(exclusion, bool);
 	PROPERTY(traffic_list, Variant);
+	PROPERTY(runtime_seen_offset, Variant);
 	PROPERTY(enabled, bool);
 	PROPERTY(shell, TerminalShell);
 	PROPERTY(wide_output_shell, bool);

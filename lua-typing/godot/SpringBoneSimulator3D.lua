@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class SpringBoneSimulator3D : SkeletonModifier3D
 ---@field external_force Vector3

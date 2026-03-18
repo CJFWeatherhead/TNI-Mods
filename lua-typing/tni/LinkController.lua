@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class LinkController : Node
 ---@field COPPER_LINK_TYPEN string # Constant value: COPPER

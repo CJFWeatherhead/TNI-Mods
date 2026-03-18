@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_POCOSIAINPUTNODE3DORBITER
 #define TNI_API_HEADER_POCOSIAINPUTNODE3DORBITER
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -25,6 +25,7 @@ struct PocosiaInputNode3DOrbiter : public Node3D {
 	PROPERTY(wasd_rate_min, double);
 	PROPERTY(wasd_rate_max, double);
 	PROPERTY(inverted_mouse, bool);
+	PROPERTY(input_disabled, bool);
 	PROPERTY(ref_drag_pixels, double);
 	PROPERTY(drags_per_rotation_min, double);
 	PROPERTY(drags_per_rotation_max, double);
@@ -42,7 +43,6 @@ struct PocosiaInputNode3DOrbiter : public Node3D {
 	PROPERTY(input_type, String);
 	PROPERTY(focus_lerp_speed, double);
 	PROPERTY(focus_zoom_margin, double);
-	PROPERTY(input_disabled, bool);
 	PROPERTY(orbital_point, Variant);
 	PROPERTY(radius, double);
 	PROPERTY(target_radius, double);

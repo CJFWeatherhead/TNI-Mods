@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class CronController : Node
 ---@field MINUTES_IN_DAY integer # Constant value: 1440

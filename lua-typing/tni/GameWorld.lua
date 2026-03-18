@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class GameWorld : Node2D
 ---@field mobile_os_scn string # Constant value: <PackedScene>
@@ -121,7 +121,8 @@ function GameWorld.test_merchant_existence(merchant_sfp) end
 function GameWorld.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function GameWorld.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function GameWorld.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function GameWorld.add_autocomplete_candidate(candid) end

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class LabWorld : Node2D
 ---@field is_state_restored boolean
@@ -112,7 +112,8 @@ function LabWorld.test_merchant_existence(merchant_sfp) end
 function LabWorld.try_add_merchant(merchant_sfp) end
 
 ---@param prog_scene PackedScene
-function LabWorld.try_release_program(prog_scene) end
+---@param notifprogstack Object?  # Default = <null>
+function LabWorld.try_release_program(prog_scene, notifprogstack) end
 
 ---@param candid string
 function LabWorld.add_autocomplete_candidate(candid) end

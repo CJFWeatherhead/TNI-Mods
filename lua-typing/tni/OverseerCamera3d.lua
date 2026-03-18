@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class OverseerCamera3d : Camera3D
 ---@field rotation_speed number

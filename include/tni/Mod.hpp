@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_MOD
 #define TNI_API_HEADER_MOD
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -23,6 +23,7 @@ struct Mod : public Sandbox {
 	PROPERTY(api_v1, ModApiV1);
 
 	inline void reload();
+	inline bool has_critical_error();
 	inline void call_if_has();
 	inline void mod_log(String s);
 	inline void handle_stdout(String s);
@@ -38,6 +39,7 @@ struct Mod : public Sandbox {
 #include "ModApiV1.hpp"
 
 inline void Mod::reload() { voidcall("reload"); }
+inline bool Mod::has_critical_error() { return operator()("has_critical_error"); }
 inline void Mod::call_if_has() { voidcall("call_if_has"); }
 inline void Mod::mod_log(String s) { voidcall("mod_log", s); }
 inline void Mod::handle_stdout(String s) { voidcall("handle_stdout", s); }

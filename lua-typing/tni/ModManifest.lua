@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class ModManifest : RefCounted
 ---@field raw_data table<any,any>
@@ -43,3 +43,8 @@ function ModManifest.is_incompatible(other) end
 ---@param addition_id string
 ---@return integer
 function ModManifest.get_expected_order(addition_id) end
+
+---@param preset ModPreset
+---@param check_dependencies boolean?  # Default = true
+---@return PackedStringArray
+function ModManifest.get_issues_with_preset(preset, check_dependencies) end

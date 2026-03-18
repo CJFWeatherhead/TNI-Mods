@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class PeripheralPlug : RigidBody2D
 ---@field product_name string
@@ -50,8 +50,9 @@ function PeripheralPlug.apply_color(color_val) end
 function PeripheralPlug.plug_in(a) end
 
 ---@param impulse Object?  # Default = (0.0, 0.0)
+---@param skip_autoplug boolean?  # Default = false
 ---@return boolean
-function PeripheralPlug.drop(impulse) end
+function PeripheralPlug.drop(impulse, skip_autoplug) end
 
 ---@param a Socket
 function PeripheralPlug.srv_handle_pickup(a) end

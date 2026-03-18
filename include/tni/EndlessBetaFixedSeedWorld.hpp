@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_ENDLESSBETAFIXEDSEEDWORLD
 #define TNI_API_HEADER_ENDLESSBETAFIXEDSEEDWORLD
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -104,7 +104,7 @@ struct EndlessBetaFixedSeedWorld : public Node2D {
 	inline Variant lookup_domain(Variant domain);
 	inline Variant test_merchant_existence(Variant merchant_sfp);
 	inline void try_add_merchant(Variant merchant_sfp);
-	inline void try_release_program(PackedScene prog_scene);
+	inline void try_release_program(PackedScene prog_scene, Variant notifprogstack);
 	inline void add_autocomplete_candidate(String candid);
 	inline void remove_autocomplete_candidate(String candid);
 	inline Variant get_loc_index(Location loc);
@@ -162,7 +162,7 @@ inline Variant EndlessBetaFixedSeedWorld::get_transactional_sum(Variant n_date, 
 inline Variant EndlessBetaFixedSeedWorld::lookup_domain(Variant domain) { return operator()("lookup_domain", domain); }
 inline Variant EndlessBetaFixedSeedWorld::test_merchant_existence(Variant merchant_sfp) { return operator()("test_merchant_existence", merchant_sfp); }
 inline void EndlessBetaFixedSeedWorld::try_add_merchant(Variant merchant_sfp) { voidcall("try_add_merchant", merchant_sfp); }
-inline void EndlessBetaFixedSeedWorld::try_release_program(PackedScene prog_scene) { voidcall("try_release_program", prog_scene); }
+inline void EndlessBetaFixedSeedWorld::try_release_program(PackedScene prog_scene, Variant notifprogstack) { voidcall("try_release_program", prog_scene, notifprogstack); }
 inline void EndlessBetaFixedSeedWorld::add_autocomplete_candidate(String candid) { voidcall("add_autocomplete_candidate", candid); }
 inline void EndlessBetaFixedSeedWorld::remove_autocomplete_candidate(String candid) { voidcall("remove_autocomplete_candidate", candid); }
 inline Variant EndlessBetaFixedSeedWorld::get_loc_index(Location loc) { return operator()("get_loc_index", loc); }

@@ -1,5 +1,5 @@
 ---@meta _
--- Generated API for game version 0.10.7
+-- Generated API for game version 0.10.11
 
 ---@class TraversalConsume : Node
 ---@field produce_use_config UseConfig
@@ -71,6 +71,8 @@ function TraversalConsume.make_packet_root() end
 function TraversalConsume.make_traversal_packet(proot) end
 
 function TraversalConsume.tick() end
+
+function TraversalConsume.client_sim() end
 
 ---@param ds string
 ---@return string

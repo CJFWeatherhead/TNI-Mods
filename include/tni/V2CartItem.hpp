@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_V2CARTITEM
 #define TNI_API_HEADER_V2CARTITEM
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>

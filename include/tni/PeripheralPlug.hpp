@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_PERIPHERALPLUG
 #define TNI_API_HEADER_PERIPHERALPLUG
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
@@ -49,7 +49,7 @@ struct PeripheralPlug : public RigidBody2D {
 	inline void remove_and_free_object();
 	inline void apply_color(Variant color_val);
 	inline void plug_in(Variant a);
-	inline bool drop(Variant impulse);
+	inline bool drop(Variant impulse, bool skip_autoplug);
 	inline void srv_handle_pickup(Socket a);
 	inline bool pickup(Variant new_picker);
 	inline void reset_child_z_index();
@@ -70,7 +70,7 @@ inline void PeripheralPlug::elevator_move(Variant new_pos) { voidcall("elevator_
 inline void PeripheralPlug::remove_and_free_object() { voidcall("remove_and_free_object"); }
 inline void PeripheralPlug::apply_color(Variant color_val) { voidcall("apply_color", color_val); }
 inline void PeripheralPlug::plug_in(Variant a) { voidcall("plug_in", a); }
-inline bool PeripheralPlug::drop(Variant impulse) { return operator()("drop", impulse); }
+inline bool PeripheralPlug::drop(Variant impulse, bool skip_autoplug) { return operator()("drop", impulse, skip_autoplug); }
 inline void PeripheralPlug::srv_handle_pickup(Socket a) { voidcall("srv_handle_pickup", a); }
 inline bool PeripheralPlug::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
 inline void PeripheralPlug::reset_child_z_index() { voidcall("reset_child_z_index"); }

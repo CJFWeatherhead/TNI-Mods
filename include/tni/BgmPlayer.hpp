@@ -1,6 +1,6 @@
 #ifndef TNI_API_HEADER_BGMPLAYER
 #define TNI_API_HEADER_BGMPLAYER
-// Generated API for game version 0.10.7
+// Generated API for game version 0.10.11
 // If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
 
 #include <generated_api.hpp>
