@@ -125,6 +125,12 @@ static void setup_lua_state() {
     });
     lua_setglobal(L, "create_node");
 
+    lua_pushcfunction(L, [](lua_State *L) -> int {
+        std::string path = luaL_checkstring(L, 1);
+        return push_gd_variant(L, loadv(path));
+    });
+    lua_setglobal(L, "loadv");
+
     lua_getglobal(L, "package");
     // Stack: package
     lua_pushstring(L, "mod://?.lua;mod://?/init.lua");
