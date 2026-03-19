@@ -53,12 +53,6 @@ function Object.to_string() end
 ---@return integer
 function Object.get_instance_id() end
 
----@param script Object
-function Object.set_script(script) end
-
----@return Object
-function Object.get_script() end
-
 ---@param name string
 ---@param value Object
 function Object.set_meta(name, value) end

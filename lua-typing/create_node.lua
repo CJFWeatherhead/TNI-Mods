@@ -821,11 +821,6 @@ function create_node(classname, param) end
 ---@return CanvasItemEditor
 function create_node(classname, param) end
 
----@param classname "CanvasItemEditorSelectedItem"
----@param param string
----@return CanvasItemEditorSelectedItem
-function create_node(classname, param) end
-
 ---@param classname "CanvasItemEditorViewport"
 ---@param param string
 ---@return CanvasItemEditorViewport
@@ -1119,11 +1114,6 @@ function create_node(classname, param) end
 ---@param classname "ControlEditorToolbar"
 ---@param param string
 ---@return ControlEditorToolbar
-function create_node(classname, param) end
-
----@param classname "ControlPositioningWarning"
----@param param string
----@return ControlPositioningWarning
 function create_node(classname, param) end
 
 ---@param classname "ConvertTransformModifier3D"
@@ -1476,9 +1466,19 @@ function create_node(classname, param) end
 ---@return EditorFileSystemImportFormatSupportQuery
 function create_node(classname, param) end
 
+---@param classname "EditorHelp"
+---@param param string
+---@return EditorHelp
+function create_node(classname, param) end
+
 ---@param classname "EditorHelpBit"
 ---@param param string
 ---@return EditorHelpBit
+function create_node(classname, param) end
+
+---@param classname "EditorHelpBitTooltip"
+---@param param string
+---@return EditorHelpBitTooltip
 function create_node(classname, param) end
 
 ---@param classname "EditorHelpSearch"
@@ -1571,11 +1571,6 @@ function create_node(classname, param) end
 ---@return EditorObjectSelector
 function create_node(classname, param) end
 
----@param classname "EditorPaginator"
----@param param string
----@return EditorPaginator
-function create_node(classname, param) end
-
 ---@param classname "EditorPaths"
 ---@param param string
 ---@return EditorPaths
@@ -1601,19 +1596,9 @@ function create_node(classname, param) end
 ---@return EditorProperty
 function create_node(classname, param) end
 
----@param classname "EditorPropertyArrayObject"
----@param param string
----@return EditorPropertyArrayObject
-function create_node(classname, param) end
-
 ---@param classname "EditorPropertyDictionaryObject"
 ---@param param string
 ---@return EditorPropertyDictionaryObject
-function create_node(classname, param) end
-
----@param classname "EditorPropertyLayersGrid"
----@param param string
----@return EditorPropertyLayersGrid
 function create_node(classname, param) end
 
 ---@param classname "EditorPropertyNameProcessor"
@@ -1761,11 +1746,6 @@ function create_node(classname, param) end
 ---@return EditorVariantTypeOptionButton
 function create_node(classname, param) end
 
----@param classname "EditorVariantTypePopupMenu"
----@param param string
----@return EditorVariantTypePopupMenu
-function create_node(classname, param) end
-
 ---@param classname "EditorVersionButton"
 ---@param param string
 ---@return EditorVersionButton
@@ -1849,6 +1829,11 @@ function create_node(classname, param) end
 ---@param classname "FileSystemList"
 ---@param param string
 ---@return FileSystemList
+function create_node(classname, param) end
+
+---@param classname "FindBar"
+---@param param string
+---@return FindBar
 function create_node(classname, param) end
 
 ---@param classname "FindInFiles"

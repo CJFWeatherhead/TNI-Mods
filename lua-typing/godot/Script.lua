@@ -14,12 +14,6 @@ function Script.instance_has(base_object) end
 ---@return boolean
 function Script.has_source_code() end
 
----@return string
-function Script.get_source_code() end
-
----@param source string
-function Script.set_source_code(source) end
-
 ---@param keep_state boolean?  # Default = false
 ---@return Error
 function Script.reload(keep_state) end

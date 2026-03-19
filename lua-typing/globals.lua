@@ -14,3 +14,7 @@ Engine = nil
 
 ---@type Array
 Array = nil
+
+---@param path string
+---@return any|Object
+function loadv(path) end

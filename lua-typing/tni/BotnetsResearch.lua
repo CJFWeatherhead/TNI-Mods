@@ -3,7 +3,7 @@
 
 ---@class BotnetsResearch : Node
 ---@field techv string # Constant value: botnets
----@field prereq_ps Array<any> # Constant value: [<PackedScene#-9223365941574653958>]
+---@field prereq_ps Array<any> # Constant value: [<PackedScene#-9223367395119098303>]
 ---@field cost integer
 ---@field submitted boolean
 ---@field locked boolean

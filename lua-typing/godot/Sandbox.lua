@@ -25,9 +25,6 @@
 ---@field monitor_accumulated_startup_time number
 local Sandbox = {}
 
----@param buffer PackedByteArray
-function Sandbox.load_buffer(buffer) end
-
 ---@param unload boolean?  # Default = false
 function Sandbox.reset(unload) end
 
@@ -47,34 +44,8 @@ function Sandbox.vmcallable(function_, args) end
 ---@return Object
 function Sandbox.vmcallable_address(address, args) end
 
----@param restrictions boolean
-function Sandbox.set_restrictions(restrictions) end
-
----@return boolean
-function Sandbox.get_restrictions() end
-
----@param instance Object
-function Sandbox.add_allowed_object(instance) end
-
 ---@param instance Object
 function Sandbox.remove_allowed_object(instance) end
-
-function Sandbox.clear_allowed_objects() end
-
----@param instance (Callable|function)
-function Sandbox.set_class_allowed_callback(instance) end
-
----@param instance (Callable|function)
-function Sandbox.set_object_allowed_callback(instance) end
-
----@param instance (Callable|function)
-function Sandbox.set_method_allowed_callback(instance) end
-
----@param instance (Callable|function)
-function Sandbox.set_property_allowed_callback(instance) end
-
----@param instance (Callable|function)
-function Sandbox.set_resource_allowed_callback(instance) end
 
 ---@param name string
 ---@return boolean
@@ -99,30 +70,14 @@ function Sandbox.is_allowed_property(instance, property, is_set) end
 ---@return boolean
 function Sandbox.is_allowed_resource(res) end
 
----@param callback (Callable|function)
-function Sandbox.set_redirect_stdout(callback) end
-
 ---@return Array<any>
 function Sandbox.get_general_registers() end
 
 ---@return Array<any>
 function Sandbox.get_floating_point_registers() end
 
----@param args Array<any>
-function Sandbox.set_argument_registers(args) end
-
 ---@return string
 function Sandbox.get_current_instruction() end
-
-function Sandbox.make_resumable() end
-
----@param max_instructions integer
----@return boolean
-function Sandbox.resume(max_instructions) end
-
----@param test string
----@param iterations integer
-function Sandbox.assault(test, iterations) end
 
 ---@param function_ string
 ---@return boolean
@@ -180,19 +135,6 @@ function Sandbox.share_vec4_array(allow_write, array) end
 ---@return boolean
 function Sandbox.unshare_array(address) end
 
----@param ignore_instruction_limit boolean?  # Default = false
----@param automatic_nbit_address_space boolean?  # Default = false
----@return string
-function Sandbox.emit_binary_translation(ignore_instruction_limit, automatic_nbit_address_space) end
-
----@param shared_library_path string?  # Default = res://bintr
----@param compiler string?  # Default = cc
----@param extra_cflags string?  # Default = 
----@param ignore_instruction_limit boolean?  # Default = false
----@param automatic_nbit_as boolean?  # Default = false
----@return boolean
-function Sandbox.try_compile_binary_translation(shared_library_path, compiler, extra_cflags, ignore_instruction_limit, automatic_nbit_as) end
-
 ---@return boolean
 function Sandbox.is_binary_translated() end
 
@@ -245,24 +187,6 @@ function Sandbox.set_precise_simulation(precise_simulation) end
 
 ---@return boolean
 function Sandbox.get_precise_simulation() end
-
----@param use_nbit_as boolean
-function Sandbox.set_binary_translation_nbit_as(use_nbit_as) end
-
----@return boolean
-function Sandbox.get_binary_translation_nbit_as() end
-
----@param register_caching boolean
-function Sandbox.set_binary_translation_register_caching(register_caching) end
-
----@return boolean
-function Sandbox.get_binary_translation_register_caching() end
-
----@param bg_compilation boolean
-function Sandbox.set_binary_translation_bg_compilation(bg_compilation) end
-
----@return boolean
-function Sandbox.get_binary_translation_bg_compilation() end
 
 ---@param enable boolean?  # Default = false
 function Sandbox.set_profiling(enable) end
