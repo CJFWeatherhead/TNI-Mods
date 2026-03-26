@@ -21,7 +21,7 @@ struct Toast : public PanelContainer {
 };
 
 
-inline void Toast::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline void Toast::clear_toast() { voidcall("clear_toast"); }
+inline void Toast::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline void Toast::clear_toast() { this->voidcall("clear_toast"); }
 
 #endif

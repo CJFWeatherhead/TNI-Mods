@@ -26,7 +26,7 @@ struct SettingsMenu : public Control {
 };
 
 
-inline Variant SettingsMenu::get_loaded_langs() { return operator()("get_loaded_langs"); }
-inline String SettingsMenu::get_locale_from_lang(String langname) { return operator()("get_locale_from_lang", langname); }
+inline Variant SettingsMenu::get_loaded_langs() { return this->operator()("get_loaded_langs"); }
+inline String SettingsMenu::get_locale_from_lang(String langname) { return this->operator()("get_locale_from_lang", langname); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Decentrometer : Container
+---@class Decentrometer : ScreenApp
 ---@field node_item_scn PackedScene
 ---@field an_container Container
 ---@field sf_container Container

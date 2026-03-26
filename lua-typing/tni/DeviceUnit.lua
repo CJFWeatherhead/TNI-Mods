@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DeviceUnit : RigidBody2D
+---@class DeviceUnit : PickableDevice
 ---@field ZINDEX integer # Constant value: 200
 ---@field MAX_PRICE integer # Constant value: 1000000
 ---@field SNAP_MARGIN number # Constant value: 2.0

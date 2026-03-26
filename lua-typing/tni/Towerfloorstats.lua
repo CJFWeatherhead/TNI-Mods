@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Towerfloorstats : Container
+---@class Towerfloorstats : DashboardApp
 ---@field refresh_timer Timer
 ---@field issues1_text RichTextLabel
 ---@field issues1_count Label

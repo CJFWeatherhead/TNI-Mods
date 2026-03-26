@@ -28,6 +28,6 @@ struct FirstPersonCamera3d : public Camera3D {
 };
 
 
-inline void FirstPersonCamera3d::set_mouse_input_captured(bool val) { voidcall("set_mouse_input_captured", val); }
+inline void FirstPersonCamera3d::set_mouse_input_captured(bool val) { this->voidcall("set_mouse_input_captured", val); }
 
 #endif

@@ -22,6 +22,6 @@ struct PocosiaLobbies : public ScrollContainer {
 };
 
 
-inline void PocosiaLobbies::refresh_lobbies() { voidcall("refresh_lobbies"); }
+inline void PocosiaLobbies::refresh_lobbies() { this->voidcall("refresh_lobbies"); }
 
 #endif

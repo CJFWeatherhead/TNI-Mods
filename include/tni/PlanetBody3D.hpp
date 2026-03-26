@@ -36,8 +36,8 @@ struct PlanetBody3D : public StaticBody3D {
 #include "GravitySphereArea3D.hpp"
 #include "LinearDragSphereArea3D.hpp"
 
-inline double PlanetBody3D::get_ground_radius() { return operator()("get_ground_radius"); }
-inline double PlanetBody3D::get_safe_orbital_radius() { return operator()("get_safe_orbital_radius"); }
-inline double PlanetBody3D::get_planet_gravity() { return operator()("get_planet_gravity"); }
+inline double PlanetBody3D::get_ground_radius() { return this->operator()("get_ground_radius"); }
+inline double PlanetBody3D::get_safe_orbital_radius() { return this->operator()("get_safe_orbital_radius"); }
+inline double PlanetBody3D::get_planet_gravity() { return this->operator()("get_planet_gravity"); }
 
 #endif

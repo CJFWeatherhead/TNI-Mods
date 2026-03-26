@@ -20,6 +20,6 @@ struct Rack : public StaticBody2D {
 };
 
 
-inline void Rack::remove() { voidcall("remove"); }
+inline void Rack::remove() { this->voidcall("remove"); }
 
 #endif

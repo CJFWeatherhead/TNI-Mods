@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Vmconf : Node
+---@class Vmconf : TerminalRoutine
 ---@field enabled boolean
 ---@field shell TerminalShell
 ---@field wide_output_shell boolean

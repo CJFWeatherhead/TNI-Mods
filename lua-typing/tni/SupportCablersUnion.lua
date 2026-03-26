@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class SupportCablersUnion : Node
+---@class SupportCablersUnion : PropMod
 ---@field cost integer
 ---@field submitted boolean
 ---@field locked boolean

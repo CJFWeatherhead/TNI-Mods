@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct NetworkHub : public Node {
-	using Node::Node;
+struct NetworkHub : public Program {
+	using Program::Program;
 
-	constexpr NetworkHub(Node base) : Node{base} {}
-	constexpr NetworkHub(uint64_t addr) : Node{addr} {}
+	constexpr NetworkHub(Program base) : Program{base} {}
+	constexpr NetworkHub(uint64_t addr) : Program{addr} {}
 	constexpr NetworkHub(Object obj) : NetworkHub{obj.address()} {}
 	NetworkHub(Variant variant) : NetworkHub{variant.as_object().address()} {}
 
@@ -30,7 +31,7 @@ struct NetworkHub : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline void tick();
 	inline String colorize_description(String ds);
 	inline void start();
@@ -43,13 +44,13 @@ struct NetworkHub : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline bool NetworkHub::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline void NetworkHub::tick() { voidcall("tick"); }
-inline String NetworkHub::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void NetworkHub::start() { voidcall("start"); }
-inline void NetworkHub::stop() { voidcall("stop"); }
-inline void NetworkHub::uninstall() { voidcall("uninstall"); }
-inline void NetworkHub::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool NetworkHub::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline bool NetworkHub::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline void NetworkHub::tick() { this->voidcall("tick"); }
+inline String NetworkHub::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void NetworkHub::start() { this->voidcall("start"); }
+inline void NetworkHub::stop() { this->voidcall("stop"); }
+inline void NetworkHub::uninstall() { this->voidcall("uninstall"); }
+inline void NetworkHub::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool NetworkHub::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

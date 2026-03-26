@@ -22,6 +22,6 @@ struct LocationSpawnRequirement : public Resource {
 };
 
 
-inline Variant LocationSpawnRequirement::is_satisfied(Variant locations) { return operator()("is_satisfied", locations); }
+inline Variant LocationSpawnRequirement::is_satisfied(Variant locations) { return this->operator()("is_satisfied", locations); }
 
 #endif

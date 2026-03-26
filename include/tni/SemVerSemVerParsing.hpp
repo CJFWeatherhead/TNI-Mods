@@ -28,12 +28,12 @@ struct SemVerSemVerParsing : public RefCounted {
 };
 
 
-inline String SemVerSemVerParsing::get_remaining() { return operator()("get_remaining"); }
-inline void SemVerSemVerParsing::advance(int64_t count) { voidcall("advance", count); }
-inline int64_t SemVerSemVerParsing::consume_whitespace() { return operator()("consume_whitespace"); }
-inline bool SemVerSemVerParsing::peek_token(String s) { return operator()("peek_token", s); }
-inline bool SemVerSemVerParsing::consume_token(String s) { return operator()("consume_token", s); }
-inline RefCounted SemVerSemVerParsing::parse_version(RefCounted state, int64_t default_) { return RefCounted(operator()("parse_version", state, default_).as_object().address()); }
-inline RefCounted SemVerSemVerParsing::parse_range(RefCounted state) { return RefCounted(operator()("parse_range", state).as_object().address()); }
+inline String SemVerSemVerParsing::get_remaining() { return this->operator()("get_remaining"); }
+inline void SemVerSemVerParsing::advance(int64_t count) { this->voidcall("advance", count); }
+inline int64_t SemVerSemVerParsing::consume_whitespace() { return this->operator()("consume_whitespace"); }
+inline bool SemVerSemVerParsing::peek_token(String s) { return this->operator()("peek_token", s); }
+inline bool SemVerSemVerParsing::consume_token(String s) { return this->operator()("consume_token", s); }
+inline RefCounted SemVerSemVerParsing::parse_version(RefCounted state, int64_t default_) { return RefCounted(this->operator()("parse_version", state, default_).as_object().address()); }
+inline RefCounted SemVerSemVerParsing::parse_range(RefCounted state) { return RefCounted(this->operator()("parse_range", state).as_object().address()); }
 
 #endif

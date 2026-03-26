@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PowerMeter : Area2D
+---@class PowerMeter : FixtureUnit
 ---@field metering_target PowerController
 ---@field kwh_price_ratio_base integer
 ---@field title string

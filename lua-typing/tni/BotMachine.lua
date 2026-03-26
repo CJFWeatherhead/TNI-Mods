@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class BotMachine : Node
+---@class BotMachine : Program
 ---@field VISIT_TRAFFIC string # Constant value: tcp/80
 ---@field opcode string
 ---@field oparg string

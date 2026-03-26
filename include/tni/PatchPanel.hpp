@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DeviceUnit.hpp"
 
-struct PatchPanel : public RigidBody2D {
-	using RigidBody2D::RigidBody2D;
+struct PatchPanel : public DeviceUnit {
+	using DeviceUnit::DeviceUnit;
 
-	constexpr PatchPanel(RigidBody2D base) : RigidBody2D{base} {}
-	constexpr PatchPanel(uint64_t addr) : RigidBody2D{addr} {}
+	constexpr PatchPanel(DeviceUnit base) : DeviceUnit{base} {}
+	constexpr PatchPanel(uint64_t addr) : DeviceUnit{addr} {}
 	constexpr PatchPanel(Object obj) : PatchPanel{obj.address()} {}
 	PatchPanel(Variant variant) : PatchPanel{variant.as_object().address()} {}
 
@@ -97,26 +98,26 @@ struct PatchPanel : public RigidBody2D {
 #include "LogicController.hpp"
 #include "PowerController.hpp"
 
-inline void PatchPanel::connect_patch_panel_link() { voidcall("connect_patch_panel_link"); }
-inline void PatchPanel::finish_cable_connection() { voidcall("finish_cable_connection"); }
-inline PatchPanel PatchPanel::get_panel_at_mouse() { return PatchPanel(operator()("get_panel_at_mouse").as_object().address()); }
-inline void PatchPanel::apply_autoconfig() { voidcall("apply_autoconfig"); }
-inline void PatchPanel::reposition(Variant new_pos) { voidcall("reposition", new_pos); }
-inline void PatchPanel::elevator_move(Variant new_pos) { voidcall("elevator_move", new_pos); }
-inline double PatchPanel::get_device_bounding_height() { return operator()("get_device_bounding_height"); }
-inline Variant PatchPanel::get_global_y_range() { return operator()("get_global_y_range"); }
-inline Variant PatchPanel::get_local_y_range() { return operator()("get_local_y_range"); }
-inline Variant PatchPanel::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline Variant PatchPanel::debug_mux_setup() { return operator()("debug_mux_setup"); }
-inline Variant PatchPanel::update_in_trolley_state() { return operator()("update_in_trolley_state"); }
-inline bool PatchPanel::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
-inline bool PatchPanel::drop(Variant impulse) { return operator()("drop", impulse); }
-inline void PatchPanel::reset_child_z_index() { voidcall("reset_child_z_index"); }
-inline void PatchPanel::set_autosvc(bool new_state) { voidcall("set_autosvc", new_state); }
-inline void PatchPanel::update_user_note(String new_value) { voidcall("update_user_note", new_value); }
-inline void PatchPanel::remove_and_free_object() { voidcall("remove_and_free_object"); }
-inline void PatchPanel::lift_child_z_index(int64_t base_val) { voidcall("lift_child_z_index", base_val); }
-inline Variant PatchPanel::get_picker_type(Variant test_picker) { return operator()("get_picker_type", test_picker); }
-inline void PatchPanel::setup_teleport(Variant gpos) { voidcall("setup_teleport", gpos); }
+inline void PatchPanel::connect_patch_panel_link() { this->voidcall("connect_patch_panel_link"); }
+inline void PatchPanel::finish_cable_connection() { this->voidcall("finish_cable_connection"); }
+inline PatchPanel PatchPanel::get_panel_at_mouse() { return PatchPanel(this->operator()("get_panel_at_mouse").as_object().address()); }
+inline void PatchPanel::apply_autoconfig() { this->voidcall("apply_autoconfig"); }
+inline void PatchPanel::reposition(Variant new_pos) { this->voidcall("reposition", new_pos); }
+inline void PatchPanel::elevator_move(Variant new_pos) { this->voidcall("elevator_move", new_pos); }
+inline double PatchPanel::get_device_bounding_height() { return this->operator()("get_device_bounding_height"); }
+inline Variant PatchPanel::get_global_y_range() { return this->operator()("get_global_y_range"); }
+inline Variant PatchPanel::get_local_y_range() { return this->operator()("get_local_y_range"); }
+inline Variant PatchPanel::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline Variant PatchPanel::debug_mux_setup() { return this->operator()("debug_mux_setup"); }
+inline Variant PatchPanel::update_in_trolley_state() { return this->operator()("update_in_trolley_state"); }
+inline bool PatchPanel::pickup(Variant new_picker) { return this->operator()("pickup", new_picker); }
+inline bool PatchPanel::drop(Variant impulse) { return this->operator()("drop", impulse); }
+inline void PatchPanel::reset_child_z_index() { this->voidcall("reset_child_z_index"); }
+inline void PatchPanel::set_autosvc(bool new_state) { this->voidcall("set_autosvc", new_state); }
+inline void PatchPanel::update_user_note(String new_value) { this->voidcall("update_user_note", new_value); }
+inline void PatchPanel::remove_and_free_object() { this->voidcall("remove_and_free_object"); }
+inline void PatchPanel::lift_child_z_index(int64_t base_val) { this->voidcall("lift_child_z_index", base_val); }
+inline Variant PatchPanel::get_picker_type(Variant test_picker) { return this->operator()("get_picker_type", test_picker); }
+inline void PatchPanel::setup_teleport(Variant gpos) { this->voidcall("setup_teleport", gpos); }
 
 #endif

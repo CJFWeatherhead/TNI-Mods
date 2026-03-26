@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class UndervoltageDirective : Node
+---@class UndervoltageDirective : OutageSurgePropMod
 ---@field surge_increase number
 ---@field outage_increase number
 ---@field stamp_duty integer

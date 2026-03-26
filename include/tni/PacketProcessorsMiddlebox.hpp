@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct PacketProcessorsMiddlebox : public Node {
-	using Node::Node;
+struct PacketProcessorsMiddlebox : public Program {
+	using Program::Program;
 
-	constexpr PacketProcessorsMiddlebox(Node base) : Node{base} {}
-	constexpr PacketProcessorsMiddlebox(uint64_t addr) : Node{addr} {}
+	constexpr PacketProcessorsMiddlebox(Program base) : Program{base} {}
+	constexpr PacketProcessorsMiddlebox(uint64_t addr) : Program{addr} {}
 	constexpr PacketProcessorsMiddlebox(Object obj) : PacketProcessorsMiddlebox{obj.address()} {}
 	PacketProcessorsMiddlebox(Variant variant) : PacketProcessorsMiddlebox{variant.as_object().address()} {}
 
@@ -31,7 +32,7 @@ struct PacketProcessorsMiddlebox : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -45,13 +46,13 @@ struct PacketProcessorsMiddlebox : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline bool PacketProcessorsMiddlebox::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline String PacketProcessorsMiddlebox::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void PacketProcessorsMiddlebox::start() { voidcall("start"); }
-inline void PacketProcessorsMiddlebox::stop() { voidcall("stop"); }
-inline void PacketProcessorsMiddlebox::uninstall() { voidcall("uninstall"); }
-inline void PacketProcessorsMiddlebox::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline void PacketProcessorsMiddlebox::tick() { voidcall("tick"); }
-inline bool PacketProcessorsMiddlebox::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline bool PacketProcessorsMiddlebox::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline String PacketProcessorsMiddlebox::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void PacketProcessorsMiddlebox::start() { this->voidcall("start"); }
+inline void PacketProcessorsMiddlebox::stop() { this->voidcall("stop"); }
+inline void PacketProcessorsMiddlebox::uninstall() { this->voidcall("uninstall"); }
+inline void PacketProcessorsMiddlebox::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline void PacketProcessorsMiddlebox::tick() { this->voidcall("tick"); }
+inline bool PacketProcessorsMiddlebox::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

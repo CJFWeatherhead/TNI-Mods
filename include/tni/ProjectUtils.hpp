@@ -20,6 +20,6 @@ struct ProjectUtils : public Object {
 };
 
 
-inline void ProjectUtils::export_pocosia_defaults(String exported_cfg_path, bool force_override, Variant skip_defaults) { voidcall("export_pocosia_defaults", exported_cfg_path, force_override, skip_defaults); }
+inline void ProjectUtils::export_pocosia_defaults(String exported_cfg_path, bool force_override, Variant skip_defaults) { this->voidcall("export_pocosia_defaults", exported_cfg_path, force_override, skip_defaults); }
 
 #endif

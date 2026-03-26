@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TowerLink : Container
+---@class TowerLink : ScreenApp
 ---@field tower_link_itm_scn PackedScene
 ---@field create_page Container
 ---@field view_page Container

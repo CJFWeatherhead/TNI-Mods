@@ -30,16 +30,16 @@ struct DebugConsoleHelper : public Node {
 };
 
 
-inline Variant DebugConsoleHelper::count_devices(Variant _args) { return operator()("count_devices", _args); }
-inline Variant DebugConsoleHelper::count_users(Variant _args) { return operator()("count_users", _args); }
-inline void DebugConsoleHelper::in_game_notify(Variant args) { voidcall("in_game_notify", args); }
-inline Variant DebugConsoleHelper::get_game_opts(Variant _args) { return operator()("get_game_opts", _args); }
-inline Variant DebugConsoleHelper::get_acquired_techs(Variant _args) { return operator()("get_acquired_techs", _args); }
-inline void DebugConsoleHelper::maximize_user_lowest_sat_now(Variant _args) { voidcall("maximize_user_lowest_sat_now", _args); }
-inline void DebugConsoleHelper::trigger_devfail(Variant args) { voidcall("trigger_devfail", args); }
-inline Variant DebugConsoleHelper::restock_merchants(Variant _a) { return operator()("restock_merchants", _a); }
-inline Variant DebugConsoleHelper::unlock_tech(Variant args) { return operator()("unlock_tech", args); }
-inline Variant DebugConsoleHelper::set_local_dns(Variant args) { return operator()("set_local_dns", args); }
-inline Variant DebugConsoleHelper::reload_console_funcs(Variant _args) { return operator()("reload_console_funcs", _args); }
+inline Variant DebugConsoleHelper::count_devices(Variant _args) { return this->operator()("count_devices", _args); }
+inline Variant DebugConsoleHelper::count_users(Variant _args) { return this->operator()("count_users", _args); }
+inline void DebugConsoleHelper::in_game_notify(Variant args) { this->voidcall("in_game_notify", args); }
+inline Variant DebugConsoleHelper::get_game_opts(Variant _args) { return this->operator()("get_game_opts", _args); }
+inline Variant DebugConsoleHelper::get_acquired_techs(Variant _args) { return this->operator()("get_acquired_techs", _args); }
+inline void DebugConsoleHelper::maximize_user_lowest_sat_now(Variant _args) { this->voidcall("maximize_user_lowest_sat_now", _args); }
+inline void DebugConsoleHelper::trigger_devfail(Variant args) { this->voidcall("trigger_devfail", args); }
+inline Variant DebugConsoleHelper::restock_merchants(Variant _a) { return this->operator()("restock_merchants", _a); }
+inline Variant DebugConsoleHelper::unlock_tech(Variant args) { return this->operator()("unlock_tech", args); }
+inline Variant DebugConsoleHelper::set_local_dns(Variant args) { return this->operator()("set_local_dns", args); }
+inline Variant DebugConsoleHelper::reload_console_funcs(Variant _args) { return this->operator()("reload_console_funcs", _args); }
 
 #endif

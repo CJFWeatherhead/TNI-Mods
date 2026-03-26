@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "AudioVisualEffects2D.hpp"
 
-struct SmokeFx : public Node2D {
-	using Node2D::Node2D;
+struct SmokeFx : public AudioVisualEffects2D {
+	using AudioVisualEffects2D::AudioVisualEffects2D;
 
-	constexpr SmokeFx(Node2D base) : Node2D{base} {}
-	constexpr SmokeFx(uint64_t addr) : Node2D{addr} {}
+	constexpr SmokeFx(AudioVisualEffects2D base) : AudioVisualEffects2D{base} {}
+	constexpr SmokeFx(uint64_t addr) : AudioVisualEffects2D{addr} {}
 	constexpr SmokeFx(Object obj) : SmokeFx{obj.address()} {}
 	SmokeFx(Variant variant) : SmokeFx{variant.as_object().address()} {}
 
@@ -22,7 +23,7 @@ struct SmokeFx : public Node2D {
 };
 
 
-inline void SmokeFx::trigger() { voidcall("trigger"); }
-inline void SmokeFx::stop() { voidcall("stop"); }
+inline void SmokeFx::trigger() { this->voidcall("trigger"); }
+inline void SmokeFx::stop() { this->voidcall("stop"); }
 
 #endif

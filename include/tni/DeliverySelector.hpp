@@ -23,6 +23,6 @@ struct DeliverySelector : public ItemList {
 
 #include "Location.hpp"
 
-inline void DeliverySelector::refresh_floorlist() { voidcall("refresh_floorlist"); }
+inline void DeliverySelector::refresh_floorlist() { this->voidcall("refresh_floorlist"); }
 
 #endif

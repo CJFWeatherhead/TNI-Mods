@@ -24,8 +24,8 @@ struct PocosiaEvaporatingLabel : public Label {
 };
 
 
-inline void PocosiaEvaporatingLabel::sample_add(Node node, String msg) { voidcall("sample_add", node, msg); }
-inline void PocosiaEvaporatingLabel::dealloc() { voidcall("dealloc"); }
-inline void PocosiaEvaporatingLabel::ensure_upright(double relative_global_rotation) { voidcall("ensure_upright", relative_global_rotation); }
+inline void PocosiaEvaporatingLabel::sample_add(Node node, String msg) { this->voidcall("sample_add", node, msg); }
+inline void PocosiaEvaporatingLabel::dealloc() { this->voidcall("dealloc"); }
+inline void PocosiaEvaporatingLabel::ensure_upright(double relative_global_rotation) { this->voidcall("ensure_upright", relative_global_rotation); }
 
 #endif

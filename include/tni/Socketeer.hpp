@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "ScreenApp.hpp"
 
-struct Socketeer : public Container {
-	using Container::Container;
+struct Socketeer : public ScreenApp {
+	using ScreenApp::ScreenApp;
 
-	constexpr Socketeer(Container base) : Container{base} {}
-	constexpr Socketeer(uint64_t addr) : Container{addr} {}
+	constexpr Socketeer(ScreenApp base) : ScreenApp{base} {}
+	constexpr Socketeer(uint64_t addr) : ScreenApp{addr} {}
 	constexpr Socketeer(Object obj) : Socketeer{obj.address()} {}
 	Socketeer(Variant variant) : Socketeer{variant.as_object().address()} {}
 
@@ -41,12 +42,12 @@ struct Socketeer : public Container {
 #include "FixtureOutlet.hpp"
 #include "MainPane.hpp"
 
-inline void Socketeer::launch() { voidcall("launch"); }
-inline void Socketeer::minimize() { voidcall("minimize"); }
-inline void Socketeer::make_socket(int64_t sockind, Variant sockpos) { voidcall("make_socket", sockind, sockpos); }
-inline void Socketeer::remove_socket(NodePath sockpath) { voidcall("remove_socket", sockpath); }
-inline void Socketeer::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void Socketeer::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant Socketeer::get_main_pane() { return operator()("get_main_pane"); }
+inline void Socketeer::launch() { this->voidcall("launch"); }
+inline void Socketeer::minimize() { this->voidcall("minimize"); }
+inline void Socketeer::make_socket(int64_t sockind, Variant sockpos) { this->voidcall("make_socket", sockind, sockpos); }
+inline void Socketeer::remove_socket(NodePath sockpath) { this->voidcall("remove_socket", sockpath); }
+inline void Socketeer::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void Socketeer::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant Socketeer::get_main_pane() { return this->operator()("get_main_pane"); }
 
 #endif

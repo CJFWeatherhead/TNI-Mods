@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class VirtualMachine : Node
+---@class VirtualMachine : Program
 ---@field LGCTLSCN string # Constant value: <PackedScene>
 ---@field VSSCN string # Constant value: <PackedScene>
 ---@field vmname string

@@ -31,12 +31,12 @@ struct MultiplayerInput : public MultiplayerSynchronizer {
 };
 
 
-inline void MultiplayerInput::press_primary() { voidcall("press_primary"); }
-inline void MultiplayerInput::press_primary_double() { voidcall("press_primary_double"); }
-inline void MultiplayerInput::release_primary() { voidcall("release_primary"); }
-inline void MultiplayerInput::press_t() { voidcall("press_t"); }
-inline void MultiplayerInput::release_t() { voidcall("release_t"); }
-inline void MultiplayerInput::press_r() { voidcall("press_r"); }
-inline void MultiplayerInput::release_r() { voidcall("release_r"); }
+inline void MultiplayerInput::press_primary() { this->voidcall("press_primary"); }
+inline void MultiplayerInput::press_primary_double() { this->voidcall("press_primary_double"); }
+inline void MultiplayerInput::release_primary() { this->voidcall("release_primary"); }
+inline void MultiplayerInput::press_t() { this->voidcall("press_t"); }
+inline void MultiplayerInput::release_t() { this->voidcall("release_t"); }
+inline void MultiplayerInput::press_r() { this->voidcall("press_r"); }
+inline void MultiplayerInput::release_r() { this->voidcall("release_r"); }
 
 #endif

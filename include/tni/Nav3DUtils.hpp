@@ -20,6 +20,6 @@ struct Nav3DUtils : public Node {
 };
 
 
-inline Variant Nav3DUtils::get_stochastic_point(Variant region_rid, Variant target_pos, double accuracy) { return operator()("get_stochastic_point", region_rid, target_pos, accuracy); }
+inline Variant Nav3DUtils::get_stochastic_point(Variant region_rid, Variant target_pos, double accuracy) { return this->operator()("get_stochastic_point", region_rid, target_pos, accuracy); }
 
 #endif

@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "AlwaysProduce.hpp"
 
-struct NetworkTap : public Node {
-	using Node::Node;
+struct NetworkTap : public AlwaysProduce {
+	using AlwaysProduce::AlwaysProduce;
 
-	constexpr NetworkTap(Node base) : Node{base} {}
-	constexpr NetworkTap(uint64_t addr) : Node{addr} {}
+	constexpr NetworkTap(AlwaysProduce base) : AlwaysProduce{base} {}
+	constexpr NetworkTap(uint64_t addr) : AlwaysProduce{addr} {}
 	constexpr NetworkTap(Object obj) : NetworkTap{obj.address()} {}
 	NetworkTap(Variant variant) : NetworkTap{variant.as_object().address()} {}
 
@@ -38,10 +39,10 @@ struct NetworkTap : public Node {
 	PROPERTY(host_controller, LogicController);
 
 	inline Variant filter_required_traffic(Variant thist);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline void tick();
-	inline Variant get_produce_limit(int64_t limit_type, int64_t lfact, LogicController node, int64_t pfact);
-	inline Variant compute_produce_limit(LogicController node);
+	inline Variant get_produce_limit(int64_t limit_type, int64_t lfact, const LogicController& node, int64_t pfact);
+	inline Variant compute_produce_limit(const LogicController& node);
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -54,16 +55,16 @@ struct NetworkTap : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline Variant NetworkTap::filter_required_traffic(Variant thist) { return operator()("filter_required_traffic", thist); }
-inline bool NetworkTap::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline void NetworkTap::tick() { voidcall("tick"); }
-inline Variant NetworkTap::get_produce_limit(int64_t limit_type, int64_t lfact, LogicController node, int64_t pfact) { return operator()("get_produce_limit", limit_type, lfact, node, pfact); }
-inline Variant NetworkTap::compute_produce_limit(LogicController node) { return operator()("compute_produce_limit", node); }
-inline String NetworkTap::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void NetworkTap::start() { voidcall("start"); }
-inline void NetworkTap::stop() { voidcall("stop"); }
-inline void NetworkTap::uninstall() { voidcall("uninstall"); }
-inline void NetworkTap::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool NetworkTap::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline Variant NetworkTap::filter_required_traffic(Variant thist) { return this->operator()("filter_required_traffic", thist); }
+inline bool NetworkTap::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline void NetworkTap::tick() { this->voidcall("tick"); }
+inline Variant NetworkTap::get_produce_limit(int64_t limit_type, int64_t lfact, const LogicController& node, int64_t pfact) { return this->operator()("get_produce_limit", limit_type, lfact, Object(reinterpret_cast<const Object*>(&node)->address()), pfact); }
+inline Variant NetworkTap::compute_produce_limit(const LogicController& node) { return this->operator()("compute_produce_limit", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline String NetworkTap::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void NetworkTap::start() { this->voidcall("start"); }
+inline void NetworkTap::stop() { this->voidcall("stop"); }
+inline void NetworkTap::uninstall() { this->voidcall("uninstall"); }
+inline void NetworkTap::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool NetworkTap::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

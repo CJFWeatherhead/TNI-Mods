@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class _8FinalTrialWorld : Node2D
+---@class _8FinalTrialWorld : GameWorld
 ---@field last_tutorial_name string
 ---@field tutorial_floor0 Object
 ---@field tutorial_floor1 Object

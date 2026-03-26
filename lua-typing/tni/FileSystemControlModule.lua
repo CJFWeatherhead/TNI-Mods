@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class FileSystemControlModule : Node
+---@class FileSystemControlModule : LogicControlModule
 ---@field RESTRICTED_FILENAMES Array<any> # Constant value: ["on", "to", "rename", "using"]
 ---@field ROUTER_CONF_FILE string # Constant value: /etc/routes.conf
 ---@field DHCPD_CONF_FILE string # Constant value: /etc/dhcpd.conf

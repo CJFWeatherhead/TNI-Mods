@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "ScreenApp.hpp"
 
-struct TheSecretariat : public Container {
-	using Container::Container;
+struct TheSecretariat : public ScreenApp {
+	using ScreenApp::ScreenApp;
 
-	constexpr TheSecretariat(Container base) : Container{base} {}
-	constexpr TheSecretariat(uint64_t addr) : Container{addr} {}
+	constexpr TheSecretariat(ScreenApp base) : ScreenApp{base} {}
+	constexpr TheSecretariat(uint64_t addr) : ScreenApp{addr} {}
 	constexpr TheSecretariat(Object obj) : TheSecretariat{obj.address()} {}
 	TheSecretariat(Variant variant) : TheSecretariat{variant.as_object().address()} {}
 
@@ -38,10 +39,10 @@ struct TheSecretariat : public Container {
 
 #include "MainPane.hpp"
 
-inline void TheSecretariat::launch() { voidcall("launch"); }
-inline void TheSecretariat::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void TheSecretariat::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant TheSecretariat::get_main_pane() { return operator()("get_main_pane"); }
-inline void TheSecretariat::minimize() { voidcall("minimize"); }
+inline void TheSecretariat::launch() { this->voidcall("launch"); }
+inline void TheSecretariat::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void TheSecretariat::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant TheSecretariat::get_main_pane() { return this->operator()("get_main_pane"); }
+inline void TheSecretariat::minimize() { this->voidcall("minimize"); }
 
 #endif

@@ -32,7 +32,7 @@ struct Wiki : public Control {
 
 #include "WikiEntryItem.hpp"
 
-inline void Wiki::fade_out() { voidcall("fade_out"); }
-inline void Wiki::fade_in() { voidcall("fade_in"); }
+inline void Wiki::fade_out() { this->voidcall("fade_out"); }
+inline void Wiki::fade_in() { this->voidcall("fade_in"); }
 
 #endif

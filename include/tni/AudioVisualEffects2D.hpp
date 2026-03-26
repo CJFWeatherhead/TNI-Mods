@@ -26,7 +26,7 @@ struct AudioVisualEffects2D : public Node2D {
 };
 
 
-inline void AudioVisualEffects2D::trigger() { voidcall("trigger"); }
-inline void AudioVisualEffects2D::stop() { voidcall("stop"); }
+inline void AudioVisualEffects2D::trigger() { this->voidcall("trigger"); }
+inline void AudioVisualEffects2D::stop() { this->voidcall("stop"); }
 
 #endif

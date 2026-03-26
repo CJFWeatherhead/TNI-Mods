@@ -28,12 +28,12 @@ struct TextUtils : public Object {
 };
 
 
-inline String TextUtils::capitalize_first_char(String inp) { return operator()("capitalize_first_char", inp); }
-inline String TextUtils::get_last_n_lines(String inp, int64_t n) { return operator()("get_last_n_lines", inp, n); }
-inline Variant TextUtils::get_random_letters(int64_t count, String symbol_array) { return operator()("get_random_letters", count, symbol_array); }
-inline String TextUtils::get_whitelistchar_prefix(String inp, String whitelist) { return operator()("get_whitelistchar_prefix", inp, whitelist); }
-inline Variant TextUtils::get_int_suffix(String inp) { return operator()("get_int_suffix", inp); }
-inline String TextUtils::fill_pattstr_with_rand(String pattstr, RandomNumberGenerator rng) { return operator()("fill_pattstr_with_rand", pattstr, rng); }
-inline String TextUtils::get_shortcut_keystr(Variant shortcut) { return operator()("get_shortcut_keystr", shortcut); }
+inline String TextUtils::capitalize_first_char(String inp) { return this->operator()("capitalize_first_char", inp); }
+inline String TextUtils::get_last_n_lines(String inp, int64_t n) { return this->operator()("get_last_n_lines", inp, n); }
+inline Variant TextUtils::get_random_letters(int64_t count, String symbol_array) { return this->operator()("get_random_letters", count, symbol_array); }
+inline String TextUtils::get_whitelistchar_prefix(String inp, String whitelist) { return this->operator()("get_whitelistchar_prefix", inp, whitelist); }
+inline Variant TextUtils::get_int_suffix(String inp) { return this->operator()("get_int_suffix", inp); }
+inline String TextUtils::fill_pattstr_with_rand(String pattstr, RandomNumberGenerator rng) { return this->operator()("fill_pattstr_with_rand", pattstr, rng); }
+inline String TextUtils::get_shortcut_keystr(Variant shortcut) { return this->operator()("get_shortcut_keystr", shortcut); }
 
 #endif

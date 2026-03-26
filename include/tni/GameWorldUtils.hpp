@@ -26,11 +26,11 @@ struct GameWorldUtils : public Object {
 };
 
 
-inline void GameWorldUtils::designate_as(Node subject, String reserved_group_name) { voidcall("designate_as", subject, reserved_group_name); }
-inline Node GameWorldUtils::get_gn(Node subject, String reserved_group_name) { return Node(operator()("get_gn", subject, reserved_group_name).as_object().address()); }
-inline void GameWorldUtils::designate_as_world(Node subject) { voidcall("designate_as_world", subject); }
-inline void GameWorldUtils::designate_as_unique(Node subject, String key) { voidcall("designate_as_unique", subject, key); }
-inline Node GameWorldUtils::get_world_of(Node subject) { return Node(operator()("get_world_of", subject).as_object().address()); }
-inline Node GameWorldUtils::get_unique_in_world_of(Node subject, String key) { return Node(operator()("get_unique_in_world_of", subject, key).as_object().address()); }
+inline void GameWorldUtils::designate_as(Node subject, String reserved_group_name) { this->voidcall("designate_as", subject, reserved_group_name); }
+inline Node GameWorldUtils::get_gn(Node subject, String reserved_group_name) { return Node(this->operator()("get_gn", subject, reserved_group_name).as_object().address()); }
+inline void GameWorldUtils::designate_as_world(Node subject) { this->voidcall("designate_as_world", subject); }
+inline void GameWorldUtils::designate_as_unique(Node subject, String key) { this->voidcall("designate_as_unique", subject, key); }
+inline Node GameWorldUtils::get_world_of(Node subject) { return Node(this->operator()("get_world_of", subject).as_object().address()); }
+inline Node GameWorldUtils::get_unique_in_world_of(Node subject, String key) { return Node(this->operator()("get_unique_in_world_of", subject, key).as_object().address()); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class BladeFifteenFifteen : RigidBody2D
+---@class BladeFifteenFifteen : DeviceUnit
 ---@field bs string
 ---@field product_name string
 ---@field description string

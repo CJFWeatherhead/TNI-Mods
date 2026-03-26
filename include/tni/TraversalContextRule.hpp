@@ -26,13 +26,13 @@ struct TraversalContextRule : public RefCounted {
 	PROPERTY(dst_addr_s, String);
 	PROPERTY(traffic_class_s, String);
 
-	inline bool is_matched(TraversalContext context);
+	inline bool is_matched(const TraversalContext& context);
 	inline bool is_packet_matched(Variant packet);
 };
 
 #include "TraversalContext.hpp"
 
-inline bool TraversalContextRule::is_matched(TraversalContext context) { return operator()("is_matched", context); }
-inline bool TraversalContextRule::is_packet_matched(Variant packet) { return operator()("is_packet_matched", packet); }
+inline bool TraversalContextRule::is_matched(const TraversalContext& context) { return this->operator()("is_matched", Object(reinterpret_cast<const Object*>(&context)->address())); }
+inline bool TraversalContextRule::is_packet_matched(Variant packet) { return this->operator()("is_packet_matched", packet); }
 
 #endif

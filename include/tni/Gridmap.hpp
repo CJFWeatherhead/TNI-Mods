@@ -30,6 +30,6 @@ struct Gridmap : public GridMap {
 };
 
 
-inline void Gridmap::generate(Variant constraints, RandomNumberGenerator rng) { voidcall("generate", constraints, rng); }
+inline void Gridmap::generate(Variant constraints, RandomNumberGenerator rng) { this->voidcall("generate", constraints, rng); }
 
 #endif

@@ -31,12 +31,12 @@ struct LogicAddress : public Object {
 };
 
 
-inline bool LogicAddress::is_equivalent_addr(String addr1, String addr2) { return operator()("is_equivalent_addr", addr1, addr2); }
-inline bool LogicAddress::is_prefixed_with(String addr1, String prefix1) { return operator()("is_prefixed_with", addr1, prefix1); }
-inline Variant LogicAddress::get_addr_color_bbtag(String addr1) { return operator()("get_addr_color_bbtag", addr1); }
-inline String LogicAddress::colorize_addr(String addr1, int64_t fixed_width, String replace_empty_with, String empty_color, bool return_color_only) { return operator()("colorize_addr", addr1, fixed_width, replace_empty_with, empty_color, return_color_only); }
-inline bool LogicAddress::is_valid_laddr(String addr1) { return operator()("is_valid_laddr", addr1); }
-inline bool LogicAddress::is_valid_netaddr(String addr1) { return operator()("is_valid_netaddr", addr1); }
-inline bool LogicAddress::is_valid_fqdn(Variant fqdn1) { return operator()("is_valid_fqdn", fqdn1); }
+inline bool LogicAddress::is_equivalent_addr(String addr1, String addr2) { return this->operator()("is_equivalent_addr", addr1, addr2); }
+inline bool LogicAddress::is_prefixed_with(String addr1, String prefix1) { return this->operator()("is_prefixed_with", addr1, prefix1); }
+inline Variant LogicAddress::get_addr_color_bbtag(String addr1) { return this->operator()("get_addr_color_bbtag", addr1); }
+inline String LogicAddress::colorize_addr(String addr1, int64_t fixed_width, String replace_empty_with, String empty_color, bool return_color_only) { return this->operator()("colorize_addr", addr1, fixed_width, replace_empty_with, empty_color, return_color_only); }
+inline bool LogicAddress::is_valid_laddr(String addr1) { return this->operator()("is_valid_laddr", addr1); }
+inline bool LogicAddress::is_valid_netaddr(String addr1) { return this->operator()("is_valid_netaddr", addr1); }
+inline bool LogicAddress::is_valid_fqdn(Variant fqdn1) { return this->operator()("is_valid_fqdn", fqdn1); }
 
 #endif

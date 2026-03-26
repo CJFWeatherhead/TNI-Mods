@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PickableDevice.hpp"
 
-struct DeviceUnit : public RigidBody2D {
-	using RigidBody2D::RigidBody2D;
+struct DeviceUnit : public PickableDevice {
+	using PickableDevice::PickableDevice;
 
-	constexpr DeviceUnit(RigidBody2D base) : RigidBody2D{base} {}
-	constexpr DeviceUnit(uint64_t addr) : RigidBody2D{addr} {}
+	constexpr DeviceUnit(PickableDevice base) : PickableDevice{base} {}
+	constexpr DeviceUnit(uint64_t addr) : PickableDevice{addr} {}
 	constexpr DeviceUnit(Object obj) : DeviceUnit{obj.address()} {}
 	DeviceUnit(Variant variant) : DeviceUnit{variant.as_object().address()} {}
 
@@ -130,23 +131,23 @@ struct DeviceUnit : public RigidBody2D {
 #include "LogicController.hpp"
 #include "PowerController.hpp"
 
-inline void DeviceUnit::apply_autoconfig() { voidcall("apply_autoconfig"); }
-inline void DeviceUnit::reposition(Variant new_pos) { voidcall("reposition", new_pos); }
-inline void DeviceUnit::elevator_move(Variant new_pos) { voidcall("elevator_move", new_pos); }
-inline double DeviceUnit::get_device_bounding_height() { return operator()("get_device_bounding_height"); }
-inline Variant DeviceUnit::get_global_y_range() { return operator()("get_global_y_range"); }
-inline Variant DeviceUnit::get_local_y_range() { return operator()("get_local_y_range"); }
-inline Variant DeviceUnit::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline Variant DeviceUnit::debug_mux_setup() { return operator()("debug_mux_setup"); }
-inline Variant DeviceUnit::update_in_trolley_state() { return operator()("update_in_trolley_state"); }
-inline bool DeviceUnit::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
-inline bool DeviceUnit::drop(Variant impulse) { return operator()("drop", impulse); }
-inline void DeviceUnit::reset_child_z_index() { voidcall("reset_child_z_index"); }
-inline void DeviceUnit::set_autosvc(bool new_state) { voidcall("set_autosvc", new_state); }
-inline void DeviceUnit::update_user_note(String new_value) { voidcall("update_user_note", new_value); }
-inline void DeviceUnit::remove_and_free_object() { voidcall("remove_and_free_object"); }
-inline void DeviceUnit::lift_child_z_index(int64_t base_val) { voidcall("lift_child_z_index", base_val); }
-inline Variant DeviceUnit::get_picker_type(Variant test_picker) { return operator()("get_picker_type", test_picker); }
-inline void DeviceUnit::setup_teleport(Variant gpos) { voidcall("setup_teleport", gpos); }
+inline void DeviceUnit::apply_autoconfig() { this->voidcall("apply_autoconfig"); }
+inline void DeviceUnit::reposition(Variant new_pos) { this->voidcall("reposition", new_pos); }
+inline void DeviceUnit::elevator_move(Variant new_pos) { this->voidcall("elevator_move", new_pos); }
+inline double DeviceUnit::get_device_bounding_height() { return this->operator()("get_device_bounding_height"); }
+inline Variant DeviceUnit::get_global_y_range() { return this->operator()("get_global_y_range"); }
+inline Variant DeviceUnit::get_local_y_range() { return this->operator()("get_local_y_range"); }
+inline Variant DeviceUnit::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline Variant DeviceUnit::debug_mux_setup() { return this->operator()("debug_mux_setup"); }
+inline Variant DeviceUnit::update_in_trolley_state() { return this->operator()("update_in_trolley_state"); }
+inline bool DeviceUnit::pickup(Variant new_picker) { return this->operator()("pickup", new_picker); }
+inline bool DeviceUnit::drop(Variant impulse) { return this->operator()("drop", impulse); }
+inline void DeviceUnit::reset_child_z_index() { this->voidcall("reset_child_z_index"); }
+inline void DeviceUnit::set_autosvc(bool new_state) { this->voidcall("set_autosvc", new_state); }
+inline void DeviceUnit::update_user_note(String new_value) { this->voidcall("update_user_note", new_value); }
+inline void DeviceUnit::remove_and_free_object() { this->voidcall("remove_and_free_object"); }
+inline void DeviceUnit::lift_child_z_index(int64_t base_val) { this->voidcall("lift_child_z_index", base_val); }
+inline Variant DeviceUnit::get_picker_type(Variant test_picker) { return this->operator()("get_picker_type", test_picker); }
+inline void DeviceUnit::setup_teleport(Variant gpos) { this->voidcall("setup_teleport", gpos); }
 
 #endif

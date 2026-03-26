@@ -27,7 +27,7 @@ struct RandomEvent : public Node {
 };
 
 
-inline void RandomEvent::start() { voidcall("start"); }
-inline void RandomEvent::pause() { voidcall("pause"); }
+inline void RandomEvent::start() { this->voidcall("start"); }
+inline void RandomEvent::pause() { this->voidcall("pause"); }
 
 #endif

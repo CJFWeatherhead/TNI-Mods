@@ -23,14 +23,14 @@ struct BalanceCalc : public Object {
 	static constexpr double GLOBAL_DEVICE_POWERLOAD_MULTIPLIER = 1.0;  // NOTE: You should recompile your mod if this value changes!
 
 
-	inline int64_t auto_calculate_logic_controller_powerload(int64_t device_hardware_class, LogicController target_controller);
-	inline int64_t auto_calculate_device_installed_bw(DeviceUnit du_with_lgctl);
+	inline int64_t auto_calculate_logic_controller_powerload(int64_t device_hardware_class, const LogicController& target_controller);
+	inline int64_t auto_calculate_device_installed_bw(const DeviceUnit& du_with_lgctl);
 };
 
 #include "LogicController.hpp"
 #include "DeviceUnit.hpp"
 
-inline int64_t BalanceCalc::auto_calculate_logic_controller_powerload(int64_t device_hardware_class, LogicController target_controller) { return operator()("auto_calculate_logic_controller_powerload", device_hardware_class, target_controller); }
-inline int64_t BalanceCalc::auto_calculate_device_installed_bw(DeviceUnit du_with_lgctl) { return operator()("auto_calculate_device_installed_bw", du_with_lgctl); }
+inline int64_t BalanceCalc::auto_calculate_logic_controller_powerload(int64_t device_hardware_class, const LogicController& target_controller) { return this->operator()("auto_calculate_logic_controller_powerload", device_hardware_class, Object(reinterpret_cast<const Object*>(&target_controller)->address())); }
+inline int64_t BalanceCalc::auto_calculate_device_installed_bw(const DeviceUnit& du_with_lgctl) { return this->operator()("auto_calculate_device_installed_bw", Object(reinterpret_cast<const Object*>(&du_with_lgctl)->address())); }
 
 #endif

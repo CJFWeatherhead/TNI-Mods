@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "NetworkRouterImpl.hpp"
 
-struct HaRouter : public Node {
-	using Node::Node;
+struct HaRouter : public NetworkRouterImpl {
+	using NetworkRouterImpl::NetworkRouterImpl;
 
-	constexpr HaRouter(Node base) : Node{base} {}
-	constexpr HaRouter(uint64_t addr) : Node{addr} {}
+	constexpr HaRouter(NetworkRouterImpl base) : NetworkRouterImpl{base} {}
+	constexpr HaRouter(uint64_t addr) : NetworkRouterImpl{addr} {}
 	constexpr HaRouter(Object obj) : HaRouter{obj.address()} {}
 	HaRouter(Variant variant) : HaRouter{variant.as_object().address()} {}
 
@@ -31,10 +32,10 @@ struct HaRouter : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline void tick();
 	inline Variant get_longest_matched_port(Variant hc, Variant pktctl, Variant rtctl, Variant packet);
-	inline void update_routes_from_rip_packet(LogicController src_node_controller, LogicController hopped_node_controller, String rcpt_port_id, String src_port_id);
+	inline void update_routes_from_rip_packet(const LogicController& src_node_controller, const LogicController& hopped_node_controller, String rcpt_port_id, String src_port_id);
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -47,15 +48,15 @@ struct HaRouter : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline bool HaRouter::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline void HaRouter::tick() { voidcall("tick"); }
-inline Variant HaRouter::get_longest_matched_port(Variant hc, Variant pktctl, Variant rtctl, Variant packet) { return operator()("get_longest_matched_port", hc, pktctl, rtctl, packet); }
-inline void HaRouter::update_routes_from_rip_packet(LogicController src_node_controller, LogicController hopped_node_controller, String rcpt_port_id, String src_port_id) { voidcall("update_routes_from_rip_packet", src_node_controller, hopped_node_controller, rcpt_port_id, src_port_id); }
-inline String HaRouter::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void HaRouter::start() { voidcall("start"); }
-inline void HaRouter::stop() { voidcall("stop"); }
-inline void HaRouter::uninstall() { voidcall("uninstall"); }
-inline void HaRouter::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool HaRouter::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline bool HaRouter::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline void HaRouter::tick() { this->voidcall("tick"); }
+inline Variant HaRouter::get_longest_matched_port(Variant hc, Variant pktctl, Variant rtctl, Variant packet) { return this->operator()("get_longest_matched_port", hc, pktctl, rtctl, packet); }
+inline void HaRouter::update_routes_from_rip_packet(const LogicController& src_node_controller, const LogicController& hopped_node_controller, String rcpt_port_id, String src_port_id) { this->voidcall("update_routes_from_rip_packet", Object(reinterpret_cast<const Object*>(&src_node_controller)->address()), Object(reinterpret_cast<const Object*>(&hopped_node_controller)->address()), rcpt_port_id, src_port_id); }
+inline String HaRouter::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void HaRouter::start() { this->voidcall("start"); }
+inline void HaRouter::stop() { this->voidcall("stop"); }
+inline void HaRouter::uninstall() { this->voidcall("uninstall"); }
+inline void HaRouter::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool HaRouter::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

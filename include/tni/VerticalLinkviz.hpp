@@ -28,8 +28,8 @@ struct VerticalLinkviz : public ScrollContainer {
 };
 
 
-inline Variant VerticalLinkviz::set_link_data(Variant link_data) { return operator()("set_link_data", link_data); }
-inline void VerticalLinkviz::make_link_displays() { voidcall("make_link_displays"); }
-inline void VerticalLinkviz::refresh() { voidcall("refresh"); }
+inline Variant VerticalLinkviz::set_link_data(Variant link_data) { return this->operator()("set_link_data", link_data); }
+inline void VerticalLinkviz::make_link_displays() { this->voidcall("make_link_displays"); }
+inline void VerticalLinkviz::refresh() { this->voidcall("refresh"); }
 
 #endif

@@ -18,11 +18,11 @@ struct LocationPiece : public Node2D {
 	PROPERTY(refborder, Variant);
 	PROPERTY(nodes_to_add, Variant);
 
-	inline void affix_at_location(Variant pos, Location location, Variant is_server);
+	inline void affix_at_location(Variant pos, const Location& location, Variant is_server);
 };
 
 #include "Location.hpp"
 
-inline void LocationPiece::affix_at_location(Variant pos, Location location, Variant is_server) { voidcall("affix_at_location", pos, location, is_server); }
+inline void LocationPiece::affix_at_location(Variant pos, const Location& location, Variant is_server) { this->voidcall("affix_at_location", pos, Object(reinterpret_cast<const Object*>(&location)->address()), is_server); }
 
 #endif

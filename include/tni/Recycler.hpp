@@ -30,8 +30,8 @@ struct Recycler : public Node2D {
 };
 
 
-inline void Recycler::update_trolley_devices(Variant tcar) { voidcall("update_trolley_devices", tcar); }
-inline void Recycler::recycle_objects_in_cargo() { voidcall("recycle_objects_in_cargo"); }
-inline Variant Recycler::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
+inline void Recycler::update_trolley_devices(Variant tcar) { this->voidcall("update_trolley_devices", tcar); }
+inline void Recycler::recycle_objects_in_cargo() { this->voidcall("recycle_objects_in_cargo"); }
+inline Variant Recycler::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
 
 #endif

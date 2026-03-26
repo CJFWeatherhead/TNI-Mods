@@ -29,7 +29,7 @@ struct MinimalGuideWindow : public Control {
 };
 
 
-inline void MinimalGuideWindow::update_tutorial_details() { voidcall("update_tutorial_details"); }
-inline void MinimalGuideWindow::update_tutorial_status() { voidcall("update_tutorial_status"); }
+inline void MinimalGuideWindow::update_tutorial_details() { this->voidcall("update_tutorial_details"); }
+inline void MinimalGuideWindow::update_tutorial_status() { this->voidcall("update_tutorial_status"); }
 
 #endif

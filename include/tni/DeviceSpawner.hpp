@@ -16,11 +16,11 @@ struct DeviceSpawner : public Node2D {
 
 
 
-	inline void add_device(DeviceUnit newnode);
+	inline void add_device(const DeviceUnit& newnode);
 };
 
 #include "DeviceUnit.hpp"
 
-inline void DeviceSpawner::add_device(DeviceUnit newnode) { voidcall("add_device", newnode); }
+inline void DeviceSpawner::add_device(const DeviceUnit& newnode) { this->voidcall("add_device", Object(reinterpret_cast<const Object*>(&newnode)->address())); }
 
 #endif

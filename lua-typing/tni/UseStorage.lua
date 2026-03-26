@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class UseStorage : Node
+---@class UseStorage : Program
 ---@field stored_use_stack table<any,any>
 ---@field stored_use_config UseConfig
 ---@field storage_factor integer

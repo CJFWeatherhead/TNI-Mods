@@ -53,10 +53,10 @@ struct User : public Node {
 
 #include "Location.hpp"
 
-inline void User::time_mult_updated(double time_mult_delta) { voidcall("time_mult_updated", time_mult_delta); }
-inline void User::finish_setup() { voidcall("finish_setup"); }
-inline void User::first_use() { voidcall("first_use"); }
-inline void User::periodic_use() { voidcall("periodic_use"); }
-inline void User::down() { voidcall("down"); }
+inline void User::time_mult_updated(double time_mult_delta) { this->voidcall("time_mult_updated", time_mult_delta); }
+inline void User::finish_setup() { this->voidcall("finish_setup"); }
+inline void User::first_use() { this->voidcall("first_use"); }
+inline void User::periodic_use() { this->voidcall("periodic_use"); }
+inline void User::down() { this->voidcall("down"); }
 
 #endif

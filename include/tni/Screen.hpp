@@ -22,6 +22,6 @@ struct Screen : public Container {
 };
 
 
-inline void Screen::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
+inline void Screen::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
 
 #endif

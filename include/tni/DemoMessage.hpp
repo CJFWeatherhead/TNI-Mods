@@ -25,7 +25,7 @@ struct DemoMessage : public Window {
 };
 
 
-inline void DemoMessage::refresh_tutorial(Variant filename) { voidcall("refresh_tutorial", filename); }
-inline Variant DemoMessage::load_tutorial_txt(Variant filename) { return operator()("load_tutorial_txt", filename); }
+inline void DemoMessage::refresh_tutorial(Variant filename) { this->voidcall("refresh_tutorial", filename); }
+inline Variant DemoMessage::load_tutorial_txt(Variant filename) { return this->operator()("load_tutorial_txt", filename); }
 
 #endif

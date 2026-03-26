@@ -25,8 +25,8 @@ struct DashboardScreen : public Container {
 };
 
 
-inline void DashboardScreen::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline void DashboardScreen::on_power_off() { voidcall("on_power_off"); }
-inline void DashboardScreen::on_power_on() { voidcall("on_power_on"); }
+inline void DashboardScreen::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline void DashboardScreen::on_power_off() { this->voidcall("on_power_off"); }
+inline void DashboardScreen::on_power_on() { this->voidcall("on_power_on"); }
 
 #endif

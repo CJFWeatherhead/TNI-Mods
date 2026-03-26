@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class VisitorScaledUserHosting : Node
+---@class VisitorScaledUserHosting : UserHosting
 ---@field min_visitors integer
 ---@field max_visitors integer
 ---@field growth_per_tick integer

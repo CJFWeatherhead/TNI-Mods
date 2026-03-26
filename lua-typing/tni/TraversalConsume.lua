@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TraversalConsume : Node
+---@class TraversalConsume : TraversalBase
 ---@field produce_use_config UseConfig
 ---@field produce_target TraversalConsume.ProductTarget
 ---@field produce_factor integer

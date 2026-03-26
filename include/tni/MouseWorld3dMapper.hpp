@@ -31,8 +31,8 @@ struct MouseWorld3dMapper : public Node3D {
 };
 
 
-inline void MouseWorld3dMapper::clear_prev_click_contexts() { voidcall("clear_prev_click_contexts"); }
-inline void MouseWorld3dMapper::handle_input(InputEvent event) { voidcall("handle_input", event); }
-inline Variant MouseWorld3dMapper::get_adjusted_gridmap_position(GridMap gm, Variant collipos) { return operator()("get_adjusted_gridmap_position", gm, collipos); }
+inline void MouseWorld3dMapper::clear_prev_click_contexts() { this->voidcall("clear_prev_click_contexts"); }
+inline void MouseWorld3dMapper::handle_input(InputEvent event) { this->voidcall("handle_input", event); }
+inline Variant MouseWorld3dMapper::get_adjusted_gridmap_position(GridMap gm, Variant collipos) { return this->operator()("get_adjusted_gridmap_position", gm, collipos); }
 
 #endif

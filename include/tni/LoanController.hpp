@@ -29,9 +29,9 @@ struct LoanController : public Node {
 };
 
 
-inline void LoanController::populate_interest_breakdown(Variant payment_breakdown) { voidcall("populate_interest_breakdown", payment_breakdown); }
-inline void LoanController::disburse_player_loan(int64_t pkgidx) { voidcall("disburse_player_loan", pkgidx); }
-inline void LoanController::broadcast_financial_updates() { voidcall("broadcast_financial_updates"); }
-inline void LoanController::repay_player_loan(String loan_name) { voidcall("repay_player_loan", loan_name); }
+inline void LoanController::populate_interest_breakdown(Variant payment_breakdown) { this->voidcall("populate_interest_breakdown", payment_breakdown); }
+inline void LoanController::disburse_player_loan(int64_t pkgidx) { this->voidcall("disburse_player_loan", pkgidx); }
+inline void LoanController::broadcast_financial_updates() { this->voidcall("broadcast_financial_updates"); }
+inline void LoanController::repay_player_loan(String loan_name) { this->voidcall("repay_player_loan", loan_name); }
 
 #endif

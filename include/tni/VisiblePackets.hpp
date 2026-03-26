@@ -21,6 +21,6 @@ struct VisiblePackets : public Node2D {
 };
 
 
-inline void VisiblePackets::animate_along_path(PackedArray<Vector2> points, double duration) { voidcall("animate_along_path", points, duration); }
+inline void VisiblePackets::animate_along_path(PackedArray<Vector2> points, double duration) { this->voidcall("animate_along_path", points, duration); }
 
 #endif

@@ -27,6 +27,6 @@ struct RandomSphereWalker : public Node3D {
 };
 
 
-inline void RandomSphereWalker::trigger_random_walk() { voidcall("trigger_random_walk"); }
+inline void RandomSphereWalker::trigger_random_walk() { this->voidcall("trigger_random_walk"); }
 
 #endif

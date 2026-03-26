@@ -19,6 +19,6 @@ struct ShaderUtils : public Object {
 };
 
 
-inline void ShaderUtils::apply_shader(CanvasItem v, Variant shader_path) { voidcall("apply_shader", v, shader_path); }
+inline void ShaderUtils::apply_shader(CanvasItem v, Variant shader_path) { this->voidcall("apply_shader", v, shader_path); }
 
 #endif

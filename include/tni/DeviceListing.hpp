@@ -46,9 +46,9 @@ struct DeviceListing : public Node {
 
 #include "DeviceMerchant.hpp"
 
-inline void DeviceListing::update_availability(Variant eval_day) { voidcall("update_availability", eval_day); }
-inline Variant DeviceListing::destock(int64_t n) { return operator()("destock", n); }
-inline void DeviceListing::restock(int64_t n) { voidcall("restock", n); }
-inline void DeviceListing::apply_variants(Variant items, String variantkey) { voidcall("apply_variants", items, variantkey); }
+inline void DeviceListing::update_availability(Variant eval_day) { this->voidcall("update_availability", eval_day); }
+inline Variant DeviceListing::destock(int64_t n) { return this->operator()("destock", n); }
+inline void DeviceListing::restock(int64_t n) { this->voidcall("restock", n); }
+inline void DeviceListing::apply_variants(Variant items, String variantkey) { this->voidcall("apply_variants", items, variantkey); }
 
 #endif

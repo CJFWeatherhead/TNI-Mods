@@ -28,6 +28,6 @@ struct Finalize : public VBoxContainer {
 };
 
 
-inline void Finalize::set_domain_item(Variant di, bool is_registration) { voidcall("set_domain_item", di, is_registration); }
+inline void Finalize::set_domain_item(Variant di, bool is_registration) { this->voidcall("set_domain_item", di, is_registration); }
 
 #endif

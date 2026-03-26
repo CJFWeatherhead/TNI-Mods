@@ -23,6 +23,6 @@ struct AudioSettings : public VBoxContainer {
 };
 
 
-inline Variant AudioSettings::map_float_to_volume_db(double inp) { return operator()("map_float_to_volume_db", inp); }
+inline Variant AudioSettings::map_float_to_volume_db(double inp) { return this->operator()("map_float_to_volume_db", inp); }
 
 #endif

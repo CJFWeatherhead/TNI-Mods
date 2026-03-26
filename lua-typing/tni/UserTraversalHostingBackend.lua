@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class UserTraversalHostingBackend : Node
+---@class UserTraversalHostingBackend : UserTraversalFQDN
 ---@field user_hosting_frontend UserHosting
 ---@field warning_checks_uses_or_condition boolean
 ---@field manifest_probability number

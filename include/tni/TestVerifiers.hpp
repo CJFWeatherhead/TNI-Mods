@@ -16,11 +16,11 @@ struct TestVerifiers : public Node {
 
 
 
-	inline void verify_logicas(GameWorld game_world);
+	inline void verify_logicas(const GameWorld& game_world);
 };
 
 #include "GameWorld.hpp"
 
-inline void TestVerifiers::verify_logicas(GameWorld game_world) { voidcall("verify_logicas", game_world); }
+inline void TestVerifiers::verify_logicas(const GameWorld& game_world) { this->voidcall("verify_logicas", Object(reinterpret_cast<const Object*>(&game_world)->address())); }
 
 #endif

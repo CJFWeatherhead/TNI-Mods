@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DashboardApp.hpp"
 
-struct Towerfloorstats : public Container {
-	using Container::Container;
+struct Towerfloorstats : public DashboardApp {
+	using DashboardApp::DashboardApp;
 
-	constexpr Towerfloorstats(Container base) : Container{base} {}
-	constexpr Towerfloorstats(uint64_t addr) : Container{addr} {}
+	constexpr Towerfloorstats(DashboardApp base) : DashboardApp{base} {}
+	constexpr Towerfloorstats(uint64_t addr) : DashboardApp{addr} {}
 	constexpr Towerfloorstats(Object obj) : Towerfloorstats{obj.address()} {}
 	Towerfloorstats(Variant variant) : Towerfloorstats{variant.as_object().address()} {}
 
@@ -40,10 +41,10 @@ struct Towerfloorstats : public Container {
 
 #include "MainDashboard.hpp"
 
-inline void Towerfloorstats::launch() { voidcall("launch"); }
-inline void Towerfloorstats::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void Towerfloorstats::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant Towerfloorstats::get_main_pane() { return operator()("get_main_pane"); }
-inline void Towerfloorstats::minimize() { voidcall("minimize"); }
+inline void Towerfloorstats::launch() { this->voidcall("launch"); }
+inline void Towerfloorstats::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void Towerfloorstats::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant Towerfloorstats::get_main_pane() { return this->operator()("get_main_pane"); }
+inline void Towerfloorstats::minimize() { this->voidcall("minimize"); }
 
 #endif

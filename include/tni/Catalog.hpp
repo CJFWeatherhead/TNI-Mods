@@ -35,8 +35,8 @@ struct Catalog : public Control {
 };
 
 
-inline void Catalog::cache_ulfinfo() { voidcall("cache_ulfinfo"); }
-inline void Catalog::fade_out() { voidcall("fade_out"); }
-inline void Catalog::fade_in() { voidcall("fade_in"); }
+inline void Catalog::cache_ulfinfo() { this->voidcall("cache_ulfinfo"); }
+inline void Catalog::fade_out() { this->voidcall("fade_out"); }
+inline void Catalog::fade_in() { this->voidcall("fade_in"); }
 
 #endif

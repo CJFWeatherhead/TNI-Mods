@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class LogicControllerSocket : Area2D
+---@class LogicControllerSocket : Socket
 ---@field PacketPlaceholderScene string # Constant value: <PackedScene>
 ---@field is_back_port boolean
 ---@field link_ind Node2D

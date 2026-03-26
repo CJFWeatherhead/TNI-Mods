@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PacketProcessorsMiddlebox : Node
+---@class PacketProcessorsMiddlebox : Program
 ---@field networkctl NetworkControlModule
 ---@field cpu_load integer
 ---@field code_size integer

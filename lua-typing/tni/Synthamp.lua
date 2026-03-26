@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Synthamp : Container
+---@class Synthamp : ScreenApp
 ---@field avpanel Container
 ---@field playnmlb Label
 ---@field shuffle_btn Button

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class VLANControlModule : Node
+---@class VLANControlModule : LogicControlModule
 ---@field MAX_VLANTAG_CHARS integer # Constant value: 10
 ---@field vlan_port_tags table<any,any>
 ---@field subif_cfg table<any,any>

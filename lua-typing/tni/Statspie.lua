@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Statspie : Container
+---@class Statspie : DashboardApp
 ---@field refresh_timer Timer
 ---@field pie_chart Sprite2D
 ---@field domain_name_label Label

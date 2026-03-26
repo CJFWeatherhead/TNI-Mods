@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DashboardApp.hpp"
 
-struct Towerpopulation : public Container {
-	using Container::Container;
+struct Towerpopulation : public DashboardApp {
+	using DashboardApp::DashboardApp;
 
-	constexpr Towerpopulation(Container base) : Container{base} {}
-	constexpr Towerpopulation(uint64_t addr) : Container{addr} {}
+	constexpr Towerpopulation(DashboardApp base) : DashboardApp{base} {}
+	constexpr Towerpopulation(uint64_t addr) : DashboardApp{addr} {}
 	constexpr Towerpopulation(Object obj) : Towerpopulation{obj.address()} {}
 	Towerpopulation(Variant variant) : Towerpopulation{variant.as_object().address()} {}
 
@@ -44,13 +45,13 @@ struct Towerpopulation : public Container {
 
 #include "MainDashboard.hpp"
 
-inline void Towerpopulation::launch() { voidcall("launch"); }
-inline void Towerpopulation::setup_floor_groups() { voidcall("setup_floor_groups"); }
-inline void Towerpopulation::update_all_user_profile() { voidcall("update_all_user_profile"); }
-inline void Towerpopulation::update_floor_group_display() { voidcall("update_floor_group_display"); }
-inline void Towerpopulation::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void Towerpopulation::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant Towerpopulation::get_main_pane() { return operator()("get_main_pane"); }
-inline void Towerpopulation::minimize() { voidcall("minimize"); }
+inline void Towerpopulation::launch() { this->voidcall("launch"); }
+inline void Towerpopulation::setup_floor_groups() { this->voidcall("setup_floor_groups"); }
+inline void Towerpopulation::update_all_user_profile() { this->voidcall("update_all_user_profile"); }
+inline void Towerpopulation::update_floor_group_display() { this->voidcall("update_floor_group_display"); }
+inline void Towerpopulation::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void Towerpopulation::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant Towerpopulation::get_main_pane() { return this->operator()("get_main_pane"); }
+inline void Towerpopulation::minimize() { this->voidcall("minimize"); }
 
 #endif

@@ -21,6 +21,6 @@ struct FixtureSpawner : public Node2D {
 };
 
 
-inline void FixtureSpawner::add_fixture(Variant new_rack, Variant rackpos) { voidcall("add_fixture", new_rack, rackpos); }
+inline void FixtureSpawner::add_fixture(Variant new_rack, Variant rackpos) { this->voidcall("add_fixture", new_rack, rackpos); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class WindowAndLightRay : Node2D
+---@class WindowAndLightRay : ParallaxWindow
 ---@field region_center Vector2
 ---@field region_pos Vector2
 ---@field slide_margin Vector2

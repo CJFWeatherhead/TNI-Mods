@@ -24,8 +24,8 @@ struct SampleDebugChunk : public Node3D {
 };
 
 
-inline void SampleDebugChunk::set_chunk_color(Variant color) { voidcall("set_chunk_color", color); }
-inline void SampleDebugChunk::set_label_text(String s) { voidcall("set_label_text", s); }
-inline void SampleDebugChunk::set_cell_size(Variant szv) { voidcall("set_cell_size", szv); }
+inline void SampleDebugChunk::set_chunk_color(Variant color) { this->voidcall("set_chunk_color", color); }
+inline void SampleDebugChunk::set_label_text(String s) { this->voidcall("set_label_text", s); }
+inline void SampleDebugChunk::set_cell_size(Variant szv) { this->voidcall("set_cell_size", szv); }
 
 #endif

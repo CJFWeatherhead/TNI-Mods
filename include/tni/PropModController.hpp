@@ -33,10 +33,10 @@ struct PropModController : public Node {
 
 #include "PropMod.hpp"
 
-inline void PropModController::new_proposals_updated() { voidcall("new_proposals_updated"); }
-inline void PropModController::ex_proposals_updated() { voidcall("ex_proposals_updated"); }
-inline void PropModController::reroll_proposals() { voidcall("reroll_proposals"); }
-inline void PropModController::submit(Variant mod_path) { voidcall("submit", mod_path); }
-inline void PropModController::lock(Variant mod_path) { voidcall("lock", mod_path); }
+inline void PropModController::new_proposals_updated() { this->voidcall("new_proposals_updated"); }
+inline void PropModController::ex_proposals_updated() { this->voidcall("ex_proposals_updated"); }
+inline void PropModController::reroll_proposals() { this->voidcall("reroll_proposals"); }
+inline void PropModController::submit(Variant mod_path) { this->voidcall("submit", mod_path); }
+inline void PropModController::lock(Variant mod_path) { this->voidcall("lock", mod_path); }
 
 #endif

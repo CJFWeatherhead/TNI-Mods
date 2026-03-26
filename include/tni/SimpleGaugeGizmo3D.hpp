@@ -23,6 +23,6 @@ struct SimpleGaugeGizmo3D : public Area3D {
 };
 
 
-inline void SimpleGaugeGizmo3D::set_gizmo_value(double value_f, double normal_f) { voidcall("set_gizmo_value", value_f, normal_f); }
+inline void SimpleGaugeGizmo3D::set_gizmo_value(double value_f, double normal_f) { this->voidcall("set_gizmo_value", value_f, normal_f); }
 
 #endif

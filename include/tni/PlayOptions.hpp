@@ -70,12 +70,12 @@ struct PlayOptions : public Resource {
 };
 
 
-inline void PlayOptions::set_vals_from_dict(Variant pod) { voidcall("set_vals_from_dict", pod); }
-inline int64_t PlayOptions::get_difficulty_hash() { return operator()("get_difficulty_hash"); }
-inline void PlayOptions::set_easy_mode() { voidcall("set_easy_mode"); }
-inline void PlayOptions::set_hard_mode() { voidcall("set_hard_mode"); }
-inline void PlayOptions::set_mp_mode() { voidcall("set_mp_mode"); }
-inline void PlayOptions::set_zen_mode() { voidcall("set_zen_mode"); }
-inline void PlayOptions::set_hard_zen_mode() { voidcall("set_hard_zen_mode"); }
+inline void PlayOptions::set_vals_from_dict(Variant pod) { this->voidcall("set_vals_from_dict", pod); }
+inline int64_t PlayOptions::get_difficulty_hash() { return this->operator()("get_difficulty_hash"); }
+inline void PlayOptions::set_easy_mode() { this->voidcall("set_easy_mode"); }
+inline void PlayOptions::set_hard_mode() { this->voidcall("set_hard_mode"); }
+inline void PlayOptions::set_mp_mode() { this->voidcall("set_mp_mode"); }
+inline void PlayOptions::set_zen_mode() { this->voidcall("set_zen_mode"); }
+inline void PlayOptions::set_hard_zen_mode() { this->voidcall("set_hard_zen_mode"); }
 
 #endif

@@ -22,6 +22,6 @@ struct MementoDeviceItem : public PanelContainer {
 
 #include "DeviceUnit.hpp"
 
-inline void MementoDeviceItem::refresh() { voidcall("refresh"); }
+inline void MementoDeviceItem::refresh() { this->voidcall("refresh"); }
 
 #endif

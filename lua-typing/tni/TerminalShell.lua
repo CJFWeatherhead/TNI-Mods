@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TerminalShell : Container
+---@class TerminalShell : ScreenApp
 ---@field input TerminalInput
 ---@field preposition_defaults table<any,any>
 ---@field terminal_routines Array<TerminalRoutine>

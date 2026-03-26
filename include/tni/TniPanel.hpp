@@ -26,7 +26,7 @@ struct TniPanel : public PanelContainer {
 };
 
 
-inline void TniPanel::play(double elapsed_s) { voidcall("play", elapsed_s); }
-inline void TniPanel::pause() { voidcall("pause"); }
+inline void TniPanel::play(double elapsed_s) { this->voidcall("play", elapsed_s); }
+inline void TniPanel::pause() { this->voidcall("pause"); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class StorageSocket : Area2D
+---@class StorageSocket : Socket
 ---@field connection Object
 ---@field opposite_socket Socket
 ---@field type Socket.Type

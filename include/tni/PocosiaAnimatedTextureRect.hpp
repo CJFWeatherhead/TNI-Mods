@@ -30,7 +30,7 @@ struct PocosiaAnimatedTextureRect : public TextureRect {
 };
 
 
-inline void PocosiaAnimatedTextureRect::play(int64_t from_frame) { voidcall("play", from_frame); }
-inline void PocosiaAnimatedTextureRect::pause() { voidcall("pause"); }
+inline void PocosiaAnimatedTextureRect::play(int64_t from_frame) { this->voidcall("play", from_frame); }
+inline void PocosiaAnimatedTextureRect::pause() { this->voidcall("pause"); }
 
 #endif

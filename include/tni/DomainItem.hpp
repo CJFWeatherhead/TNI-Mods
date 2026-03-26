@@ -33,7 +33,7 @@ struct DomainItem : public MarginContainer {
 
 #include "PlayerHosting.hpp"
 
-inline void DomainItem::update_phdisp_with_phref() { voidcall("update_phdisp_with_phref"); }
-inline void DomainItem::update_use_d() { voidcall("update_use_d"); }
+inline void DomainItem::update_phdisp_with_phref() { this->voidcall("update_phdisp_with_phref"); }
+inline void DomainItem::update_use_d() { this->voidcall("update_use_d"); }
 
 #endif

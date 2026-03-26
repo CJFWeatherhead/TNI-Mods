@@ -34,14 +34,14 @@ struct TerminalInput : public CodeEdit {
 };
 
 
-inline void TerminalInput::cls() { voidcall("cls"); }
-inline String TerminalInput::get_last_word(String inp) { return operator()("get_last_word", inp); }
-inline void TerminalInput::caret_to_end() { voidcall("caret_to_end"); }
-inline void TerminalInput::paste_string(String s) { voidcall("paste_string", s); }
-inline void TerminalInput::paste_clipboard() { voidcall("paste_clipboard"); }
-inline void TerminalInput::clear_autocomplete_candids() { voidcall("clear_autocomplete_candids"); }
-inline void TerminalInput::fill_auto() { voidcall("fill_auto"); }
-inline void TerminalInput::suggest_autocomplete() { voidcall("suggest_autocomplete"); }
-inline Variant TerminalInput::get_insertion_candidate(String fullcmd) { return operator()("get_insertion_candidate", fullcmd); }
+inline void TerminalInput::cls() { this->voidcall("cls"); }
+inline String TerminalInput::get_last_word(String inp) { return this->operator()("get_last_word", inp); }
+inline void TerminalInput::caret_to_end() { this->voidcall("caret_to_end"); }
+inline void TerminalInput::paste_string(String s) { this->voidcall("paste_string", s); }
+inline void TerminalInput::paste_clipboard() { this->voidcall("paste_clipboard"); }
+inline void TerminalInput::clear_autocomplete_candids() { this->voidcall("clear_autocomplete_candids"); }
+inline void TerminalInput::fill_auto() { this->voidcall("fill_auto"); }
+inline void TerminalInput::suggest_autocomplete() { this->voidcall("suggest_autocomplete"); }
+inline Variant TerminalInput::get_insertion_candidate(String fullcmd) { return this->operator()("get_insertion_candidate", fullcmd); }
 
 #endif

@@ -34,15 +34,15 @@ struct ModApiV1 : public Node {
 #include "MyCustomCamera.hpp"
 #include "BaseUI.hpp"
 
-inline void ModApiV1::sanity() { voidcall("sanity"); }
-inline SemVerVersion ModApiV1::get_game_version() { return SemVerVersion(operator()("get_game_version").as_object().address()); }
-inline bool ModApiV1::has_mods_reloaded() { return operator()("has_mods_reloaded"); }
-inline std::optional<GameWorld> ModApiV1::get_game_world() { Variant value = operator()("get_game_world"); return value == Nil ? std::nullopt : std::optional(GameWorld(value.as_object().address())); }
-inline std::optional<MyCustomCamera> ModApiV1::get_player_camera() { Variant value = operator()("get_player_camera"); return value == Nil ? std::nullopt : std::optional(MyCustomCamera(value.as_object().address())); }
-inline BaseUI ModApiV1::get_base_ui() { return BaseUI(operator()("get_base_ui").as_object().address()); }
-inline Variant ModApiV1::get_devices() { return operator()("get_devices"); }
-inline Variant ModApiV1::get_users() { return operator()("get_users"); }
-inline Variant ModApiV1::get_locations() { return operator()("get_locations"); }
-inline Variant ModApiV1::get_merchants() { return operator()("get_merchants"); }
+inline void ModApiV1::sanity() { this->voidcall("sanity"); }
+inline SemVerVersion ModApiV1::get_game_version() { return SemVerVersion(this->operator()("get_game_version").as_object().address()); }
+inline bool ModApiV1::has_mods_reloaded() { return this->operator()("has_mods_reloaded"); }
+inline std::optional<GameWorld> ModApiV1::get_game_world() { Variant value = this->operator()("get_game_world"); return value == Nil ? std::nullopt : std::optional(GameWorld(value.as_object().address())); }
+inline std::optional<MyCustomCamera> ModApiV1::get_player_camera() { Variant value = this->operator()("get_player_camera"); return value == Nil ? std::nullopt : std::optional(MyCustomCamera(value.as_object().address())); }
+inline BaseUI ModApiV1::get_base_ui() { return BaseUI(this->operator()("get_base_ui").as_object().address()); }
+inline Variant ModApiV1::get_devices() { return this->operator()("get_devices"); }
+inline Variant ModApiV1::get_users() { return this->operator()("get_users"); }
+inline Variant ModApiV1::get_locations() { return this->operator()("get_locations"); }
+inline Variant ModApiV1::get_merchants() { return this->operator()("get_merchants"); }
 
 #endif

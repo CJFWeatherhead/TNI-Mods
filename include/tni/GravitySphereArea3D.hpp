@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DeltaVSphereArea3D.hpp"
 
-struct GravitySphereArea3D : public Area3D {
-	using Area3D::Area3D;
+struct GravitySphereArea3D : public DeltaVSphereArea3D {
+	using DeltaVSphereArea3D::DeltaVSphereArea3D;
 
-	constexpr GravitySphereArea3D(Area3D base) : Area3D{base} {}
-	constexpr GravitySphereArea3D(uint64_t addr) : Area3D{addr} {}
+	constexpr GravitySphereArea3D(DeltaVSphereArea3D base) : DeltaVSphereArea3D{base} {}
+	constexpr GravitySphereArea3D(uint64_t addr) : DeltaVSphereArea3D{addr} {}
 	constexpr GravitySphereArea3D(Object obj) : GravitySphereArea3D{obj.address()} {}
 	GravitySphereArea3D(Variant variant) : GravitySphereArea3D{variant.as_object().address()} {}
 
@@ -24,6 +25,6 @@ struct GravitySphereArea3D : public Area3D {
 };
 
 
-inline void GravitySphereArea3D::affect_rigid_body(RigidBody3D body, double _time_delta) { voidcall("affect_rigid_body", body, _time_delta); }
+inline void GravitySphereArea3D::affect_rigid_body(RigidBody3D body, double _time_delta) { this->voidcall("affect_rigid_body", body, _time_delta); }
 
 #endif

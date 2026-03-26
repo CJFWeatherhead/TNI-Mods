@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DeviceUnit.hpp"
 
-struct Firewatch : public RigidBody2D {
-	using RigidBody2D::RigidBody2D;
+struct Firewatch : public DeviceUnit {
+	using DeviceUnit::DeviceUnit;
 
-	constexpr Firewatch(RigidBody2D base) : RigidBody2D{base} {}
-	constexpr Firewatch(uint64_t addr) : RigidBody2D{addr} {}
+	constexpr Firewatch(DeviceUnit base) : DeviceUnit{base} {}
+	constexpr Firewatch(uint64_t addr) : DeviceUnit{addr} {}
 	constexpr Firewatch(Object obj) : Firewatch{obj.address()} {}
 	Firewatch(Variant variant) : Firewatch{variant.as_object().address()} {}
 
@@ -87,23 +88,23 @@ struct Firewatch : public RigidBody2D {
 #include "LogicController.hpp"
 #include "PowerController.hpp"
 
-inline void Firewatch::apply_autoconfig() { voidcall("apply_autoconfig"); }
-inline void Firewatch::reposition(Variant new_pos) { voidcall("reposition", new_pos); }
-inline void Firewatch::elevator_move(Variant new_pos) { voidcall("elevator_move", new_pos); }
-inline double Firewatch::get_device_bounding_height() { return operator()("get_device_bounding_height"); }
-inline Variant Firewatch::get_global_y_range() { return operator()("get_global_y_range"); }
-inline Variant Firewatch::get_local_y_range() { return operator()("get_local_y_range"); }
-inline Variant Firewatch::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline Variant Firewatch::debug_mux_setup() { return operator()("debug_mux_setup"); }
-inline Variant Firewatch::update_in_trolley_state() { return operator()("update_in_trolley_state"); }
-inline bool Firewatch::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
-inline bool Firewatch::drop(Variant impulse) { return operator()("drop", impulse); }
-inline void Firewatch::reset_child_z_index() { voidcall("reset_child_z_index"); }
-inline void Firewatch::set_autosvc(bool new_state) { voidcall("set_autosvc", new_state); }
-inline void Firewatch::update_user_note(String new_value) { voidcall("update_user_note", new_value); }
-inline void Firewatch::remove_and_free_object() { voidcall("remove_and_free_object"); }
-inline void Firewatch::lift_child_z_index(int64_t base_val) { voidcall("lift_child_z_index", base_val); }
-inline Variant Firewatch::get_picker_type(Variant test_picker) { return operator()("get_picker_type", test_picker); }
-inline void Firewatch::setup_teleport(Variant gpos) { voidcall("setup_teleport", gpos); }
+inline void Firewatch::apply_autoconfig() { this->voidcall("apply_autoconfig"); }
+inline void Firewatch::reposition(Variant new_pos) { this->voidcall("reposition", new_pos); }
+inline void Firewatch::elevator_move(Variant new_pos) { this->voidcall("elevator_move", new_pos); }
+inline double Firewatch::get_device_bounding_height() { return this->operator()("get_device_bounding_height"); }
+inline Variant Firewatch::get_global_y_range() { return this->operator()("get_global_y_range"); }
+inline Variant Firewatch::get_local_y_range() { return this->operator()("get_local_y_range"); }
+inline Variant Firewatch::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline Variant Firewatch::debug_mux_setup() { return this->operator()("debug_mux_setup"); }
+inline Variant Firewatch::update_in_trolley_state() { return this->operator()("update_in_trolley_state"); }
+inline bool Firewatch::pickup(Variant new_picker) { return this->operator()("pickup", new_picker); }
+inline bool Firewatch::drop(Variant impulse) { return this->operator()("drop", impulse); }
+inline void Firewatch::reset_child_z_index() { this->voidcall("reset_child_z_index"); }
+inline void Firewatch::set_autosvc(bool new_state) { this->voidcall("set_autosvc", new_state); }
+inline void Firewatch::update_user_note(String new_value) { this->voidcall("update_user_note", new_value); }
+inline void Firewatch::remove_and_free_object() { this->voidcall("remove_and_free_object"); }
+inline void Firewatch::lift_child_z_index(int64_t base_val) { this->voidcall("lift_child_z_index", base_val); }
+inline Variant Firewatch::get_picker_type(Variant test_picker) { return this->operator()("get_picker_type", test_picker); }
+inline void Firewatch::setup_teleport(Variant gpos) { this->voidcall("setup_teleport", gpos); }
 
 #endif

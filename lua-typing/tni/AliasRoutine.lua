@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class AliasRoutine : Node
+---@class AliasRoutine : TerminalRoutine
 ---@field reserved_keywords Array<any>
 ---@field enabled boolean
 ---@field shell TerminalShell

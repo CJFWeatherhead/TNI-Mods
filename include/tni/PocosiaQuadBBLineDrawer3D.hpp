@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PocosiaMultiLineDrawer3D.hpp"
 
-struct PocosiaQuadBBLineDrawer3D : public MeshInstance3D {
-	using MeshInstance3D::MeshInstance3D;
+struct PocosiaQuadBBLineDrawer3D : public PocosiaMultiLineDrawer3D {
+	using PocosiaMultiLineDrawer3D::PocosiaMultiLineDrawer3D;
 
-	constexpr PocosiaQuadBBLineDrawer3D(MeshInstance3D base) : MeshInstance3D{base} {}
-	constexpr PocosiaQuadBBLineDrawer3D(uint64_t addr) : MeshInstance3D{addr} {}
+	constexpr PocosiaQuadBBLineDrawer3D(PocosiaMultiLineDrawer3D base) : PocosiaMultiLineDrawer3D{base} {}
+	constexpr PocosiaQuadBBLineDrawer3D(uint64_t addr) : PocosiaMultiLineDrawer3D{addr} {}
 	constexpr PocosiaQuadBBLineDrawer3D(Object obj) : PocosiaQuadBBLineDrawer3D{obj.address()} {}
 	PocosiaQuadBBLineDrawer3D(Variant variant) : PocosiaQuadBBLineDrawer3D{variant.as_object().address()} {}
 
@@ -26,10 +27,10 @@ struct PocosiaQuadBBLineDrawer3D : public MeshInstance3D {
 };
 
 
-inline void PocosiaQuadBBLineDrawer3D::redraw() { voidcall("redraw"); }
-inline void PocosiaQuadBBLineDrawer3D::clear_all_lines() { voidcall("clear_all_lines"); }
-inline void PocosiaQuadBBLineDrawer3D::clear_line(Variant ref) { voidcall("clear_line", ref); }
-inline void PocosiaQuadBBLineDrawer3D::draw_line(Variant ref, Variant global_a, Variant global_b, double thickness, Variant color) { voidcall("draw_line", ref, global_a, global_b, thickness, color); }
-inline Variant PocosiaQuadBBLineDrawer3D::get_references() { return operator()("get_references"); }
+inline void PocosiaQuadBBLineDrawer3D::redraw() { this->voidcall("redraw"); }
+inline void PocosiaQuadBBLineDrawer3D::clear_all_lines() { this->voidcall("clear_all_lines"); }
+inline void PocosiaQuadBBLineDrawer3D::clear_line(Variant ref) { this->voidcall("clear_line", ref); }
+inline void PocosiaQuadBBLineDrawer3D::draw_line(Variant ref, Variant global_a, Variant global_b, double thickness, Variant color) { this->voidcall("draw_line", ref, global_a, global_b, thickness, color); }
+inline Variant PocosiaQuadBBLineDrawer3D::get_references() { return this->operator()("get_references"); }
 
 #endif

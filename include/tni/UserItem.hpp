@@ -22,6 +22,6 @@ struct UserItem : public PanelContainer {
 };
 
 
-inline void UserItem::refresh_lock_state(bool hide_known_or_unlocked) { voidcall("refresh_lock_state", hide_known_or_unlocked); }
+inline void UserItem::refresh_lock_state(bool hide_known_or_unlocked) { this->voidcall("refresh_lock_state", hide_known_or_unlocked); }
 
 #endif

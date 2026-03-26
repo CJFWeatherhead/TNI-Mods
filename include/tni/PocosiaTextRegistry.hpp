@@ -22,7 +22,7 @@ struct PocosiaTextRegistry : public Node {
 };
 
 
-inline void PocosiaTextRegistry::clear_registry() { voidcall("clear_registry"); }
-inline String PocosiaTextRegistry::generate_deterministic_string(Node node, int64_t seed_i, Variant lists, String separator) { return operator()("generate_deterministic_string", node, seed_i, lists, separator); }
+inline void PocosiaTextRegistry::clear_registry() { this->voidcall("clear_registry"); }
+inline String PocosiaTextRegistry::generate_deterministic_string(Node node, int64_t seed_i, Variant lists, String separator) { return this->operator()("generate_deterministic_string", node, seed_i, lists, separator); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class LinearDragSphereArea3D : Area3D
+---@class LinearDragSphereArea3D : DeltaVSphereArea3D
 ---@field drag_coefficient number
 ---@field velocity_exponent number
 ---@field falloff Curve

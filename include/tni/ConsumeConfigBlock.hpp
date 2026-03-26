@@ -24,7 +24,7 @@ struct ConsumeConfigBlock : public Resource {
 };
 
 
-inline Variant ConsumeConfigBlock::test_compatibility(Variant use_da, bool and_compat, Variant _split) { return operator()("test_compatibility", use_da, and_compat, _split); }
-inline Variant ConsumeConfigBlock::is_compatible(Variant use_str_a) { return operator()("is_compatible", use_str_a); }
+inline Variant ConsumeConfigBlock::test_compatibility(Variant use_da, bool and_compat, Variant _split) { return this->operator()("test_compatibility", use_da, and_compat, _split); }
+inline Variant ConsumeConfigBlock::is_compatible(Variant use_str_a) { return this->operator()("is_compatible", use_str_a); }
 
 #endif

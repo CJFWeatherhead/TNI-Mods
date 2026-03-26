@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Watch : Node
+---@class Watch : TerminalRoutine
 ---@field deb_addr Object
 ---@field dev_addr string
 ---@field watch_mode res://scenes/screen/terminal/routines/watch.gd.WatchMode

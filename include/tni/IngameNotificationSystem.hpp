@@ -22,7 +22,7 @@ struct IngameNotificationSystem : public Control {
 };
 
 
-inline void IngameNotificationSystem::display(String msg, int64_t linger_seconds, String style_type) { voidcall("display", msg, linger_seconds, style_type); }
-inline void IngameNotificationSystem::clear_notifications() { voidcall("clear_notifications"); }
+inline void IngameNotificationSystem::display(String msg, int64_t linger_seconds, String style_type) { this->voidcall("display", msg, linger_seconds, style_type); }
+inline void IngameNotificationSystem::clear_notifications() { this->voidcall("clear_notifications"); }
 
 #endif

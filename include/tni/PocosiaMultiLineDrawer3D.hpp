@@ -26,10 +26,10 @@ struct PocosiaMultiLineDrawer3D : public MeshInstance3D {
 };
 
 
-inline void PocosiaMultiLineDrawer3D::redraw() { voidcall("redraw"); }
-inline void PocosiaMultiLineDrawer3D::clear_all_lines() { voidcall("clear_all_lines"); }
-inline void PocosiaMultiLineDrawer3D::clear_line(Variant ref) { voidcall("clear_line", ref); }
-inline void PocosiaMultiLineDrawer3D::draw_line(Variant ref, Variant global_a, Variant global_b, double thickness, Variant color) { voidcall("draw_line", ref, global_a, global_b, thickness, color); }
-inline Variant PocosiaMultiLineDrawer3D::get_references() { return operator()("get_references"); }
+inline void PocosiaMultiLineDrawer3D::redraw() { this->voidcall("redraw"); }
+inline void PocosiaMultiLineDrawer3D::clear_all_lines() { this->voidcall("clear_all_lines"); }
+inline void PocosiaMultiLineDrawer3D::clear_line(Variant ref) { this->voidcall("clear_line", ref); }
+inline void PocosiaMultiLineDrawer3D::draw_line(Variant ref, Variant global_a, Variant global_b, double thickness, Variant color) { this->voidcall("draw_line", ref, global_a, global_b, thickness, color); }
+inline Variant PocosiaMultiLineDrawer3D::get_references() { return this->operator()("get_references"); }
 
 #endif

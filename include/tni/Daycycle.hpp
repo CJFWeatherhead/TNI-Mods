@@ -31,7 +31,7 @@ struct Daycycle : public Node {
 };
 
 
-inline void Daycycle::set_day_float(double new_float) { voidcall("set_day_float", new_float); }
-inline void Daycycle::start_day_cycle() { voidcall("start_day_cycle"); }
+inline void Daycycle::set_day_float(double new_float) { this->voidcall("set_day_float", new_float); }
+inline void Daycycle::start_day_cycle() { this->voidcall("start_day_cycle"); }
 
 #endif

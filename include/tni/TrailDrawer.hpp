@@ -35,9 +35,9 @@ struct TrailDrawer : public Node3D {
 };
 
 
-inline void TrailDrawer::disable() { voidcall("disable"); }
-inline void TrailDrawer::enable() { voidcall("enable"); }
-inline void TrailDrawer::clear_all_trails() { voidcall("clear_all_trails"); }
-inline void TrailDrawer::clear_trail(Node3D n) { voidcall("clear_trail", n); }
+inline void TrailDrawer::disable() { this->voidcall("disable"); }
+inline void TrailDrawer::enable() { this->voidcall("enable"); }
+inline void TrailDrawer::clear_all_trails() { this->voidcall("clear_all_trails"); }
+inline void TrailDrawer::clear_trail(Node3D n) { this->voidcall("clear_trail", n); }
 
 #endif

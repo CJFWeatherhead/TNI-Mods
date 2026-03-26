@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Skyline : Container
+---@class Skyline : ScreenApp
 ---@field summoned_cabin_dst integer
 ---@field current_call_dst integer
 ---@field current_floor Location

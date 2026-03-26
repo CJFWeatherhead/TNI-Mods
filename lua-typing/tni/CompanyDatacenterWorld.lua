@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class CompanyDatacenterWorld : Node2D
+---@class CompanyDatacenterWorld : GameWorld
 ---@field disable_interval_days integer
 ---@field disable_count integer
 ---@field days_elapsed integer

@@ -47,7 +47,7 @@ struct TowerLinkItemDisplay : public Container {
 
 #include "TowerNetworkLink.hpp"
 
-inline void TowerLinkItemDisplay::update_labels() { voidcall("update_labels"); }
-inline String TowerLinkItemDisplay::get_load_color(double ld_ratio) { return operator()("get_load_color", ld_ratio); }
+inline void TowerLinkItemDisplay::update_labels() { this->voidcall("update_labels"); }
+inline String TowerLinkItemDisplay::get_load_color(double ld_ratio) { return this->operator()("get_load_color", ld_ratio); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class SurveyScaledUserHosting : Node
+---@class SurveyScaledUserHosting : UserHosting
 ---@field min_visitors integer
 ---@field max_visitors integer
 ---@field desired_ratio number

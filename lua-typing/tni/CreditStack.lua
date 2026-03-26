@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class CreditStack : Container
+---@class CreditStack : ScreenApp
 ---@field main_pane MainPane
 ---@field dynamic_container_path string
 ---@field dynamic_container Container

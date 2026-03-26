@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "UserTraversal.hpp"
 
-struct UserTraversalFQDN : public Node {
-	using Node::Node;
+struct UserTraversalFQDN : public UserTraversal {
+	using UserTraversal::UserTraversal;
 
-	constexpr UserTraversalFQDN(Node base) : Node{base} {}
-	constexpr UserTraversalFQDN(uint64_t addr) : Node{addr} {}
+	constexpr UserTraversalFQDN(UserTraversal base) : UserTraversal{base} {}
+	constexpr UserTraversalFQDN(uint64_t addr) : UserTraversal{addr} {}
 	constexpr UserTraversalFQDN(Object obj) : UserTraversalFQDN{obj.address()} {}
 	UserTraversalFQDN(Variant variant) : UserTraversalFQDN{variant.as_object().address()} {}
 
@@ -65,14 +66,14 @@ struct UserTraversalFQDN : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline Variant make_traversal_packet(NetworkPacketRoot proot);
+	inline Variant make_traversal_packet(const NetworkPacketRoot& proot);
 	inline void tick();
 	inline void add_surveyor_msg(String msg);
 	inline Variant get_compatible_hostings();
 	inline Variant filter_acceptable_hostings(Variant initial_candids);
 	inline void select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method);
-	inline Variant produce_limit_reached(LogicController node);
-	inline Variant compute_produce_limit(LogicController node);
+	inline Variant produce_limit_reached(const LogicController& node);
+	inline Variant compute_produce_limit(const LogicController& node);
 	inline NetworkPacketRoot make_packet_root();
 	inline void client_sim();
 	inline String colorize_description(String ds);
@@ -80,7 +81,7 @@ struct UserTraversalFQDN : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
@@ -91,22 +92,22 @@ struct UserTraversalFQDN : public Node {
 #include "NetworkPacketRoot.hpp"
 #include "PacketControlModule.hpp"
 
-inline Variant UserTraversalFQDN::make_traversal_packet(NetworkPacketRoot proot) { return operator()("make_traversal_packet", proot); }
-inline void UserTraversalFQDN::tick() { voidcall("tick"); }
-inline void UserTraversalFQDN::add_surveyor_msg(String msg) { voidcall("add_surveyor_msg", msg); }
-inline Variant UserTraversalFQDN::get_compatible_hostings() { return operator()("get_compatible_hostings"); }
-inline Variant UserTraversalFQDN::filter_acceptable_hostings(Variant initial_candids) { return operator()("filter_acceptable_hostings", initial_candids); }
-inline void UserTraversalFQDN::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
-inline Variant UserTraversalFQDN::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
-inline Variant UserTraversalFQDN::compute_produce_limit(LogicController node) { return operator()("compute_produce_limit", node); }
-inline NetworkPacketRoot UserTraversalFQDN::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
-inline void UserTraversalFQDN::client_sim() { voidcall("client_sim"); }
-inline String UserTraversalFQDN::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void UserTraversalFQDN::start() { voidcall("start"); }
-inline void UserTraversalFQDN::stop() { voidcall("stop"); }
-inline void UserTraversalFQDN::uninstall() { voidcall("uninstall"); }
-inline void UserTraversalFQDN::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool UserTraversalFQDN::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool UserTraversalFQDN::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline Variant UserTraversalFQDN::make_traversal_packet(const NetworkPacketRoot& proot) { return this->operator()("make_traversal_packet", Object(reinterpret_cast<const Object*>(&proot)->address())); }
+inline void UserTraversalFQDN::tick() { this->voidcall("tick"); }
+inline void UserTraversalFQDN::add_surveyor_msg(String msg) { this->voidcall("add_surveyor_msg", msg); }
+inline Variant UserTraversalFQDN::get_compatible_hostings() { return this->operator()("get_compatible_hostings"); }
+inline Variant UserTraversalFQDN::filter_acceptable_hostings(Variant initial_candids) { return this->operator()("filter_acceptable_hostings", initial_candids); }
+inline void UserTraversalFQDN::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { this->voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
+inline Variant UserTraversalFQDN::produce_limit_reached(const LogicController& node) { return this->operator()("produce_limit_reached", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline Variant UserTraversalFQDN::compute_produce_limit(const LogicController& node) { return this->operator()("compute_produce_limit", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline NetworkPacketRoot UserTraversalFQDN::make_packet_root() { return NetworkPacketRoot(this->operator()("make_packet_root").as_object().address()); }
+inline void UserTraversalFQDN::client_sim() { this->voidcall("client_sim"); }
+inline String UserTraversalFQDN::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void UserTraversalFQDN::start() { this->voidcall("start"); }
+inline void UserTraversalFQDN::stop() { this->voidcall("stop"); }
+inline void UserTraversalFQDN::uninstall() { this->voidcall("uninstall"); }
+inline void UserTraversalFQDN::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool UserTraversalFQDN::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool UserTraversalFQDN::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

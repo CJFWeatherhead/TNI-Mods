@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class WfcLayer : Node3D
+---@class WfcLayer : ChunkedTerrainLayer
 ---@field loaded_chunks table<any,any>
 ---@field tracked_chunks table<any,any>
 ---@field scene_dir string

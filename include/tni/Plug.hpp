@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PickableDevice.hpp"
 
-struct Plug : public RigidBody2D {
-	using RigidBody2D::RigidBody2D;
+struct Plug : public PickableDevice {
+	using PickableDevice::PickableDevice;
 
-	constexpr Plug(RigidBody2D base) : RigidBody2D{base} {}
-	constexpr Plug(uint64_t addr) : RigidBody2D{addr} {}
+	constexpr Plug(PickableDevice base) : PickableDevice{base} {}
+	constexpr Plug(uint64_t addr) : PickableDevice{addr} {}
 	constexpr Plug(Object obj) : Plug{obj.address()} {}
 	Plug(Variant variant) : Plug{variant.as_object().address()} {}
 
@@ -39,7 +40,7 @@ struct Plug : public RigidBody2D {
 	inline void apply_color(Variant color_val);
 	inline void plug_in(Variant a);
 	inline bool drop(Variant impulse, bool skip_autoplug);
-	inline void srv_handle_pickup(Socket a);
+	inline void srv_handle_pickup(const Socket& a);
 	inline bool pickup(Variant new_picker);
 	inline void reset_child_z_index();
 	inline void lift_child_z_index(int64_t base_val);
@@ -51,14 +52,14 @@ struct Plug : public RigidBody2D {
 #include "GraphController.hpp"
 #include "Socket.hpp"
 
-inline void Plug::apply_color(Variant color_val) { voidcall("apply_color", color_val); }
-inline void Plug::plug_in(Variant a) { voidcall("plug_in", a); }
-inline bool Plug::drop(Variant impulse, bool skip_autoplug) { return operator()("drop", impulse, skip_autoplug); }
-inline void Plug::srv_handle_pickup(Socket a) { voidcall("srv_handle_pickup", a); }
-inline bool Plug::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
-inline void Plug::reset_child_z_index() { voidcall("reset_child_z_index"); }
-inline void Plug::lift_child_z_index(int64_t base_val) { voidcall("lift_child_z_index", base_val); }
-inline Variant Plug::get_picker_type(Variant test_picker) { return operator()("get_picker_type", test_picker); }
-inline void Plug::setup_teleport(Variant gpos) { voidcall("setup_teleport", gpos); }
+inline void Plug::apply_color(Variant color_val) { this->voidcall("apply_color", color_val); }
+inline void Plug::plug_in(Variant a) { this->voidcall("plug_in", a); }
+inline bool Plug::drop(Variant impulse, bool skip_autoplug) { return this->operator()("drop", impulse, skip_autoplug); }
+inline void Plug::srv_handle_pickup(const Socket& a) { this->voidcall("srv_handle_pickup", Object(reinterpret_cast<const Object*>(&a)->address())); }
+inline bool Plug::pickup(Variant new_picker) { return this->operator()("pickup", new_picker); }
+inline void Plug::reset_child_z_index() { this->voidcall("reset_child_z_index"); }
+inline void Plug::lift_child_z_index(int64_t base_val) { this->voidcall("lift_child_z_index", base_val); }
+inline Variant Plug::get_picker_type(Variant test_picker) { return this->operator()("get_picker_type", test_picker); }
+inline void Plug::setup_teleport(Variant gpos) { this->voidcall("setup_teleport", gpos); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class GravitySphereArea3D : Area3D
+---@class GravitySphereArea3D : DeltaVSphereArea3D
 ---@field force number
 ---@field falloff Curve
 ---@field sphere_radius number

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class SavannahBios : RigidBody2D
+---@class SavannahBios : DeviceUnit
 ---@field bs string
 ---@field cyc integer
 ---@field product_name string

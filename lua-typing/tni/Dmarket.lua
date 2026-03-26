@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Dmarket : Container
+---@class Dmarket : ScreenApp
 ---@field merchant_list_item_scene PackedScene
 ---@field device_listing_cart_item_scene PackedScene
 ---@field current_merchant DeviceMerchant

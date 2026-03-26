@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class CoreGameSettings : Object
+---@class CoreGameSettings : BaseSettings
 ---@field mouse_pan_speed number
 ---@field keyboard_pan_speed number
 ---@field drag_pan_speed number

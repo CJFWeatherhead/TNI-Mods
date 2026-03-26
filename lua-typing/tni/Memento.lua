@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Memento : Container
+---@class Memento : ScreenApp
 ---@field main_tab TabContainer
 ---@field dns_entries_ctl Container
 ---@field netaddr_assigns Container

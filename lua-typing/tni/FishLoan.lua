@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class FishLoan : Container
+---@class FishLoan : ScreenApp
 ---@field loan_offer_item_scn PackedScene
 ---@field loan_list_item_scn PackedScene
 ---@field showing_loanlist boolean

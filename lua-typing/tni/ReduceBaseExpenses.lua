@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class ReduceBaseExpenses : Node
+---@class ReduceBaseExpenses : PropMod
 ---@field reduction number
 ---@field upfront integer
 ---@field submitted boolean

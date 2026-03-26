@@ -30,17 +30,17 @@ struct Vec3Utils : public Object {
 };
 
 
-inline Variant Vec3Utils::align_basis_up(Variant basis_subj, Variant up_vector) { return operator()("align_basis_up", basis_subj, up_vector); }
-inline void Vec3Utils::align_y(Node3D n3d, Variant y_normal) { voidcall("align_y", n3d, y_normal); }
-inline void Vec3Utils::align_z(Node3D n3d, Variant z_normal) { voidcall("align_z", n3d, z_normal); }
-inline Variant Vec3Utils::get_random_normal_vector3(int64_t seed_) { return operator()("get_random_normal_vector3", seed_); }
-inline void Vec3Utils::create_debug_sphere_at_globalpos(Variant gpos, double radius, Variant color, String lbl_str) { voidcall("create_debug_sphere_at_globalpos", gpos, radius, color, lbl_str); }
-inline void Vec3Utils::create_debug_box_at_globalpos(Variant gpos, Variant size, Variant zneg_dir, Variant color, String lbl_str) { voidcall("create_debug_box_at_globalpos", gpos, size, zneg_dir, color, lbl_str); }
-inline void Vec3Utils::create_debug_frustum(Variant near_corners, Variant far_corners, Variant color) { voidcall("create_debug_frustum", near_corners, far_corners, color); }
-inline Variant Vec3Utils::get_camera_projected_plane4p(Camera3D from_camera, Variant screen_top_left, Variant screen_bottom_right, double project_dist) { return operator()("get_camera_projected_plane4p", from_camera, screen_top_left, screen_bottom_right, project_dist); }
-inline Variant Vec3Utils::make_frustum_planes(Variant near, Variant far) { return operator()("make_frustum_planes", near, far); }
-inline Variant Vec3Utils::get_shape_aabb(Shape3D shape) { return operator()("get_shape_aabb", shape); }
-inline bool Vec3Utils::aabb_intersects_plane(Variant aabb, Variant plane) { return operator()("aabb_intersects_plane", aabb, plane); }
-inline bool Vec3Utils::body_within_enclosing_planes(CollisionObject3D body, Variant planes) { return operator()("body_within_enclosing_planes", body, planes); }
+inline Variant Vec3Utils::align_basis_up(Variant basis_subj, Variant up_vector) { return this->operator()("align_basis_up", basis_subj, up_vector); }
+inline void Vec3Utils::align_y(Node3D n3d, Variant y_normal) { this->voidcall("align_y", n3d, y_normal); }
+inline void Vec3Utils::align_z(Node3D n3d, Variant z_normal) { this->voidcall("align_z", n3d, z_normal); }
+inline Variant Vec3Utils::get_random_normal_vector3(int64_t seed_) { return this->operator()("get_random_normal_vector3", seed_); }
+inline void Vec3Utils::create_debug_sphere_at_globalpos(Variant gpos, double radius, Variant color, String lbl_str) { this->voidcall("create_debug_sphere_at_globalpos", gpos, radius, color, lbl_str); }
+inline void Vec3Utils::create_debug_box_at_globalpos(Variant gpos, Variant size, Variant zneg_dir, Variant color, String lbl_str) { this->voidcall("create_debug_box_at_globalpos", gpos, size, zneg_dir, color, lbl_str); }
+inline void Vec3Utils::create_debug_frustum(Variant near_corners, Variant far_corners, Variant color) { this->voidcall("create_debug_frustum", near_corners, far_corners, color); }
+inline Variant Vec3Utils::get_camera_projected_plane4p(Camera3D from_camera, Variant screen_top_left, Variant screen_bottom_right, double project_dist) { return this->operator()("get_camera_projected_plane4p", from_camera, screen_top_left, screen_bottom_right, project_dist); }
+inline Variant Vec3Utils::make_frustum_planes(Variant near, Variant far) { return this->operator()("make_frustum_planes", near, far); }
+inline Variant Vec3Utils::get_shape_aabb(Shape3D shape) { return this->operator()("get_shape_aabb", shape); }
+inline bool Vec3Utils::aabb_intersects_plane(Variant aabb, Variant plane) { return this->operator()("aabb_intersects_plane", aabb, plane); }
+inline bool Vec3Utils::body_within_enclosing_planes(CollisionObject3D body, Variant planes) { return this->operator()("body_within_enclosing_planes", body, planes); }
 
 #endif

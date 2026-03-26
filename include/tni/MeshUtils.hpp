@@ -20,7 +20,7 @@ struct MeshUtils : public Object {
 };
 
 
-inline void MeshUtils::reladjust_node3d_ypos_above_zero(Node3D n3d) { voidcall("reladjust_node3d_ypos_above_zero", n3d); }
-inline Variant MeshUtils::get_node3d_aabb_from_visual_instances(Node3D n3d) { return operator()("get_node3d_aabb_from_visual_instances", n3d); }
+inline void MeshUtils::reladjust_node3d_ypos_above_zero(Node3D n3d) { this->voidcall("reladjust_node3d_ypos_above_zero", n3d); }
+inline Variant MeshUtils::get_node3d_aabb_from_visual_instances(Node3D n3d) { return this->operator()("get_node3d_aabb_from_visual_instances", n3d); }
 
 #endif

@@ -21,6 +21,6 @@ struct SplashScreen : public Control {
 };
 
 
-inline void SplashScreen::done_loading() { voidcall("done_loading"); }
+inline void SplashScreen::done_loading() { this->voidcall("done_loading"); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Standard : Node
+---@class Standard : PropModController
 ---@field batch_day_interval integer
 ---@field proposals_per_batch integer
 ---@field reroll_fee integer

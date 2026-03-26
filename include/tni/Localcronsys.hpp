@@ -30,9 +30,9 @@ struct Localcronsys : public Node {
 };
 
 
-inline void Localcronsys::clear_tabs() { voidcall("clear_tabs"); }
-inline void Localcronsys::remove_expr_cval(int64_t ti) { voidcall("remove_expr_cval", ti); }
-inline void Localcronsys::add_expr_cval(String c_expr, String c_val) { voidcall("add_expr_cval", c_expr, c_val); }
-inline void Localcronsys::sample_day_float(double day_float) { voidcall("sample_day_float", day_float); }
+inline void Localcronsys::clear_tabs() { this->voidcall("clear_tabs"); }
+inline void Localcronsys::remove_expr_cval(int64_t ti) { this->voidcall("remove_expr_cval", ti); }
+inline void Localcronsys::add_expr_cval(String c_expr, String c_val) { this->voidcall("add_expr_cval", c_expr, c_val); }
+inline void Localcronsys::sample_day_float(double day_float) { this->voidcall("sample_day_float", day_float); }
 
 #endif

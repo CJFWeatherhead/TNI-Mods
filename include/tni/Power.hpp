@@ -32,10 +32,10 @@ struct Power : public Node {
 
 #include "PowerController.hpp"
 
-inline void Power::world_load() { voidcall("world_load"); }
-inline void Power::broadcast_restored() { voidcall("broadcast_restored"); }
-inline void Power::broadcast_lost() { voidcall("broadcast_lost"); }
-inline void Power::on() { voidcall("on"); }
-inline void Power::off() { voidcall("off"); }
+inline void Power::world_load() { this->voidcall("world_load"); }
+inline void Power::broadcast_restored() { this->voidcall("broadcast_restored"); }
+inline void Power::broadcast_lost() { this->voidcall("broadcast_lost"); }
+inline void Power::on() { this->voidcall("on"); }
+inline void Power::off() { this->voidcall("off"); }
 
 #endif

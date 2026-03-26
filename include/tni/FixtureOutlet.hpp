@@ -23,6 +23,6 @@ struct FixtureOutlet : public Area2D {
 
 #include "Socket.hpp"
 
-inline Variant FixtureOutlet::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
+inline Variant FixtureOutlet::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
 
 #endif

@@ -19,6 +19,6 @@ struct PathUtils : public Object {
 };
 
 
-inline Variant PathUtils::list_scenes_at_path(String path, bool recursion) { return operator()("list_scenes_at_path", path, recursion); }
+inline Variant PathUtils::list_scenes_at_path(String path, bool recursion) { return this->operator()("list_scenes_at_path", path, recursion); }
 
 #endif

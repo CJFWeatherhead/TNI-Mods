@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DeviceOutlet : Area2D
+---@class DeviceOutlet : FixtureOutlet
 ---@field condition integer # Constant value: 0
 ---@field outlet_name string
 ---@field logic_controller LogicController

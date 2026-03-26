@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PatchPanel : RigidBody2D
+---@class PatchPanel : DeviceUnit
 ---@field draw_cable boolean
 ---@field cable_start Vector2
 ---@field cable_end Vector2

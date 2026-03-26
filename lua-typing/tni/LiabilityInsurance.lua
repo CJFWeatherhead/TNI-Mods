@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class LiabilityInsurance : Node
+---@class LiabilityInsurance : PropMod
 ---@field multiplier integer # Constant value: 10
 ---@field litrk string # Constant value: Liability insurance premium
 ---@field cost integer

@@ -21,7 +21,7 @@ struct Viewport3DUtils : public Object {
 };
 
 
-inline Variant Viewport3DUtils::get_mouse_raycast_cd_with_collision_plane(Viewport vp, World3D w3d, Variant mask, double max_ray_units) { return operator()("get_mouse_raycast_cd_with_collision_plane", vp, w3d, mask, max_ray_units); }
-inline Variant Viewport3DUtils::get_mouse_raycast_point_with_fixed_height_plane(Viewport vp, double plane_height, double max_ray_units) { return operator()("get_mouse_raycast_point_with_fixed_height_plane", vp, plane_height, max_ray_units); }
+inline Variant Viewport3DUtils::get_mouse_raycast_cd_with_collision_plane(Viewport vp, World3D w3d, Variant mask, double max_ray_units) { return this->operator()("get_mouse_raycast_cd_with_collision_plane", vp, w3d, mask, max_ray_units); }
+inline Variant Viewport3DUtils::get_mouse_raycast_point_with_fixed_height_plane(Viewport vp, double plane_height, double max_ray_units) { return this->operator()("get_mouse_raycast_point_with_fixed_height_plane", vp, plane_height, max_ray_units); }
 
 #endif

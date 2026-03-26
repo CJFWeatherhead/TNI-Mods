@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DeviceMerchant : Node
+---@class DeviceMerchant : Merchant
 ---@field restock_period number
 ---@field restock_mode DeviceMerchant.RESTOCK_MODE
 ---@field entry_max_stocks integer

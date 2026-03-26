@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class UserTraversal : Node
+---@class UserTraversal : TraversalConsume
 ---@field user LogicControllerUser
 ---@field satiety_weight integer
 ---@field producer_satiety_change_on_consume integer

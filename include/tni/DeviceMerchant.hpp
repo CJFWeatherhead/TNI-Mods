@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Merchant.hpp"
 
-struct DeviceMerchant : public Node {
-	using Node::Node;
+struct DeviceMerchant : public Merchant {
+	using Merchant::Merchant;
 
-	constexpr DeviceMerchant(Node base) : Node{base} {}
-	constexpr DeviceMerchant(uint64_t addr) : Node{addr} {}
+	constexpr DeviceMerchant(Merchant base) : Merchant{base} {}
+	constexpr DeviceMerchant(uint64_t addr) : Merchant{addr} {}
 	constexpr DeviceMerchant(Object obj) : DeviceMerchant{obj.address()} {}
 	DeviceMerchant(Variant variant) : DeviceMerchant{variant.as_object().address()} {}
 
@@ -35,7 +36,7 @@ struct DeviceMerchant : public Node {
 };
 
 
-inline bool DeviceMerchant::submit_order(Variant order_list, int64_t delivery_floor) { return operator()("submit_order", order_list, delivery_floor); }
-inline void DeviceMerchant::restock() { voidcall("restock"); }
+inline bool DeviceMerchant::submit_order(Variant order_list, int64_t delivery_floor) { return this->operator()("submit_order", order_list, delivery_floor); }
+inline void DeviceMerchant::restock() { this->voidcall("restock"); }
 
 #endif

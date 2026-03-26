@@ -29,9 +29,9 @@ struct PocosiaTrackingChunkedTerrain3D : public Node3D {
 };
 
 
-inline void PocosiaTrackingChunkedTerrain3D::enable() { voidcall("enable"); }
-inline void PocosiaTrackingChunkedTerrain3D::disable() { voidcall("disable"); }
-inline Variant PocosiaTrackingChunkedTerrain3D::get_chunk_coordinates(Node3D n3d, int64_t layer) { return operator()("get_chunk_coordinates", n3d, layer); }
-inline Variant PocosiaTrackingChunkedTerrain3D::get_chunk_size(int64_t layer) { return operator()("get_chunk_size", layer); }
+inline void PocosiaTrackingChunkedTerrain3D::enable() { this->voidcall("enable"); }
+inline void PocosiaTrackingChunkedTerrain3D::disable() { this->voidcall("disable"); }
+inline Variant PocosiaTrackingChunkedTerrain3D::get_chunk_coordinates(Node3D n3d, int64_t layer) { return this->operator()("get_chunk_coordinates", n3d, layer); }
+inline Variant PocosiaTrackingChunkedTerrain3D::get_chunk_size(int64_t layer) { return this->operator()("get_chunk_size", layer); }
 
 #endif

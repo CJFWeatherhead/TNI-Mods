@@ -20,7 +20,7 @@ struct AlgoUtils : public Object {
 };
 
 
-inline Variant AlgoUtils::uniq_only(Variant a) { return operator()("uniq_only", a); }
-inline Variant AlgoUtils::get_top_n_from_dict(Variant d, int64_t n) { return operator()("get_top_n_from_dict", d, n); }
+inline Variant AlgoUtils::uniq_only(Variant a) { return this->operator()("uniq_only", a); }
+inline Variant AlgoUtils::get_top_n_from_dict(Variant d, int64_t n) { return this->operator()("get_top_n_from_dict", d, n); }
 
 #endif

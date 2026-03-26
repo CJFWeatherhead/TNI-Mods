@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "RandomEvent.hpp"
 
-struct DeviceFailureController : public Node {
-	using Node::Node;
+struct DeviceFailureController : public RandomEvent {
+	using RandomEvent::RandomEvent;
 
-	constexpr DeviceFailureController(Node base) : Node{base} {}
-	constexpr DeviceFailureController(uint64_t addr) : Node{addr} {}
+	constexpr DeviceFailureController(RandomEvent base) : RandomEvent{base} {}
+	constexpr DeviceFailureController(uint64_t addr) : RandomEvent{addr} {}
 	constexpr DeviceFailureController(Object obj) : DeviceFailureController{obj.address()} {}
 	DeviceFailureController(Variant variant) : DeviceFailureController{variant.as_object().address()} {}
 
@@ -22,15 +23,15 @@ struct DeviceFailureController : public Node {
 	PROPERTY(enabled, bool);
 	PROPERTY(trial_timer, Timer);
 
-	inline void try_fail_device(DeviceUnit dev);
+	inline void try_fail_device(const DeviceUnit& dev);
 	inline void start();
 	inline void pause();
 };
 
 #include "DeviceUnit.hpp"
 
-inline void DeviceFailureController::try_fail_device(DeviceUnit dev) { voidcall("try_fail_device", dev); }
-inline void DeviceFailureController::start() { voidcall("start"); }
-inline void DeviceFailureController::pause() { voidcall("pause"); }
+inline void DeviceFailureController::try_fail_device(const DeviceUnit& dev) { this->voidcall("try_fail_device", Object(reinterpret_cast<const Object*>(&dev)->address())); }
+inline void DeviceFailureController::start() { this->voidcall("start"); }
+inline void DeviceFailureController::pause() { this->voidcall("pause"); }
 
 #endif

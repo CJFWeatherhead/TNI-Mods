@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class ModLua : Sandbox
+---@class ModLua : Mod
 ---@field lua_entry_file string
 ---@field mod_entry_binary string
 ---@field mod_dir string

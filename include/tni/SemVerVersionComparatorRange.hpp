@@ -19,14 +19,14 @@ struct SemVerVersionComparatorRange : public RefCounted {
 	PROPERTY(right, RefCounted);
 
 	inline String to_range_string();
-	inline bool check_version(SemVerVersion version);
+	inline bool check_version(const SemVerVersion& version);
 	inline RefCounted parse(String raw);
 };
 
 #include "SemVerVersion.hpp"
 
-inline String SemVerVersionComparatorRange::to_range_string() { return operator()("to_range_string"); }
-inline bool SemVerVersionComparatorRange::check_version(SemVerVersion version) { return operator()("check_version", version); }
-inline RefCounted SemVerVersionComparatorRange::parse(String raw) { return RefCounted(operator()("parse", raw).as_object().address()); }
+inline String SemVerVersionComparatorRange::to_range_string() { return this->operator()("to_range_string"); }
+inline bool SemVerVersionComparatorRange::check_version(const SemVerVersion& version) { return this->operator()("check_version", Object(reinterpret_cast<const Object*>(&version)->address())); }
+inline RefCounted SemVerVersionComparatorRange::parse(String raw) { return RefCounted(this->operator()("parse", raw).as_object().address()); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DHCPControlModule : Node
+---@class DHCPControlModule : LogicControlModule
 ---@field option_dns Array<any>
 ---@field option_prefix string
 ---@field option_nwaddr_bind table<any,any>

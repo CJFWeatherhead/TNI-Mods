@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class FirewallPolicy : RefCounted
+---@class FirewallPolicy : TraversalContextRule
 ---@field allow_policy boolean
 ---@field policy_s string
 ---@field is_default boolean

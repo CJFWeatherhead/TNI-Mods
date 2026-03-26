@@ -30,6 +30,6 @@ struct BarchartController : public Control {
 };
 
 
-inline void BarchartController::set_data(Variant new_categories, Variant new_values, Variant new_colors) { voidcall("set_data", new_categories, new_values, new_colors); }
+inline void BarchartController::set_data(Variant new_categories, Variant new_values, Variant new_colors) { this->voidcall("set_data", new_categories, new_values, new_colors); }
 
 #endif

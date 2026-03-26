@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct VlanRouter : public Node {
-	using Node::Node;
+struct VlanRouter : public Program {
+	using Program::Program;
 
-	constexpr VlanRouter(Node base) : Node{base} {}
-	constexpr VlanRouter(uint64_t addr) : Node{addr} {}
+	constexpr VlanRouter(Program base) : Program{base} {}
+	constexpr VlanRouter(uint64_t addr) : Program{addr} {}
 	constexpr VlanRouter(Object obj) : VlanRouter{obj.address()} {}
 	VlanRouter(Variant variant) : VlanRouter{variant.as_object().address()} {}
 
@@ -32,7 +33,7 @@ struct VlanRouter : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline void tick();
 	inline String colorize_description(String ds);
 	inline void start();
@@ -47,13 +48,13 @@ struct VlanRouter : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline bool VlanRouter::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline void VlanRouter::tick() { voidcall("tick"); }
-inline String VlanRouter::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void VlanRouter::start() { voidcall("start"); }
-inline void VlanRouter::stop() { voidcall("stop"); }
-inline void VlanRouter::uninstall() { voidcall("uninstall"); }
-inline void VlanRouter::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool VlanRouter::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline bool VlanRouter::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline void VlanRouter::tick() { this->voidcall("tick"); }
+inline String VlanRouter::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void VlanRouter::start() { this->voidcall("start"); }
+inline void VlanRouter::stop() { this->voidcall("stop"); }
+inline void VlanRouter::uninstall() { this->voidcall("uninstall"); }
+inline void VlanRouter::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool VlanRouter::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

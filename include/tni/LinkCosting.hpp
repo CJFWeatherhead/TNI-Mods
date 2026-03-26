@@ -22,13 +22,13 @@ struct LinkCosting : public Resource {
 	PROPERTY(daily_per_floor, int64_t);
 	PROPERTY(daily_per_distance_samefloor, double);
 
-	inline int64_t get_setup_cost(LinkOutlet lo_1, LinkOutlet lo_2);
-	inline int64_t get_daily_cost(LinkOutlet lo_1, LinkOutlet lo_2);
+	inline int64_t get_setup_cost(const LinkOutlet& lo_1, const LinkOutlet& lo_2);
+	inline int64_t get_daily_cost(const LinkOutlet& lo_1, const LinkOutlet& lo_2);
 };
 
 #include "LinkOutlet.hpp"
 
-inline int64_t LinkCosting::get_setup_cost(LinkOutlet lo_1, LinkOutlet lo_2) { return operator()("get_setup_cost", lo_1, lo_2); }
-inline int64_t LinkCosting::get_daily_cost(LinkOutlet lo_1, LinkOutlet lo_2) { return operator()("get_daily_cost", lo_1, lo_2); }
+inline int64_t LinkCosting::get_setup_cost(const LinkOutlet& lo_1, const LinkOutlet& lo_2) { return this->operator()("get_setup_cost", Object(reinterpret_cast<const Object*>(&lo_1)->address()), Object(reinterpret_cast<const Object*>(&lo_2)->address())); }
+inline int64_t LinkCosting::get_daily_cost(const LinkOutlet& lo_1, const LinkOutlet& lo_2) { return this->operator()("get_daily_cost", Object(reinterpret_cast<const Object*>(&lo_1)->address()), Object(reinterpret_cast<const Object*>(&lo_2)->address())); }
 
 #endif

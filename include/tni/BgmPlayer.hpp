@@ -25,10 +25,10 @@ struct BgmPlayer : public AudioStreamPlayer {
 };
 
 
-inline void BgmPlayer::try_fade_out(double duration) { voidcall("try_fade_out", duration); }
-inline void BgmPlayer::try_fade_in(double duration) { voidcall("try_fade_in", duration); }
-inline void BgmPlayer::play_index(int64_t ind) { voidcall("play_index", ind); }
-inline void BgmPlayer::play_random() { voidcall("play_random"); }
-inline void BgmPlayer::play_next() { voidcall("play_next"); }
+inline void BgmPlayer::try_fade_out(double duration) { this->voidcall("try_fade_out", duration); }
+inline void BgmPlayer::try_fade_in(double duration) { this->voidcall("try_fade_in", duration); }
+inline void BgmPlayer::play_index(int64_t ind) { this->voidcall("play_index", ind); }
+inline void BgmPlayer::play_random() { this->voidcall("play_random"); }
+inline void BgmPlayer::play_next() { this->voidcall("play_next"); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class SampleDebugTerrainLayer : Node3D
+---@class SampleDebugTerrainLayer : ChunkedTerrainLayer
 ---@field chunk_scn Object
 ---@field chunks table<any,any>
 ---@field buffering_range integer

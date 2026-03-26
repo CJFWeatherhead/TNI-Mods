@@ -27,8 +27,8 @@ struct DrawGraphs : public Line2D {
 };
 
 
-inline void DrawGraphs::create_graph() { voidcall("create_graph"); }
-inline void DrawGraphs::pop_values() { voidcall("pop_values"); }
-inline void DrawGraphs::add_value(double value) { voidcall("add_value", value); }
+inline void DrawGraphs::create_graph() { this->voidcall("create_graph"); }
+inline void DrawGraphs::pop_values() { this->voidcall("pop_values"); }
+inline void DrawGraphs::add_value(double value) { this->voidcall("add_value", value); }
 
 #endif

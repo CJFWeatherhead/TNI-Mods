@@ -24,6 +24,6 @@ struct TextRegistry : public Node {
 };
 
 
-inline Variant TextRegistry::get_random_player_name(bool call_randomize) { return operator()("get_random_player_name", call_randomize); }
+inline Variant TextRegistry::get_random_player_name(bool call_randomize) { return this->operator()("get_random_player_name", call_randomize); }
 
 #endif

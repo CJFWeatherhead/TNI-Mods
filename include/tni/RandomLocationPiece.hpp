@@ -25,7 +25,7 @@ struct RandomLocationPiece : public Node2D {
 
 #include "LocationPiece.hpp"
 
-inline Variant RandomLocationPiece::get_possible_upn() { return operator()("get_possible_upn"); }
-inline LocationPiece RandomLocationPiece::choose_piece() { return LocationPiece(operator()("choose_piece").as_object().address()); }
+inline Variant RandomLocationPiece::get_possible_upn() { return this->operator()("get_possible_upn"); }
+inline LocationPiece RandomLocationPiece::choose_piece() { return LocationPiece(this->operator()("choose_piece").as_object().address()); }
 
 #endif

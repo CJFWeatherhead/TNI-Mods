@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class NetworkBalancer : Node
+---@class NetworkBalancer : Program
 ---@field networkctl NetworkControlModule
 ---@field lbcounter integer
 ---@field cpu_load integer

@@ -49,7 +49,7 @@ struct Socket : public Area2D {
 
 	inline void block();
 	inline void unblock();
-	inline Variant compatible_with(Plug plug);
+	inline Variant compatible_with(const Plug& plug);
 	inline void show_hint(String msg);
 };
 
@@ -57,9 +57,9 @@ struct Socket : public Area2D {
 #include "GraphController.hpp"
 #include "Plug.hpp"
 
-inline void Socket::block() { voidcall("block"); }
-inline void Socket::unblock() { voidcall("unblock"); }
-inline Variant Socket::compatible_with(Plug plug) { return operator()("compatible_with", plug); }
-inline void Socket::show_hint(String msg) { voidcall("show_hint", msg); }
+inline void Socket::block() { this->voidcall("block"); }
+inline void Socket::unblock() { this->voidcall("unblock"); }
+inline Variant Socket::compatible_with(const Plug& plug) { return this->operator()("compatible_with", Object(reinterpret_cast<const Object*>(&plug)->address())); }
+inline void Socket::show_hint(String msg) { this->voidcall("show_hint", msg); }
 
 #endif

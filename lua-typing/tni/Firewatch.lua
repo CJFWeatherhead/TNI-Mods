@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Firewatch : RigidBody2D
+---@class Firewatch : DeviceUnit
 ---@field cyc integer
 ---@field product_name string
 ---@field description string

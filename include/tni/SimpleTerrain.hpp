@@ -38,8 +38,8 @@ struct SimpleTerrain : public Node3D {
 };
 
 
-inline Variant SimpleTerrain::get_terrain_hash() { return operator()("get_terrain_hash"); }
-inline void SimpleTerrain::generate_terrain() { voidcall("generate_terrain"); }
-inline double SimpleTerrain::get_height_at_position(double world_x, double world_z) { return operator()("get_height_at_position", world_x, world_z); }
+inline Variant SimpleTerrain::get_terrain_hash() { return this->operator()("get_terrain_hash"); }
+inline void SimpleTerrain::generate_terrain() { this->voidcall("generate_terrain"); }
+inline double SimpleTerrain::get_height_at_position(double world_x, double world_z) { return this->operator()("get_height_at_position", world_x, world_z); }
 
 #endif

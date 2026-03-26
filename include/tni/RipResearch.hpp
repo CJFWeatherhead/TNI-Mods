@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PropMod.hpp"
 
-struct RipResearch : public Node {
-	using Node::Node;
+struct RipResearch : public PropMod {
+	using PropMod::PropMod;
 
-	constexpr RipResearch(Node base) : Node{base} {}
-	constexpr RipResearch(uint64_t addr) : Node{addr} {}
+	constexpr RipResearch(PropMod base) : PropMod{base} {}
+	constexpr RipResearch(uint64_t addr) : PropMod{addr} {}
 	constexpr RipResearch(Object obj) : RipResearch{obj.address()} {}
 	RipResearch(Variant variant) : RipResearch{variant.as_object().address()} {}
 
@@ -42,13 +43,13 @@ struct RipResearch : public Node {
 
 #include "PropMod.hpp"
 
-inline void RipResearch::apply_mod() { voidcall("apply_mod"); }
-inline void RipResearch::activate_local_effects() { voidcall("activate_local_effects"); }
-inline String RipResearch::get_proposal_name() { return operator()("get_proposal_name"); }
-inline String RipResearch::get_lore() { return operator()("get_lore"); }
-inline String RipResearch::get_description() { return operator()("get_description"); }
-inline Variant RipResearch::test_adhoc_requirements() { return operator()("test_adhoc_requirements"); }
-inline void RipResearch::submit_and_apply() { voidcall("submit_and_apply"); }
-inline void RipResearch::update_state() { voidcall("update_state"); }
+inline void RipResearch::apply_mod() { this->voidcall("apply_mod"); }
+inline void RipResearch::activate_local_effects() { this->voidcall("activate_local_effects"); }
+inline String RipResearch::get_proposal_name() { return this->operator()("get_proposal_name"); }
+inline String RipResearch::get_lore() { return this->operator()("get_lore"); }
+inline String RipResearch::get_description() { return this->operator()("get_description"); }
+inline Variant RipResearch::test_adhoc_requirements() { return this->operator()("test_adhoc_requirements"); }
+inline void RipResearch::submit_and_apply() { this->voidcall("submit_and_apply"); }
+inline void RipResearch::update_state() { this->voidcall("update_state"); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PoweredDeviceOutlet : Area2D
+---@class PoweredDeviceOutlet : DeviceOutlet
 ---@field outlet_name string
 ---@field logic_controller LogicController
 ---@field device_hardware_class DeviceUnit.DeviceHardwareClass

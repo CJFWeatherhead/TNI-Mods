@@ -17,11 +17,11 @@ struct ClickableArea2D : public Area2D {
 
 	PROPERTY(tooltip_text, String);
 
-	inline void click(MultiplayerMouse src);
+	inline void click(const MultiplayerMouse& src);
 };
 
 #include "MultiplayerMouse.hpp"
 
-inline void ClickableArea2D::click(MultiplayerMouse src) { voidcall("click", src); }
+inline void ClickableArea2D::click(const MultiplayerMouse& src) { this->voidcall("click", Object(reinterpret_cast<const Object*>(&src)->address())); }
 
 #endif

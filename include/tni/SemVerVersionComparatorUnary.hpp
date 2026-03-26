@@ -20,15 +20,15 @@ struct SemVerVersionComparatorUnary : public RefCounted {
 
 	inline String to_range_string();
 	inline String op_string();
-	inline bool check_version(SemVerVersion version);
+	inline bool check_version(const SemVerVersion& version);
 	inline RefCounted parse(String raw);
 };
 
 #include "SemVerVersion.hpp"
 
-inline String SemVerVersionComparatorUnary::to_range_string() { return operator()("to_range_string"); }
-inline String SemVerVersionComparatorUnary::op_string() { return operator()("op_string"); }
-inline bool SemVerVersionComparatorUnary::check_version(SemVerVersion version) { return operator()("check_version", version); }
-inline RefCounted SemVerVersionComparatorUnary::parse(String raw) { return RefCounted(operator()("parse", raw).as_object().address()); }
+inline String SemVerVersionComparatorUnary::to_range_string() { return this->operator()("to_range_string"); }
+inline String SemVerVersionComparatorUnary::op_string() { return this->operator()("op_string"); }
+inline bool SemVerVersionComparatorUnary::check_version(const SemVerVersion& version) { return this->operator()("check_version", Object(reinterpret_cast<const Object*>(&version)->address())); }
+inline RefCounted SemVerVersionComparatorUnary::parse(String raw) { return RefCounted(this->operator()("parse", raw).as_object().address()); }
 
 #endif

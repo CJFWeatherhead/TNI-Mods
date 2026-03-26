@@ -46,8 +46,8 @@ struct LinearDepthGraphviz : public ScrollContainer {
 };
 
 
-inline void LinearDepthGraphviz::clear() { voidcall("clear"); }
-inline Variant LinearDepthGraphviz::get_element(int64_t element_id) { return operator()("get_element", element_id); }
-inline Variant LinearDepthGraphviz::add_element(int64_t parent_id) { return operator()("add_element", parent_id); }
+inline void LinearDepthGraphviz::clear() { this->voidcall("clear"); }
+inline Variant LinearDepthGraphviz::get_element(int64_t element_id) { return this->operator()("get_element", element_id); }
+inline Variant LinearDepthGraphviz::add_element(int64_t parent_id) { return this->operator()("add_element", parent_id); }
 
 #endif

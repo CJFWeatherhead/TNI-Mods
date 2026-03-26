@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class LogicController : Node
+---@class LogicController : GraphController
 ---@field default_tick_period number
 ---@field auto_cycle_enabled boolean
 ---@field installed_cpu integer

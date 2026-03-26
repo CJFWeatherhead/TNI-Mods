@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DecentroNode : Node
+---@class DecentroNode : AlwaysProduce
 ---@field decentro_currency_use_config UseConfig
 ---@field decentro_count_last_tick table<any,any>
 ---@field produce_use_config UseConfig

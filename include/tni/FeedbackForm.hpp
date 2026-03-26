@@ -26,7 +26,7 @@ struct FeedbackForm : public VBoxContainer {
 };
 
 
-inline void FeedbackForm::submit_feedback() { voidcall("submit_feedback"); }
-inline void FeedbackForm::clear_form() { voidcall("clear_form"); }
+inline void FeedbackForm::submit_feedback() { this->voidcall("submit_feedback"); }
+inline void FeedbackForm::clear_form() { this->voidcall("clear_form"); }
 
 #endif

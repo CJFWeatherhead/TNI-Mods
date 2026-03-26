@@ -20,6 +20,6 @@ struct MyCart : public VBoxContainer {
 };
 
 
-inline void MyCart::update() { voidcall("update"); }
+inline void MyCart::update() { this->voidcall("update"); }
 
 #endif

@@ -27,13 +27,13 @@ struct ModLoader : public Node {
 	PROPERTY(has_reloaded, bool);
 
 	inline void rediscover_mods();
-	inline Mod try_load_mod(ModManifest manifest);
+	inline Mod try_load_mod(const ModManifest& manifest);
 	inline void reload_mods();
 	inline void game_host_eod();
 	inline void game_state_ready();
-	inline void device_spawned(DeviceUnit device);
-	inline void user_spawned(LogicControllerUser user);
-	inline void location_spawned(Location location);
+	inline void device_spawned(const DeviceUnit& device);
+	inline void user_spawned(const LogicControllerUser& user);
+	inline void location_spawned(const Location& location);
 };
 
 #include "ModPreset.hpp"
@@ -43,13 +43,13 @@ struct ModLoader : public Node {
 #include "LogicControllerUser.hpp"
 #include "Location.hpp"
 
-inline void ModLoader::rediscover_mods() { voidcall("rediscover_mods"); }
-inline Mod ModLoader::try_load_mod(ModManifest manifest) { return Mod(operator()("try_load_mod", manifest).as_object().address()); }
-inline void ModLoader::reload_mods() { voidcall("reload_mods"); }
-inline void ModLoader::game_host_eod() { voidcall("game_host_eod"); }
-inline void ModLoader::game_state_ready() { voidcall("game_state_ready"); }
-inline void ModLoader::device_spawned(DeviceUnit device) { voidcall("device_spawned", device); }
-inline void ModLoader::user_spawned(LogicControllerUser user) { voidcall("user_spawned", user); }
-inline void ModLoader::location_spawned(Location location) { voidcall("location_spawned", location); }
+inline void ModLoader::rediscover_mods() { this->voidcall("rediscover_mods"); }
+inline Mod ModLoader::try_load_mod(const ModManifest& manifest) { return Mod(this->operator()("try_load_mod", Object(reinterpret_cast<const Object*>(&manifest)->address())).as_object().address()); }
+inline void ModLoader::reload_mods() { this->voidcall("reload_mods"); }
+inline void ModLoader::game_host_eod() { this->voidcall("game_host_eod"); }
+inline void ModLoader::game_state_ready() { this->voidcall("game_state_ready"); }
+inline void ModLoader::device_spawned(const DeviceUnit& device) { this->voidcall("device_spawned", Object(reinterpret_cast<const Object*>(&device)->address())); }
+inline void ModLoader::user_spawned(const LogicControllerUser& user) { this->voidcall("user_spawned", Object(reinterpret_cast<const Object*>(&user)->address())); }
+inline void ModLoader::location_spawned(const Location& location) { this->voidcall("location_spawned", Object(reinterpret_cast<const Object*>(&location)->address())); }
 
 #endif

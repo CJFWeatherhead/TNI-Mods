@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class NetworkRouterImpl : Node
+---@class NetworkRouterImpl : Program
 ---@field SCAN_BYPASS_RDATA string # Constant value: debugger scan with bypass
 ---@field routectl RouteControlModule
 ---@field cpu_load integer

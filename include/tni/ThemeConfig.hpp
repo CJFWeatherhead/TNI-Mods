@@ -27,9 +27,9 @@ struct ThemeConfig : public Resource {
 
 #include "ThemeConfig.hpp"
 
-inline ThemeConfig ThemeConfig::create_from_string(String thm_s, bool and_compatible) { return ThemeConfig(operator()("create_from_string", thm_s, and_compatible).as_object().address()); }
-inline bool ThemeConfig::has_valid_descriptions() { return operator()("has_valid_descriptions"); }
-inline String ThemeConfig::render_theme() { return operator()("render_theme"); }
-inline bool ThemeConfig::is_compatible(String thm_s) { return operator()("is_compatible", thm_s); }
+inline ThemeConfig ThemeConfig::create_from_string(String thm_s, bool and_compatible) { return ThemeConfig(this->operator()("create_from_string", thm_s, and_compatible).as_object().address()); }
+inline bool ThemeConfig::has_valid_descriptions() { return this->operator()("has_valid_descriptions"); }
+inline String ThemeConfig::render_theme() { return this->operator()("render_theme"); }
+inline bool ThemeConfig::is_compatible(String thm_s) { return this->operator()("is_compatible", thm_s); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Dmarketv2 : Container
+---@class Dmarketv2 : ScreenApp
 ---@field lstv2scn PackedScene
 ---@field togsrchbtn Button
 ---@field searchdtype OptionButton

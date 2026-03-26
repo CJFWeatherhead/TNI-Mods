@@ -29,6 +29,6 @@ struct AppEntryItem : public Container {
 
 #include "MainPane.hpp"
 
-inline void AppEntryItem::update_status() { voidcall("update_status"); }
+inline void AppEntryItem::update_status() { this->voidcall("update_status"); }
 
 #endif

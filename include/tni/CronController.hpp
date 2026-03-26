@@ -39,17 +39,17 @@ struct CronController : public Node {
 };
 
 
-inline void CronController::wipe(bool everything) { voidcall("wipe", everything); }
-inline void CronController::remove_expr_cmd(int64_t ti) { voidcall("remove_expr_cmd", ti); }
-inline void CronController::add_expr_cmd(String c_expr, String c_cmd) { voidcall("add_expr_cmd", c_expr, c_cmd); }
-inline void CronController::print_horizontal_sep() { voidcall("print_horizontal_sep"); }
-inline void CronController::print_success(Variant s) { voidcall("print_success", s); }
-inline void CronController::print_error(Variant s) { voidcall("print_error", s); }
-inline void CronController::print_warn(Variant s) { voidcall("print_warn", s); }
-inline void CronController::print_highlight(Variant s) { voidcall("print_highlight", s); }
-inline void CronController::put_s(Variant _c) { voidcall("put_s", _c); }
-inline void CronController::print_line(Variant s) { voidcall("print_line", s); }
-inline void CronController::rotate_output() { voidcall("rotate_output"); }
-inline void CronController::clear_display() { voidcall("clear_display"); }
+inline void CronController::wipe(bool everything) { this->voidcall("wipe", everything); }
+inline void CronController::remove_expr_cmd(int64_t ti) { this->voidcall("remove_expr_cmd", ti); }
+inline void CronController::add_expr_cmd(String c_expr, String c_cmd) { this->voidcall("add_expr_cmd", c_expr, c_cmd); }
+inline void CronController::print_horizontal_sep() { this->voidcall("print_horizontal_sep"); }
+inline void CronController::print_success(Variant s) { this->voidcall("print_success", s); }
+inline void CronController::print_error(Variant s) { this->voidcall("print_error", s); }
+inline void CronController::print_warn(Variant s) { this->voidcall("print_warn", s); }
+inline void CronController::print_highlight(Variant s) { this->voidcall("print_highlight", s); }
+inline void CronController::put_s(Variant _c) { this->voidcall("put_s", _c); }
+inline void CronController::print_line(Variant s) { this->voidcall("print_line", s); }
+inline void CronController::rotate_output() { this->voidcall("rotate_output"); }
+inline void CronController::clear_display() { this->voidcall("clear_display"); }
 
 #endif

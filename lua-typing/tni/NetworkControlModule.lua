@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class NetworkControlModule : Node
+---@class NetworkControlModule : LogicControlModule
 ---@field DHCP_BASE_PERIOD number # Constant value: 10.0
 ---@field BACK_PORT string # Constant value: backend
 ---@field STP_BLOCKED string # Constant value: stp-blocked

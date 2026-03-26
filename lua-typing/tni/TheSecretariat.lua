@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TheSecretariat : Container
+---@class TheSecretariat : ScreenApp
 ---@field proposal_item_scene PackedScene
 ---@field tab_title_item_scene PackedScene
 ---@field floor_queue_scene PackedScene

@@ -70,10 +70,10 @@ struct PocosiaInputNode3DOrbiter : public Node3D {
 };
 
 
-inline void PocosiaInputNode3DOrbiter::reset_pan() { voidcall("reset_pan"); }
-inline void PocosiaInputNode3DOrbiter::handle_input(InputEvent event) { voidcall("handle_input", event); }
-inline void PocosiaInputNode3DOrbiter::stop_focusing() { voidcall("stop_focusing"); }
-inline bool PocosiaInputNode3DOrbiter::try_focus_node3d(Node3D node) { return operator()("try_focus_node3d", node); }
-inline Variant PocosiaInputNode3DOrbiter::get_params_for_focus(Variant focus_pos) { return operator()("get_params_for_focus", focus_pos); }
+inline void PocosiaInputNode3DOrbiter::reset_pan() { this->voidcall("reset_pan"); }
+inline void PocosiaInputNode3DOrbiter::handle_input(InputEvent event) { this->voidcall("handle_input", event); }
+inline void PocosiaInputNode3DOrbiter::stop_focusing() { this->voidcall("stop_focusing"); }
+inline bool PocosiaInputNode3DOrbiter::try_focus_node3d(Node3D node) { return this->operator()("try_focus_node3d", node); }
+inline Variant PocosiaInputNode3DOrbiter::get_params_for_focus(Variant focus_pos) { return this->operator()("get_params_for_focus", focus_pos); }
 
 #endif

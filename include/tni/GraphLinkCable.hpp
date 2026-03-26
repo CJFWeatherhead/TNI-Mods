@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Cable.hpp"
 
-struct GraphLinkCable : public Node2D {
-	using Node2D::Node2D;
+struct GraphLinkCable : public Cable {
+	using Cable::Cable;
 
-	constexpr GraphLinkCable(Node2D base) : Node2D{base} {}
-	constexpr GraphLinkCable(uint64_t addr) : Node2D{addr} {}
+	constexpr GraphLinkCable(Cable base) : Cable{base} {}
+	constexpr GraphLinkCable(uint64_t addr) : Cable{addr} {}
 	constexpr GraphLinkCable(Object obj) : GraphLinkCable{obj.address()} {}
 	GraphLinkCable(Variant variant) : GraphLinkCable{variant.as_object().address()} {}
 
@@ -58,11 +59,11 @@ struct GraphLinkCable : public Node2D {
 
 #include "Socket.hpp"
 
-inline Variant GraphLinkCable::get_other_end(Variant end) { return operator()("get_other_end", end); }
-inline void GraphLinkCable::reposition(Variant newpos) { voidcall("reposition", newpos); }
-inline void GraphLinkCable::elevator_move(Variant pos_delta) { voidcall("elevator_move", pos_delta); }
-inline void GraphLinkCable::force_cable_unidle() { voidcall("force_cable_unidle"); }
-inline void GraphLinkCable::remove_and_free_object() { voidcall("remove_and_free_object"); }
-inline void GraphLinkCable::unmake_cable() { voidcall("unmake_cable"); }
+inline Variant GraphLinkCable::get_other_end(Variant end) { return this->operator()("get_other_end", end); }
+inline void GraphLinkCable::reposition(Variant newpos) { this->voidcall("reposition", newpos); }
+inline void GraphLinkCable::elevator_move(Variant pos_delta) { this->voidcall("elevator_move", pos_delta); }
+inline void GraphLinkCable::force_cable_unidle() { this->voidcall("force_cable_unidle"); }
+inline void GraphLinkCable::remove_and_free_object() { this->voidcall("remove_and_free_object"); }
+inline void GraphLinkCable::unmake_cable() { this->voidcall("unmake_cable"); }
 
 #endif

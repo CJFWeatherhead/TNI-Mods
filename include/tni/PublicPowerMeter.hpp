@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PowerMeter.hpp"
 
-struct PublicPowerMeter : public Area2D {
-	using Area2D::Area2D;
+struct PublicPowerMeter : public PowerMeter {
+	using PowerMeter::PowerMeter;
 
-	constexpr PublicPowerMeter(Area2D base) : Area2D{base} {}
-	constexpr PublicPowerMeter(uint64_t addr) : Area2D{addr} {}
+	constexpr PublicPowerMeter(PowerMeter base) : PowerMeter{base} {}
+	constexpr PublicPowerMeter(uint64_t addr) : PowerMeter{addr} {}
 	constexpr PublicPowerMeter(Object obj) : PublicPowerMeter{obj.address()} {}
 	PublicPowerMeter(Variant variant) : PublicPowerMeter{variant.as_object().address()} {}
 
@@ -34,7 +35,7 @@ struct PublicPowerMeter : public Area2D {
 #include "PowerController.hpp"
 #include "LogicController.hpp"
 
-inline Variant PublicPowerMeter::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline void PublicPowerMeter::play_surge_effects() { voidcall("play_surge_effects"); }
+inline Variant PublicPowerMeter::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline void PublicPowerMeter::play_surge_effects() { this->voidcall("play_surge_effects"); }
 
 #endif

@@ -28,7 +28,7 @@ struct BaseSettings : public Object {
 };
 
 
-inline Variant BaseSettings::map_float_to_volume_db(double inp) { return operator()("map_float_to_volume_db", inp); }
-inline void BaseSettings::apply() { voidcall("apply"); }
+inline Variant BaseSettings::map_float_to_volume_db(double inp) { return this->operator()("map_float_to_volume_db", inp); }
+inline void BaseSettings::apply() { this->voidcall("apply"); }
 
 #endif

@@ -21,6 +21,6 @@ struct FinalScreen : public VBoxContainer {
 };
 
 
-inline void FinalScreen::refresh_floorlist() { voidcall("refresh_floorlist"); }
+inline void FinalScreen::refresh_floorlist() { this->voidcall("refresh_floorlist"); }
 
 #endif

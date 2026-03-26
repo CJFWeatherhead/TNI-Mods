@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PowerSurgeController : Node
+---@class PowerSurgeController : RandomEvent
 ---@field min_warn_seconds integer
 ---@field max_warn_seconds integer
 ---@field min_surge_seconds integer

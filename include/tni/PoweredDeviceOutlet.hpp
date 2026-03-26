@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DeviceOutlet.hpp"
 
-struct PoweredDeviceOutlet : public Area2D {
-	using Area2D::Area2D;
+struct PoweredDeviceOutlet : public DeviceOutlet {
+	using DeviceOutlet::DeviceOutlet;
 
-	constexpr PoweredDeviceOutlet(Area2D base) : Area2D{base} {}
-	constexpr PoweredDeviceOutlet(uint64_t addr) : Area2D{addr} {}
+	constexpr PoweredDeviceOutlet(DeviceOutlet base) : DeviceOutlet{base} {}
+	constexpr PoweredDeviceOutlet(uint64_t addr) : DeviceOutlet{addr} {}
 	constexpr PoweredDeviceOutlet(Object obj) : PoweredDeviceOutlet{obj.address()} {}
 	PoweredDeviceOutlet(Variant variant) : PoweredDeviceOutlet{variant.as_object().address()} {}
 
@@ -27,6 +28,6 @@ struct PoweredDeviceOutlet : public Area2D {
 #include "LogicController.hpp"
 #include "Socket.hpp"
 
-inline Variant PoweredDeviceOutlet::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
+inline Variant PoweredDeviceOutlet::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
 
 #endif

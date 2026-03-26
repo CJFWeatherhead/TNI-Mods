@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DashboardMonitor : RigidBody2D
+---@class DashboardMonitor : DeviceUnit
 ---@field back_buffer_copy Object
 ---@field crt_sprite Object
 ---@field extra_screen Object

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class AppDesktop : Container
+---@class AppDesktop : Screen
 ---@field home Object
 ---@field main Object
 ---@field header Object

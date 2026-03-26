@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class CableOMatic : RigidBody2D
+---@class CableOMatic : DeviceUnit
 ---@field stored_length integer
 ---@field max_stored_length integer
 ---@field max_make_length integer

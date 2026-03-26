@@ -39,8 +39,8 @@ struct SaveMenu : public Container {
 
 #include "SaveController.hpp"
 
-inline void SaveMenu::populate_group_saves(String group_name) { voidcall("populate_group_saves", group_name); }
-inline void SaveMenu::enum_save_groups(String contain_s) { voidcall("enum_save_groups", contain_s); }
-inline void SaveMenu::refresh_ui(String contain_s) { voidcall("refresh_ui", contain_s); }
+inline void SaveMenu::populate_group_saves(String group_name) { this->voidcall("populate_group_saves", group_name); }
+inline void SaveMenu::enum_save_groups(String contain_s) { this->voidcall("enum_save_groups", contain_s); }
+inline void SaveMenu::refresh_ui(String contain_s) { this->voidcall("refresh_ui", contain_s); }
 
 #endif

@@ -26,7 +26,7 @@ struct GameMessage : public Object {
 
 #include "GameMessage.hpp"
 
-inline String GameMessage::serialize() { return operator()("serialize"); }
-inline GameMessage GameMessage::from_json(String jsonstr) { return GameMessage(operator()("from_json", jsonstr).as_object().address()); }
+inline String GameMessage::serialize() { return this->operator()("serialize"); }
+inline GameMessage GameMessage::from_json(String jsonstr) { return GameMessage(this->operator()("from_json", jsonstr).as_object().address()); }
 
 #endif

@@ -32,6 +32,6 @@ struct ClickRotateDialGizmo3D : public Area3D {
 };
 
 
-inline void ClickRotateDialGizmo3D::set_gizmo_value(double value_f, double _unused_normal_factor) { voidcall("set_gizmo_value", value_f, _unused_normal_factor); }
+inline void ClickRotateDialGizmo3D::set_gizmo_value(double value_f, double _unused_normal_factor) { this->voidcall("set_gizmo_value", value_f, _unused_normal_factor); }
 
 #endif

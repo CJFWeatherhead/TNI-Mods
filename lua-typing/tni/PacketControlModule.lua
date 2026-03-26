@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PacketControlModule : Node
+---@class PacketControlModule : LogicControlModule
 ---@field default_clock_period number # Constant value: 0.1
 ---@field clk_timer Timer
 ---@field packet_in_queue Array<Dictionary>

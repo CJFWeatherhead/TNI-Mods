@@ -30,6 +30,6 @@ struct UserListItem : public HBoxContainer {
 
 #include "User.hpp"
 
-inline void UserListItem::refresh_label() { voidcall("refresh_label"); }
+inline void UserListItem::refresh_label() { this->voidcall("refresh_label"); }
 
 #endif

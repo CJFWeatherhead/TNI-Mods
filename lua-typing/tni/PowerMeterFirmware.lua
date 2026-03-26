@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PowerMeterFirmware : Node
+---@class PowerMeterFirmware : Program
 ---@field cumulative_kwh number
 ---@field cpu_load integer
 ---@field code_size integer

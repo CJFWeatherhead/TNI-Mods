@@ -60,15 +60,15 @@ struct TraversalContext : public RefCounted {
 	PROPERTY(ttl, int64_t);
 	PROPERTY(hop1_interfaces, Variant);
 
-	inline void record_visit(LogicController node, String on_tag);
-	inline Variant has_traversed_before(LogicController node, String on_tag);
+	inline void record_visit(const LogicController& node, String on_tag);
+	inline Variant has_traversed_before(const LogicController& node, String on_tag);
 };
 
 #include "LogicController.hpp"
 #include "UseConfig.hpp"
 #include "LogicControllerSocket.hpp"
 
-inline void TraversalContext::record_visit(LogicController node, String on_tag) { voidcall("record_visit", node, on_tag); }
-inline Variant TraversalContext::has_traversed_before(LogicController node, String on_tag) { return operator()("has_traversed_before", node, on_tag); }
+inline void TraversalContext::record_visit(const LogicController& node, String on_tag) { this->voidcall("record_visit", Object(reinterpret_cast<const Object*>(&node)->address()), on_tag); }
+inline Variant TraversalContext::has_traversed_before(const LogicController& node, String on_tag) { return this->operator()("has_traversed_before", Object(reinterpret_cast<const Object*>(&node)->address()), on_tag); }
 
 #endif

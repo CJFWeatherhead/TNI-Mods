@@ -16,15 +16,15 @@ struct SemVerVersionRange : public RefCounted {
 
 
 
-	inline void check_version(SemVerVersion version);
+	inline void check_version(const SemVerVersion& version);
 	inline void to_range_string();
 	inline RefCounted parse(String raw);
 };
 
 #include "SemVerVersion.hpp"
 
-inline void SemVerVersionRange::check_version(SemVerVersion version) { voidcall("check_version", version); }
-inline void SemVerVersionRange::to_range_string() { voidcall("to_range_string"); }
-inline RefCounted SemVerVersionRange::parse(String raw) { return RefCounted(operator()("parse", raw).as_object().address()); }
+inline void SemVerVersionRange::check_version(const SemVerVersion& version) { this->voidcall("check_version", Object(reinterpret_cast<const Object*>(&version)->address())); }
+inline void SemVerVersionRange::to_range_string() { this->voidcall("to_range_string"); }
+inline RefCounted SemVerVersionRange::parse(String raw) { return RefCounted(this->operator()("parse", raw).as_object().address()); }
 
 #endif

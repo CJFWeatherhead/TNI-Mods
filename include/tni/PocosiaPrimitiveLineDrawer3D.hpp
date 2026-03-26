@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PocosiaMultiLineDrawer3D.hpp"
 
-struct PocosiaPrimitiveLineDrawer3D : public MeshInstance3D {
-	using MeshInstance3D::MeshInstance3D;
+struct PocosiaPrimitiveLineDrawer3D : public PocosiaMultiLineDrawer3D {
+	using PocosiaMultiLineDrawer3D::PocosiaMultiLineDrawer3D;
 
-	constexpr PocosiaPrimitiveLineDrawer3D(MeshInstance3D base) : MeshInstance3D{base} {}
-	constexpr PocosiaPrimitiveLineDrawer3D(uint64_t addr) : MeshInstance3D{addr} {}
+	constexpr PocosiaPrimitiveLineDrawer3D(PocosiaMultiLineDrawer3D base) : PocosiaMultiLineDrawer3D{base} {}
+	constexpr PocosiaPrimitiveLineDrawer3D(uint64_t addr) : PocosiaMultiLineDrawer3D{addr} {}
 	constexpr PocosiaPrimitiveLineDrawer3D(Object obj) : PocosiaPrimitiveLineDrawer3D{obj.address()} {}
 	PocosiaPrimitiveLineDrawer3D(Variant variant) : PocosiaPrimitiveLineDrawer3D{variant.as_object().address()} {}
 
@@ -26,10 +27,10 @@ struct PocosiaPrimitiveLineDrawer3D : public MeshInstance3D {
 };
 
 
-inline void PocosiaPrimitiveLineDrawer3D::redraw() { voidcall("redraw"); }
-inline void PocosiaPrimitiveLineDrawer3D::clear_all_lines() { voidcall("clear_all_lines"); }
-inline void PocosiaPrimitiveLineDrawer3D::clear_line(Variant ref) { voidcall("clear_line", ref); }
-inline void PocosiaPrimitiveLineDrawer3D::draw_line(Variant ref, Variant global_a, Variant global_b, double thickness, Variant color) { voidcall("draw_line", ref, global_a, global_b, thickness, color); }
-inline Variant PocosiaPrimitiveLineDrawer3D::get_references() { return operator()("get_references"); }
+inline void PocosiaPrimitiveLineDrawer3D::redraw() { this->voidcall("redraw"); }
+inline void PocosiaPrimitiveLineDrawer3D::clear_all_lines() { this->voidcall("clear_all_lines"); }
+inline void PocosiaPrimitiveLineDrawer3D::clear_line(Variant ref) { this->voidcall("clear_line", ref); }
+inline void PocosiaPrimitiveLineDrawer3D::draw_line(Variant ref, Variant global_a, Variant global_b, double thickness, Variant color) { this->voidcall("draw_line", ref, global_a, global_b, thickness, color); }
+inline Variant PocosiaPrimitiveLineDrawer3D::get_references() { return this->operator()("get_references"); }
 
 #endif

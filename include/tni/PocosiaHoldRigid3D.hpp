@@ -23,6 +23,6 @@ struct PocosiaHoldRigid3D : public Node3D {
 };
 
 
-inline void PocosiaHoldRigid3D::hold(RigidBody3D r3b) { voidcall("hold", r3b); }
+inline void PocosiaHoldRigid3D::hold(RigidBody3D r3b) { this->voidcall("hold", r3b); }
 
 #endif

@@ -36,6 +36,6 @@ struct UserBehaviourListItem : public Container {
 #include "LogicControllerUser.hpp"
 #include "UserTraversal.hpp"
 
-inline String UserBehaviourListItem::format_nbr(int64_t val, String zval) { return operator()("format_nbr", val, zval); }
+inline String UserBehaviourListItem::format_nbr(int64_t val, String zval) { return this->operator()("format_nbr", val, zval); }
 
 #endif

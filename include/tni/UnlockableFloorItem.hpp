@@ -22,6 +22,6 @@ struct UnlockableFloorItem : public PanelContainer {
 };
 
 
-inline void UnlockableFloorItem::refresh_lock_state(bool hide_known_or_unlocked) { voidcall("refresh_lock_state", hide_known_or_unlocked); }
+inline void UnlockableFloorItem::refresh_lock_state(bool hide_known_or_unlocked) { this->voidcall("refresh_lock_state", hide_known_or_unlocked); }
 
 #endif

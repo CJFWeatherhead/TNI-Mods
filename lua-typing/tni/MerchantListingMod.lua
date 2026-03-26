@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class MerchantListingMod : Node
+---@class MerchantListingMod : PropMod
 ---@field merchant_scn PackedScene
 ---@field new_price_multiplier number
 ---@field new_price_add_constant integer

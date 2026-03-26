@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Rack.hpp"
 
-struct MountingRack : public StaticBody2D {
-	using StaticBody2D::StaticBody2D;
+struct MountingRack : public Rack {
+	using Rack::Rack;
 
-	constexpr MountingRack(StaticBody2D base) : StaticBody2D{base} {}
-	constexpr MountingRack(uint64_t addr) : StaticBody2D{addr} {}
+	constexpr MountingRack(Rack base) : Rack{base} {}
+	constexpr MountingRack(uint64_t addr) : Rack{addr} {}
 	constexpr MountingRack(Object obj) : MountingRack{obj.address()} {}
 	MountingRack(Variant variant) : MountingRack{variant.as_object().address()} {}
 
@@ -20,6 +21,6 @@ struct MountingRack : public StaticBody2D {
 };
 
 
-inline void MountingRack::remove() { voidcall("remove"); }
+inline void MountingRack::remove() { this->voidcall("remove"); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class HaRouter : Node
+---@class HaRouter : NetworkRouterImpl
 ---@field routectl RouteControlModule
 ---@field cpu_load integer
 ---@field code_size integer

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class InternetExchangePointOne : Node
+---@class InternetExchangePointOne : PropMod
 ---@field submitted boolean
 ---@field locked boolean
 ---@field depends_on PropMod

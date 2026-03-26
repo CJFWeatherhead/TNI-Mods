@@ -24,6 +24,6 @@ struct HintBoard : public Control {
 };
 
 
-inline void HintBoard::cleanup() { voidcall("cleanup"); }
+inline void HintBoard::cleanup() { this->voidcall("cleanup"); }
 
 #endif

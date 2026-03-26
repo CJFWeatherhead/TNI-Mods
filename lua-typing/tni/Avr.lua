@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Avr : RigidBody2D
+---@class Avr : DeviceUnit
 ---@field display RichTextLabel
 ---@field label_update_timer Timer
 ---@field product_name string

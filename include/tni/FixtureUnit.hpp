@@ -24,6 +24,6 @@ struct FixtureUnit : public Area2D {
 #include "LogicController.hpp"
 #include "PowerController.hpp"
 
-inline Variant FixtureUnit::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
+inline Variant FixtureUnit::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
 
 #endif

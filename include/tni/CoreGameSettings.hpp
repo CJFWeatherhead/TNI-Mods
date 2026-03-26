@@ -5,12 +5,14 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "BaseSettings.hpp"
 
-struct CoreGameSettings : public Object {
-	using Object::Object;
+struct CoreGameSettings : public BaseSettings {
+	using BaseSettings::BaseSettings;
 
-	constexpr CoreGameSettings(Object base) : Object{base} {}
-	constexpr CoreGameSettings(uint64_t addr) : Object{addr} {}
+	constexpr CoreGameSettings(BaseSettings base) : BaseSettings{base} {}
+	constexpr CoreGameSettings(uint64_t addr) : BaseSettings{addr} {}
+	constexpr CoreGameSettings(Object obj) : CoreGameSettings{obj.address()} {}
 	CoreGameSettings(Variant variant) : CoreGameSettings{variant.as_object().address()} {}
 
 
@@ -52,8 +54,8 @@ struct CoreGameSettings : public Object {
 };
 
 
-inline void CoreGameSettings::apply() { voidcall("apply"); }
-inline void CoreGameSettings::engine_perfpar_sync() { voidcall("engine_perfpar_sync"); }
-inline Variant CoreGameSettings::map_float_to_volume_db(double inp) { return operator()("map_float_to_volume_db", inp); }
+inline void CoreGameSettings::apply() { this->voidcall("apply"); }
+inline void CoreGameSettings::engine_perfpar_sync() { this->voidcall("engine_perfpar_sync"); }
+inline Variant CoreGameSettings::map_float_to_volume_db(double inp) { return this->operator()("map_float_to_volume_db", inp); }
 
 #endif

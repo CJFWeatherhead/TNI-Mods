@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class NewDataCenter : Node
+---@class NewDataCenter : PropMod
 ---@field admin_perc_increase number # Constant value: 0.1
 ---@field submitted boolean
 ---@field locked boolean

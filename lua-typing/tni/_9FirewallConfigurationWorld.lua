@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class _9FirewallConfigurationWorld : Node2D
+---@class _9FirewallConfigurationWorld : GameWorld
 ---@field last_tutorial_name string
 ---@field tutorial_floor0 Object
 ---@field paired_cable_connection Object

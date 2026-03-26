@@ -29,6 +29,6 @@ struct Downloader : public Window {
 };
 
 
-inline void Downloader::extract_all_from_zip(String path, String dest) { voidcall("extract_all_from_zip", path, dest); }
+inline void Downloader::extract_all_from_zip(String path, String dest) { this->voidcall("extract_all_from_zip", path, dest); }
 
 #endif

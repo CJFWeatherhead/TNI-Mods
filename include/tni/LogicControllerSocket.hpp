@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Socket.hpp"
 
-struct LogicControllerSocket : public Area2D {
-	using Area2D::Area2D;
+struct LogicControllerSocket : public Socket {
+	using Socket::Socket;
 
-	constexpr LogicControllerSocket(Area2D base) : Area2D{base} {}
-	constexpr LogicControllerSocket(uint64_t addr) : Area2D{addr} {}
+	constexpr LogicControllerSocket(Socket base) : Socket{base} {}
+	constexpr LogicControllerSocket(uint64_t addr) : Socket{addr} {}
 	constexpr LogicControllerSocket(Object obj) : LogicControllerSocket{obj.address()} {}
 	LogicControllerSocket(Variant variant) : LogicControllerSocket{variant.as_object().address()} {}
 
@@ -49,7 +50,7 @@ struct LogicControllerSocket : public Area2D {
 	inline Variant get_port_tags();
 	inline void block();
 	inline void unblock();
-	inline Variant compatible_with(Plug plug);
+	inline Variant compatible_with(const Plug& plug);
 	inline void show_hint(String msg);
 };
 
@@ -57,12 +58,12 @@ struct LogicControllerSocket : public Area2D {
 #include "GraphController.hpp"
 #include "Plug.hpp"
 
-inline void LogicControllerSocket::network_activity(bool is_tx_dir, Variant packet) { voidcall("network_activity", is_tx_dir, packet); }
-inline void LogicControllerSocket::reset_netw_stats() { voidcall("reset_netw_stats"); }
-inline Variant LogicControllerSocket::get_port_tags() { return operator()("get_port_tags"); }
-inline void LogicControllerSocket::block() { voidcall("block"); }
-inline void LogicControllerSocket::unblock() { voidcall("unblock"); }
-inline Variant LogicControllerSocket::compatible_with(Plug plug) { return operator()("compatible_with", plug); }
-inline void LogicControllerSocket::show_hint(String msg) { voidcall("show_hint", msg); }
+inline void LogicControllerSocket::network_activity(bool is_tx_dir, Variant packet) { this->voidcall("network_activity", is_tx_dir, packet); }
+inline void LogicControllerSocket::reset_netw_stats() { this->voidcall("reset_netw_stats"); }
+inline Variant LogicControllerSocket::get_port_tags() { return this->operator()("get_port_tags"); }
+inline void LogicControllerSocket::block() { this->voidcall("block"); }
+inline void LogicControllerSocket::unblock() { this->voidcall("unblock"); }
+inline Variant LogicControllerSocket::compatible_with(const Plug& plug) { return this->operator()("compatible_with", Object(reinterpret_cast<const Object*>(&plug)->address())); }
+inline void LogicControllerSocket::show_hint(String msg) { this->voidcall("show_hint", msg); }
 
 #endif

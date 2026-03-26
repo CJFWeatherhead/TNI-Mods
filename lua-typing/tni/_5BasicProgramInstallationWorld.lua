@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class _5BasicProgramInstallationWorld : Node2D
+---@class _5BasicProgramInstallationWorld : GameWorld
 ---@field last_tutorial_name string
 ---@field tutorial_floor0 Object
 ---@field is_state_restored boolean

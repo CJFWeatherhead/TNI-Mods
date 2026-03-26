@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DeviceUnit.hpp"
 
-struct BladeFifteenFifteen : public RigidBody2D {
-	using RigidBody2D::RigidBody2D;
+struct BladeFifteenFifteen : public DeviceUnit {
+	using DeviceUnit::DeviceUnit;
 
-	constexpr BladeFifteenFifteen(RigidBody2D base) : RigidBody2D{base} {}
-	constexpr BladeFifteenFifteen(uint64_t addr) : RigidBody2D{addr} {}
+	constexpr BladeFifteenFifteen(DeviceUnit base) : DeviceUnit{base} {}
+	constexpr BladeFifteenFifteen(uint64_t addr) : DeviceUnit{addr} {}
 	constexpr BladeFifteenFifteen(Object obj) : BladeFifteenFifteen{obj.address()} {}
 	BladeFifteenFifteen(Variant variant) : BladeFifteenFifteen{variant.as_object().address()} {}
 
@@ -87,23 +88,23 @@ struct BladeFifteenFifteen : public RigidBody2D {
 #include "LogicController.hpp"
 #include "PowerController.hpp"
 
-inline void BladeFifteenFifteen::apply_autoconfig() { voidcall("apply_autoconfig"); }
-inline void BladeFifteenFifteen::reposition(Variant new_pos) { voidcall("reposition", new_pos); }
-inline void BladeFifteenFifteen::elevator_move(Variant new_pos) { voidcall("elevator_move", new_pos); }
-inline double BladeFifteenFifteen::get_device_bounding_height() { return operator()("get_device_bounding_height"); }
-inline Variant BladeFifteenFifteen::get_global_y_range() { return operator()("get_global_y_range"); }
-inline Variant BladeFifteenFifteen::get_local_y_range() { return operator()("get_local_y_range"); }
-inline Variant BladeFifteenFifteen::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline Variant BladeFifteenFifteen::debug_mux_setup() { return operator()("debug_mux_setup"); }
-inline Variant BladeFifteenFifteen::update_in_trolley_state() { return operator()("update_in_trolley_state"); }
-inline bool BladeFifteenFifteen::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
-inline bool BladeFifteenFifteen::drop(Variant impulse) { return operator()("drop", impulse); }
-inline void BladeFifteenFifteen::reset_child_z_index() { voidcall("reset_child_z_index"); }
-inline void BladeFifteenFifteen::set_autosvc(bool new_state) { voidcall("set_autosvc", new_state); }
-inline void BladeFifteenFifteen::update_user_note(String new_value) { voidcall("update_user_note", new_value); }
-inline void BladeFifteenFifteen::remove_and_free_object() { voidcall("remove_and_free_object"); }
-inline void BladeFifteenFifteen::lift_child_z_index(int64_t base_val) { voidcall("lift_child_z_index", base_val); }
-inline Variant BladeFifteenFifteen::get_picker_type(Variant test_picker) { return operator()("get_picker_type", test_picker); }
-inline void BladeFifteenFifteen::setup_teleport(Variant gpos) { voidcall("setup_teleport", gpos); }
+inline void BladeFifteenFifteen::apply_autoconfig() { this->voidcall("apply_autoconfig"); }
+inline void BladeFifteenFifteen::reposition(Variant new_pos) { this->voidcall("reposition", new_pos); }
+inline void BladeFifteenFifteen::elevator_move(Variant new_pos) { this->voidcall("elevator_move", new_pos); }
+inline double BladeFifteenFifteen::get_device_bounding_height() { return this->operator()("get_device_bounding_height"); }
+inline Variant BladeFifteenFifteen::get_global_y_range() { return this->operator()("get_global_y_range"); }
+inline Variant BladeFifteenFifteen::get_local_y_range() { return this->operator()("get_local_y_range"); }
+inline Variant BladeFifteenFifteen::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline Variant BladeFifteenFifteen::debug_mux_setup() { return this->operator()("debug_mux_setup"); }
+inline Variant BladeFifteenFifteen::update_in_trolley_state() { return this->operator()("update_in_trolley_state"); }
+inline bool BladeFifteenFifteen::pickup(Variant new_picker) { return this->operator()("pickup", new_picker); }
+inline bool BladeFifteenFifteen::drop(Variant impulse) { return this->operator()("drop", impulse); }
+inline void BladeFifteenFifteen::reset_child_z_index() { this->voidcall("reset_child_z_index"); }
+inline void BladeFifteenFifteen::set_autosvc(bool new_state) { this->voidcall("set_autosvc", new_state); }
+inline void BladeFifteenFifteen::update_user_note(String new_value) { this->voidcall("update_user_note", new_value); }
+inline void BladeFifteenFifteen::remove_and_free_object() { this->voidcall("remove_and_free_object"); }
+inline void BladeFifteenFifteen::lift_child_z_index(int64_t base_val) { this->voidcall("lift_child_z_index", base_val); }
+inline Variant BladeFifteenFifteen::get_picker_type(Variant test_picker) { return this->operator()("get_picker_type", test_picker); }
+inline void BladeFifteenFifteen::setup_teleport(Variant gpos) { this->voidcall("setup_teleport", gpos); }
 
 #endif

@@ -40,7 +40,7 @@ struct CreditTransaction : public Object {
 
 #include "CreditTransaction.hpp"
 
-inline String CreditTransaction::serialize() { return operator()("serialize"); }
-inline CreditTransaction CreditTransaction::from_json(String jsonstr) { return CreditTransaction(operator()("from_json", jsonstr).as_object().address()); }
+inline String CreditTransaction::serialize() { return this->operator()("serialize"); }
+inline CreditTransaction CreditTransaction::from_json(String jsonstr) { return CreditTransaction(this->operator()("from_json", jsonstr).as_object().address()); }
 
 #endif

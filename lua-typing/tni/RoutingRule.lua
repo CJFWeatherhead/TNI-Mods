@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class RoutingRule : RefCounted
+---@class RoutingRule : TraversalContextRule
 ---@field key string
 ---@field num integer
 ---@field prefix_length integer

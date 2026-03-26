@@ -30,6 +30,6 @@ struct SimpleLeverGizmo3D : public Area3D {
 };
 
 
-inline void SimpleLeverGizmo3D::set_gizmo_value(int64_t lpos, double _unused_normal_factor) { voidcall("set_gizmo_value", lpos, _unused_normal_factor); }
+inline void SimpleLeverGizmo3D::set_gizmo_value(int64_t lpos, double _unused_normal_factor) { this->voidcall("set_gizmo_value", lpos, _unused_normal_factor); }
 
 #endif

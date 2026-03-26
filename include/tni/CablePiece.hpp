@@ -23,7 +23,7 @@ struct CablePiece : public RigidBody2D {
 };
 
 
-inline void CablePiece::reset_collision() { voidcall("reset_collision"); }
-inline void CablePiece::disable_collision() { voidcall("disable_collision"); }
+inline void CablePiece::reset_collision() { this->voidcall("reset_collision"); }
+inline void CablePiece::disable_collision() { this->voidcall("disable_collision"); }
 
 #endif

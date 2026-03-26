@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PocosiaPrimitiveLineDrawer3D : MeshInstance3D
+---@class PocosiaPrimitiveLineDrawer3D : PocosiaMultiLineDrawer3D
 ---@field redraw_frame_interval integer
 ---@field ref_points table<any,any>
 local PocosiaPrimitiveLineDrawer3D = {}

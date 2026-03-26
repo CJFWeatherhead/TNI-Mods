@@ -29,6 +29,6 @@ struct DecentroMarketController : public Node {
 };
 
 
-inline void DecentroMarketController::adjust_price(Variant trade_quantity) { voidcall("adjust_price", trade_quantity); }
+inline void DecentroMarketController::adjust_price(Variant trade_quantity) { this->voidcall("adjust_price", trade_quantity); }
 
 #endif

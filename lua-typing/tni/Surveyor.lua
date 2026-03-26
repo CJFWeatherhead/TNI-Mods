@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Surveyor : Container
+---@class Surveyor : ScreenApp
 ---@field satiety_per_color_level number # Constant value: 3.0
 ---@field satiety_level_color Array<any> # Constant value: [(1.0, 0.6, 0.0, 1.0), (1.0, 1.0, 0.0, 1.0), (0.8, 1.0, 0.2, 1.0), (0.6, 1.0, 0.2, 1.0), (0.4, 1.0, 0.2, 1.0), (0.2, 0.8, 0.2, 1.0), (0.0, 1.0, 0.0, 1.0), (0.0, 1.0, 0.6, 1.0), (0.0, 1.0, 0.8, 1.0), (0.0, 0.8, 0.9333, 1.0)]
 ---@field user_list_item_scene PackedScene

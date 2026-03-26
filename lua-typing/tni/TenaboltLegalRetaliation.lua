@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TenaboltLegalRetaliation : Node
+---@class TenaboltLegalRetaliation : MerchantListingMod
 ---@field merchant_scn PackedScene
 ---@field new_price_multiplier number
 ---@field new_price_add_constant integer

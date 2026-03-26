@@ -27,6 +27,6 @@ struct ElevatorPanelA : public Area2D {
 
 #include "Location.hpp"
 
-inline void ElevatorPanelA::time_mult_updated(double time_mult_delta) { voidcall("time_mult_updated", time_mult_delta); }
+inline void ElevatorPanelA::time_mult_updated(double time_mult_delta) { this->voidcall("time_mult_updated", time_mult_delta); }
 
 #endif

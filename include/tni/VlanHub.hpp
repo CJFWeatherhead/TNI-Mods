@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct VlanHub : public Node {
-	using Node::Node;
+struct VlanHub : public Program {
+	using Program::Program;
 
-	constexpr VlanHub(Node base) : Node{base} {}
-	constexpr VlanHub(uint64_t addr) : Node{addr} {}
+	constexpr VlanHub(Program base) : Program{base} {}
+	constexpr VlanHub(uint64_t addr) : Program{addr} {}
 	constexpr VlanHub(Object obj) : VlanHub{obj.address()} {}
 	VlanHub(Variant variant) : VlanHub{variant.as_object().address()} {}
 
@@ -32,7 +33,7 @@ struct VlanHub : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline void tick();
 	inline String colorize_description(String ds);
 	inline void start();
@@ -47,13 +48,13 @@ struct VlanHub : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline bool VlanHub::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline void VlanHub::tick() { voidcall("tick"); }
-inline String VlanHub::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void VlanHub::start() { voidcall("start"); }
-inline void VlanHub::stop() { voidcall("stop"); }
-inline void VlanHub::uninstall() { voidcall("uninstall"); }
-inline void VlanHub::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool VlanHub::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline bool VlanHub::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline void VlanHub::tick() { this->voidcall("tick"); }
+inline String VlanHub::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void VlanHub::start() { this->voidcall("start"); }
+inline void VlanHub::stop() { this->voidcall("stop"); }
+inline void VlanHub::uninstall() { this->voidcall("uninstall"); }
+inline void VlanHub::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool VlanHub::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

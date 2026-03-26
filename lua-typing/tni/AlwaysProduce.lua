@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class AlwaysProduce : Node
+---@class AlwaysProduce : Program
 ---@field produce_use_config UseConfig
 ---@field produce_factor integer
 ---@field produce_limit_type AlwaysProduce.ProduceLimitType

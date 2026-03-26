@@ -24,9 +24,9 @@ struct AsyncLoader : public Node {
 };
 
 
-inline void AsyncLoader::begin_threaded_load(String respath, Variant done_callback) { voidcall("begin_threaded_load", respath, done_callback); }
-inline void AsyncLoader::queue_async_caching(String respath) { voidcall("queue_async_caching", respath); }
-inline void AsyncLoader::begin_async_caching(String respath) { voidcall("begin_async_caching", respath); }
-inline Resource AsyncLoader::recursive_caching_by_frame(String respath, int64_t max_depth, int64_t current_depth) { return Resource(operator()("recursive_caching_by_frame", respath, max_depth, current_depth).as_object().address()); }
+inline void AsyncLoader::begin_threaded_load(String respath, Variant done_callback) { this->voidcall("begin_threaded_load", respath, done_callback); }
+inline void AsyncLoader::queue_async_caching(String respath) { this->voidcall("queue_async_caching", respath); }
+inline void AsyncLoader::begin_async_caching(String respath) { this->voidcall("begin_async_caching", respath); }
+inline Resource AsyncLoader::recursive_caching_by_frame(String respath, int64_t max_depth, int64_t current_depth) { return Resource(this->operator()("recursive_caching_by_frame", respath, max_depth, current_depth).as_object().address()); }
 
 #endif

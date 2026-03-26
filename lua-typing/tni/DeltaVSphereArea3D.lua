@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DeltaVSphereArea3D : Area3D
+---@class DeltaVSphereArea3D : DeltaVArea3D
 ---@field sphere_radius number
 ---@field rigids_under_influence Array<RigidBody3D>
 local DeltaVSphereArea3D = {}

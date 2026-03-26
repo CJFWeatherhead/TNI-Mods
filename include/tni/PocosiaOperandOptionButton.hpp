@@ -26,6 +26,6 @@ struct PocosiaOperandOptionButton : public OptionButton {
 };
 
 
-inline bool PocosiaOperandOptionButton::eval_with_values(int64_t lhv, Variant rhv) { return operator()("eval_with_values", lhv, rhv); }
+inline bool PocosiaOperandOptionButton::eval_with_values(int64_t lhv, Variant rhv) { return this->operator()("eval_with_values", lhv, rhv); }
 
 #endif

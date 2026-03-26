@@ -24,8 +24,8 @@ struct LogicControlModule : public Node {
 
 #include "LogicController.hpp"
 
-inline void LogicControlModule::handle_save(Variant save_obj) { voidcall("handle_save", save_obj); }
-inline void LogicControlModule::handle_load(Variant save_obj) { voidcall("handle_load", save_obj); }
-inline Variant LogicControlModule::get_save_var_list() { return operator()("get_save_var_list"); }
+inline void LogicControlModule::handle_save(Variant save_obj) { this->voidcall("handle_save", save_obj); }
+inline void LogicControlModule::handle_load(Variant save_obj) { this->voidcall("handle_load", save_obj); }
+inline Variant LogicControlModule::get_save_var_list() { return this->operator()("get_save_var_list"); }
 
 #endif

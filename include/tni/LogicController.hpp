@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "GraphController.hpp"
 
-struct LogicController : public Node {
-	using Node::Node;
+struct LogicController : public GraphController {
+	using GraphController::GraphController;
 
-	constexpr LogicController(Node base) : Node{base} {}
-	constexpr LogicController(uint64_t addr) : Node{addr} {}
+	constexpr LogicController(GraphController base) : GraphController{base} {}
+	constexpr LogicController(uint64_t addr) : GraphController{addr} {}
 	constexpr LogicController(Object obj) : LogicController{obj.address()} {}
 	LogicController(Variant variant) : LogicController{variant.as_object().address()} {}
 
@@ -152,12 +153,12 @@ struct LogicController : public Node {
 	inline Variant is_friend_class(Variant obj);
 	inline void show_hint(String msg);
 	inline void restore_default_configs();
-	inline void add_port(Socket socket);
+	inline void add_port(const Socket& socket);
 	inline void remove_port(Variant socket);
 	inline void update_pkt_processors();
-	inline void add_neighbour(Socket port, GraphController nc);
-	inline void remove_neighbours_on_port(Socket port);
-	inline GraphController get_neighbour(Socket via);
+	inline void add_neighbour(const Socket& port, const GraphController& nc);
+	inline void remove_neighbours_on_port(const Socket& port);
+	inline GraphController get_neighbour(const Socket& via);
 	inline bool default_port_traversal_rule(Variant _context, Variant _node, Variant _port, Variant _current_depth);
 	inline int64_t default_port_traversal_callback(Variant _context, Variant _node, Variant _port, Variant _current_index, Variant _current_depth);
 	inline void bfs_port_traversal(Variant traversal_ctx, Variant traversal_callback, Variant traversal_rule);
@@ -180,50 +181,50 @@ struct LogicController : public Node {
 #include "Socket.hpp"
 #include "GraphController.hpp"
 
-inline void LogicController::time_mult_updated(double _time_mult_delta) { voidcall("time_mult_updated", _time_mult_delta); }
-inline void LogicController::wipe_all_data() { voidcall("wipe_all_data"); }
-inline void LogicController::reboot_os() { voidcall("reboot_os"); }
-inline void LogicController::autoconfigure_specs_based_on_installs() { voidcall("autoconfigure_specs_based_on_installs"); }
-inline Variant LogicController::install_program(String prg_path, bool bypass_restrictions, int64_t modify_cpu_abs, int64_t modify_mem_abs, int64_t modify_sto_abs, String modify_rel_nm, Variant extra_install_opts) { return operator()("install_program", prg_path, bypass_restrictions, modify_cpu_abs, modify_mem_abs, modify_sto_abs, modify_rel_nm, extra_install_opts); }
-inline Program LogicController::get_installed_program(String release_name) { return Program(operator()("get_installed_program", release_name).as_object().address()); }
-inline Variant LogicController::run_installed_program(String release_name, bool bypass_restrictions) { return operator()("run_installed_program", release_name, bypass_restrictions); }
-inline Variant LogicController::halt_running_process(String release_name, bool bypass_restrictions) { return operator()("halt_running_process", release_name, bypass_restrictions); }
-inline void LogicController::remove_program(NodePath prog_path) { voidcall("remove_program", prog_path); }
-inline Variant LogicController::uninstall_program(String release_name, bool bypass_restrictions) { return operator()("uninstall_program", release_name, bypass_restrictions); }
-inline void LogicController::start_all_programs() { voidcall("start_all_programs"); }
-inline void LogicController::add_peripheral(Variant per, bool install_callback) { voidcall("add_peripheral", per, install_callback); }
-inline void LogicController::remove_peripheral(Variant per) { voidcall("remove_peripheral", per); }
-inline void LogicController::reset() { voidcall("reset"); }
-inline void LogicController::client_update_last_tick_usage(int64_t new_nbw_used, int64_t new_nbw_wasted) { voidcall("client_update_last_tick_usage", new_nbw_used, new_nbw_wasted); }
-inline void LogicController::refresh_all(bool reset_schidx) { voidcall("refresh_all", reset_schidx); }
-inline void LogicController::clear_port_stats() { voidcall("clear_port_stats"); }
-inline void LogicController::boot_os() { voidcall("boot_os"); }
-inline void LogicController::shutdown_os() { voidcall("shutdown_os"); }
-inline void LogicController::run_cycle() { voidcall("run_cycle"); }
-inline bool LogicController::default_traversal_rule(Variant _context, Variant _from_node, Variant _from_port, Variant _current_depth) { return operator()("default_traversal_rule", _context, _from_node, _from_port, _current_depth); }
-inline Variant LogicController::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline void LogicController::remove_table_entry(String re, int64_t tt) { voidcall("remove_table_entry", re, tt); }
-inline void LogicController::clear_table(int64_t tt) { voidcall("clear_table", tt); }
-inline TraversalContext LogicController::init_traversal_ctx(Variant traffic_class, Variant request_data) { return TraversalContext(operator()("init_traversal_ctx", traffic_class, request_data).as_object().address()); }
-inline bool LogicController::has_hardware_address(String hwaddr) { return operator()("has_hardware_address", hwaddr); }
-inline bool LogicController::has_network_address(String nwaddr) { return operator()("has_network_address", nwaddr); }
-inline bool LogicController::test_modifier_presence(int64_t ctlmod) { return operator()("test_modifier_presence", ctlmod); }
-inline bool LogicController::has_logical_address(String addr) { return operator()("has_logical_address", addr); }
-inline bool LogicController::has_network_port_id(Variant port_id_or_num) { return operator()("has_network_port_id", port_id_or_num); }
-inline void LogicController::push_to_use_stack(String new_use, int64_t count) { voidcall("push_to_use_stack", new_use, count); }
-inline Variant LogicController::is_friend_class(Variant obj) { return operator()("is_friend_class", obj); }
-inline void LogicController::show_hint(String msg) { voidcall("show_hint", msg); }
-inline void LogicController::restore_default_configs() { voidcall("restore_default_configs"); }
-inline void LogicController::add_port(Socket socket) { voidcall("add_port", socket); }
-inline void LogicController::remove_port(Variant socket) { voidcall("remove_port", socket); }
-inline void LogicController::update_pkt_processors() { voidcall("update_pkt_processors"); }
-inline void LogicController::add_neighbour(Socket port, GraphController nc) { voidcall("add_neighbour", port, nc); }
-inline void LogicController::remove_neighbours_on_port(Socket port) { voidcall("remove_neighbours_on_port", port); }
-inline GraphController LogicController::get_neighbour(Socket via) { return GraphController(operator()("get_neighbour", via).as_object().address()); }
-inline bool LogicController::default_port_traversal_rule(Variant _context, Variant _node, Variant _port, Variant _current_depth) { return operator()("default_port_traversal_rule", _context, _node, _port, _current_depth); }
-inline int64_t LogicController::default_port_traversal_callback(Variant _context, Variant _node, Variant _port, Variant _current_index, Variant _current_depth) { return operator()("default_port_traversal_callback", _context, _node, _port, _current_index, _current_depth); }
-inline void LogicController::bfs_port_traversal(Variant traversal_ctx, Variant traversal_callback, Variant traversal_rule) { voidcall("bfs_port_traversal", traversal_ctx, traversal_callback, traversal_rule); }
-inline int64_t LogicController::default_traversal_callback(Variant _context, Variant _node, Variant _current_index, Variant _current_depth) { return operator()("default_traversal_callback", _context, _node, _current_index, _current_depth); }
-inline void LogicController::bfs_traversal(Variant traversal_ctx, Variant traversal_callback, Variant traversal_rule) { voidcall("bfs_traversal", traversal_ctx, traversal_callback, traversal_rule); }
+inline void LogicController::time_mult_updated(double _time_mult_delta) { this->voidcall("time_mult_updated", _time_mult_delta); }
+inline void LogicController::wipe_all_data() { this->voidcall("wipe_all_data"); }
+inline void LogicController::reboot_os() { this->voidcall("reboot_os"); }
+inline void LogicController::autoconfigure_specs_based_on_installs() { this->voidcall("autoconfigure_specs_based_on_installs"); }
+inline Variant LogicController::install_program(String prg_path, bool bypass_restrictions, int64_t modify_cpu_abs, int64_t modify_mem_abs, int64_t modify_sto_abs, String modify_rel_nm, Variant extra_install_opts) { return this->operator()("install_program", prg_path, bypass_restrictions, modify_cpu_abs, modify_mem_abs, modify_sto_abs, modify_rel_nm, extra_install_opts); }
+inline Program LogicController::get_installed_program(String release_name) { return Program(this->operator()("get_installed_program", release_name).as_object().address()); }
+inline Variant LogicController::run_installed_program(String release_name, bool bypass_restrictions) { return this->operator()("run_installed_program", release_name, bypass_restrictions); }
+inline Variant LogicController::halt_running_process(String release_name, bool bypass_restrictions) { return this->operator()("halt_running_process", release_name, bypass_restrictions); }
+inline void LogicController::remove_program(NodePath prog_path) { this->voidcall("remove_program", prog_path); }
+inline Variant LogicController::uninstall_program(String release_name, bool bypass_restrictions) { return this->operator()("uninstall_program", release_name, bypass_restrictions); }
+inline void LogicController::start_all_programs() { this->voidcall("start_all_programs"); }
+inline void LogicController::add_peripheral(Variant per, bool install_callback) { this->voidcall("add_peripheral", per, install_callback); }
+inline void LogicController::remove_peripheral(Variant per) { this->voidcall("remove_peripheral", per); }
+inline void LogicController::reset() { this->voidcall("reset"); }
+inline void LogicController::client_update_last_tick_usage(int64_t new_nbw_used, int64_t new_nbw_wasted) { this->voidcall("client_update_last_tick_usage", new_nbw_used, new_nbw_wasted); }
+inline void LogicController::refresh_all(bool reset_schidx) { this->voidcall("refresh_all", reset_schidx); }
+inline void LogicController::clear_port_stats() { this->voidcall("clear_port_stats"); }
+inline void LogicController::boot_os() { this->voidcall("boot_os"); }
+inline void LogicController::shutdown_os() { this->voidcall("shutdown_os"); }
+inline void LogicController::run_cycle() { this->voidcall("run_cycle"); }
+inline bool LogicController::default_traversal_rule(Variant _context, Variant _from_node, Variant _from_port, Variant _current_depth) { return this->operator()("default_traversal_rule", _context, _from_node, _from_port, _current_depth); }
+inline Variant LogicController::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline void LogicController::remove_table_entry(String re, int64_t tt) { this->voidcall("remove_table_entry", re, tt); }
+inline void LogicController::clear_table(int64_t tt) { this->voidcall("clear_table", tt); }
+inline TraversalContext LogicController::init_traversal_ctx(Variant traffic_class, Variant request_data) { return TraversalContext(this->operator()("init_traversal_ctx", traffic_class, request_data).as_object().address()); }
+inline bool LogicController::has_hardware_address(String hwaddr) { return this->operator()("has_hardware_address", hwaddr); }
+inline bool LogicController::has_network_address(String nwaddr) { return this->operator()("has_network_address", nwaddr); }
+inline bool LogicController::test_modifier_presence(int64_t ctlmod) { return this->operator()("test_modifier_presence", ctlmod); }
+inline bool LogicController::has_logical_address(String addr) { return this->operator()("has_logical_address", addr); }
+inline bool LogicController::has_network_port_id(Variant port_id_or_num) { return this->operator()("has_network_port_id", port_id_or_num); }
+inline void LogicController::push_to_use_stack(String new_use, int64_t count) { this->voidcall("push_to_use_stack", new_use, count); }
+inline Variant LogicController::is_friend_class(Variant obj) { return this->operator()("is_friend_class", obj); }
+inline void LogicController::show_hint(String msg) { this->voidcall("show_hint", msg); }
+inline void LogicController::restore_default_configs() { this->voidcall("restore_default_configs"); }
+inline void LogicController::add_port(const Socket& socket) { this->voidcall("add_port", Object(reinterpret_cast<const Object*>(&socket)->address())); }
+inline void LogicController::remove_port(Variant socket) { this->voidcall("remove_port", socket); }
+inline void LogicController::update_pkt_processors() { this->voidcall("update_pkt_processors"); }
+inline void LogicController::add_neighbour(const Socket& port, const GraphController& nc) { this->voidcall("add_neighbour", Object(reinterpret_cast<const Object*>(&port)->address()), Object(reinterpret_cast<const Object*>(&nc)->address())); }
+inline void LogicController::remove_neighbours_on_port(const Socket& port) { this->voidcall("remove_neighbours_on_port", Object(reinterpret_cast<const Object*>(&port)->address())); }
+inline GraphController LogicController::get_neighbour(const Socket& via) { return GraphController(this->operator()("get_neighbour", Object(reinterpret_cast<const Object*>(&via)->address())).as_object().address()); }
+inline bool LogicController::default_port_traversal_rule(Variant _context, Variant _node, Variant _port, Variant _current_depth) { return this->operator()("default_port_traversal_rule", _context, _node, _port, _current_depth); }
+inline int64_t LogicController::default_port_traversal_callback(Variant _context, Variant _node, Variant _port, Variant _current_index, Variant _current_depth) { return this->operator()("default_port_traversal_callback", _context, _node, _port, _current_index, _current_depth); }
+inline void LogicController::bfs_port_traversal(Variant traversal_ctx, Variant traversal_callback, Variant traversal_rule) { this->voidcall("bfs_port_traversal", traversal_ctx, traversal_callback, traversal_rule); }
+inline int64_t LogicController::default_traversal_callback(Variant _context, Variant _node, Variant _current_index, Variant _current_depth) { return this->operator()("default_traversal_callback", _context, _node, _current_index, _current_depth); }
+inline void LogicController::bfs_traversal(Variant traversal_ctx, Variant traversal_callback, Variant traversal_rule) { this->voidcall("bfs_traversal", traversal_ctx, traversal_callback, traversal_rule); }
 
 #endif

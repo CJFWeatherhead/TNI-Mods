@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class UserTraversalP2P : Node
+---@class UserTraversalP2P : UserTraversal
 ---@field p2p_method UserTraversalP2P.P2PMethod
 ---@field facility_selection_algorithm UserTraversal.HostSelMethod
 ---@field user LogicControllerUser

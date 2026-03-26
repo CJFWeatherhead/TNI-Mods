@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct DoNothing : public Node {
-	using Node::Node;
+struct DoNothing : public Program {
+	using Program::Program;
 
-	constexpr DoNothing(Node base) : Node{base} {}
-	constexpr DoNothing(uint64_t addr) : Node{addr} {}
+	constexpr DoNothing(Program base) : Program{base} {}
+	constexpr DoNothing(uint64_t addr) : Program{addr} {}
 	constexpr DoNothing(Object obj) : DoNothing{obj.address()} {}
 	DoNothing(Variant variant) : DoNothing{variant.as_object().address()} {}
 
@@ -36,20 +37,20 @@ struct DoNothing : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline void DoNothing::tick() { voidcall("tick"); }
-inline String DoNothing::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void DoNothing::start() { voidcall("start"); }
-inline void DoNothing::stop() { voidcall("stop"); }
-inline void DoNothing::uninstall() { voidcall("uninstall"); }
-inline void DoNothing::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool DoNothing::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool DoNothing::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline void DoNothing::tick() { this->voidcall("tick"); }
+inline String DoNothing::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void DoNothing::start() { this->voidcall("start"); }
+inline void DoNothing::stop() { this->voidcall("stop"); }
+inline void DoNothing::uninstall() { this->voidcall("uninstall"); }
+inline void DoNothing::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool DoNothing::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool DoNothing::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

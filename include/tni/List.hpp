@@ -23,6 +23,6 @@ struct List : public VBoxContainer {
 };
 
 
-inline void List::update_domains() { voidcall("update_domains"); }
+inline void List::update_domains() { this->voidcall("update_domains"); }
 
 #endif

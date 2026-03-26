@@ -28,6 +28,6 @@ struct V2CartItem : public PanelContainer {
 #include "DeviceMerchant.hpp"
 #include "DeviceCheckout.hpp"
 
-inline void V2CartItem::update_cart_count() { voidcall("update_cart_count"); }
+inline void V2CartItem::update_cart_count() { this->voidcall("update_cart_count"); }
 
 #endif

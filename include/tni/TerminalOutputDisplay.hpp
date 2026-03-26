@@ -28,14 +28,14 @@ struct TerminalOutputDisplay : public RichTextLabel {
 };
 
 
-inline void TerminalOutputDisplay::print_horizontal_sep() { voidcall("print_horizontal_sep"); }
-inline void TerminalOutputDisplay::print_success(Variant s) { voidcall("print_success", s); }
-inline void TerminalOutputDisplay::print_warn(Variant s) { voidcall("print_warn", s); }
-inline void TerminalOutputDisplay::print_error(Variant s) { voidcall("print_error", s); }
-inline void TerminalOutputDisplay::print_highlight(Variant s) { voidcall("print_highlight", s); }
-inline void TerminalOutputDisplay::print_line(Variant s) { voidcall("print_line", s); }
-inline void TerminalOutputDisplay::put_s(Variant c) { voidcall("put_s", c); }
-inline void TerminalOutputDisplay::rotate_output() { voidcall("rotate_output"); }
-inline void TerminalOutputDisplay::clear_display() { voidcall("clear_display"); }
+inline void TerminalOutputDisplay::print_horizontal_sep() { this->voidcall("print_horizontal_sep"); }
+inline void TerminalOutputDisplay::print_success(Variant s) { this->voidcall("print_success", s); }
+inline void TerminalOutputDisplay::print_warn(Variant s) { this->voidcall("print_warn", s); }
+inline void TerminalOutputDisplay::print_error(Variant s) { this->voidcall("print_error", s); }
+inline void TerminalOutputDisplay::print_highlight(Variant s) { this->voidcall("print_highlight", s); }
+inline void TerminalOutputDisplay::print_line(Variant s) { this->voidcall("print_line", s); }
+inline void TerminalOutputDisplay::put_s(Variant c) { this->voidcall("put_s", c); }
+inline void TerminalOutputDisplay::rotate_output() { this->voidcall("rotate_output"); }
+inline void TerminalOutputDisplay::clear_display() { this->voidcall("clear_display"); }
 
 #endif

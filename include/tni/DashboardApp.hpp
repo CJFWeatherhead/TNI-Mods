@@ -29,10 +29,10 @@ struct DashboardApp : public Container {
 
 #include "MainDashboard.hpp"
 
-inline void DashboardApp::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void DashboardApp::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant DashboardApp::get_main_pane() { return operator()("get_main_pane"); }
-inline void DashboardApp::minimize() { voidcall("minimize"); }
-inline void DashboardApp::launch() { voidcall("launch"); }
+inline void DashboardApp::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void DashboardApp::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant DashboardApp::get_main_pane() { return this->operator()("get_main_pane"); }
+inline void DashboardApp::minimize() { this->voidcall("minimize"); }
+inline void DashboardApp::launch() { this->voidcall("launch"); }
 
 #endif

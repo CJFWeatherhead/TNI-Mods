@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class WormBase : Node
+---@class WormBase : TraversalBase
 ---@field release_name_template string
 ---@field max_spread_per_tick integer
 ---@field signature string

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class RemovableStorageDevice : RigidBody2D
+---@class RemovableStorageDevice : PeripheralPlug
 ---@field available_sto integer
 ---@field product_name string
 ---@field price integer

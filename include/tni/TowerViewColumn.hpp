@@ -22,7 +22,7 @@ struct TowerViewColumn : public PanelContainer {
 };
 
 
-inline void TowerViewColumn::display_as_toplink() { voidcall("display_as_toplink"); }
-inline void TowerViewColumn::display_as_bottomlink() { voidcall("display_as_bottomlink"); }
+inline void TowerViewColumn::display_as_toplink() { this->voidcall("display_as_toplink"); }
+inline void TowerViewColumn::display_as_bottomlink() { this->voidcall("display_as_bottomlink"); }
 
 #endif

@@ -26,6 +26,6 @@ struct WikiEntryItem : public PanelContainer {
 
 #include "WikiEntry.hpp"
 
-inline void WikiEntryItem::navigate_to() { voidcall("navigate_to"); }
+inline void WikiEntryItem::navigate_to() { this->voidcall("navigate_to"); }
 
 #endif

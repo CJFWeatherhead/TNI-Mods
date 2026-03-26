@@ -30,6 +30,6 @@ struct LayoutUtils : public Object {
 };
 
 
-inline Variant LayoutUtils::apply_anchor_mode(Variant original_vec, int64_t anchor_mode, Variant rect_size) { return operator()("apply_anchor_mode", original_vec, anchor_mode, rect_size); }
+inline Variant LayoutUtils::apply_anchor_mode(Variant original_vec, int64_t anchor_mode, Variant rect_size) { return this->operator()("apply_anchor_mode", original_vec, anchor_mode, rect_size); }
 
 #endif

@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "ScreenApp.hpp"
 
-struct Memento : public Container {
-	using Container::Container;
+struct Memento : public ScreenApp {
+	using ScreenApp::ScreenApp;
 
-	constexpr Memento(Container base) : Container{base} {}
-	constexpr Memento(uint64_t addr) : Container{addr} {}
+	constexpr Memento(ScreenApp base) : ScreenApp{base} {}
+	constexpr Memento(uint64_t addr) : ScreenApp{addr} {}
 	constexpr Memento(Object obj) : Memento{obj.address()} {}
 	Memento(Variant variant) : Memento{variant.as_object().address()} {}
 
@@ -36,10 +37,10 @@ struct Memento : public Container {
 
 #include "MainPane.hpp"
 
-inline void Memento::launch() { voidcall("launch"); }
-inline void Memento::minimize() { voidcall("minimize"); }
-inline void Memento::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void Memento::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant Memento::get_main_pane() { return operator()("get_main_pane"); }
+inline void Memento::launch() { this->voidcall("launch"); }
+inline void Memento::minimize() { this->voidcall("minimize"); }
+inline void Memento::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void Memento::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant Memento::get_main_pane() { return this->operator()("get_main_pane"); }
 
 #endif

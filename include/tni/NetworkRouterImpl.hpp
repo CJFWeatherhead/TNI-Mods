@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct NetworkRouterImpl : public Node {
-	using Node::Node;
+struct NetworkRouterImpl : public Program {
+	using Program::Program;
 
-	constexpr NetworkRouterImpl(Node base) : Node{base} {}
-	constexpr NetworkRouterImpl(uint64_t addr) : Node{addr} {}
+	constexpr NetworkRouterImpl(Program base) : Program{base} {}
+	constexpr NetworkRouterImpl(uint64_t addr) : Program{addr} {}
 	constexpr NetworkRouterImpl(Object obj) : NetworkRouterImpl{obj.address()} {}
 	NetworkRouterImpl(Variant variant) : NetworkRouterImpl{variant.as_object().address()} {}
 
@@ -34,8 +35,8 @@ struct NetworkRouterImpl : public Node {
 
 	inline void tick();
 	inline Variant get_longest_matched_port(Variant hc, Variant pktctl, Variant rtctl, Variant packet);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
-	inline void update_routes_from_rip_packet(LogicController src_node_controller, LogicController hopped_node_controller, String rcpt_port_id, String src_port_id);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
+	inline void update_routes_from_rip_packet(const LogicController& src_node_controller, const LogicController& hopped_node_controller, String rcpt_port_id, String src_port_id);
 	inline String colorize_description(String ds);
 	inline void start();
 	inline void stop();
@@ -48,15 +49,15 @@ struct NetworkRouterImpl : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline void NetworkRouterImpl::tick() { voidcall("tick"); }
-inline Variant NetworkRouterImpl::get_longest_matched_port(Variant hc, Variant pktctl, Variant rtctl, Variant packet) { return operator()("get_longest_matched_port", hc, pktctl, rtctl, packet); }
-inline bool NetworkRouterImpl::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline void NetworkRouterImpl::update_routes_from_rip_packet(LogicController src_node_controller, LogicController hopped_node_controller, String rcpt_port_id, String src_port_id) { voidcall("update_routes_from_rip_packet", src_node_controller, hopped_node_controller, rcpt_port_id, src_port_id); }
-inline String NetworkRouterImpl::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void NetworkRouterImpl::start() { voidcall("start"); }
-inline void NetworkRouterImpl::stop() { voidcall("stop"); }
-inline void NetworkRouterImpl::uninstall() { voidcall("uninstall"); }
-inline void NetworkRouterImpl::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool NetworkRouterImpl::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline void NetworkRouterImpl::tick() { this->voidcall("tick"); }
+inline Variant NetworkRouterImpl::get_longest_matched_port(Variant hc, Variant pktctl, Variant rtctl, Variant packet) { return this->operator()("get_longest_matched_port", hc, pktctl, rtctl, packet); }
+inline bool NetworkRouterImpl::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline void NetworkRouterImpl::update_routes_from_rip_packet(const LogicController& src_node_controller, const LogicController& hopped_node_controller, String rcpt_port_id, String src_port_id) { this->voidcall("update_routes_from_rip_packet", Object(reinterpret_cast<const Object*>(&src_node_controller)->address()), Object(reinterpret_cast<const Object*>(&hopped_node_controller)->address()), rcpt_port_id, src_port_id); }
+inline String NetworkRouterImpl::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void NetworkRouterImpl::start() { this->voidcall("start"); }
+inline void NetworkRouterImpl::stop() { this->voidcall("stop"); }
+inline void NetworkRouterImpl::uninstall() { this->voidcall("uninstall"); }
+inline void NetworkRouterImpl::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool NetworkRouterImpl::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

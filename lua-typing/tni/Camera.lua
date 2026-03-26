@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Camera : Container
+---@class Camera : ScreenApp
 ---@field main_page Container
 ---@field current_scn Object
 ---@field gallery_container Object

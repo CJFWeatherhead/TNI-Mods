@@ -27,6 +27,6 @@ struct ScreenAppLauncher : public Control {
 };
 
 
-inline Variant ScreenAppLauncher::init_app() { return operator()("init_app"); }
+inline Variant ScreenAppLauncher::init_app() { return this->operator()("init_app"); }
 
 #endif

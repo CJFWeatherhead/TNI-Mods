@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "TraversalBase.hpp"
 
-struct WormBase : public Node {
-	using Node::Node;
+struct WormBase : public TraversalBase {
+	using TraversalBase::TraversalBase;
 
-	constexpr WormBase(Node base) : Node{base} {}
-	constexpr WormBase(uint64_t addr) : Node{addr} {}
+	constexpr WormBase(TraversalBase base) : TraversalBase{base} {}
+	constexpr WormBase(uint64_t addr) : TraversalBase{addr} {}
 	constexpr WormBase(Object obj) : WormBase{obj.address()} {}
 	WormBase(Variant variant) : WormBase{variant.as_object().address()} {}
 
@@ -39,7 +40,7 @@ struct WormBase : public Node {
 	PROPERTY(host_controller, LogicController);
 
 	inline NetworkPacketRoot make_packet_root();
-	inline Variant make_traversal_packet(NetworkPacketRoot proot);
+	inline Variant make_traversal_packet(const NetworkPacketRoot& proot);
 	inline void tick();
 	inline void client_sim();
 	inline String colorize_description(String ds);
@@ -47,7 +48,7 @@ struct WormBase : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
@@ -55,16 +56,16 @@ struct WormBase : public Node {
 #include "NetworkPacketRoot.hpp"
 #include "PacketControlModule.hpp"
 
-inline NetworkPacketRoot WormBase::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
-inline Variant WormBase::make_traversal_packet(NetworkPacketRoot proot) { return operator()("make_traversal_packet", proot); }
-inline void WormBase::tick() { voidcall("tick"); }
-inline void WormBase::client_sim() { voidcall("client_sim"); }
-inline String WormBase::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void WormBase::start() { voidcall("start"); }
-inline void WormBase::stop() { voidcall("stop"); }
-inline void WormBase::uninstall() { voidcall("uninstall"); }
-inline void WormBase::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool WormBase::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool WormBase::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline NetworkPacketRoot WormBase::make_packet_root() { return NetworkPacketRoot(this->operator()("make_packet_root").as_object().address()); }
+inline Variant WormBase::make_traversal_packet(const NetworkPacketRoot& proot) { return this->operator()("make_traversal_packet", Object(reinterpret_cast<const Object*>(&proot)->address())); }
+inline void WormBase::tick() { this->voidcall("tick"); }
+inline void WormBase::client_sim() { this->voidcall("client_sim"); }
+inline String WormBase::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void WormBase::start() { this->voidcall("start"); }
+inline void WormBase::stop() { this->voidcall("stop"); }
+inline void WormBase::uninstall() { this->voidcall("uninstall"); }
+inline void WormBase::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool WormBase::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool WormBase::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

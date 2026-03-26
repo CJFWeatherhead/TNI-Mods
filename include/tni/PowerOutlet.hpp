@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "FixtureOutlet.hpp"
 
-struct PowerOutlet : public Area2D {
-	using Area2D::Area2D;
+struct PowerOutlet : public FixtureOutlet {
+	using FixtureOutlet::FixtureOutlet;
 
-	constexpr PowerOutlet(Area2D base) : Area2D{base} {}
-	constexpr PowerOutlet(uint64_t addr) : Area2D{addr} {}
+	constexpr PowerOutlet(FixtureOutlet base) : FixtureOutlet{base} {}
+	constexpr PowerOutlet(uint64_t addr) : FixtureOutlet{addr} {}
 	constexpr PowerOutlet(Object obj) : PowerOutlet{obj.address()} {}
 	PowerOutlet(Variant variant) : PowerOutlet{variant.as_object().address()} {}
 
@@ -28,7 +29,7 @@ struct PowerOutlet : public Area2D {
 #include "Location.hpp"
 #include "Socket.hpp"
 
-inline void PowerOutlet::remove() { voidcall("remove"); }
-inline Variant PowerOutlet::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
+inline void PowerOutlet::remove() { this->voidcall("remove"); }
+inline Variant PowerOutlet::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
 
 #endif

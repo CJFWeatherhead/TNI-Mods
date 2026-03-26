@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Illusion : Container
+---@class Illusion : ScreenApp
 ---@field curr_vw WebView
 ---@field mouse_in_webview boolean
 ---@field main_pane MainPane

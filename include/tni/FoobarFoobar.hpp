@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "ScreenApp.hpp"
 
-struct FoobarFoobar : public Container {
-	using Container::Container;
+struct FoobarFoobar : public ScreenApp {
+	using ScreenApp::ScreenApp;
 
-	constexpr FoobarFoobar(Container base) : Container{base} {}
-	constexpr FoobarFoobar(uint64_t addr) : Container{addr} {}
+	constexpr FoobarFoobar(ScreenApp base) : ScreenApp{base} {}
+	constexpr FoobarFoobar(uint64_t addr) : ScreenApp{addr} {}
 	constexpr FoobarFoobar(Object obj) : FoobarFoobar{obj.address()} {}
 	FoobarFoobar(Variant variant) : FoobarFoobar{variant.as_object().address()} {}
 
@@ -29,10 +30,10 @@ struct FoobarFoobar : public Container {
 
 #include "MainPane.hpp"
 
-inline void FoobarFoobar::launch() { voidcall("launch"); }
-inline void FoobarFoobar::minimize() { voidcall("minimize"); }
-inline void FoobarFoobar::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void FoobarFoobar::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant FoobarFoobar::get_main_pane() { return operator()("get_main_pane"); }
+inline void FoobarFoobar::launch() { this->voidcall("launch"); }
+inline void FoobarFoobar::minimize() { this->voidcall("minimize"); }
+inline void FoobarFoobar::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void FoobarFoobar::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant FoobarFoobar::get_main_pane() { return this->operator()("get_main_pane"); }
 
 #endif

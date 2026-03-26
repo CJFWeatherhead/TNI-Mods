@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DeviceFailureController : Node
+---@class DeviceFailureController : RandomEvent
 ---@field max_concurrent_fails integer
 ---@field min_trial_period_seconds number
 ---@field max_trial_period_seconds number

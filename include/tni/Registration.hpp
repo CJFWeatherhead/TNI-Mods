@@ -32,6 +32,6 @@ struct Registration : public VBoxContainer {
 };
 
 
-inline void Registration::reset() { voidcall("reset"); }
+inline void Registration::reset() { this->voidcall("reset"); }
 
 #endif

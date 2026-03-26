@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class RouteControlModule : Node
+---@class RouteControlModule : LogicControlModule
 ---@field DEFAULT_DROP_CS string # Constant value: drop
 ---@field MAX_PORT_GROUPS integer # Constant value: 10
 ---@field ADR_CYTL_DEFAULT integer # Constant value: 4

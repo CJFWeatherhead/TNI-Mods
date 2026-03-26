@@ -30,11 +30,11 @@ struct SemVerVersion : public RefCounted {
 };
 
 
-inline String SemVerVersion::to_version_string() { return operator()("to_version_string"); }
-inline bool SemVerVersion::is_definitive_version() { return operator()("is_definitive_version"); }
-inline bool SemVerVersion::matches(RefCounted other) { return operator()("matches", other); }
-inline Variant SemVerVersion::compare_parts(RefCounted other) { return operator()("compare_parts", other); }
-inline int64_t SemVerVersion::compare(RefCounted other) { return operator()("compare", other); }
-inline RefCounted SemVerVersion::parse(String raw, bool allow_wildcard) { return RefCounted(operator()("parse", raw, allow_wildcard).as_object().address()); }
+inline String SemVerVersion::to_version_string() { return this->operator()("to_version_string"); }
+inline bool SemVerVersion::is_definitive_version() { return this->operator()("is_definitive_version"); }
+inline bool SemVerVersion::matches(RefCounted other) { return this->operator()("matches", other); }
+inline Variant SemVerVersion::compare_parts(RefCounted other) { return this->operator()("compare_parts", other); }
+inline int64_t SemVerVersion::compare(RefCounted other) { return this->operator()("compare", other); }
+inline RefCounted SemVerVersion::parse(String raw, bool allow_wildcard) { return RefCounted(this->operator()("parse", raw, allow_wildcard).as_object().address()); }
 
 #endif

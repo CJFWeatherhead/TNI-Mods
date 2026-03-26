@@ -34,6 +34,6 @@ struct ModListItem : public Panel {
 #include "ModManifest.hpp"
 #include "ModManager.hpp"
 
-inline void ModListItem::update_item() { voidcall("update_item"); }
+inline void ModListItem::update_item() { this->voidcall("update_item"); }
 
 #endif

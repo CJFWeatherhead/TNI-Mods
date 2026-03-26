@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class DataWiperUSB : RigidBody2D
+---@class DataWiperUSB : PeripheralPlug
 ---@field product_name string
 ---@field price integer
 ---@field description string

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Pcap : Node
+---@class Pcap : TerminalRoutine
 ---@field MAX_LIVE_TRAFFIC_DISPLAY integer # Constant value: 15
 ---@field line_buffer Array<string>
 ---@field runtime_traversal_history table<any,any>

@@ -29,10 +29,10 @@ struct ScreenApp : public Container {
 
 #include "MainPane.hpp"
 
-inline void ScreenApp::clear_dynamic() { voidcall("clear_dynamic"); }
-inline void ScreenApp::toast(String msg, int64_t duration) { voidcall("toast", msg, duration); }
-inline Variant ScreenApp::get_main_pane() { return operator()("get_main_pane"); }
-inline void ScreenApp::minimize() { voidcall("minimize"); }
-inline void ScreenApp::launch() { voidcall("launch"); }
+inline void ScreenApp::clear_dynamic() { this->voidcall("clear_dynamic"); }
+inline void ScreenApp::toast(String msg, int64_t duration) { this->voidcall("toast", msg, duration); }
+inline Variant ScreenApp::get_main_pane() { return this->operator()("get_main_pane"); }
+inline void ScreenApp::minimize() { this->voidcall("minimize"); }
+inline void ScreenApp::launch() { this->voidcall("launch"); }
 
 #endif

@@ -20,7 +20,7 @@ struct C3DUtils : public Object {
 };
 
 
-inline Variant C3DUtils::get_recursive_rids(Node n) { return operator()("get_recursive_rids", n); }
-inline void C3DUtils::naive_box_packing(Area3D packing_area, Variant to_pack, double grid_step, Variant additional_excludes) { voidcall("naive_box_packing", packing_area, to_pack, grid_step, additional_excludes); }
+inline Variant C3DUtils::get_recursive_rids(Node n) { return this->operator()("get_recursive_rids", n); }
+inline void C3DUtils::naive_box_packing(Area3D packing_area, Variant to_pack, double grid_step, Variant additional_excludes) { this->voidcall("naive_box_packing", packing_area, to_pack, grid_step, additional_excludes); }
 
 #endif

@@ -51,7 +51,7 @@ struct Location : public Node2D {
 	inline Variant is_valid_global_point(Variant gpoint);
 	inline Variant get_floor_idx_from_global_point(Variant gpoint);
 	inline Variant debug_monitor_callback();
-	inline void add_fixture_outlet(FixtureOutlet newsock, Variant sockpos);
+	inline void add_fixture_outlet(const FixtureOutlet& newsock, Variant sockpos);
 	inline void populate_bill_breakdown(Variant payment_breakdown, bool power_fee_waiver, double global_network_fee_mult);
 };
 
@@ -61,10 +61,10 @@ struct Location : public Node2D {
 #include "Elevator.hpp"
 #include "FixtureOutlet.hpp"
 
-inline Variant Location::is_valid_global_point(Variant gpoint) { return operator()("is_valid_global_point", gpoint); }
-inline Variant Location::get_floor_idx_from_global_point(Variant gpoint) { return operator()("get_floor_idx_from_global_point", gpoint); }
-inline Variant Location::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline void Location::add_fixture_outlet(FixtureOutlet newsock, Variant sockpos) { voidcall("add_fixture_outlet", newsock, sockpos); }
-inline void Location::populate_bill_breakdown(Variant payment_breakdown, bool power_fee_waiver, double global_network_fee_mult) { voidcall("populate_bill_breakdown", payment_breakdown, power_fee_waiver, global_network_fee_mult); }
+inline Variant Location::is_valid_global_point(Variant gpoint) { return this->operator()("is_valid_global_point", gpoint); }
+inline Variant Location::get_floor_idx_from_global_point(Variant gpoint) { return this->operator()("get_floor_idx_from_global_point", gpoint); }
+inline Variant Location::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline void Location::add_fixture_outlet(const FixtureOutlet& newsock, Variant sockpos) { this->voidcall("add_fixture_outlet", Object(reinterpret_cast<const Object*>(&newsock)->address()), sockpos); }
+inline void Location::populate_bill_breakdown(Variant payment_breakdown, bool power_fee_waiver, double global_network_fee_mult) { this->voidcall("populate_bill_breakdown", payment_breakdown, power_fee_waiver, global_network_fee_mult); }
 
 #endif

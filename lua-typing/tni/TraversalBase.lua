@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TraversalBase : Node
+---@class TraversalBase : Program
 ---@field traffic_class string
 ---@field traffic_weight integer
 ---@field cpu_load integer

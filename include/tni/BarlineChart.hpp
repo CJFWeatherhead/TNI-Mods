@@ -40,8 +40,8 @@ struct BarlineChart : public Node2D {
 };
 
 
-inline void BarlineChart::generate_dataset_colors() { voidcall("generate_dataset_colors"); }
-inline void BarlineChart::setup_visual(Variant category_array, Variant bar_dataset, Variant line_values, Variant line_label) { voidcall("setup_visual", category_array, bar_dataset, line_values, line_label); }
-inline void BarlineChart::update_chart() { voidcall("update_chart"); }
+inline void BarlineChart::generate_dataset_colors() { this->voidcall("generate_dataset_colors"); }
+inline void BarlineChart::setup_visual(Variant category_array, Variant bar_dataset, Variant line_values, Variant line_label) { this->voidcall("setup_visual", category_array, bar_dataset, line_values, line_label); }
+inline void BarlineChart::update_chart() { this->voidcall("update_chart"); }
 
 #endif

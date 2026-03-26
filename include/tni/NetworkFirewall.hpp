@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct NetworkFirewall : public Node {
-	using Node::Node;
+struct NetworkFirewall : public Program {
+	using Program::Program;
 
-	constexpr NetworkFirewall(Node base) : Node{base} {}
-	constexpr NetworkFirewall(uint64_t addr) : Node{addr} {}
+	constexpr NetworkFirewall(Program base) : Program{base} {}
+	constexpr NetworkFirewall(uint64_t addr) : Program{addr} {}
 	constexpr NetworkFirewall(Object obj) : NetworkFirewall{obj.address()} {}
 	NetworkFirewall(Variant variant) : NetworkFirewall{variant.as_object().address()} {}
 
@@ -31,7 +32,7 @@ struct NetworkFirewall : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline bool process_network_packet(PacketControlModule _pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& _pktctl, Variant packet);
 	inline void tick();
 	inline String colorize_description(String ds);
 	inline void start();
@@ -45,13 +46,13 @@ struct NetworkFirewall : public Node {
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline bool NetworkFirewall::process_network_packet(PacketControlModule _pktctl, Variant packet) { return operator()("process_network_packet", _pktctl, packet); }
-inline void NetworkFirewall::tick() { voidcall("tick"); }
-inline String NetworkFirewall::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void NetworkFirewall::start() { voidcall("start"); }
-inline void NetworkFirewall::stop() { voidcall("stop"); }
-inline void NetworkFirewall::uninstall() { voidcall("uninstall"); }
-inline void NetworkFirewall::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool NetworkFirewall::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline bool NetworkFirewall::process_network_packet(const PacketControlModule& _pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&_pktctl)->address()), packet); }
+inline void NetworkFirewall::tick() { this->voidcall("tick"); }
+inline String NetworkFirewall::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void NetworkFirewall::start() { this->voidcall("start"); }
+inline void NetworkFirewall::stop() { this->voidcall("stop"); }
+inline void NetworkFirewall::uninstall() { this->voidcall("uninstall"); }
+inline void NetworkFirewall::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool NetworkFirewall::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

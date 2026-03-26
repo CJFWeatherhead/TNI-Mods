@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "DeviceUnit.hpp"
 
-struct ShelfPiece : public RigidBody2D {
-	using RigidBody2D::RigidBody2D;
+struct ShelfPiece : public DeviceUnit {
+	using DeviceUnit::DeviceUnit;
 
-	constexpr ShelfPiece(RigidBody2D base) : RigidBody2D{base} {}
-	constexpr ShelfPiece(uint64_t addr) : RigidBody2D{addr} {}
+	constexpr ShelfPiece(DeviceUnit base) : DeviceUnit{base} {}
+	constexpr ShelfPiece(uint64_t addr) : DeviceUnit{addr} {}
 	constexpr ShelfPiece(Object obj) : ShelfPiece{obj.address()} {}
 	ShelfPiece(Variant variant) : ShelfPiece{variant.as_object().address()} {}
 
@@ -86,23 +87,23 @@ struct ShelfPiece : public RigidBody2D {
 #include "LogicController.hpp"
 #include "PowerController.hpp"
 
-inline void ShelfPiece::apply_autoconfig() { voidcall("apply_autoconfig"); }
-inline void ShelfPiece::reposition(Variant new_pos) { voidcall("reposition", new_pos); }
-inline void ShelfPiece::elevator_move(Variant new_pos) { voidcall("elevator_move", new_pos); }
-inline double ShelfPiece::get_device_bounding_height() { return operator()("get_device_bounding_height"); }
-inline Variant ShelfPiece::get_global_y_range() { return operator()("get_global_y_range"); }
-inline Variant ShelfPiece::get_local_y_range() { return operator()("get_local_y_range"); }
-inline Variant ShelfPiece::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
-inline Variant ShelfPiece::debug_mux_setup() { return operator()("debug_mux_setup"); }
-inline Variant ShelfPiece::update_in_trolley_state() { return operator()("update_in_trolley_state"); }
-inline bool ShelfPiece::pickup(Variant new_picker) { return operator()("pickup", new_picker); }
-inline bool ShelfPiece::drop(Variant impulse) { return operator()("drop", impulse); }
-inline void ShelfPiece::reset_child_z_index() { voidcall("reset_child_z_index"); }
-inline void ShelfPiece::set_autosvc(bool new_state) { voidcall("set_autosvc", new_state); }
-inline void ShelfPiece::update_user_note(String new_value) { voidcall("update_user_note", new_value); }
-inline void ShelfPiece::remove_and_free_object() { voidcall("remove_and_free_object"); }
-inline void ShelfPiece::lift_child_z_index(int64_t base_val) { voidcall("lift_child_z_index", base_val); }
-inline Variant ShelfPiece::get_picker_type(Variant test_picker) { return operator()("get_picker_type", test_picker); }
-inline void ShelfPiece::setup_teleport(Variant gpos) { voidcall("setup_teleport", gpos); }
+inline void ShelfPiece::apply_autoconfig() { this->voidcall("apply_autoconfig"); }
+inline void ShelfPiece::reposition(Variant new_pos) { this->voidcall("reposition", new_pos); }
+inline void ShelfPiece::elevator_move(Variant new_pos) { this->voidcall("elevator_move", new_pos); }
+inline double ShelfPiece::get_device_bounding_height() { return this->operator()("get_device_bounding_height"); }
+inline Variant ShelfPiece::get_global_y_range() { return this->operator()("get_global_y_range"); }
+inline Variant ShelfPiece::get_local_y_range() { return this->operator()("get_local_y_range"); }
+inline Variant ShelfPiece::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
+inline Variant ShelfPiece::debug_mux_setup() { return this->operator()("debug_mux_setup"); }
+inline Variant ShelfPiece::update_in_trolley_state() { return this->operator()("update_in_trolley_state"); }
+inline bool ShelfPiece::pickup(Variant new_picker) { return this->operator()("pickup", new_picker); }
+inline bool ShelfPiece::drop(Variant impulse) { return this->operator()("drop", impulse); }
+inline void ShelfPiece::reset_child_z_index() { this->voidcall("reset_child_z_index"); }
+inline void ShelfPiece::set_autosvc(bool new_state) { this->voidcall("set_autosvc", new_state); }
+inline void ShelfPiece::update_user_note(String new_value) { this->voidcall("update_user_note", new_value); }
+inline void ShelfPiece::remove_and_free_object() { this->voidcall("remove_and_free_object"); }
+inline void ShelfPiece::lift_child_z_index(int64_t base_val) { this->voidcall("lift_child_z_index", base_val); }
+inline Variant ShelfPiece::get_picker_type(Variant test_picker) { return this->operator()("get_picker_type", test_picker); }
+inline void ShelfPiece::setup_teleport(Variant gpos) { this->voidcall("setup_teleport", gpos); }
 
 #endif

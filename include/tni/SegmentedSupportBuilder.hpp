@@ -51,7 +51,7 @@ struct SegmentedSupportBuilder : public Area3D {
 };
 
 
-inline void SegmentedSupportBuilder::build() { voidcall("build"); }
-inline void SegmentedSupportBuilder::stop_build() { voidcall("stop_build"); }
+inline void SegmentedSupportBuilder::build() { this->voidcall("build"); }
+inline void SegmentedSupportBuilder::stop_build() { this->voidcall("stop_build"); }
 
 #endif

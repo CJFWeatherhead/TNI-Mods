@@ -42,12 +42,12 @@ struct DayCycleController : public CanvasModulate {
 };
 
 
-inline void DayCycleController::time_mult_updated(double time_mult_delta) { voidcall("time_mult_updated", time_mult_delta); }
-inline void DayCycleController::force_day_clock(double new_clk) { voidcall("force_day_clock", new_clk); }
-inline void DayCycleController::force_normal_clock(double new_clk) { voidcall("force_normal_clock", new_clk); }
-inline Variant DayCycleController::calculate_day_clock_from_normal_clock(double dayclk) { return operator()("calculate_day_clock_from_normal_clock", dayclk); }
-inline void DayCycleController::pause_timer() { voidcall("pause_timer"); }
-inline void DayCycleController::resume_timer() { voidcall("resume_timer"); }
-inline Variant DayCycleController::debug_monitor_callback() { return operator()("debug_monitor_callback"); }
+inline void DayCycleController::time_mult_updated(double time_mult_delta) { this->voidcall("time_mult_updated", time_mult_delta); }
+inline void DayCycleController::force_day_clock(double new_clk) { this->voidcall("force_day_clock", new_clk); }
+inline void DayCycleController::force_normal_clock(double new_clk) { this->voidcall("force_normal_clock", new_clk); }
+inline Variant DayCycleController::calculate_day_clock_from_normal_clock(double dayclk) { return this->operator()("calculate_day_clock_from_normal_clock", dayclk); }
+inline void DayCycleController::pause_timer() { this->voidcall("pause_timer"); }
+inline void DayCycleController::resume_timer() { this->voidcall("resume_timer"); }
+inline Variant DayCycleController::debug_monitor_callback() { return this->operator()("debug_monitor_callback"); }
 
 #endif

@@ -56,13 +56,13 @@ struct Piechart : public Sprite2D {
 };
 
 
-inline void Piechart::generate_segment_colors() { voidcall("generate_segment_colors"); }
-inline void Piechart::set_segments(Variant names, Variant values, Variant colors) { voidcall("set_segments", names, values, colors); }
-inline Variant Piechart::process_top_segments(Variant names, Variant values, Variant colors) { return operator()("process_top_segments", names, values, colors); }
-inline void Piechart::update_pie_chart() { voidcall("update_pie_chart"); }
-inline void Piechart::add_percentage_table() { voidcall("add_percentage_table"); }
-inline Variant Piechart::format_number(Variant num) { return operator()("format_number", num); }
-inline void Piechart::add_legend() { voidcall("add_legend"); }
-inline void Piechart::clear_labels() { voidcall("clear_labels"); }
+inline void Piechart::generate_segment_colors() { this->voidcall("generate_segment_colors"); }
+inline void Piechart::set_segments(Variant names, Variant values, Variant colors) { this->voidcall("set_segments", names, values, colors); }
+inline Variant Piechart::process_top_segments(Variant names, Variant values, Variant colors) { return this->operator()("process_top_segments", names, values, colors); }
+inline void Piechart::update_pie_chart() { this->voidcall("update_pie_chart"); }
+inline void Piechart::add_percentage_table() { this->voidcall("add_percentage_table"); }
+inline Variant Piechart::format_number(Variant num) { return this->operator()("format_number", num); }
+inline void Piechart::add_legend() { this->voidcall("add_legend"); }
+inline void Piechart::clear_labels() { this->voidcall("clear_labels"); }
 
 #endif

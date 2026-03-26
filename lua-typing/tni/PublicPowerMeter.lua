@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PublicPowerMeter : Area2D
+---@class PublicPowerMeter : PowerMeter
 ---@field fine_lbl Label
 ---@field fine_threshold_kwh number
 ---@field metering_target PowerController

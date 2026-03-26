@@ -21,6 +21,6 @@ struct HallwayPropsPack : public Node2D {
 };
 
 
-inline void HallwayPropsPack::set_asset_shaders() { voidcall("set_asset_shaders"); }
+inline void HallwayPropsPack::set_asset_shaders() { this->voidcall("set_asset_shaders"); }
 
 #endif

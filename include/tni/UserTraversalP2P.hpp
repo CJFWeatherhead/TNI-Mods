@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "UserTraversal.hpp"
 
-struct UserTraversalP2P : public Node {
-	using Node::Node;
+struct UserTraversalP2P : public UserTraversal {
+	using UserTraversal::UserTraversal;
 
-	constexpr UserTraversalP2P(Node base) : Node{base} {}
-	constexpr UserTraversalP2P(uint64_t addr) : Node{addr} {}
+	constexpr UserTraversalP2P(UserTraversal base) : UserTraversal{base} {}
+	constexpr UserTraversalP2P(uint64_t addr) : UserTraversal{addr} {}
 	constexpr UserTraversalP2P(Object obj) : UserTraversalP2P{obj.address()} {}
 	UserTraversalP2P(Variant variant) : UserTraversalP2P{variant.as_object().address()} {}
 
@@ -73,9 +74,9 @@ struct UserTraversalP2P : public Node {
 	inline Variant get_compatible_hostings();
 	inline Variant filter_acceptable_hostings(Variant initial_candids);
 	inline void select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method);
-	inline Variant make_traversal_packet(NetworkPacketRoot proot);
-	inline Variant produce_limit_reached(LogicController node);
-	inline Variant compute_produce_limit(LogicController node);
+	inline Variant make_traversal_packet(const NetworkPacketRoot& proot);
+	inline Variant produce_limit_reached(const LogicController& node);
+	inline Variant compute_produce_limit(const LogicController& node);
 	inline NetworkPacketRoot make_packet_root();
 	inline void client_sim();
 	inline String colorize_description(String ds);
@@ -83,7 +84,7 @@ struct UserTraversalP2P : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
@@ -94,22 +95,22 @@ struct UserTraversalP2P : public Node {
 #include "NetworkPacketRoot.hpp"
 #include "PacketControlModule.hpp"
 
-inline void UserTraversalP2P::tick() { voidcall("tick"); }
-inline void UserTraversalP2P::add_surveyor_msg(String msg) { voidcall("add_surveyor_msg", msg); }
-inline Variant UserTraversalP2P::get_compatible_hostings() { return operator()("get_compatible_hostings"); }
-inline Variant UserTraversalP2P::filter_acceptable_hostings(Variant initial_candids) { return operator()("filter_acceptable_hostings", initial_candids); }
-inline void UserTraversalP2P::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
-inline Variant UserTraversalP2P::make_traversal_packet(NetworkPacketRoot proot) { return operator()("make_traversal_packet", proot); }
-inline Variant UserTraversalP2P::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
-inline Variant UserTraversalP2P::compute_produce_limit(LogicController node) { return operator()("compute_produce_limit", node); }
-inline NetworkPacketRoot UserTraversalP2P::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
-inline void UserTraversalP2P::client_sim() { voidcall("client_sim"); }
-inline String UserTraversalP2P::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void UserTraversalP2P::start() { voidcall("start"); }
-inline void UserTraversalP2P::stop() { voidcall("stop"); }
-inline void UserTraversalP2P::uninstall() { voidcall("uninstall"); }
-inline void UserTraversalP2P::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool UserTraversalP2P::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool UserTraversalP2P::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline void UserTraversalP2P::tick() { this->voidcall("tick"); }
+inline void UserTraversalP2P::add_surveyor_msg(String msg) { this->voidcall("add_surveyor_msg", msg); }
+inline Variant UserTraversalP2P::get_compatible_hostings() { return this->operator()("get_compatible_hostings"); }
+inline Variant UserTraversalP2P::filter_acceptable_hostings(Variant initial_candids) { return this->operator()("filter_acceptable_hostings", initial_candids); }
+inline void UserTraversalP2P::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { this->voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
+inline Variant UserTraversalP2P::make_traversal_packet(const NetworkPacketRoot& proot) { return this->operator()("make_traversal_packet", Object(reinterpret_cast<const Object*>(&proot)->address())); }
+inline Variant UserTraversalP2P::produce_limit_reached(const LogicController& node) { return this->operator()("produce_limit_reached", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline Variant UserTraversalP2P::compute_produce_limit(const LogicController& node) { return this->operator()("compute_produce_limit", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline NetworkPacketRoot UserTraversalP2P::make_packet_root() { return NetworkPacketRoot(this->operator()("make_packet_root").as_object().address()); }
+inline void UserTraversalP2P::client_sim() { this->voidcall("client_sim"); }
+inline String UserTraversalP2P::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void UserTraversalP2P::start() { this->voidcall("start"); }
+inline void UserTraversalP2P::stop() { this->voidcall("stop"); }
+inline void UserTraversalP2P::uninstall() { this->voidcall("uninstall"); }
+inline void UserTraversalP2P::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool UserTraversalP2P::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool UserTraversalP2P::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

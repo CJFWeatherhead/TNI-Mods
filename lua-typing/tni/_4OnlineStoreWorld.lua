@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class _4OnlineStoreWorld : Node2D
+---@class _4OnlineStoreWorld : GameWorld
 ---@field last_tutorial_name string
 ---@field tutorial_floor Object
 ---@field bought_items Object

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class ElevatorUpgrade : Node
+---@class ElevatorUpgrade : PropMod
 ---@field cost integer
 ---@field wait_time_decrease_factor number
 ---@field submitted boolean

@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "TraversalBase.hpp"
 
-struct TraversalConsume : public Node {
-	using Node::Node;
+struct TraversalConsume : public TraversalBase {
+	using TraversalBase::TraversalBase;
 
-	constexpr TraversalConsume(Node base) : Node{base} {}
-	constexpr TraversalConsume(uint64_t addr) : Node{addr} {}
+	constexpr TraversalConsume(TraversalBase base) : TraversalBase{base} {}
+	constexpr TraversalConsume(uint64_t addr) : TraversalBase{addr} {}
 	constexpr TraversalConsume(Object obj) : TraversalConsume{obj.address()} {}
 	TraversalConsume(Variant variant) : TraversalConsume{variant.as_object().address()} {}
 
@@ -57,10 +58,10 @@ struct TraversalConsume : public Node {
 	PROPERTY(is_running, bool);
 	PROPERTY(host_controller, LogicController);
 
-	inline Variant produce_limit_reached(LogicController node);
-	inline Variant compute_produce_limit(LogicController node);
+	inline Variant produce_limit_reached(const LogicController& node);
+	inline Variant compute_produce_limit(const LogicController& node);
 	inline NetworkPacketRoot make_packet_root();
-	inline Variant make_traversal_packet(NetworkPacketRoot proot);
+	inline Variant make_traversal_packet(const NetworkPacketRoot& proot);
 	inline void tick();
 	inline void client_sim();
 	inline String colorize_description(String ds);
@@ -68,7 +69,7 @@ struct TraversalConsume : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
@@ -77,18 +78,18 @@ struct TraversalConsume : public Node {
 #include "NetworkPacketRoot.hpp"
 #include "PacketControlModule.hpp"
 
-inline Variant TraversalConsume::produce_limit_reached(LogicController node) { return operator()("produce_limit_reached", node); }
-inline Variant TraversalConsume::compute_produce_limit(LogicController node) { return operator()("compute_produce_limit", node); }
-inline NetworkPacketRoot TraversalConsume::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
-inline Variant TraversalConsume::make_traversal_packet(NetworkPacketRoot proot) { return operator()("make_traversal_packet", proot); }
-inline void TraversalConsume::tick() { voidcall("tick"); }
-inline void TraversalConsume::client_sim() { voidcall("client_sim"); }
-inline String TraversalConsume::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void TraversalConsume::start() { voidcall("start"); }
-inline void TraversalConsume::stop() { voidcall("stop"); }
-inline void TraversalConsume::uninstall() { voidcall("uninstall"); }
-inline void TraversalConsume::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool TraversalConsume::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool TraversalConsume::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline Variant TraversalConsume::produce_limit_reached(const LogicController& node) { return this->operator()("produce_limit_reached", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline Variant TraversalConsume::compute_produce_limit(const LogicController& node) { return this->operator()("compute_produce_limit", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline NetworkPacketRoot TraversalConsume::make_packet_root() { return NetworkPacketRoot(this->operator()("make_packet_root").as_object().address()); }
+inline Variant TraversalConsume::make_traversal_packet(const NetworkPacketRoot& proot) { return this->operator()("make_traversal_packet", Object(reinterpret_cast<const Object*>(&proot)->address())); }
+inline void TraversalConsume::tick() { this->voidcall("tick"); }
+inline void TraversalConsume::client_sim() { this->voidcall("client_sim"); }
+inline String TraversalConsume::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void TraversalConsume::start() { this->voidcall("start"); }
+inline void TraversalConsume::stop() { this->voidcall("stop"); }
+inline void TraversalConsume::uninstall() { this->voidcall("uninstall"); }
+inline void TraversalConsume::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool TraversalConsume::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool TraversalConsume::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

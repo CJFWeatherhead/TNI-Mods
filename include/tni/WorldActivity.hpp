@@ -21,7 +21,7 @@ struct WorldActivity : public Node {
 };
 
 
-inline void WorldActivity::get_activity_display_name() { voidcall("get_activity_display_name"); }
-inline String WorldActivity::get_activity_description() { return operator()("get_activity_description"); }
+inline void WorldActivity::get_activity_display_name() { this->voidcall("get_activity_display_name"); }
+inline String WorldActivity::get_activity_description() { return this->operator()("get_activity_description"); }
 
 #endif

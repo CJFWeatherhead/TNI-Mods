@@ -27,7 +27,7 @@ struct LobbyItem : public HBoxContainer {
 };
 
 
-inline void LobbyItem::hide_join_button() { voidcall("hide_join_button"); }
-inline void LobbyItem::disable_join_button() { voidcall("disable_join_button"); }
+inline void LobbyItem::hide_join_button() { this->voidcall("hide_join_button"); }
+inline void LobbyItem::disable_join_button() { this->voidcall("disable_join_button"); }
 
 #endif

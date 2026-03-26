@@ -21,6 +21,6 @@ struct PhoneActivator : public Control {
 };
 
 
-inline void PhoneActivator::update() { voidcall("update"); }
+inline void PhoneActivator::update() { this->voidcall("update"); }
 
 #endif

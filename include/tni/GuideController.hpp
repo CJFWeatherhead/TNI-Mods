@@ -23,7 +23,7 @@ struct GuideController : public Node {
 };
 
 
-inline void GuideController::cleanup() { voidcall("cleanup"); }
-inline void GuideController::mark_guide_complete(String guide_name) { voidcall("mark_guide_complete", guide_name); }
+inline void GuideController::cleanup() { this->voidcall("cleanup"); }
+inline void GuideController::mark_guide_complete(String guide_name) { this->voidcall("mark_guide_complete", guide_name); }
 
 #endif

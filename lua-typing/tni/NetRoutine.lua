@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class NetRoutine : Node
+---@class NetRoutine : TerminalRoutine
 ---@field ADDR_SUBCOM Array<any> # Constant value: ["address", "addr", "a"]
 ---@field DNS_SUBCOM Array<any> # Constant value: ["dns"]
 ---@field DHCP_SUBCOM Array<any> # Constant value: ["dhcp"]

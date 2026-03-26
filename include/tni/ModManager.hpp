@@ -67,13 +67,13 @@ struct ModManager : public Control {
 #include "ModManifest.hpp"
 #include "ModPreset.hpp"
 
-inline void ModManager::fade_in() { voidcall("fade_in"); }
-inline void ModManager::fade_out() { voidcall("fade_out"); }
-inline void ModManager::update_preset_label() { voidcall("update_preset_label"); }
-inline void ModManager::update_mod_list() { voidcall("update_mod_list"); }
-inline void ModManager::update_mod_tabs() { voidcall("update_mod_tabs"); }
-inline void ModManager::update_mod_info_tab() { voidcall("update_mod_info_tab"); }
-inline void ModManager::update_mod_config_tab() { voidcall("update_mod_config_tab"); }
-inline void ModManager::update_mod_stats_tab() { voidcall("update_mod_stats_tab"); }
+inline void ModManager::fade_in() { this->voidcall("fade_in"); }
+inline void ModManager::fade_out() { this->voidcall("fade_out"); }
+inline void ModManager::update_preset_label() { this->voidcall("update_preset_label"); }
+inline void ModManager::update_mod_list() { this->voidcall("update_mod_list"); }
+inline void ModManager::update_mod_tabs() { this->voidcall("update_mod_tabs"); }
+inline void ModManager::update_mod_info_tab() { this->voidcall("update_mod_info_tab"); }
+inline void ModManager::update_mod_config_tab() { this->voidcall("update_mod_config_tab"); }
+inline void ModManager::update_mod_stats_tab() { this->voidcall("update_mod_stats_tab"); }
 
 #endif

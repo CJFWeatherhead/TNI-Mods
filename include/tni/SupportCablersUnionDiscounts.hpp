@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "MerchantListingMod.hpp"
 
-struct SupportCablersUnionDiscounts : public Node {
-	using Node::Node;
+struct SupportCablersUnionDiscounts : public MerchantListingMod {
+	using MerchantListingMod::MerchantListingMod;
 
-	constexpr SupportCablersUnionDiscounts(Node base) : Node{base} {}
-	constexpr SupportCablersUnionDiscounts(uint64_t addr) : Node{addr} {}
+	constexpr SupportCablersUnionDiscounts(MerchantListingMod base) : MerchantListingMod{base} {}
+	constexpr SupportCablersUnionDiscounts(uint64_t addr) : MerchantListingMod{addr} {}
 	constexpr SupportCablersUnionDiscounts(Object obj) : SupportCablersUnionDiscounts{obj.address()} {}
 	SupportCablersUnionDiscounts(Variant variant) : SupportCablersUnionDiscounts{variant.as_object().address()} {}
 
@@ -49,13 +50,13 @@ struct SupportCablersUnionDiscounts : public Node {
 
 #include "PropMod.hpp"
 
-inline void SupportCablersUnionDiscounts::apply_mod() { voidcall("apply_mod"); }
-inline String SupportCablersUnionDiscounts::get_proposal_name() { return operator()("get_proposal_name"); }
-inline String SupportCablersUnionDiscounts::get_lore() { return operator()("get_lore"); }
-inline String SupportCablersUnionDiscounts::get_description() { return operator()("get_description"); }
-inline void SupportCablersUnionDiscounts::activate_local_effects() { voidcall("activate_local_effects"); }
-inline Variant SupportCablersUnionDiscounts::test_adhoc_requirements() { return operator()("test_adhoc_requirements"); }
-inline void SupportCablersUnionDiscounts::submit_and_apply() { voidcall("submit_and_apply"); }
-inline void SupportCablersUnionDiscounts::update_state() { voidcall("update_state"); }
+inline void SupportCablersUnionDiscounts::apply_mod() { this->voidcall("apply_mod"); }
+inline String SupportCablersUnionDiscounts::get_proposal_name() { return this->operator()("get_proposal_name"); }
+inline String SupportCablersUnionDiscounts::get_lore() { return this->operator()("get_lore"); }
+inline String SupportCablersUnionDiscounts::get_description() { return this->operator()("get_description"); }
+inline void SupportCablersUnionDiscounts::activate_local_effects() { this->voidcall("activate_local_effects"); }
+inline Variant SupportCablersUnionDiscounts::test_adhoc_requirements() { return this->operator()("test_adhoc_requirements"); }
+inline void SupportCablersUnionDiscounts::submit_and_apply() { this->voidcall("submit_and_apply"); }
+inline void SupportCablersUnionDiscounts::update_state() { this->voidcall("update_state"); }
 
 #endif

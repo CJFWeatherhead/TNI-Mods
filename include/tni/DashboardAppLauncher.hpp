@@ -27,6 +27,6 @@ struct DashboardAppLauncher : public Control {
 };
 
 
-inline Variant DashboardAppLauncher::init_app() { return operator()("init_app"); }
+inline Variant DashboardAppLauncher::init_app() { return this->operator()("init_app"); }
 
 #endif

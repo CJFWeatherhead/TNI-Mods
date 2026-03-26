@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class NetopsResearch : Node
+---@class NetopsResearch : PropMod
 ---@field techv string # Constant value: netops_v1
 ---@field cost integer
 ---@field submitted boolean

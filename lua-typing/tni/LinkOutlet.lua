@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class LinkOutlet : Area2D
+---@class LinkOutlet : FixtureOutlet
 ---@field link_type LinkOutlet.LinkOutletType
 ---@field link_np string
 ---@field tower_link TowerNetworkLink

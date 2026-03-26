@@ -24,6 +24,6 @@ struct WFCCell : public Object {
 };
 
 
-inline void WFCCell::collapse() { voidcall("collapse"); }
+inline void WFCCell::collapse() { this->voidcall("collapse"); }
 
 #endif

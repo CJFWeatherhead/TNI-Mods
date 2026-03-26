@@ -22,7 +22,7 @@ struct NpcEmailSystem : public Control {
 };
 
 
-inline void NpcEmailSystem::display(String msg) { voidcall("display", msg); }
-inline void NpcEmailSystem::clear_emails() { voidcall("clear_emails"); }
+inline void NpcEmailSystem::display(String msg) { this->voidcall("display", msg); }
+inline void NpcEmailSystem::clear_emails() { this->voidcall("clear_emails"); }
 
 #endif

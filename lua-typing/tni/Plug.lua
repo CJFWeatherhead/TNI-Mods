@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Plug : RigidBody2D
+---@class Plug : PickableDevice
 ---@field ZINDEX integer # Constant value: 500
 ---@field compatibles Array<any>
 ---@field connection Object

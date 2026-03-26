@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Breaktime : Container
+---@class Breaktime : ScreenApp
 ---@field CDFTIME number # Constant value: 3.0
 ---@field speedup_button Button
 ---@field slowdown_button Button

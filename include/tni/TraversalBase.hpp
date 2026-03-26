@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Program.hpp"
 
-struct TraversalBase : public Node {
-	using Node::Node;
+struct TraversalBase : public Program {
+	using Program::Program;
 
-	constexpr TraversalBase(Node base) : Node{base} {}
-	constexpr TraversalBase(uint64_t addr) : Node{addr} {}
+	constexpr TraversalBase(Program base) : Program{base} {}
+	constexpr TraversalBase(uint64_t addr) : Program{addr} {}
 	constexpr TraversalBase(Object obj) : TraversalBase{obj.address()} {}
 	TraversalBase(Variant variant) : TraversalBase{variant.as_object().address()} {}
 
@@ -43,7 +44,7 @@ struct TraversalBase : public Node {
 	PROPERTY(host_controller, LogicController);
 
 	inline NetworkPacketRoot make_packet_root();
-	inline Variant make_traversal_packet(NetworkPacketRoot proot);
+	inline Variant make_traversal_packet(const NetworkPacketRoot& proot);
 	inline void tick();
 	inline void client_sim();
 	inline String colorize_description(String ds);
@@ -51,7 +52,7 @@ struct TraversalBase : public Node {
 	inline void stop();
 	inline void uninstall();
 	inline void install(Variant _install_opts);
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
@@ -59,16 +60,16 @@ struct TraversalBase : public Node {
 #include "NetworkPacketRoot.hpp"
 #include "PacketControlModule.hpp"
 
-inline NetworkPacketRoot TraversalBase::make_packet_root() { return NetworkPacketRoot(operator()("make_packet_root").as_object().address()); }
-inline Variant TraversalBase::make_traversal_packet(NetworkPacketRoot proot) { return operator()("make_traversal_packet", proot); }
-inline void TraversalBase::tick() { voidcall("tick"); }
-inline void TraversalBase::client_sim() { voidcall("client_sim"); }
-inline String TraversalBase::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void TraversalBase::start() { voidcall("start"); }
-inline void TraversalBase::stop() { voidcall("stop"); }
-inline void TraversalBase::uninstall() { voidcall("uninstall"); }
-inline void TraversalBase::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline bool TraversalBase::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool TraversalBase::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline NetworkPacketRoot TraversalBase::make_packet_root() { return NetworkPacketRoot(this->operator()("make_packet_root").as_object().address()); }
+inline Variant TraversalBase::make_traversal_packet(const NetworkPacketRoot& proot) { return this->operator()("make_traversal_packet", Object(reinterpret_cast<const Object*>(&proot)->address())); }
+inline void TraversalBase::tick() { this->voidcall("tick"); }
+inline void TraversalBase::client_sim() { this->voidcall("client_sim"); }
+inline String TraversalBase::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void TraversalBase::start() { this->voidcall("start"); }
+inline void TraversalBase::stop() { this->voidcall("stop"); }
+inline void TraversalBase::uninstall() { this->voidcall("uninstall"); }
+inline void TraversalBase::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool TraversalBase::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool TraversalBase::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

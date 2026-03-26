@@ -54,20 +54,20 @@ struct Program : public Node {
 	inline void uninstall();
 	inline void install(Variant _install_opts);
 	inline void tick();
-	inline bool process_network_packet(PacketControlModule pktctl, Variant packet);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
 	inline bool is_pkt_for_self(Variant packet);
 };
 
 #include "LogicController.hpp"
 #include "PacketControlModule.hpp"
 
-inline String Program::colorize_description(String ds) { return operator()("colorize_description", ds); }
-inline void Program::start() { voidcall("start"); }
-inline void Program::stop() { voidcall("stop"); }
-inline void Program::uninstall() { voidcall("uninstall"); }
-inline void Program::install(Variant _install_opts) { voidcall("install", _install_opts); }
-inline void Program::tick() { voidcall("tick"); }
-inline bool Program::process_network_packet(PacketControlModule pktctl, Variant packet) { return operator()("process_network_packet", pktctl, packet); }
-inline bool Program::is_pkt_for_self(Variant packet) { return operator()("is_pkt_for_self", packet); }
+inline String Program::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void Program::start() { this->voidcall("start"); }
+inline void Program::stop() { this->voidcall("stop"); }
+inline void Program::uninstall() { this->voidcall("uninstall"); }
+inline void Program::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline void Program::tick() { this->voidcall("tick"); }
+inline bool Program::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool Program::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
 
 #endif

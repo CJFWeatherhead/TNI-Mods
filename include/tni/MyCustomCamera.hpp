@@ -46,10 +46,10 @@ struct MyCustomCamera : public Camera2D {
 
 #include "Location.hpp"
 
-inline void MyCustomCamera::warp_to_initial() { voidcall("warp_to_initial"); }
-inline void MyCustomCamera::warp_to_floor(int64_t floor_id) { voidcall("warp_to_floor", floor_id); }
-inline void MyCustomCamera::warp(Variant dest) { voidcall("warp", dest); }
-inline void MyCustomCamera::zoom_in() { voidcall("zoom_in"); }
-inline void MyCustomCamera::zoom_out() { voidcall("zoom_out"); }
+inline void MyCustomCamera::warp_to_initial() { this->voidcall("warp_to_initial"); }
+inline void MyCustomCamera::warp_to_floor(int64_t floor_id) { this->voidcall("warp_to_floor", floor_id); }
+inline void MyCustomCamera::warp(Variant dest) { this->voidcall("warp", dest); }
+inline void MyCustomCamera::zoom_in() { this->voidcall("zoom_in"); }
+inline void MyCustomCamera::zoom_out() { this->voidcall("zoom_out"); }
 
 #endif

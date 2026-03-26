@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PassiveActivity : Node
+---@class PassiveActivity : WorldActivity
 local PassiveActivity = {}
 
 function PassiveActivity.tick() end

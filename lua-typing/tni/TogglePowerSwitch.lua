@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TogglePowerSwitch : Area2D
+---@class TogglePowerSwitch : ToggleSwitch
 ---@field pointlight2d PointLight2D
 ---@field physical_state boolean
 ---@field energy number

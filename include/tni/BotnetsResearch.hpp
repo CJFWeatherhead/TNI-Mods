@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "PropMod.hpp"
 
-struct BotnetsResearch : public Node {
-	using Node::Node;
+struct BotnetsResearch : public PropMod {
+	using PropMod::PropMod;
 
-	constexpr BotnetsResearch(Node base) : Node{base} {}
-	constexpr BotnetsResearch(uint64_t addr) : Node{addr} {}
+	constexpr BotnetsResearch(PropMod base) : PropMod{base} {}
+	constexpr BotnetsResearch(uint64_t addr) : PropMod{addr} {}
 	constexpr BotnetsResearch(Object obj) : BotnetsResearch{obj.address()} {}
 	BotnetsResearch(Variant variant) : BotnetsResearch{variant.as_object().address()} {}
 
@@ -43,13 +44,13 @@ struct BotnetsResearch : public Node {
 
 #include "PropMod.hpp"
 
-inline void BotnetsResearch::apply_mod() { voidcall("apply_mod"); }
-inline void BotnetsResearch::activate_local_effects() { voidcall("activate_local_effects"); }
-inline String BotnetsResearch::get_proposal_name() { return operator()("get_proposal_name"); }
-inline String BotnetsResearch::get_lore() { return operator()("get_lore"); }
-inline String BotnetsResearch::get_description() { return operator()("get_description"); }
-inline Variant BotnetsResearch::test_adhoc_requirements() { return operator()("test_adhoc_requirements"); }
-inline void BotnetsResearch::submit_and_apply() { voidcall("submit_and_apply"); }
-inline void BotnetsResearch::update_state() { voidcall("update_state"); }
+inline void BotnetsResearch::apply_mod() { this->voidcall("apply_mod"); }
+inline void BotnetsResearch::activate_local_effects() { this->voidcall("activate_local_effects"); }
+inline String BotnetsResearch::get_proposal_name() { return this->operator()("get_proposal_name"); }
+inline String BotnetsResearch::get_lore() { return this->operator()("get_lore"); }
+inline String BotnetsResearch::get_description() { return this->operator()("get_description"); }
+inline Variant BotnetsResearch::test_adhoc_requirements() { return this->operator()("test_adhoc_requirements"); }
+inline void BotnetsResearch::submit_and_apply() { this->voidcall("submit_and_apply"); }
+inline void BotnetsResearch::update_state() { this->voidcall("update_state"); }
 
 #endif

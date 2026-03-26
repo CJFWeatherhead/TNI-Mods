@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Registry : Container
+---@class Registry : ScreenApp
 ---@field di_scn string # Constant value: <PackedScene>
 ---@field reg_page Container
 ---@field main_page Container

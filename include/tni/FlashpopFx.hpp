@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "AudioVisualEffects2D.hpp"
 
-struct FlashpopFx : public Node2D {
-	using Node2D::Node2D;
+struct FlashpopFx : public AudioVisualEffects2D {
+	using AudioVisualEffects2D::AudioVisualEffects2D;
 
-	constexpr FlashpopFx(Node2D base) : Node2D{base} {}
-	constexpr FlashpopFx(uint64_t addr) : Node2D{addr} {}
+	constexpr FlashpopFx(AudioVisualEffects2D base) : AudioVisualEffects2D{base} {}
+	constexpr FlashpopFx(uint64_t addr) : AudioVisualEffects2D{addr} {}
 	constexpr FlashpopFx(Object obj) : FlashpopFx{obj.address()} {}
 	FlashpopFx(Variant variant) : FlashpopFx{variant.as_object().address()} {}
 
@@ -22,7 +23,7 @@ struct FlashpopFx : public Node2D {
 };
 
 
-inline void FlashpopFx::trigger() { voidcall("trigger"); }
-inline void FlashpopFx::stop() { voidcall("stop"); }
+inline void FlashpopFx::trigger() { this->voidcall("trigger"); }
+inline void FlashpopFx::stop() { this->voidcall("stop"); }
 
 #endif

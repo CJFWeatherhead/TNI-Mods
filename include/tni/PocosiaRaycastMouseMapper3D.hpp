@@ -34,6 +34,6 @@ struct PocosiaRaycastMouseMapper3D : public Node3D {
 };
 
 
-inline void PocosiaRaycastMouseMapper3D::handle_input(InputEvent event) { voidcall("handle_input", event); }
+inline void PocosiaRaycastMouseMapper3D::handle_input(InputEvent event) { this->voidcall("handle_input", event); }
 
 #endif

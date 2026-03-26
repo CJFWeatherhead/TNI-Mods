@@ -5,12 +5,13 @@
 
 #include <generated_api.hpp>
 #include "structs.hpp"
+#include "Mod.hpp"
 
-struct ModLua : public Sandbox {
-	using Sandbox::Sandbox;
+struct ModLua : public Mod {
+	using Mod::Mod;
 
-	constexpr ModLua(Sandbox base) : Sandbox{base} {}
-	constexpr ModLua(uint64_t addr) : Sandbox{addr} {}
+	constexpr ModLua(Mod base) : Mod{base} {}
+	constexpr ModLua(uint64_t addr) : Mod{addr} {}
 	constexpr ModLua(Object obj) : ModLua{obj.address()} {}
 	ModLua(Variant variant) : ModLua{variant.as_object().address()} {}
 
@@ -39,15 +40,15 @@ struct ModLua : public Sandbox {
 #include "ModFileSystem.hpp"
 #include "ModApiV1.hpp"
 
-inline void ModLua::reload() { voidcall("reload"); }
-inline bool ModLua::has_critical_error() { return operator()("has_critical_error"); }
-inline void ModLua::call_if_has() { voidcall("call_if_has"); }
-inline void ModLua::mod_log(String s) { voidcall("mod_log", s); }
-inline void ModLua::handle_stdout(String s) { voidcall("handle_stdout", s); }
-inline Variant ModLua::callable_args_to_array(Variant c) { return operator()("callable_args_to_array", c); }
-inline bool ModLua::array_value_allowed(Variant array, int64_t idx) { return operator()("array_value_allowed", array, idx); }
-inline Variant ModLua::instance_from_id_(int64_t id) { return operator()("instance_from_id_", id); }
-inline String ModLua::error_string_(int64_t e) { return operator()("error_string_", e); }
-inline String ModLua::str_(Variant value) { return operator()("str_", value); }
+inline void ModLua::reload() { this->voidcall("reload"); }
+inline bool ModLua::has_critical_error() { return this->operator()("has_critical_error"); }
+inline void ModLua::call_if_has() { this->voidcall("call_if_has"); }
+inline void ModLua::mod_log(String s) { this->voidcall("mod_log", s); }
+inline void ModLua::handle_stdout(String s) { this->voidcall("handle_stdout", s); }
+inline Variant ModLua::callable_args_to_array(Variant c) { return this->operator()("callable_args_to_array", c); }
+inline bool ModLua::array_value_allowed(Variant array, int64_t idx) { return this->operator()("array_value_allowed", array, idx); }
+inline Variant ModLua::instance_from_id_(int64_t id) { return this->operator()("instance_from_id_", id); }
+inline String ModLua::error_string_(int64_t e) { return this->operator()("error_string_", e); }
+inline String ModLua::str_(Variant value) { return this->operator()("str_", value); }
 
 #endif

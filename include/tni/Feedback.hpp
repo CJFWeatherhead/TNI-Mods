@@ -24,10 +24,10 @@ struct Feedback : public Control {
 };
 
 
-inline void Feedback::fade_in() { voidcall("fade_in"); }
-inline void Feedback::fade_out() { voidcall("fade_out"); }
-inline void Feedback::show_loading_form() { voidcall("show_loading_form"); }
-inline void Feedback::hide_loading_form() { voidcall("hide_loading_form"); }
-inline void Feedback::show_response_form(Variant response_code) { voidcall("show_response_form", response_code); }
+inline void Feedback::fade_in() { this->voidcall("fade_in"); }
+inline void Feedback::fade_out() { this->voidcall("fade_out"); }
+inline void Feedback::show_loading_form() { this->voidcall("show_loading_form"); }
+inline void Feedback::hide_loading_form() { this->voidcall("hide_loading_form"); }
+inline void Feedback::show_response_form(Variant response_code) { this->voidcall("show_response_form", response_code); }
 
 #endif

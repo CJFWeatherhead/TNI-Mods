@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TraversalHistoryProduce : Node
+---@class TraversalHistoryProduce : AlwaysProduce
 ---@field require_user_traffic boolean
 ---@field use_limit integer
 ---@field produce_use_config UseConfig

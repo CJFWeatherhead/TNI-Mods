@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PowerController : Node
+---@class PowerController : GraphController
 ---@field MAX_DEPTH integer # Constant value: 99999
 ---@field LEAKAGE integer # Constant value: 1
 ---@field REFRESH_PERIOD_SECONDS number # Constant value: 0.7

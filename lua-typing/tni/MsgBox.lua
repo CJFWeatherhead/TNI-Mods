@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class MsgBox : Container
+---@class MsgBox : ScreenApp
 ---@field msg_list_scene PackedScene
 ---@field msg_view_scene PackedScene
 ---@field viewing_msg boolean

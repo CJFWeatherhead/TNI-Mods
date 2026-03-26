@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class TenaboltFusionPhaseTwo : Node
+---@class TenaboltFusionPhaseTwo : PropMod
 ---@field cost integer # Constant value: 2000
 ---@field reduction number
 ---@field prob_reduction number

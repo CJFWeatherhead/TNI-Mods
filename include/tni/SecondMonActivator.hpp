@@ -21,6 +21,6 @@ struct SecondMonActivator : public Control {
 };
 
 
-inline void SecondMonActivator::update() { voidcall("update"); }
+inline void SecondMonActivator::update() { this->voidcall("update"); }
 
 #endif

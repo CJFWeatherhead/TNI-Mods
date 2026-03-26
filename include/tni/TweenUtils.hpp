@@ -19,6 +19,6 @@ struct TweenUtils : public Object {
 };
 
 
-inline Variant TweenUtils::stop_and_create(Node bind_node, Tween twn1) { return operator()("stop_and_create", bind_node, twn1); }
+inline Variant TweenUtils::stop_and_create(Node bind_node, Tween twn1) { return this->operator()("stop_and_create", bind_node, twn1); }
 
 #endif

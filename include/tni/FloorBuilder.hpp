@@ -35,9 +35,9 @@ struct FloorBuilder : public Node {
 
 #include "OnboardingController.hpp"
 
-inline bool FloorBuilder::floor_requirements_satisfied(Variant candid) { return operator()("floor_requirements_satisfied", candid); }
-inline void FloorBuilder::execute_random_build_option(bool force_spawn) { voidcall("execute_random_build_option", force_spawn); }
-inline void FloorBuilder::build_floor_with_sfp(String sfp, bool force_spawn) { voidcall("build_floor_with_sfp", sfp, force_spawn); }
-inline void FloorBuilder::trigger_date_elapsed(int64_t new_date) { voidcall("trigger_date_elapsed", new_date); }
+inline bool FloorBuilder::floor_requirements_satisfied(Variant candid) { return this->operator()("floor_requirements_satisfied", candid); }
+inline void FloorBuilder::execute_random_build_option(bool force_spawn) { this->voidcall("execute_random_build_option", force_spawn); }
+inline void FloorBuilder::build_floor_with_sfp(String sfp, bool force_spawn) { this->voidcall("build_floor_with_sfp", sfp, force_spawn); }
+inline void FloorBuilder::trigger_date_elapsed(int64_t new_date) { this->voidcall("trigger_date_elapsed", new_date); }
 
 #endif

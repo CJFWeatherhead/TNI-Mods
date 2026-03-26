@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class SecondMonitor : Node
+---@class SecondMonitor : PropMod
 ---@field techv string # Constant value: second_monitor
 ---@field cost integer
 ---@field submitted boolean

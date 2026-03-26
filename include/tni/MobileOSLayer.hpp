@@ -51,12 +51,12 @@ struct MobileOSLayer : public CanvasLayer {
 
 #include "Screen.hpp"
 
-inline void MobileOSLayer::internal_captured_event_propagate(InputEvent event) { voidcall("internal_captured_event_propagate", event); }
-inline void MobileOSLayer::left_click() { voidcall("left_click"); }
-inline void MobileOSLayer::right_click() { voidcall("right_click"); }
-inline void MobileOSLayer::middle_click() { voidcall("middle_click"); }
-inline void MobileOSLayer::play_coffee_animation() { voidcall("play_coffee_animation"); }
-inline void MobileOSLayer::play_tea_animation() { voidcall("play_tea_animation"); }
-inline void MobileOSLayer::play_water_animation() { voidcall("play_water_animation"); }
+inline void MobileOSLayer::internal_captured_event_propagate(InputEvent event) { this->voidcall("internal_captured_event_propagate", event); }
+inline void MobileOSLayer::left_click() { this->voidcall("left_click"); }
+inline void MobileOSLayer::right_click() { this->voidcall("right_click"); }
+inline void MobileOSLayer::middle_click() { this->voidcall("middle_click"); }
+inline void MobileOSLayer::play_coffee_animation() { this->voidcall("play_coffee_animation"); }
+inline void MobileOSLayer::play_tea_animation() { this->voidcall("play_tea_animation"); }
+inline void MobileOSLayer::play_water_animation() { this->voidcall("play_water_animation"); }
 
 #endif

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class MediaWorld : Node2D
+---@class MediaWorld : GameWorld
 ---@field is_state_restored boolean
 ---@field play_options PlayOptions
 ---@field game_stats GameStatistics

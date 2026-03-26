@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PowerOutageController : Node
+---@class PowerOutageController : RandomEvent
 ---@field scheduled_outage_rate number
 ---@field min_warn_seconds integer
 ---@field max_warn_seconds integer

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class UserTraversalFQDN : Node
+---@class UserTraversalFQDN : UserTraversal
 ---@field manifest_probability number
 ---@field never_manifest_without_any_provider boolean
 ---@field host_selection_algorithm UserTraversal.HostSelMethod

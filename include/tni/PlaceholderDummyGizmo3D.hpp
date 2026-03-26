@@ -20,6 +20,6 @@ struct PlaceholderDummyGizmo3D : public Object {
 };
 
 
-inline void PlaceholderDummyGizmo3D::set_gizmo_value(Variant v, double _unused_normal_factor) { voidcall("set_gizmo_value", v, _unused_normal_factor); }
+inline void PlaceholderDummyGizmo3D::set_gizmo_value(Variant v, double _unused_normal_factor) { this->voidcall("set_gizmo_value", v, _unused_normal_factor); }
 
 #endif

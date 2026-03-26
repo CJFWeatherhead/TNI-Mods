@@ -30,8 +30,8 @@ struct MouseGridOverlay2d : public Node2D {
 };
 
 
-inline void MouseGridOverlay2d::draw_grid_lines(Variant top_left, Variant bottom_right) { voidcall("draw_grid_lines", top_left, bottom_right); }
-inline void MouseGridOverlay2d::draw_faded_line(Variant start, Variant end) { voidcall("draw_faded_line", start, end); }
-inline double MouseGridOverlay2d::calculate_alpha(double dist) { return operator()("calculate_alpha", dist); }
+inline void MouseGridOverlay2d::draw_grid_lines(Variant top_left, Variant bottom_right) { this->voidcall("draw_grid_lines", top_left, bottom_right); }
+inline void MouseGridOverlay2d::draw_faded_line(Variant start, Variant end) { this->voidcall("draw_faded_line", start, end); }
+inline double MouseGridOverlay2d::calculate_alpha(double dist) { return this->operator()("calculate_alpha", dist); }
 
 #endif

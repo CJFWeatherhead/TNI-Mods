@@ -21,6 +21,6 @@ struct DeltaVArea3D : public Area3D {
 };
 
 
-inline void DeltaVArea3D::affect_rigid_body(RigidBody3D body, double time_delta) { voidcall("affect_rigid_body", body, time_delta); }
+inline void DeltaVArea3D::affect_rigid_body(RigidBody3D body, double time_delta) { this->voidcall("affect_rigid_body", body, time_delta); }
 
 #endif

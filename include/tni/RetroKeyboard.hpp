@@ -35,7 +35,7 @@ struct RetroKeyboard : public Node2D {
 };
 
 
-inline void RetroKeyboard::press_key_from_event(InputEventKey inpev) { voidcall("press_key_from_event", inpev); }
-inline void RetroKeyboard::press_key(int64_t kc) { voidcall("press_key", kc); }
+inline void RetroKeyboard::press_key_from_event(InputEventKey inpev) { this->voidcall("press_key_from_event", inpev); }
+inline void RetroKeyboard::press_key(int64_t kc) { this->voidcall("press_key", kc); }
 
 #endif

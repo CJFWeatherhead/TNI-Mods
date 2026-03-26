@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class ShelfPiece : RigidBody2D
+---@class ShelfPiece : DeviceUnit
 ---@field product_name string
 ---@field description string
 ---@field text string

@@ -34,8 +34,8 @@ struct LoadingScreen : public Control {
 };
 
 
-inline void LoadingScreen::show_hint(int64_t n) { voidcall("show_hint", n); }
-inline void LoadingScreen::hide_after_shortwait(double n) { voidcall("hide_after_shortwait", n); }
-inline void LoadingScreen::cycle_hint() { voidcall("cycle_hint"); }
+inline void LoadingScreen::show_hint(int64_t n) { this->voidcall("show_hint", n); }
+inline void LoadingScreen::hide_after_shortwait(double n) { this->voidcall("hide_after_shortwait", n); }
+inline void LoadingScreen::cycle_hint() { this->voidcall("cycle_hint"); }
 
 #endif

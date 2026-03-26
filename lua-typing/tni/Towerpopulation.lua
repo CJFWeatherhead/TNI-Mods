@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class Towerpopulation : Container
+---@class Towerpopulation : DashboardApp
 ---@field refresh_timer Timer
 ---@field barline_chart Node2D
 ---@field floors_per_group integer

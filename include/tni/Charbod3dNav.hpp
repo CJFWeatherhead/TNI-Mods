@@ -39,8 +39,8 @@ struct Charbod3dNav : public NavigationAgent3D {
 };
 
 
-inline void Charbod3dNav::issue_sp_move_order(Variant tpos) { voidcall("issue_sp_move_order", tpos); }
-inline void Charbod3dNav::stop_sp_move_order() { voidcall("stop_sp_move_order"); }
-inline void Charbod3dNav::align_to_target(Variant target_transform, bool ignore_direction) { voidcall("align_to_target", target_transform, ignore_direction); }
+inline void Charbod3dNav::issue_sp_move_order(Variant tpos) { this->voidcall("issue_sp_move_order", tpos); }
+inline void Charbod3dNav::stop_sp_move_order() { this->voidcall("stop_sp_move_order"); }
+inline void Charbod3dNav::align_to_target(Variant target_transform, bool ignore_direction) { this->voidcall("align_to_target", target_transform, ignore_direction); }
 
 #endif

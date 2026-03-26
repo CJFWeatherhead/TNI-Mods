@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class _7RocketStoreWorld : Node2D
+---@class _7RocketStoreWorld : GameWorld
 ---@field last_tutorial_name string
 ---@field tutorial_floor0 Object
 ---@field server_addr Object

@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class PickableDevice : RigidBody2D
+---@class PickableDevice : PickableRigidBody2D
 ---@field hard_contact_tolerance number
 ---@field hard_contact_audio AudioStreamPlayer2D
 ---@field base_size Vector2

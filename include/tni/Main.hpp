@@ -25,15 +25,15 @@ struct Main : public Node {
 	inline void show_game_menu();
 	inline void add_new_player(Variant remote_peer_id);
 	inline void join_game(Variant join_id);
-	inline void host_game(String save_name, String gw_path, String scenario_name, PlayOptions play_options);
+	inline void host_game(String save_name, String gw_path, String scenario_name, const PlayOptions& play_options);
 };
 
 #include "SaveController.hpp"
 #include "PlayOptions.hpp"
 
-inline void Main::show_game_menu() { voidcall("show_game_menu"); }
-inline void Main::add_new_player(Variant remote_peer_id) { voidcall("add_new_player", remote_peer_id); }
-inline void Main::join_game(Variant join_id) { voidcall("join_game", join_id); }
-inline void Main::host_game(String save_name, String gw_path, String scenario_name, PlayOptions play_options) { voidcall("host_game", save_name, gw_path, scenario_name, play_options); }
+inline void Main::show_game_menu() { this->voidcall("show_game_menu"); }
+inline void Main::add_new_player(Variant remote_peer_id) { this->voidcall("add_new_player", remote_peer_id); }
+inline void Main::join_game(Variant join_id) { this->voidcall("join_game", join_id); }
+inline void Main::host_game(String save_name, String gw_path, String scenario_name, const PlayOptions& play_options) { this->voidcall("host_game", save_name, gw_path, scenario_name, Object(reinterpret_cast<const Object*>(&play_options)->address())); }
 
 #endif

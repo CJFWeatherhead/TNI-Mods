@@ -23,7 +23,7 @@ struct SlidingSfx : public Node2D {
 };
 
 
-inline void SlidingSfx::play_slide_in() { voidcall("play_slide_in"); }
-inline void SlidingSfx::play_slide_out() { voidcall("play_slide_out"); }
+inline void SlidingSfx::play_slide_in() { this->voidcall("play_slide_in"); }
+inline void SlidingSfx::play_slide_out() { this->voidcall("play_slide_out"); }
 
 #endif

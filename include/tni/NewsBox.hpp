@@ -21,6 +21,6 @@ struct NewsBox : public VBoxContainer {
 };
 
 
-inline void NewsBox::cycle_news() { voidcall("cycle_news"); }
+inline void NewsBox::cycle_news() { this->voidcall("cycle_news"); }
 
 #endif

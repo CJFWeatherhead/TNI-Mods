@@ -1,7 +1,7 @@
 ---@meta _
 -- Generated API for game version 0.10.11
 
----@class LogicProgramUnlock : Node
+---@class LogicProgramUnlock : PropMod
 ---@field title string
 ---@field dialog_text string
 ---@field cost integer
