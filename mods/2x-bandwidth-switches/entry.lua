@@ -1,10 +1,12 @@
-function on_engine_load()
+function on_mod_load()
+    -- this is called when this mod is loaded
+    -- pressing F-11 key will reload all mods
     print("High BW capacity switches!")
-    ModApiV1.sanity()
 end
 
-function on_mod_reload()
-    print("Pressed the reload action key (F11), reloading mod...")
+function on_mods_loaded()
+    -- this is called after all mods are loaded
+    ModApiV1.sanity()
 end
 
 ---@param device DeviceUnit
