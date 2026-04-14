@@ -2,14 +2,14 @@
 
 <#
 .SYNOPSIS
-    Tower Networking Inc - WPF Mod Manager v3.6.0
+    Tower Networking Inc - WPF Mod Manager v3.7.0
 .DESCRIPTION
     A Windows Presentation Foundation GUI for managing TNI mods.
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
     Supports mod.jsonc metadata format alongside legacy metadata.yaml.
 .NOTES
     Author: CJFWeatherhead
-    Version: 3.6.0
+    Version: 3.7.0
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
@@ -37,7 +37,7 @@ $script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/
 
 # Startup logging
 Write-Host "======================================" -ForegroundColor Cyan
-Write-Host "TNI Mod Manager v3.6.0 - Starting up..." -ForegroundColor Cyan
+Write-Host "TNI Mod Manager v3.7.0 - Starting up..." -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Configuration:" -ForegroundColor Yellow
@@ -506,9 +506,40 @@ function Download-ModFromGitHub {
             New-Item -Path $script:ModsDirectory -ItemType Directory -Force | Out-Null
         }
         
-        # Extract zip
+        # Extract zip to a temp directory first, then move the mod folder into place.
+        # New packaging wraps files as <mod-id>/ inside the zip;
+        # legacy zips have files flat at the root.
         Add-Type -AssemblyName System.IO.Compression.FileSystem
-        [System.IO.Compression.ZipFile]::ExtractToDirectory($tempZipPath, $modTargetPath)
+        $tempExtractPath = Join-Path $env:TEMP "tni-mod-extract-$modId"
+        if (Test-Path $tempExtractPath) {
+            Remove-Item $tempExtractPath -Recurse -Force
+        }
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($tempZipPath, $tempExtractPath)
+        
+        # Detect zip layout: check for mods/<mod-id>/ or <mod-id>/ wrapper
+        $innerModsPath = Join-Path $tempExtractPath "mods\$modId"
+        $innerDirectPath = Join-Path $tempExtractPath $modId
+        
+        if (Test-Path $innerModsPath) {
+            # New format: mods/<mod-id>/... → move inner folder to target
+            if (Test-Path $modTargetPath) { Remove-Item $modTargetPath -Recurse -Force }
+            Move-Item -Path $innerModsPath -Destination $modTargetPath -Force
+        }
+        elseif (Test-Path $innerDirectPath) {
+            # Alternate format: <mod-id>/... → move inner folder to target
+            if (Test-Path $modTargetPath) { Remove-Item $modTargetPath -Recurse -Force }
+            Move-Item -Path $innerDirectPath -Destination $modTargetPath -Force
+        }
+        else {
+            # Legacy flat format: files at zip root → move whole extracted dir
+            if (Test-Path $modTargetPath) { Remove-Item $modTargetPath -Recurse -Force }
+            Move-Item -Path $tempExtractPath -Destination $modTargetPath -Force
+        }
+        
+        # Clean up temp extraction directory
+        if (Test-Path $tempExtractPath) {
+            Remove-Item $tempExtractPath -Recurse -Force -ErrorAction SilentlyContinue
+        }
         
         # Clean up temp file
         Remove-Item $tempZipPath -Force -ErrorAction SilentlyContinue
@@ -766,7 +797,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tower Networking Inc - Mod Manager v3.6.0" 
+        Title="Tower Networking Inc - Mod Manager v3.7.0" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">

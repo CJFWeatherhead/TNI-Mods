@@ -61,7 +61,7 @@ The PowerShell `ModManagerGUI.ps1` script provides a UI to:
 .\ModManagerGUI.ps1
 ```
 
-The manager reads and writes the configuration section in each mod's `entry.lua` file located in `lua/<mod-name>/entry.lua`.
+The manager reads and writes the configuration section in each mod's `entry.lua` file located in `mods/<mod-name>/entry.lua`.
 
 ## Parameter Definition
 

@@ -18,7 +18,7 @@ from datetime import datetime
 # Paths - determine repository root dynamically
 SCRIPT_DIR = Path(__file__).parent.resolve()
 REPO_ROOT = SCRIPT_DIR.parent
-LUA_DIR = REPO_ROOT / 'lua'
+LUA_DIR = REPO_ROOT / 'mods'
 DOCS_CONTENT_DIR = SCRIPT_DIR / 'content' / 'mods'
 
 # GitHub repository

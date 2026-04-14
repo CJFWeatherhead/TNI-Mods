@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/all-proposals/**'
+      - 'mods/all-proposals/**'
   workflow_dispatch:
     inputs:
       bump_type:

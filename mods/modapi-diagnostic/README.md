@@ -24,7 +24,7 @@ This mod provides comprehensive diagnostic capabilities for Tower Networking Inc
 
 ## Usage
 
-1. Place in `lua/modapi-diagnostic/`
+1. Place in `mods/modapi-diagnostic/`
 2. Load the game and check console output
 3. Look for `[DIAGNOSTIC]` prefixed messages
 4. Use keyboard shortcuts for interactive features

@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/device-tweaker/**'
+      - 'mods/device-tweaker/**'
   workflow_dispatch:
     inputs:
       bump_type:

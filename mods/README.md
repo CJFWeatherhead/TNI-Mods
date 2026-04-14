@@ -72,7 +72,7 @@ For IDE support with autocompletion and type checking:
 
 - **Main README**: [Documentation root](../README.md)
 - **Example Mod**: [2x Bandwidth Switches](2x-bandwidth-switches/)
-- **C++ Template**: [For comparison](../programs/tni-mod-template/)
+- **C++ Template**: [For comparison](../programs/cpp-template/)
 - **Contributing**: [Guidelines](../CONTRIBUTING.md)
 
 ## Tips

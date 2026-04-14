@@ -1,6 +1,6 @@
 # Mod Metadata Schema
 # This schema defines the structure for mod metadata files in YAML format.
-# Each mod in the lua/ folder should have a metadata.yaml file with these fields.
+# Each mod in the mods/ folder should have a metadata.yaml file with these fields.
 
 # Required fields:
 # - Name: Pretty name of the mod (e.g., "Double the Bandwidth on Switches")

@@ -4,14 +4,14 @@ on:
   push:
     branches: ["beta"]
     paths:
-      - "lua/**/metadata.yaml"
-      - "lua/**/README.md"
+      - "mods/**/metadata.yaml"
+      - "mods/**/README.md"
       - "docs/generate_mod_pages.py"
   pull_request:
     branches: ["beta"]
     paths:
-      - "lua/**/metadata.yaml"
-      - "lua/**/README.md"
+      - "mods/**/metadata.yaml"
+      - "mods/**/README.md"
       - "docs/generate_mod_pages.py"
   workflow_dispatch:
     # Allow manual triggering

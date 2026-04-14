@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/money-cheat/**'
+      - 'mods/money-cheat/**'
   workflow_dispatch:
     inputs:
       bump_type:

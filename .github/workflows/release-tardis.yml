@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/tardis/**'
+      - 'mods/tardis/**'
   workflow_dispatch:
     inputs:
       bump_type:

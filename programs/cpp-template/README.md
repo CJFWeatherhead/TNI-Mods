@@ -58,33 +58,33 @@ if (event.get_class() == "InputEventKey") {
 See the main [README](../../README.md#building-cc-mods) for complete build setup instructions.
 
 **Quick reference**:
-- **Windows**: Install Zig, CMake, Ninja → Run `zig.cmd`
-- **Linux**: Install GCC RISC-V toolchain, CMake, Ninja → Run `./build.sh`
+- **Windows**: Install Zig, CMake, Ninja → Run `build-zig.cmd`
+- **Linux**: Install GCC RISC-V toolchain, CMake, Ninja → Run `./build-gnu.sh`
 
 ### Build Commands
 
 **Windows**:
 ```cmd
 cd /path/to/TNI-Mods
-zig.cmd
+build-zig.cmd
 ```
 
 **Linux/WSL**:
 ```sh
 cd /path/to/TNI-Mods
-./build.sh
+./build-gnu.sh
 ```
 
 ### Build Output
 
-- **Windows**: `.zig/tni-mod-template/entry.elf`
-- **Linux**: `.build/tni-mod-template/entry.elf`
+- **Windows**: `.zig/cpp-template/entry.elf`
+- **Linux**: `.build/cpp-template/entry.elf`
 
 ## Installation
 
 1. Build the mod using the commands above
-2. Copy the entire `tni-mod-template` directory to your game's `mods/` folder
-3. Ensure the structure is: `mods/tni-mod-template/entry.elf`
+2. Copy the entire `cpp-template` directory to your game's `mods/` folder
+3. Ensure the structure is: `mods/cpp-template/entry.elf`
 4. Launch the game
 
 **Game mod directories**:
@@ -154,7 +154,7 @@ Callable fn = Callable::Create<Variant(MyType)>([](MyType obj) -> Variant {
 - Ensure you're using the correct toolchain (Zig on Windows, GCC on Linux)
 
 **Mod doesn't load**:
-- Check file structure: `mods/tni-mod-template/entry.elf`
+- Check file structure: `mods/cpp-template/entry.elf`
 - Look for error messages in game logs
 - Verify the `.elf` file was built for RISC-V64 architecture
 
@@ -167,7 +167,7 @@ Callable fn = Callable::Create<Variant(MyType)>([](MyType obj) -> Variant {
 
 - **Study the code**: Read through `entry.cpp` with the inline comments
 - **Experiment**: Modify callbacks and see what happens
-- **Check other examples**: Look at the [Lua example](../../lua/2x-bandwidth-switches/)
+- **Check other examples**: Look at the [Lua example](../../mods/2x-bandwidth-switches/)
 - **Read API docs**: Explore the full API capabilities
 - **Build something cool**: Share your creation with the community!
 

@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/modapi-diagnostic/**'
+      - 'mods/modapi-diagnostic/**'
   workflow_dispatch:
     inputs:
       bump_type:

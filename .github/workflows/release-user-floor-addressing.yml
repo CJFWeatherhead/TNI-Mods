@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/user-floor-addressing/**'
+      - 'mods/user-floor-addressing/**'
   workflow_dispatch:
     inputs:
       bump_type:

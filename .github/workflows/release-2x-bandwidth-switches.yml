@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/2x-bandwidth-switches/**'
+      - 'mods/2x-bandwidth-switches/**'
   workflow_dispatch:
     inputs:
       bump_type:

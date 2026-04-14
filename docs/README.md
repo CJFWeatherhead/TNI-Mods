@@ -60,7 +60,7 @@ This directory contains the Hugo-based website and documentation hub for the TNI
 
 The website is automatically deployed to Cloudflare Pages via GitHub Actions when:
 - Changes are pushed to the `main` or `beta` branch
-- Changes affect the `docs/` or `lua/` directories
+- Changes affect the `docs/` or `mods/` directories
 - The workflow is manually triggered
 
 ### Cloudflare Pages Setup
@@ -73,15 +73,15 @@ To set up deployment, you need to configure these GitHub secrets:
 The deployment workflow:
 1. Checks out the repository with submodules
 2. Sets up Hugo and Python
-3. Generates mod pages from `lua/*/metadata.yaml` files
+3. Generates mod pages from `mods/*/metadata.yaml` files
 4. Builds the Hugo site
 5. Deploys to Cloudflare Pages
 
 ## Adding/Updating Mods
 
-Mod pages are automatically generated from the metadata in the `lua/` directory. To add or update a mod:
+Mod pages are automatically generated from the metadata in the `mods/` directory. To add or update a mod:
 
-1. Create or update the mod folder in `lua/<mod-name>/`
+1. Create or update the mod folder in `mods/<mod-name>/`
 2. Ensure it has:
    - `metadata.yaml` - Following the schema in `/mod-metadata-schema.yaml`
    - `README.md` - Detailed documentation
@@ -136,7 +136,7 @@ cd docs
 python3 generate_mod_pages.py
 ```
 
-This will scan all mods in `lua/` and regenerate their pages.
+This will scan all mods in `mods/` and regenerate their pages.
 
 ## Support
 

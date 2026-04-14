@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/floor-reward-scaling/**'
+      - 'mods/floor-reward-scaling/**'
   workflow_dispatch:
     inputs:
       bump_type:

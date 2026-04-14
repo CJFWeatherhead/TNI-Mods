@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/chaos-engine/**'
+      - 'mods/chaos-engine/**'
   workflow_dispatch:
     inputs:
       bump_type:

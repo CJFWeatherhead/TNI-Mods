@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/inverse-prices/**'
+      - 'mods/inverse-prices/**'
   workflow_dispatch:
     inputs:
       bump_type:

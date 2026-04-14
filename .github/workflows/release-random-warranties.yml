@@ -6,7 +6,7 @@ on:
       - main
       - beta
     paths:
-      - 'lua/random-warranties/**'
+      - 'mods/random-warranties/**'
   workflow_dispatch:
     inputs:
       bump_type:

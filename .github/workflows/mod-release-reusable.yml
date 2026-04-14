@@ -38,8 +38,8 @@ jobs:
       - name: Update mod version and date
         id: version
         run: |
-          python .github/scripts/update_mod_version.py "lua/${{ inputs.mod_name }}/metadata.yaml" "${{ inputs.bump_type }}"
-          NEW_VERSION=$(grep '^Version:' "lua/${{ inputs.mod_name }}/metadata.yaml" | awk '{print $2}')
+          python .github/scripts/update_mod_version.py "mods/${{ inputs.mod_name }}/metadata.yaml" "${{ inputs.bump_type }}"
+          NEW_VERSION=$(grep '^Version:' "mods/${{ inputs.mod_name }}/metadata.yaml" | awk '{print $2}')
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "Updated to version $NEW_VERSION"
       
@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "lua/${{ inputs.mod_name }}/metadata.yaml"
+          git add "mods/${{ inputs.mod_name }}/metadata.yaml"
           git commit -m "chore(${{ inputs.mod_name }}): bump version to ${{ steps.version.outputs.new_version }}"
           
           # Retry push with rebase on conflict (handles concurrent workflow runs)
@@ -72,9 +72,13 @@ jobs:
       
       - name: Package mod
         run: |
-          cd lua/${{ inputs.mod_name }}
-          zip -r ../../${{ inputs.mod_name }}-${{ steps.version.outputs.new_version }}.zip . -x ".*" -x "__pycache__/*"
-          cd ../..
+          # Package with mod folder at zip root so users extract <mod-name>/ into mods/
+          cd mods
+          zip -r ../${{ inputs.mod_name }}-${{ steps.version.outputs.new_version }}.zip \
+            ${{ inputs.mod_name }}/ \
+            -x "${{ inputs.mod_name }}/.*" -x "${{ inputs.mod_name }}/__pycache__/*" \
+            -x "${{ inputs.mod_name }}/ui-config.ps1"
+          cd ..
           echo "Created ${{ inputs.mod_name }}-${{ steps.version.outputs.new_version }}.zip"
       
       - name: Create Release
@@ -85,8 +89,8 @@ jobs:
           RELEASE_NAME="${{ inputs.mod_name }} v${{ steps.version.outputs.new_version }}"
           
           # Read mod metadata for release notes
-          MOD_NAME=$(grep '^Name:' "lua/${{ inputs.mod_name }}/metadata.yaml" | sed 's/^Name: *//')
-          DESCRIPTION=$(awk '/^Description:/{flag=1;next}/^[A-Z]/{flag=0}flag' "lua/${{ inputs.mod_name }}/metadata.yaml" | sed 's/^  //')
+          MOD_NAME=$(grep '^Name:' "mods/${{ inputs.mod_name }}/metadata.yaml" | sed 's/^Name: *//')
+          DESCRIPTION=$(awk '/^Description:/{flag=1;next}/^[A-Z]/{flag=0}flag' "mods/${{ inputs.mod_name }}/metadata.yaml" | sed 's/^  //')
           
           # Create release notes
           cat > release_notes.md << EOF
@@ -97,16 +101,17 @@ jobs:
           ## Installation
           
           1. Download the zip file below
-          2. Extract to your game's mods directory:
-             - Windows: \`%APPDATA%\\Godot\\app_userdata\\Tower Networking Inc\\mods\\\`
-             - Linux: \`~/.local/share/godot/app_userdata/Tower Networking Inc/mods/\`
-          3. Ensure you have [luajit.elf](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
+          2. Extract the \`${{ inputs.mod_name }}/\` folder into your game's mods directory:
+             - Windows: \`%APPDATA%\\Godot\\app_userdata\\Tower Networking Inc\\Mods\\\`
+             - Linux: \`~/.local/share/godot/app_userdata/Tower Networking Inc/Mods/\`
+          3. Ensure you have [luajit-support](https://github.com/CJFWeatherhead/TNI-Mods/releases) installed
           4. Configure using [ModManagerGUI.ps1](https://github.com/CJFWeatherhead/TNI-Mods)
           
           ## Files Included
           
           - \`entry.lua\` - Main mod file
-          - \`metadata.yaml\` - Mod metadata
+          - \`mod.jsonc\` - Mod metadata (required by game)
+          - \`metadata.yaml\` - Extended metadata
           - \`README.md\` - Documentation
           
           ---
