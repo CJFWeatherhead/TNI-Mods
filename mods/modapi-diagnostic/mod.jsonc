@@ -2,7 +2,7 @@
 	"id": "modapi-diagnostic",
 	"name": "ModAPI Diagnostic Tool",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "3.0.5",
+	"version": "3.0.7",
 	"description": [
 		"Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.",
 		"Event logging, device/user spawn inspection, JSON game state export (Shift+J),",

@@ -27,7 +27,7 @@ $script:SettingsPath = Join-Path $script:GameDataPath "settings.json"
 $script:ModCachePath = Join-Path $script:GameDataPath "mod_cache.json"
 $script:ConfigFileName = "entry.lua"
 $script:LuaJitModFolder = Join-Path $script:ModsDirectory "luajit-support"
-$script:LuaJitPath = Join-Path $script:LuaJitModFolder "luajit-support.elf"
+$script:LuaJitPath = Join-Path $script:LuaJitModFolder "entry.elf"
 
 # GitHub Configuration
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
@@ -196,7 +196,7 @@ function Install-LuaJit {
             $success = $true
         }
         else {
-            Write-Host "  [ERROR] luajit-support.elf not found after extraction" -ForegroundColor Red
+            Write-Host "  [ERROR] entry.elf not found after extraction in luajit-support" -ForegroundColor Red
             $success = $false
         }
         

@@ -2,7 +2,7 @@
 	"id": "user-floor-addressing",
 	"name": "User Floor-Based Addressing",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": [
 		"Sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.",
 		"Addresses like f{floor}/usr{increment}, with floor-specific DNS and fallback servers.",

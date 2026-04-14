@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add "mods/${{ inputs.mod_name }}/metadata.yaml"
+          git add "mods/${{ inputs.mod_name }}/metadata.yaml" "mods/${{ inputs.mod_name }}/mod.jsonc"
           git commit -m "chore(${{ inputs.mod_name }}): bump version to ${{ steps.version.outputs.new_version }}"
           
           # Retry push with rebase on conflict (handles concurrent workflow runs)

@@ -2,7 +2,7 @@
 	"id": "random-warranties",
 	"name": "Random Device Warranties",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": [
 		"A simple example mod that randomizes warranty periods of all devices.",
 		"Superseded by Device Tweaker, but kept as a useful demonstration mod for new developers."

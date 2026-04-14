@@ -2,7 +2,7 @@
 	"id": "money-cheat",
 	"name": "Money Cheat",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": [
 		"Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.",
 		"Configurable amount (default: $10,000), cooldown protection, and optional in-game notifications."

@@ -101,7 +101,29 @@ def update_metadata_yaml(filepath, bump_type='patch', new_version=None):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
     
+    # Also update mod.jsonc if it exists in the same directory
+    jsonc_path = filepath.parent / 'mod.jsonc'
+    if jsonc_path.exists():
+        update_mod_jsonc_version(jsonc_path, new_version_str)
+    
     return old_version, new_version_str
+
+
+def update_mod_jsonc_version(filepath, new_version):
+    """
+    Update the version field in a mod.jsonc file, preserving comments and formatting.
+    """
+    filepath = Path(filepath)
+    with open(filepath, 'r', encoding='utf-8') as f:
+        content = f.read()
+    
+    # Replace the "version": "x.y.z" line, preserving surrounding whitespace/formatting
+    version_pattern = re.compile(r'("version"\s*:\s*)"[^"]*"')
+    if version_pattern.search(content):
+        content = version_pattern.sub(rf'\1"{new_version}"', content)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"  Also updated {filepath} -> {new_version}")
 
 
 def main():
