@@ -1,0 +1,23 @@
+{
+	"id": "tardis",
+	"name": "TARDIS - Time Controller",
+	"authors": [ "CJFWeatherhead" ],
+	"version": "0.1.1",
+	"description": [
+		"Control game time like a Time Lord!",
+		"SHIFT+> to speed up, SHIFT+< to slow down, SHIFT++ to skip to end of day.",
+		"Configurable speed step, min/max speed, and visual feedback."
+	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/tardis"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+	},
+	"incompatibilities": {
+	}
+}

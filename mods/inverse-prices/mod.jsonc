@@ -1,0 +1,23 @@
+{
+	"id": "inverse-prices",
+	"name": "Inverse Prices",
+	"authors": [ "CJFWeatherhead" ],
+	"version": "0.1.1",
+	"description": [
+		"Inverts the game's economy by making purchases pay the player instead of costing money.",
+		"Device purchases, proposal costs, tower link and socket costs are all refunded.",
+		"Configurable refund amounts: Free (1x), Double (2x), or Custom multiplier."
+	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/inverse-prices"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+	},
+	"incompatibilities": {
+	}
+}

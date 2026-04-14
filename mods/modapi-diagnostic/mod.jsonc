@@ -1,0 +1,24 @@
+{
+	"id": "modapi-diagnostic",
+	"name": "ModAPI Diagnostic Tool",
+	"authors": [ "CJFWeatherhead" ],
+	"version": "3.0.5",
+	"description": [
+		"Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.",
+		"Event logging, device/user spawn inspection, JSON game state export (Shift+J),",
+		"API test suite (Shift+Q), and Lua console commands for debugging.",
+		"Ideal for mod developers and building external tool integrations (Terraform, REST APIs)."
+	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+	},
+	"incompatibilities": {
+	}
+}

@@ -1,0 +1,24 @@
+{
+	"id": "device-tweaker",
+	"name": "Device Tweaker",
+	"authors": [ "CJFWeatherhead" ],
+	"version": "0.1.9",
+	"description": [
+		"A comprehensive mod for tweaking device properties in Tower Networking Inc.",
+		"Bandwidth multiplier, warranty modifications, cost adjustments, hardware multipliers,",
+		"auto network addressing, DHCP configuration, device class filtering, and merchant restock (CTRL+SHIFT+R).",
+		"Supports all 20 device hardware classes with per-class enable/disable toggles."
+	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+	},
+	"incompatibilities": {
+	}
+}

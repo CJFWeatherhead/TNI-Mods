@@ -2,13 +2,14 @@
 
 <#
 .SYNOPSIS
-    Tower Networking Inc - WPF Mod Manager v3.5.2
+    Tower Networking Inc - WPF Mod Manager v3.6.0
 .DESCRIPTION
     A Windows Presentation Foundation GUI for managing TNI mods.
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
+    Supports mod.jsonc metadata format alongside legacy metadata.yaml.
 .NOTES
     Author: CJFWeatherhead
-    Version: 3.5.4
+    Version: 3.6.0
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
@@ -25,17 +26,18 @@ $script:DisabledModsDirectory = Join-Path $script:GameDataPath "Mods_Disabled"
 $script:SettingsPath = Join-Path $script:GameDataPath "settings.json"
 $script:ModCachePath = Join-Path $script:GameDataPath "mod_cache.json"
 $script:ConfigFileName = "entry.lua"
-$script:LuaJitPath = Join-Path $script:ModsDirectory "luajit.elf"
+$script:LuaJitModFolder = Join-Path $script:ModsDirectory "luajit-support"
+$script:LuaJitPath = Join-Path $script:LuaJitModFolder "luajit-support.elf"
 
 # GitHub Configuration
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
 $script:GitHubApiBase = "https://api.github.com/repos/$script:GitHubRepo"
 $script:LuaJitReleaseTag = "continuous-gnu-beta"
-$script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/$script:LuaJitReleaseTag/luajit.zip"
+$script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/$script:LuaJitReleaseTag/luajit-support.zip"
 
 # Startup logging
 Write-Host "======================================" -ForegroundColor Cyan
-Write-Host "TNI Mod Manager v3.0 - Starting up..." -ForegroundColor Cyan
+Write-Host "TNI Mod Manager v3.6.0 - Starting up..." -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Configuration:" -ForegroundColor Yellow
@@ -111,7 +113,7 @@ function Install-LuaJit {
             })
         }
         
-        $tempZipPath = Join-Path $env:TEMP "luajit.zip"
+        $tempZipPath = Join-Path $env:TEMP "luajit-support.zip"
         
         # Ensure mods directory exists
         if (-not (Test-Path $script:ModsDirectory)) {
@@ -178,23 +180,25 @@ function Install-LuaJit {
             })
         }
         
-        # Extract luajit.elf from zip
+        # Extract luajit-support folder from zip
         Add-Type -AssemblyName System.IO.Compression.FileSystem
-        $zip = [System.IO.Compression.ZipFile]::OpenRead($tempZipPath)
         
-        $luajitEntry = $zip.Entries | Where-Object { $_.Name -eq "luajit.elf" } | Select-Object -First 1
+        # Remove existing luajit-support folder if exists
+        if (Test-Path $script:LuaJitModFolder) {
+            Remove-Item $script:LuaJitModFolder -Recurse -Force
+        }
         
-        if ($luajitEntry) {
-            [System.IO.Compression.ZipFileExtensions]::ExtractToFile($luajitEntry, $script:LuaJitPath, $true)
-            Write-Host "  [OK] LuaJIT installed successfully" -ForegroundColor Green
+        # Extract to mods directory (zip contains luajit-support/ folder)
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($tempZipPath, $script:ModsDirectory)
+        
+        if (Test-Path $script:LuaJitPath) {
+            Write-Host "  [OK] LuaJIT support mod installed successfully" -ForegroundColor Green
             $success = $true
         }
         else {
-            Write-Host "  [ERROR] luajit.elf not found in archive" -ForegroundColor Red
+            Write-Host "  [ERROR] luajit-support.elf not found after extraction" -ForegroundColor Red
             $success = $false
         }
-        
-        $zip.Dispose()
         
         # Clean up temp file
         Remove-Item $tempZipPath -Force -ErrorAction SilentlyContinue
@@ -245,7 +249,7 @@ function Show-LuaJitPrompt {
     $message = @"
 LuaJIT Runtime Missing
 
-The LuaJIT runtime (luajit.elf) is required to load Lua mods.
+The LuaJIT support mod (luajit-support) is required to load Lua mods.
 It was not found in your mods directory.
 
 Would you like to download and install it now?
@@ -273,7 +277,7 @@ Location: $script:LuaJitPath
         }
         else {
             [System.Windows.MessageBox]::Show(
-                "Failed to install LuaJIT.`n`nPlease download luajit.zip manually from:`n$script:LuaJitZipUrl`n`nExtract luajit.elf to:`n$script:LuaJitPath",
+                "Failed to install LuaJIT.`n`nPlease download luajit-support.zip manually from:`n$script:LuaJitZipUrl`n`nExtract to:`n$script:LuaJitModFolder",
                 "Installation Failed",
                 [System.Windows.MessageBoxButton]::OK,
                 [System.Windows.MessageBoxImage]::Error
@@ -286,11 +290,11 @@ Location: $script:LuaJitPath
         $warning = @"
 Warning: Without LuaJIT, mods are unlikely to load correctly.
 
-You can install it later by downloading luajit.zip from:
+You can install it later by downloading luajit-support.zip from:
 $script:LuaJitZipUrl
 
-Extract luajit.elf to:
-$script:LuaJitPath
+Extract to:
+$script:LuaJitModFolder
 "@
         
         [System.Windows.MessageBox]::Show(
@@ -762,7 +766,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tower Networking Inc - Mod Manager v3.5.4" 
+        Title="Tower Networking Inc - Mod Manager v3.6.0" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">
@@ -1489,47 +1493,153 @@ function ConvertFrom-SimpleYaml {
 
 #endregion
 
+#region JSONC Parser
+
+function ConvertFrom-ModJsonc {
+    <#
+    .SYNOPSIS
+        Parses a mod.jsonc file (JSON with comments) into a metadata hashtable
+        compatible with the existing mod manager format.
+    #>
+    param([string]$Content)
+    
+    # Strip JSONC comments (// line comments)
+    $jsonContent = ($Content -split "`r?`n" | ForEach-Object {
+        $_ -replace '^\s*//.*$', '' -replace '(?<!")//(?!.*").*$', ''
+    }) -join "`n"
+    
+    try {
+        $json = $jsonContent | ConvertFrom-Json
+    }
+    catch {
+        Write-Host "  [WARN] Failed to parse mod.jsonc: $_" -ForegroundColor Yellow
+        return $null
+    }
+    
+    # Map mod.jsonc fields to the metadata format used by the mod manager
+    $metadata = @{
+        'ID'                     = $json.id
+        'Name'                   = $json.name
+        'Author'                 = if ($json.authors) { ($json.authors -join ', ') } else { 'Unknown' }
+        'Version'                = $json.version
+        'Description'            = if ($json.description -is [array]) { $json.description -join "`n" } else { $json.description }
+        'Development Status'     = 'Active Development'
+        'Game Version Supported' = 'beta'
+        'Last Updated'           = ''
+        'Website'                = ''
+        'Dependencies'           = @()
+        'Image'                  = ''
+        'Notes'                  = ''
+    }
+    
+    # Extract website from links
+    if ($json.links) {
+        if ($json.links.github) {
+            $metadata['Website'] = $json.links.github
+        }
+    }
+    
+    # Extract dependencies as a list of IDs
+    if ($json.dependencies) {
+        $deps = @()
+        foreach ($prop in $json.dependencies.PSObject.Properties) {
+            if ($prop.Name -ne 'tower-networking-inc') {
+                $deps += $prop.Name
+            }
+        }
+        $metadata['Dependencies'] = $deps
+    }
+    
+    # Store the raw jsonc data for potential future use
+    $metadata['_jsonc'] = $json
+    
+    return $metadata
+}
+
+#endregion
+
 #region Mod Discovery
 
 function Get-InstalledMods {
     <#
     .SYNOPSIS
-        Scans for installed mods (both in Mods and Mods_Disabled directories)
+        Scans for installed mods (both in Mods and Mods_Disabled directories).
+        Reads mod.jsonc as primary metadata source, falls back to metadata.yaml.
     #>
     Write-Host "Scanning for installed mods..." -ForegroundColor Cyan
     $mods = @()
     
     # Scan enabled mods
     if (Test-Path $script:ModsDirectory) {
-        $modFolders = Get-ChildItem -Path $script:ModsDirectory -Directory | 
-            Where-Object { $_.Name -ne '.lua-typing' }
+        $modFolders = Get-ChildItem -Path $script:ModsDirectory -Directory
         
         foreach ($folder in $modFolders) {
+            $jsoncPath = Join-Path $folder.FullName "mod.jsonc"
             $metadataPath = Join-Path $folder.FullName "metadata.yaml"
             
-            if (Test-Path $metadataPath) {
+            $metadata = $null
+            $metadataSource = $null
+            
+            # Try mod.jsonc first (new format)
+            if (Test-Path $jsoncPath) {
+                try {
+                    $content = Get-Content $jsoncPath -Raw -Encoding UTF8
+                    $metadata = ConvertFrom-ModJsonc $content
+                    $metadataSource = "mod.jsonc"
+                }
+                catch {
+                    Write-Host "  [WARN] Failed to parse mod.jsonc: $($folder.Name)" -ForegroundColor Yellow
+                    $metadata = $null
+                }
+            }
+            
+            # Fall back to metadata.yaml (legacy format)
+            if (-not $metadata -and (Test-Path $metadataPath)) {
                 try {
                     $content = Get-Content $metadataPath -Raw -Encoding UTF8
                     $metadata = ConvertFrom-SimpleYaml $content
-                    $metadata['Folder'] = $folder.Name
-                    $metadata['Enabled'] = $true
-                    
-                    # Determine source type from cache
-                    if ($script:ModCache.ContainsKey($metadata['ID'])) {
-                        $metadata['Source'] = $script:ModCache[$metadata['ID']].Source
-                        $metadata['InstalledVersion'] = $script:ModCache[$metadata['ID']].Version
-                    }
-                    else {
-                        $metadata['Source'] = $script:ModSourceType.Manual
-                        $metadata['InstalledVersion'] = $metadata['Version']
-                    }
-                    
-                    $mods += $metadata
-                    Write-Host "  [OK] $($metadata['Name']) ($($metadata['Source']))" -ForegroundColor Green
+                    $metadataSource = "metadata.yaml"
                 }
                 catch {
-                    Write-Host "  [WARN] Failed to parse: $($folder.Name)" -ForegroundColor Yellow
+                    Write-Host "  [WARN] Failed to parse metadata.yaml: $($folder.Name)" -ForegroundColor Yellow
                 }
+            }
+            
+            # If mod.jsonc was read, overlay any extra fields from metadata.yaml (e.g. Parameters)
+            if ($metadataSource -eq "mod.jsonc" -and (Test-Path $metadataPath)) {
+                try {
+                    $yamlContent = Get-Content $metadataPath -Raw -Encoding UTF8
+                    $yamlData = ConvertFrom-SimpleYaml $yamlContent
+                    
+                    # Merge fields that mod.jsonc doesn't have (Parameters, Notes, Development Status, etc.)
+                    foreach ($key in @('Parameters', 'Notes', 'Development Status', 'Last Updated', 'Creation Date', 'Game Version Supported', 'Image')) {
+                        if ($yamlData.ContainsKey($key) -and (-not $metadata.ContainsKey($key) -or [string]::IsNullOrEmpty($metadata[$key]))) {
+                            $metadata[$key] = $yamlData[$key]
+                        }
+                    }
+                }
+                catch {
+                    # Non-fatal - mod.jsonc data is sufficient
+                }
+            }
+            
+            if ($metadata) {
+                $metadata['Folder'] = $folder.Name
+                $metadata['Enabled'] = $true
+                $metadata['MetadataSource'] = $metadataSource
+                
+                # Determine source type from cache
+                if ($script:ModCache.ContainsKey($metadata['ID'])) {
+                    $metadata['Source'] = $script:ModCache[$metadata['ID']].Source
+                    $metadata['InstalledVersion'] = $script:ModCache[$metadata['ID']].Version
+                }
+                else {
+                    $metadata['Source'] = $script:ModSourceType.Manual
+                    $metadata['InstalledVersion'] = $metadata['Version']
+                }
+                
+                $mods += $metadata
+                Write-Host "  [OK] $($metadata['Name']) ($($metadata['Source']), $metadataSource)" -ForegroundColor Green
             }
         }
     }
@@ -1539,23 +1649,51 @@ function Get-InstalledMods {
         $disabledFolders = Get-ChildItem -Path $script:DisabledModsDirectory -Directory
         
         foreach ($folder in $disabledFolders) {
+            $jsoncPath = Join-Path $folder.FullName "mod.jsonc"
             $metadataPath = Join-Path $folder.FullName "metadata.yaml"
             
-            if (Test-Path $metadataPath) {
+            $metadata = $null
+            
+            # Try mod.jsonc first
+            if (Test-Path $jsoncPath) {
+                try {
+                    $content = Get-Content $jsoncPath -Raw -Encoding UTF8
+                    $metadata = ConvertFrom-ModJsonc $content
+                }
+                catch { $metadata = $null }
+            }
+            
+            # Fall back to metadata.yaml
+            if (-not $metadata -and (Test-Path $metadataPath)) {
                 try {
                     $content = Get-Content $metadataPath -Raw -Encoding UTF8
                     $metadata = ConvertFrom-SimpleYaml $content
-                    $metadata['Folder'] = $folder.Name
-                    $metadata['Enabled'] = $false
-                    $metadata['Source'] = $script:ModSourceType.Manual
-                    $metadata['InstalledVersion'] = $metadata['Version']
-                    
-                    $mods += $metadata
-                    Write-Host "  [OK] $($metadata['Name']) (Manual, Disabled)" -ForegroundColor Gray
                 }
-                catch {
-                    Write-Host "  [WARN] Failed to parse disabled: $($folder.Name)" -ForegroundColor Yellow
+                catch { $metadata = $null }
+            }
+            
+            # Overlay yaml parameters if jsonc was primary
+            if ($metadata -and (Test-Path $metadataPath) -and (Test-Path $jsoncPath)) {
+                try {
+                    $yamlContent = Get-Content $metadataPath -Raw -Encoding UTF8
+                    $yamlData = ConvertFrom-SimpleYaml $yamlContent
+                    foreach ($key in @('Parameters', 'Notes', 'Development Status', 'Last Updated', 'Creation Date', 'Game Version Supported', 'Image')) {
+                        if ($yamlData.ContainsKey($key) -and (-not $metadata.ContainsKey($key) -or [string]::IsNullOrEmpty($metadata[$key]))) {
+                            $metadata[$key] = $yamlData[$key]
+                        }
+                    }
                 }
+                catch { }
+            }
+            
+            if ($metadata) {
+                $metadata['Folder'] = $folder.Name
+                $metadata['Enabled'] = $false
+                $metadata['Source'] = $script:ModSourceType.Manual
+                $metadata['InstalledVersion'] = $metadata['Version']
+                
+                $mods += $metadata
+                Write-Host "  [OK] $($metadata['Name']) (Manual, Disabled)" -ForegroundColor Gray
             }
         }
     }
