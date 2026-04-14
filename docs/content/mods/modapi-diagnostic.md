@@ -4,7 +4,7 @@ date: 2026-02-08
 draft: false
 mod_id: "modapi-diagnostic"
 author: "CJFWeatherhead"
-version: "3.0.4"
+version: "3.0.6"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
 
 | | |
 |---|---|
-| **Version** | 3.0.4 |
+| **Version** | 3.0.6 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
 
 <div class="download-section">
 
-**[Download modapi-diagnostic-3.0.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.4/modapi-diagnostic-3.0.4.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download modapi-diagnostic-3.0.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.6/modapi-diagnostic-3.0.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -138,7 +138,7 @@ This mod provides comprehensive diagnostic capabilities for Tower Networking Inc
 
 ## Usage
 
-1. Place in `lua/modapi-diagnostic/`
+1. Place in `mods/modapi-diagnostic/`
 2. Load the game and check console output
 3. Look for `[DIAGNOSTIC]` prefixed messages
 4. Use keyboard shortcuts for interactive features
@@ -343,8 +343,8 @@ No gameplay impact. Ideal for:
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v3.0.4)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.4/modapi-diagnostic-3.0.4.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v3.0.6)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.6/modapi-diagnostic-3.0.6.zip)
 
 </details>
 

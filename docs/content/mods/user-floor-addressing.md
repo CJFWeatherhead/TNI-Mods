@@ -120,7 +120,7 @@ The mod hooks into the `on_user_spawned` callback, triggered whenever a new user
 
 ## Installation
 
-1. Copy the `user-floor-addressing` folder to your `lua/` directory
+1. Copy the `user-floor-addressing` folder to your `mods/` directory
 2. The mod will be automatically loaded when the game starts
 3. Press F11 to reload the mod without restarting the game
 
