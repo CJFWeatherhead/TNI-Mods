@@ -5,7 +5,7 @@
         "ModApiV1"
     ],
     "workspace.library": [
-        "${workspaceFolder}/include"
+        "${workspaceFolder}/lua-typing"
     ],
     "workspace.checkThirdParty": false
 }

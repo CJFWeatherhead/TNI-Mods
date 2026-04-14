@@ -1,6 +1,5 @@
 # Build outputs
 **/.build/
-**/.embedded/
 **/.zig/
 *.o
 *.a
@@ -36,9 +35,14 @@ Thumbs.db
 # Logs
 *.log
 
+# Mod build outputs
+mods/**/*.elf
+
 # Exceptions
-!programs/luajit/libluajit.a
-!programs/luajit/zig-libluajit.a
+!programs/luajit-support/libluajit.a
+!programs/luajit-support/zig-libluajit.a
+
+# Project specific
 .vscode/settings.json
 TNI-Mods.code-workspace
 STEAM-COMMUNITY-GUIDE.md

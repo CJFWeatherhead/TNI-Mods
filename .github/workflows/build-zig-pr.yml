@@ -2,14 +2,9 @@ name: Build with Zig on Windows
 on:
   pull_request:
     branches: [ "**" ]
-    paths:
-      - "ext/LuaJIT/**"
-      - "programs/luajit/**"
-      - "CMakeLists.txt"
-      - "cmake/**"
-      - "zig.cmd"
-      - "zig.sh"
-      - ".github/workflows/build-zig-pr.yml"
+    paths-ignore:
+      - "mods/**"
+      - "*.md"
 
 jobs:
   build:
@@ -18,7 +13,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v6.0.1
+    - uses: actions/checkout@v6.0.2
       with:
         submodules: recursive
 
@@ -35,14 +30,14 @@ jobs:
       shell: bash
       run: |
         export PATH=$PWD/zig-x86_64-windows-0.15.2:$PATH
-        ./zig.cmd
+        cmd /c ./build-zig.cmd
 
     - name: Collect Artifact
       shell: bash
       run: |
         mkdir ./artifact
         # For every directory containing a .elf file, zip it into ./artifact
-        find ./.zig -name '*.elf' -execdir bash -c "zip -r \"${PWD}/artifact/\$(basename \$(realpath .)).zip\" ." \;
+        find ./mods/ -name '*.elf' -execdir bash -c "MOD_NAME=\"\$(basename \$(realpath .))\" && cd .. && zip -r \"${PWD}/artifact/\$MOD_NAME.zip\" \"./\$MOD_NAME\"" \;
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v6
