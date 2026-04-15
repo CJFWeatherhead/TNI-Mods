@@ -8,7 +8,7 @@ Description: |
   - Configures DNS servers with floor-specific primary and floor 0 fallbacks
   - Tracks user count per floor for incremental addressing
 Author: CJFWeatherhead
-Version: 0.1.6
+Version: 0.1.7
 Creation Date: 2026-01-01
 Last Updated: 2026-04-14
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing
@@ -16,7 +16,7 @@ Development Status: Active Development
 Game Version Supported: beta
 ID: user-floor-addressing
 Dependencies: []
-Image: 
+Image: icon.png
 Notes: |
   DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
 Parameters:

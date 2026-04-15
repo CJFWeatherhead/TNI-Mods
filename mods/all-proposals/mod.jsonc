@@ -2,7 +2,7 @@
 	"id": "all-proposals",
 	"name": "All Proposals",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": [
 		"Enhances the game's proposal system by allowing players to view all available proposals at once.",
 		"Press Shift+P to temporarily increase the proposal batch size and display all eligible proposals.",

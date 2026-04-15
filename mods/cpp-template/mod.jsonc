@@ -2,7 +2,7 @@
 	"id": "cpp-template-example",
 	"name": "C++ Template (example mod)",
 	"authors": [ "modding-kit" ],
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": [
 		"Example for a C++ based mod.",
 		"Doesn't actually make any changes to the gameplay."

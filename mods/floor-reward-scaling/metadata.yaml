@@ -8,7 +8,7 @@ Description: |
   - **Exponential**: Rapid growth - rewards increase dramatically on higher floors
   - **Randomised**: Unpredictable rewards - each user gets a random multiplier within configured range
 Author: CJFWeatherhead
-Version: 0.1.5
+Version: 0.1.6
 Creation Date: 2026-01-01
 Last Updated: 2026-04-14
 Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling"
@@ -16,7 +16,7 @@ Development Status: Active Development
 Game Version Supported: beta
 ID: floor-reward-scaling
 Dependencies: []
-Image: ""
+Image: icon.png
 Notes: |
   - Tested with game version 0.10.0
   - Compatible with other mods

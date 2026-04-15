@@ -11,7 +11,7 @@ Description: |
   - Uses proper transaction system for refunds
   - Real-time monitoring of expenses and proposals
 Author: CJFWeatherhead
-Version: 0.1.2
+Version: 0.1.3
 Creation Date: 2026-01-01
 Last Updated: 2026-04-14
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices
@@ -19,7 +19,7 @@ Development Status: Active Development
 Game Version Supported: beta
 ID: inverse-prices
 Dependencies: []
-Image: 
+Image: icon.png
 Notes: Configure refund multiplier and what to affect via Mod Manager settings. Uses on_device_spawned and on_tick hooks for real-time monitoring.
 Parameters:
   - Name: refund_type

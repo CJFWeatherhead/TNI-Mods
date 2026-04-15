@@ -1,7 +1,7 @@
 Name: Random Device Warranties
 Description: A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful demonstration mod for new developers.
 Author: CJFWeatherhead
-Version: 0.1.4
+Version: 0.1.5
 Creation Date: 2026-01-01
 Last Updated: 2026-04-14
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties
@@ -9,7 +9,7 @@ Development Status: Discontinued
 Game Version Supported: beta
 ID: random-warranties
 Dependencies: []
-Image: 
+Image: icon.png
 Notes: Each device gets its own random multiplier, so warranties vary widely.
 Parameters:
   - Name: warranty_multiplier_min

@@ -42,7 +42,7 @@ Description: |
   - Network addressing format: @f{floor}/{abbrev}{increment}
   
 Author: CJFWeatherhead
-Version: 0.1.10
+Version: 0.1.11
 Creation Date: 2026-01-18
 Last Updated: 2026-04-14
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker
@@ -50,7 +50,7 @@ Development Status: Active Development
 Game Version Supported: beta
 ID: device-tweaker
 Dependencies: []
-Image: 
+Image: icon.png
 Notes: |
   This mod combines and extends functionality from 2x-bandwidth-switches and random-warranties mods.
   All modifications are applied when devices spawn.

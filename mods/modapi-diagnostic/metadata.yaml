@@ -49,7 +49,7 @@ Description: |
   saved to files in the mod directory.
   
 Author: CJFWeatherhead
-Version: 3.0.7
+Version: 3.0.8
 Creation Date: 2026-01-20
 Last Updated: 2026-04-14
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic
@@ -57,7 +57,7 @@ Development Status: Active Development
 Game Version Supported: beta
 ID: modapi-diagnostic
 Dependencies: []
-Image: 
+Image: icon.png
 Notes: |
   This is a developer tool for mod creators and external tool integrations.
   No gameplay impact. Ideal for:
