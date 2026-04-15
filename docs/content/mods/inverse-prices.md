@@ -1,10 +1,10 @@
 ---
 title: "Inverse Prices"
-date: 2026-01-24
+date: 2026-04-14
 draft: false
 mod_id: "inverse-prices"
 author: "CJFWeatherhead"
-version: "0.1.1"
+version: "0.1.3"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ This mod inverts the game's economy by making purchases pay the player instead o
 
 | | |
 |---|---|
-| **Version** | 0.1.1 |
+| **Version** | 0.1.3 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-01-24 |
+| **Last Updated** | 2026-04-14 |
 
 </div>
 
@@ -31,7 +31,7 @@ This mod inverts the game's economy by making purchases pay the player instead o
 
 <div class="download-section">
 
-**[Download inverse-prices-0.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download inverse-prices-0.1.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.3/inverse-prices-0.1.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -210,14 +210,14 @@ Configure refund multiplier and what to affect via Mod Manager settings. Uses on
 |-------|-------|
 | Mod ID | `inverse-prices` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-01-24 |
+| Last Updated | 2026-04-14 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/inverse-prices-v0.1.1)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.1/inverse-prices-0.1.1.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/inverse-prices-v0.1.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.3/inverse-prices-0.1.3.zip)
 
 </details>
 
