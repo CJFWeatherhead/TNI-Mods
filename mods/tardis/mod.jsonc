@@ -2,7 +2,7 @@
 	"id": "tardis",
 	"name": "TARDIS - Time Controller",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": [
 		"Control game time like a Time Lord!",
 		"SHIFT+> to speed up, SHIFT+< to slow down, SHIFT++ to skip to end of day.",
