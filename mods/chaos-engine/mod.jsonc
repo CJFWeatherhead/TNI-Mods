@@ -2,7 +2,7 @@
 	"id": "chaos-engine",
 	"name": "Chaos Engine",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": [
 		"A controlled chaos mod that introduces randomness and unpredictability to Tower Networking Inc.",
 		"SHIFT+F: Force spawn a random floor. SHIFT+D: Toggle Disaster Mode. SHIFT+X: Reset all chaos settings.",
