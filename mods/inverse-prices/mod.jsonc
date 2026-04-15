@@ -2,7 +2,7 @@
 	"id": "inverse-prices",
 	"name": "Inverse Prices",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": [
 		"Inverts the game's economy by making purchases pay the player instead of costing money.",
 		"Device purchases, proposal costs, tower link and socket costs are all refunded.",
