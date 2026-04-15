@@ -2,7 +2,7 @@
 	"id": "device-tweaker",
 	"name": "Device Tweaker",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.11",
+	"version": "0.1.12",
 	"description": [
 		"A comprehensive mod for tweaking device properties in Tower Networking Inc.",
 		"Bandwidth multiplier, warranty modifications, cost adjustments, hardware multipliers,",
