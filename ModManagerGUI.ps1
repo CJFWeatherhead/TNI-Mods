@@ -317,121 +317,127 @@ $script:LuaJitModFolder
 function Test-SupaModLoaderInstalled {
     <#
     .SYNOPSIS
-        Checks if the supa-mod-loader marker mod is present in the mods directory
+        Checks if the supa-mod-loader mod is present in the mods directory
     #>
     return (Test-Path (Join-Path $script:SupaModLoaderFolder "mod.jsonc"))
 }
 
-function Install-SupaModLoader {
+function Get-SupaModLoaderLatestRelease {
     <#
     .SYNOPSIS
-        Silently writes the supa-mod-loader marker mod into the mods directory.
-        Called automatically at startup — no user prompt required.
-        The mod version is tied to the Mod Manager version so installs can be traced.
+        Fetches the latest supa-mod-loader release info from GitHub
     #>
     try {
-        Write-Host "Installing supa-mod-loader v$script:ModManagerVersion..." -ForegroundColor Cyan
+        Write-Host "Fetching latest supa-mod-loader release from GitHub..." -ForegroundColor Cyan
+        $uri = "$script:GitHubApiBase/releases"
+        $headers = @{
+            "Accept"     = "application/vnd.github.v3+json"
+            "User-Agent" = "TNI-ModManager/3.0"
+        }
+        $releases = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get -TimeoutSec 30
 
-        if (-not (Test-Path $script:SupaModLoaderFolder)) {
-            New-Item -Path $script:SupaModLoaderFolder -ItemType Directory -Force | Out-Null
+        foreach ($release in $releases) {
+            if ($release.tag_name -match '^supa-mod-loader-v(\d+\.\d+\.\d+)$') {
+                $version = $Matches[1]
+                $asset = $release.assets | Where-Object { $_.name -like "*.zip" } | Select-Object -First 1
+                if ($asset) {
+                    return @{
+                        ModId        = "supa-mod-loader"
+                        Version      = $version
+                        TagName      = $release.tag_name
+                        DownloadUrl  = $asset.browser_download_url
+                        AssetName    = $asset.name
+                        Size         = $asset.size
+                        PublishedAt  = $release.published_at
+                        ReleaseNotes = $release.body
+                        HtmlUrl      = $release.html_url
+                    }
+                }
+            }
         }
 
-        # mod.jsonc
-        $modJsonc = @"
-{
-	"id": "supa-mod-loader",
-	"name": "Supa Mod Loader",
-	"authors": [ "CJFWeatherhead" ],
-	"version": "$script:ModManagerVersion",
-	"description": [
-		"Automatically added by ModManagerGUI when mods are installed.\n\nIts presence signals to other mods that this installation was set up via ModManagerGUI.ps1 rather than being manually installed. The version tracks the Mod Manager version used. No gameplay changes are made."
-	],
-	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader",
-		"ModManager GUI": "https://github.com/CJFWeatherhead/TNI-Mods/blob/beta/ModManagerGUI.ps1"
-	},
-	"dependencies": {
-		"tower-networking-inc": "^0.10.7"
-	},
-	"dependencies_optional": {},
-	"incompatibilities": {}
-}
-"@
-        Set-Content -Path (Join-Path $script:SupaModLoaderFolder "mod.jsonc") -Value $modJsonc -Encoding UTF8
-
-        # metadata.yaml
-        $today = (Get-Date).ToString("yyyy-MM-dd")
-        $metadataYaml = @"
-Name: Supa Mod Loader
-Description: |
-  Automatically added by ModManagerGUI when mods are installed.
-
-  Its presence signals to other mods that this installation was set up via
-  ModManagerGUI.ps1 rather than being manually installed. The version tracks
-  the Mod Manager version used. No gameplay changes are made.
-
-Author: CJFWeatherhead
-Version: $script:ModManagerVersion
-Creation Date: 2026-04-16
-Last Updated: $today
-Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader
-Development Status: Stable
-Game Version Supported: beta
-ID: supa-mod-loader
-Dependencies: []
-Image: icon.png
-Notes: |
-  Managed automatically by ModManagerGUI.ps1.
-  Version corresponds to the Mod Manager version that installed your mods.
-"@
-        Set-Content -Path (Join-Path $script:SupaModLoaderFolder "metadata.yaml") -Value $metadataYaml -Encoding UTF8
-
-        # entry.lua
-        $entryLua = @"
--- Supa Mod Loader v$script:ModManagerVersion
--- Automatically added by ModManagerGUI.ps1 when mods are installed via the mod manager.
--- Presence signals the mod collection was set up using the ModManager GUI.
--- No gameplay changes are made by this mod.
-
-local MOD_ID      = "supa-mod-loader"
-local MOD_VERSION = "$script:ModManagerVersion"
-
-print(string.format("[%s] v%s loaded -- installed via ModManager GUI", MOD_ID, MOD_VERSION))
-
-if Mod then
-    Mod.loader_version = MOD_VERSION
-    Mod.installed_by   = "ModManagerGUI"
-end
-"@
-        Set-Content -Path (Join-Path $script:SupaModLoaderFolder "entry.lua") -Value $entryLua -Encoding UTF8
-
-        Write-Host "  [OK] supa-mod-loader v$script:ModManagerVersion installed" -ForegroundColor Green
-        return $true
+        Write-Host "  [WARN] No supa-mod-loader release found on GitHub" -ForegroundColor Yellow
+        return $null
     }
     catch {
-        Write-Host "[ERROR] Failed to install supa-mod-loader: $_" -ForegroundColor Red
-        return $false
+        Write-Host "[ERROR] Failed to fetch supa-mod-loader release: $_" -ForegroundColor Red
+        return $null
     }
 }
 
-function Update-SupaModLoaderIfOutdated {
+function Show-SupaModLoaderPrompt {
     <#
     .SYNOPSIS
-        Re-writes supa-mod-loader if the stored version differs from the current Mod Manager version.
+        Asks the user whether they want to install the supa-mod-loader mod,
+        then downloads and installs it from the latest GitHub release if they agree.
     #>
-    $modJsoncPath = Join-Path $script:SupaModLoaderFolder "mod.jsonc"
-    if (Test-Path $modJsoncPath) {
-        $content = Get-Content $modJsoncPath -Raw
-        if ($content -match '"version":\s*"([^"]+)"') {
-            $installedVersion = $Matches[1]
-            if ($installedVersion -eq $script:ModManagerVersion) {
-                Write-Host "[OK] supa-mod-loader v$installedVersion is current" -ForegroundColor Green
-                return
+    param(
+        [System.Windows.Controls.ProgressBar]$ProgressBar = $null,
+        [System.Windows.Controls.TextBlock]$StatusText = $null
+    )
+
+    $message = @"
+Supa Mod Loader
+
+The Mod Manager can install a small companion mod called 'Supa Mod Loader'.
+
+It has no gameplay effects. Its purpose is informational: it lets other mods
+know they were installed via the Mod Manager (rather than manually), and
+tracks which version of the Mod Manager set things up.
+
+Would you like to install it?
+(Skipping this is completely fine — your mods will work normally either way.)
+"@
+
+    $result = [System.Windows.MessageBox]::Show(
+        $message,
+        "Supa Mod Loader",
+        [System.Windows.MessageBoxButton]::YesNo,
+        [System.Windows.MessageBoxImage]::Question
+    )
+
+    if ($result -eq "Yes") {
+        if ($StatusText) {
+            $StatusText.Dispatcher.Invoke([Action]{ $StatusText.Text = "Fetching supa-mod-loader release..." })
+        }
+
+        $releaseInfo = Get-SupaModLoaderLatestRelease
+
+        if ($releaseInfo) {
+            $installSuccess = Download-ModFromGitHub -ReleaseInfo $releaseInfo -ProgressBar $ProgressBar -StatusText $StatusText
+
+            if ($installSuccess) {
+                [System.Windows.MessageBox]::Show(
+                    "Supa Mod Loader v$($releaseInfo.Version) installed successfully!",
+                    "Installation Complete",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Information
+                )
             }
-            Write-Host "[INFO] supa-mod-loader v$installedVersion -> updating to v$script:ModManagerVersion" -ForegroundColor Yellow
+            else {
+                [System.Windows.MessageBox]::Show(
+                    "Failed to install Supa Mod Loader.`n`nYou can install it manually from:`n$($releaseInfo.HtmlUrl)",
+                    "Installation Failed",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Error
+                )
+            }
+            return $installSuccess
+        }
+        else {
+            [System.Windows.MessageBox]::Show(
+                "Could not find a Supa Mod Loader release on GitHub.`n`nPlease try again later or install it manually from the releases page.",
+                "Release Not Found",
+                [System.Windows.MessageBoxButton]::OK,
+                [System.Windows.MessageBoxImage]::Warning
+            )
+            return $false
         }
     }
-    Install-SupaModLoader | Out-Null
+    else {
+        Write-Host "[INFO] User declined supa-mod-loader installation" -ForegroundColor Yellow
+        return $false
+    }
 }
 
 #endregion
@@ -3227,22 +3233,40 @@ try {
     $downloadStatusText = $window.FindName("DownloadStatusText")
     $statusText = $window.FindName("StatusText")
     
-    # Ensure supa-mod-loader marker is present and up to date (silent, no prompt)
+    # Ensure mods directory exists
     if (-not (Test-Path $script:ModsDirectory)) {
         New-Item -Path $script:ModsDirectory -ItemType Directory -Force | Out-Null
     }
-    Update-SupaModLoaderIfOutdated
+
+    # Show window before startup prompts so dialogs have a parent
+    $needsStartupPrompt = (-not (Test-SupaModLoaderInstalled)) -or (-not (Test-LuaJitInstalled))
+    if ($needsStartupPrompt) {
+        $window.Show()
+        $window.Dispatcher.Invoke([Action]{}, [System.Windows.Threading.DispatcherPriority]::Background)
+    }
+
+    # Offer supa-mod-loader on first run
+    if (-not (Test-SupaModLoaderInstalled)) {
+        Write-Host "[INFO] supa-mod-loader not found - prompting user..." -ForegroundColor Yellow
+        $statusText.Text = "Checking Supa Mod Loader..."
+        Show-SupaModLoaderPrompt -ProgressBar $progressBar -StatusText $downloadStatusText
+    }
+    else {
+        Write-Host "[OK] supa-mod-loader found" -ForegroundColor Green
+    }
 
     # Check for LuaJIT installation
     if (-not (Test-LuaJitInstalled)) {
         Write-Host "[WARN] LuaJIT not found at: $script:LuaJitPath" -ForegroundColor Yellow
         $statusText.Text = "LuaJIT runtime missing - prompting user..."
         $window.Dispatcher.Invoke([Action]{}, [System.Windows.Threading.DispatcherPriority]::Background)
-        
-        # Show window first so the dialogs have a parent
-        $window.Show()
-        $window.Dispatcher.Invoke([Action]{}, [System.Windows.Threading.DispatcherPriority]::Background)
-        
+
+        if (-not $needsStartupPrompt) {
+            # Window not yet shown (supa-mod-loader was already installed)
+            $window.Show()
+            $window.Dispatcher.Invoke([Action]{}, [System.Windows.Threading.DispatcherPriority]::Background)
+        }
+
         Show-LuaJitPrompt -ProgressBar $progressBar -StatusText $downloadStatusText
     }
     else {
