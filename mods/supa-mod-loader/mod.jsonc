@@ -8,7 +8,6 @@
 	],
 	"links": {
 		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader",
-		"ModManager GUI": "https://github.com/CJFWeatherhead/TNI-Mods/blob/beta/ModManagerGUI.ps1",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
 	},
 	"dependencies": {
