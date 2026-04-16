@@ -3,7 +3,7 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display with Shift+O.
 -- Author: CJFWeatherhead
--- Version: 0.1.6
+-- Version: 0.1.7
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
@@ -13,7 +13,7 @@
 --        It stores the original batch size on first use and restores it when deactivating.
 --        Proposals with unmet dependencies or failed adhoc requirements are excluded from display.
 
-print("=== All Proposals Mod v0.1.6 Loaded ===")
+print("=== All Proposals Mod v0.1.7 Loaded ===")
 
 -- ===== MOD CONFIGURATION START =====
 -- This section is parsed and modified by ModManager
@@ -255,56 +255,15 @@ local function show_all_proposals()
     print("[All Proposals] Triggering proposal reroll...")
     pcall(function()
         propmod_controller:reroll_proposals()
+        print("[All Proposals] Reroll complete")
     end)
 
-    -- Emit signals to refresh the Secretariat UI
-    -- Try both direct call and emit_signal approaches
-    pcall(function()
-        if propmod_controller.emit_signal then
-            propmod_controller:emit_signal("new_proposals_updated")
-            print("[All Proposals] Emitted new_proposals_updated signal via emit_signal")
-        else
-            propmod_controller:new_proposals_updated()
-            print("[All Proposals] Called new_proposals_updated directly")
-        end
-    end)
-
-    pcall(function()
-        if propmod_controller.emit_signal then
-            propmod_controller:emit_signal("ex_proposals_updated")
-            print("[All Proposals] Emitted ex_proposals_updated signal via emit_signal")
-        else
-            propmod_controller:ex_proposals_updated()
-            print("[All Proposals] Called ex_proposals_updated directly")
-        end
-    end)
-
-    -- Try to find and refresh the Secretariat app if it's open
-    pcall(function()
-        local base_ui = ModApiV1.get_base_ui()
-        if base_ui and base_ui.get_node then
-            -- Try to find the Secretariat node in the scene tree
-            local secretariat = base_ui:get_node_or_null("/root/BaseUI/TheSecretariat")
-            if not secretariat then
-                secretariat = base_ui:get_node_or_null("TheSecretariat")
-            end
-            
-            if secretariat then
-                print("[All Proposals] Found Secretariat, attempting refresh...")
-                -- Try various refresh methods
-                if secretariat.clear_dynamic then
-                    secretariat:clear_dynamic()
-                    print("[All Proposals] Called clear_dynamic()")
-                end
-                if secretariat.launch then
-                    secretariat:launch()
-                    print("[All Proposals] Called launch() to refresh")
-                end
-            else
-                print("[All Proposals] Secretariat not found in scene tree (may not be open)")
-            end
-        end
-    end)
+    -- Note: The Secretariat UI may not refresh immediately
+    -- You can manually refresh by:
+    --   1. Closing and reopening the Secretariat app
+    --   2. Clicking "Refresh RFP's" button in the Secretariat
+    --   3. Waiting for the automatic refresh cycle
+    print("[All Proposals] Note: If proposals don't show in Secretariat, close and reopen the app")
 
     all_proposals_active = true
 
@@ -325,8 +284,8 @@ local function show_all_proposals()
             if base_ui and base_ui.display_notification then
                 -- tone_enum: 0 = neutral, 1 = positive, 2 = negative
                 base_ui.display_notification(
-                    string.format("Showing all %d proposals (Blocked: %d, Submitted: %d)", 
-                        available_proposals, blocked_proposals, submitted_proposals), 
+                    string.format("All %d proposals loaded! Close/reopen Secretariat to see them", 
+                        available_proposals), 
                     1
                 )
             end
@@ -368,44 +327,7 @@ local function restore_normal_proposals()
         print("[All Proposals] Rerolled proposals")
     end)
 
-    -- Emit signals to refresh the Secretariat UI
-    pcall(function()
-        if propmod_controller.emit_signal then
-            propmod_controller:emit_signal("new_proposals_updated")
-            print("[All Proposals] Emitted new_proposals_updated signal via emit_signal")
-        else
-            propmod_controller:new_proposals_updated()
-            print("[All Proposals] Called new_proposals_updated directly")
-        end
-    end)
-
-    pcall(function()
-        if propmod_controller.emit_signal then
-            propmod_controller:emit_signal("ex_proposals_updated")
-            print("[All Proposals] Emitted ex_proposals_updated signal via emit_signal")
-        else
-            propmod_controller:ex_proposals_updated()
-            print("[All Proposals] Called ex_proposals_updated directly")
-        end
-    end)
-
-    -- Try to refresh Secretariat if open
-    pcall(function()
-        local base_ui = ModApiV1.get_base_ui()
-        if base_ui and base_ui.get_node then
-            local secretariat = base_ui:get_node_or_null("/root/BaseUI/TheSecretariat")
-            if not secretariat then
-                secretariat = base_ui:get_node_or_null("TheSecretariat")
-            end
-            if secretariat and secretariat.clear_dynamic then
-                secretariat:clear_dynamic()
-                if secretariat.launch then
-                    secretariat:launch()
-                end
-                print("[All Proposals] Refreshed Secretariat UI")
-            end
-        end
-    end)
+    print("[All Proposals] Note: If proposals don't refresh in Secretariat, close and reopen the app")
 
     all_proposals_active = false
     print("[All Proposals] Normal mode restored")
