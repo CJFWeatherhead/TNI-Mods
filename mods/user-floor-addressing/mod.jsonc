@@ -1,15 +1,16 @@
-{
+﻿{
 	"id": "user-floor-addressing",
 	"name": "User Floor-Based Addressing",
 	"authors": [ "CJFWeatherhead" ],
 	"version": "0.1.8",
 	"description": [
-		"Sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.",
-		"Addresses like f{floor}/usr{increment}, with floor-specific DNS and fallback servers.",
-		"Also supports custom phone and CCTV address formats."
+		"This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/user-floor-addressing"
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/user-floor-addressing",
+		"lua": "https://lua.org/",
+		"luajit": "https://luajit.org/",
+		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
 	},
 	"dependencies": {
 		// See https://devhints.io/semver for syntax.
@@ -17,6 +18,7 @@
 		"luajit-support": "~0.2.0"
 	},
 	"dependencies_optional": {
+		"supa-mod-loader": ">=3.7.0"
 	},
 	"incompatibilities": {
 	}
