@@ -1,10 +1,10 @@
 ---
 title: "Floor Reward Scaling"
-date: 2026-04-14
+date: 2026-04-15
 draft: false
 mod_id: "floor-reward-scaling"
 author: "CJFWeatherhead"
-version: "0.1.6"
+version: "0.1.7"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ game_version: "beta"
 
 | | |
 |---|---|
-| **Version** | 0.1.6 |
+| **Version** | 0.1.7 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-14 |
+| **Last Updated** | 2026-04-15 |
 
 </div>
 
@@ -31,7 +31,7 @@ game_version: "beta"
 
 <div class="download-section">
 
-**[Download floor-reward-scaling-0.1.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.6/floor-reward-scaling-0.1.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download floor-reward-scaling-0.1.7.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.7/floor-reward-scaling-0.1.7.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -188,14 +188,14 @@ CJFWeatherhead
 |-------|-------|
 | Mod ID | `floor-reward-scaling` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-14 |
+| Last Updated | 2026-04-15 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.6)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.6/floor-reward-scaling-0.1.6.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.7)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.7/floor-reward-scaling-0.1.7.zip)
 
 </details>
 
