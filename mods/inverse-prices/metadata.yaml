@@ -11,9 +11,9 @@ Description: |
   - Uses proper transaction system for refunds
   - Real-time monitoring of expenses and proposals
 Author: CJFWeatherhead
-Version: 0.1.4
+Version: 0.1.5
 Creation Date: 2026-01-01
-Last Updated: 2026-04-15
+Last Updated: 2026-04-16
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices
 Development Status: Active Development
 Game Version Supported: beta

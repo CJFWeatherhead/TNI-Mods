@@ -2,7 +2,7 @@
 	"id": "inverse-prices",
 	"name": "Inverse Prices",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": [
 		"This mod inverts the game's economy by making purchases pay the player instead of costing money."
 	],
