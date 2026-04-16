@@ -71,6 +71,12 @@ jobs:
           # Update window title
           $content = $content -replace '(Title="Tower Networking Inc - Mod Manager v)\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
           
+          # Update ModManagerVersion runtime variable
+          $content = $content -replace '(\$script:ModManagerVersion = ")\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
+          
+          # Update startup log line
+          $content = $content -replace '(TNI Mod Manager v)\d+\.\d+(?:\.\d+)?( - Starting up)', "`${1}$newVersion`${2}"
+          
           Set-Content "ModManagerGUI.ps1" -Value $content -NoNewline
           
           echo "Updated version to $newVersion"

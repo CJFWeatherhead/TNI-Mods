@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-    Tower Networking Inc - WPF Mod Manager v3.7.0
+    Tower Networking Inc - WPF Mod Manager v3.7
 .DESCRIPTION
     A Windows Presentation Foundation GUI for managing TNI mods.
     Downloads mods from GitHub releases, manages local mods, and configures parameters.
@@ -28,7 +28,7 @@ $script:ModCachePath = Join-Path $script:GameDataPath "mod_cache.json"
 $script:ConfigFileName = "entry.lua"
 $script:LuaJitModFolder = Join-Path $script:ModsDirectory "luajit-support"
 $script:LuaJitPath = Join-Path $script:LuaJitModFolder "entry.elf"
-$script:ModManagerVersion = "3.7.2"
+$script:ModManagerVersion = "3.7.4"
 $script:SupaModLoaderFolder = Join-Path $script:ModsDirectory "supa-mod-loader"
 
 # GitHub Configuration
@@ -39,7 +39,7 @@ $script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/
 
 # Startup logging
 Write-Host "======================================" -ForegroundColor Cyan
-Write-Host "TNI Mod Manager v3.7.0 - Starting up..." -ForegroundColor Cyan
+Write-Host "TNI Mod Manager v3.7.4 - Starting up..." -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Configuration:" -ForegroundColor Yellow
