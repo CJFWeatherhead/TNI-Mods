@@ -18,6 +18,7 @@
 		"tower-networking-inc": "^0.10.11"
 	},
 	"dependencies_optional": {
+		"supa-mod-loader": ">=3.7.0"
 	},
 	"incompatibilities": {
 	}
