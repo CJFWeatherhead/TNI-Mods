@@ -1,0 +1,30 @@
+Name: Supa Mod Loader
+Description: |
+  Automatically added by the ModManager GUI when mods are installed via ModManagerGUI.ps1.
+
+  Its presence allows other mods to detect whether the mod collection was set up using the
+  mod manager or installed manually. No gameplay changes are made.
+
+  Other mods may declare this as an optional dependency to provide manager-aware behaviour,
+  such as displaying update guidance or manager-specific instructions.
+
+  ## Details
+
+  - Added automatically by ModManagerGUI.ps1 during mod installation
+  - Acts as a version-tracked marker for the ModManager GUI installation method
+  - Safe to leave installed; has no side effects on gameplay
+
+Author: CJFWeatherhead
+Version: 3.7.2
+Creation Date: 2026-04-16
+Last Updated: 2026-04-16
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader
+Development Status: Stable
+Game Version Supported: beta
+ID: supa-mod-loader
+Dependencies: []
+Image: icon.png
+Notes: |
+  This mod is managed automatically by ModManagerGUI.ps1.
+  It should not need to be manually installed or removed.
+  The version tracks the ModManager GUI version that performed the installation.

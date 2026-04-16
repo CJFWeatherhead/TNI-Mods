@@ -1,0 +1,22 @@
+{
+	"id": "supa-mod-loader",
+	"name": "Supa Mod Loader",
+	"authors": [ "CJFWeatherhead" ],
+	"version": "3.7.2",
+	"description": [
+		"SupaNerdo's Mod Loader is automatically added when mods are installed using the ModManager GUI.\n\nIts presence indicates that this mod collection was installed or managed via ModManagerGUI.ps1, allowing other mods to detect whether they were installed manually or through the mod manager.\n\nOther mods may list this as an optional dependency to adjust their behaviour based on the installation method — for example, showing update reminders or manager-specific guidance.\n\nNo gameplay changes are made by this mod."
+	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader",
+		"ModManager GUI": "https://github.com/CJFWeatherhead/TNI-Mods/blob/beta/ModManagerGUI.ps1",
+		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7"
+	},
+	"dependencies_optional": {
+	},
+	"incompatibilities": {
+	}
+}

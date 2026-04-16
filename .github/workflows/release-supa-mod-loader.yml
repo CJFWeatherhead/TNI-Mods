@@ -1,0 +1,27 @@
+name: Release supa-mod-loader
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+    paths:
+      - 'mods/supa-mod-loader/**'
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    uses: ./.github/workflows/mod-release-reusable.yml
+    with:
+      mod_name: 'supa-mod-loader'
+      bump_type: ${{ inputs.bump_type || 'patch' }}

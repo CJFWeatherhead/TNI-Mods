@@ -28,6 +28,8 @@ $script:ModCachePath = Join-Path $script:GameDataPath "mod_cache.json"
 $script:ConfigFileName = "entry.lua"
 $script:LuaJitModFolder = Join-Path $script:ModsDirectory "luajit-support"
 $script:LuaJitPath = Join-Path $script:LuaJitModFolder "entry.elf"
+$script:ModManagerVersion = "3.7.2"
+$script:SupaModLoaderFolder = Join-Path $script:ModsDirectory "supa-mod-loader"
 
 # GitHub Configuration
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
@@ -306,6 +308,130 @@ $script:LuaJitModFolder
         
         return $false
     }
+}
+
+#endregion
+
+#region Supa Mod Loader Management
+
+function Test-SupaModLoaderInstalled {
+    <#
+    .SYNOPSIS
+        Checks if the supa-mod-loader marker mod is present in the mods directory
+    #>
+    return (Test-Path (Join-Path $script:SupaModLoaderFolder "mod.jsonc"))
+}
+
+function Install-SupaModLoader {
+    <#
+    .SYNOPSIS
+        Silently writes the supa-mod-loader marker mod into the mods directory.
+        Called automatically at startup — no user prompt required.
+        The mod version is tied to the Mod Manager version so installs can be traced.
+    #>
+    try {
+        Write-Host "Installing supa-mod-loader v$script:ModManagerVersion..." -ForegroundColor Cyan
+
+        if (-not (Test-Path $script:SupaModLoaderFolder)) {
+            New-Item -Path $script:SupaModLoaderFolder -ItemType Directory -Force | Out-Null
+        }
+
+        # mod.jsonc
+        $modJsonc = @"
+{
+	"id": "supa-mod-loader",
+	"name": "Supa Mod Loader",
+	"authors": [ "CJFWeatherhead" ],
+	"version": "$script:ModManagerVersion",
+	"description": [
+		"Automatically added by ModManagerGUI when mods are installed.\n\nIts presence signals to other mods that this installation was set up via ModManagerGUI.ps1 rather than being manually installed. The version tracks the Mod Manager version used. No gameplay changes are made."
+	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader",
+		"ModManager GUI": "https://github.com/CJFWeatherhead/TNI-Mods/blob/beta/ModManagerGUI.ps1"
+	},
+	"dependencies": {
+		"tower-networking-inc": "^0.10.7"
+	},
+	"dependencies_optional": {},
+	"incompatibilities": {}
+}
+"@
+        Set-Content -Path (Join-Path $script:SupaModLoaderFolder "mod.jsonc") -Value $modJsonc -Encoding UTF8
+
+        # metadata.yaml
+        $today = (Get-Date).ToString("yyyy-MM-dd")
+        $metadataYaml = @"
+Name: Supa Mod Loader
+Description: |
+  Automatically added by ModManagerGUI when mods are installed.
+
+  Its presence signals to other mods that this installation was set up via
+  ModManagerGUI.ps1 rather than being manually installed. The version tracks
+  the Mod Manager version used. No gameplay changes are made.
+
+Author: CJFWeatherhead
+Version: $script:ModManagerVersion
+Creation Date: 2026-04-16
+Last Updated: $today
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader
+Development Status: Stable
+Game Version Supported: beta
+ID: supa-mod-loader
+Dependencies: []
+Image: icon.png
+Notes: |
+  Managed automatically by ModManagerGUI.ps1.
+  Version corresponds to the Mod Manager version that installed your mods.
+"@
+        Set-Content -Path (Join-Path $script:SupaModLoaderFolder "metadata.yaml") -Value $metadataYaml -Encoding UTF8
+
+        # entry.lua
+        $entryLua = @"
+-- Supa Mod Loader v$script:ModManagerVersion
+-- Automatically added by ModManagerGUI.ps1 when mods are installed via the mod manager.
+-- Presence signals the mod collection was set up using the ModManager GUI.
+-- No gameplay changes are made by this mod.
+
+local MOD_ID      = "supa-mod-loader"
+local MOD_VERSION = "$script:ModManagerVersion"
+
+print(string.format("[%s] v%s loaded -- installed via ModManager GUI", MOD_ID, MOD_VERSION))
+
+if Mod then
+    Mod.loader_version = MOD_VERSION
+    Mod.installed_by   = "ModManagerGUI"
+end
+"@
+        Set-Content -Path (Join-Path $script:SupaModLoaderFolder "entry.lua") -Value $entryLua -Encoding UTF8
+
+        Write-Host "  [OK] supa-mod-loader v$script:ModManagerVersion installed" -ForegroundColor Green
+        return $true
+    }
+    catch {
+        Write-Host "[ERROR] Failed to install supa-mod-loader: $_" -ForegroundColor Red
+        return $false
+    }
+}
+
+function Update-SupaModLoaderIfOutdated {
+    <#
+    .SYNOPSIS
+        Re-writes supa-mod-loader if the stored version differs from the current Mod Manager version.
+    #>
+    $modJsoncPath = Join-Path $script:SupaModLoaderFolder "mod.jsonc"
+    if (Test-Path $modJsoncPath) {
+        $content = Get-Content $modJsoncPath -Raw
+        if ($content -match '"version":\s*"([^"]+)"') {
+            $installedVersion = $Matches[1]
+            if ($installedVersion -eq $script:ModManagerVersion) {
+                Write-Host "[OK] supa-mod-loader v$installedVersion is current" -ForegroundColor Green
+                return
+            }
+            Write-Host "[INFO] supa-mod-loader v$installedVersion -> updating to v$script:ModManagerVersion" -ForegroundColor Yellow
+        }
+    }
+    Install-SupaModLoader | Out-Null
 }
 
 #endregion
@@ -3101,6 +3227,12 @@ try {
     $downloadStatusText = $window.FindName("DownloadStatusText")
     $statusText = $window.FindName("StatusText")
     
+    # Ensure supa-mod-loader marker is present and up to date (silent, no prompt)
+    if (-not (Test-Path $script:ModsDirectory)) {
+        New-Item -Path $script:ModsDirectory -ItemType Directory -Force | Out-Null
+    }
+    Update-SupaModLoaderIfOutdated
+
     # Check for LuaJIT installation
     if (-not (Test-LuaJitInstalled)) {
         Write-Host "[WARN] LuaJIT not found at: $script:LuaJitPath" -ForegroundColor Yellow
