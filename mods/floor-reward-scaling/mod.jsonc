@@ -2,7 +2,7 @@
 	"id": "floor-reward-scaling",
 	"name": "Floor Reward Scaling",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.7",
+	"version": "0.1.8",
 	"description": [
 		"Floor Reward Scaling Mod automatically scales user daily payment rates based on their floor number using configurable progression systems. Choose from logarithmic, linear, exponential, or randomised scaling to customize reward progression."
 	],
