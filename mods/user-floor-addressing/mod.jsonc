@@ -2,7 +2,7 @@
 	"id": "user-floor-addressing",
 	"name": "User Floor-Based Addressing",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.8",
+	"version": "0.1.9",
 	"description": [
 		"This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment."
 	],
