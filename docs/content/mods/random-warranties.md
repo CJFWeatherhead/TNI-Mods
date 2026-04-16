@@ -1,10 +1,10 @@
 ---
 title: "Random Device Warranties"
-date: 2026-04-15
+date: 2026-04-16
 draft: false
 mod_id: "random-warranties"
 author: "CJFWeatherhead"
-version: "0.1.6"
+version: "0.1.7"
 status: "Discontinued"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ A simple example mod that randomizes warranty periods of all devices in Tower Ne
 
 | | |
 |---|---|
-| **Version** | 0.1.6 |
+| **Version** | 0.1.7 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🔴 Discontinued |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-15 |
+| **Last Updated** | 2026-04-16 |
 
 </div>
 
@@ -31,7 +31,7 @@ A simple example mod that randomizes warranty periods of all devices in Tower Ne
 
 <div class="download-section">
 
-**[Download random-warranties-0.1.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.6/random-warranties-0.1.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download random-warranties-0.1.7.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.7/random-warranties-0.1.7.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -140,14 +140,14 @@ Each device gets its own random multiplier, so warranties vary widely.
 |-------|-------|
 | Mod ID | `random-warranties` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-15 |
+| Last Updated | 2026-04-16 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-warranties-v0.1.6)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.6/random-warranties-0.1.6.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-warranties-v0.1.7)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.7/random-warranties-0.1.7.zip)
 
 </details>
 

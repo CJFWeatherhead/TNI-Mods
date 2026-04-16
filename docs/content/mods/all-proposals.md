@@ -1,10 +1,10 @@
 ---
 title: "All Proposals"
-date: 2026-04-15
+date: 2026-01-31
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "0.1.10"
+version: "0.1.7"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 | | |
 |---|---|
-| **Version** | 0.1.10 |
+| **Version** | 0.1.7 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-15 |
+| **Last Updated** | 2026-01-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 <div class="download-section">
 
-**[Download all-proposals-0.1.10.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.10/all-proposals-0.1.10.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-0.1.7.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.7/all-proposals-0.1.7.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -96,12 +96,15 @@ The mod will log detailed information about the proposal status in the console, 
 - **BLOCKED PROPOSALS**: Proposals with unmet dependencies (shows what they require)
 - **SUBMITTED PROPOSALS**: Proposals already completed
 
-**Note about UI refresh**: The mod attempts to automatically refresh the Secretariat app when toggling modes. If the proposals don't update immediately in the Secretariat, try:
-1. Close and reopen the Secretariat app
-2. Wait for the next automatic proposal refresh cycle
-3. Click the reroll button in the Secretariat (if available)
+### Important: UI Refresh
 
-The proposals are definitely updated in the game's memory - the UI just may need a manual refresh.
+The mod updates the proposal batch size and triggers a reroll, but **the Secretariat UI does not automatically refresh**. To see all proposals in the Secretariat app:
+
+1. **Close and reopen the Secretariat app** - This is the most reliable method
+2. Use the "Refresh RFP's" button in the Secretariat (costs credits)
+3. Wait for the automatic 3-day refresh cycle
+
+The proposals **are updated in the game's backend** - it's only the UI display that needs manual refreshing. The console output will show you all available proposals even if the Secretariat hasn't refreshed yet.
 
 ## Example Output
 ```
@@ -167,14 +170,14 @@ CJFWeatherhead
 |-------|-------|
 | Mod ID | `all-proposals` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-15 |
+| Last Updated | 2026-01-31 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.10)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.10/all-proposals-0.1.10.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.7)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.7/all-proposals-0.1.7.zip)
 
 </details>
 

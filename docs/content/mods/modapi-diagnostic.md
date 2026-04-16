@@ -1,10 +1,10 @@
 ---
 title: "ModAPI Diagnostic Tool"
-date: 2026-04-15
+date: 2026-04-16
 draft: false
 mod_id: "modapi-diagnostic"
 author: "CJFWeatherhead"
-version: "3.0.9"
+version: "3.0.10"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
 
 | | |
 |---|---|
-| **Version** | 3.0.9 |
+| **Version** | 3.0.10 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-15 |
+| **Last Updated** | 2026-04-16 |
 
 </div>
 
@@ -31,7 +31,7 @@ Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
 
 <div class="download-section">
 
-**[Download modapi-diagnostic-3.0.9.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.9/modapi-diagnostic-3.0.9.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download modapi-diagnostic-3.0.10.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.10/modapi-diagnostic-3.0.10.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -337,14 +337,14 @@ No gameplay impact. Ideal for:
 |-------|-------|
 | Mod ID | `modapi-diagnostic` |
 | Creation Date | 2026-01-20 |
-| Last Updated | 2026-04-15 |
+| Last Updated | 2026-04-16 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v3.0.9)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.9/modapi-diagnostic-3.0.9.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v3.0.10)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.10/modapi-diagnostic-3.0.10.zip)
 
 </details>
 
