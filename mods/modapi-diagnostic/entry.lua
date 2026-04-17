@@ -519,7 +519,7 @@ local function export_game_state_json()
     
     local game_state = {
         _metadata = {
-            mod_version = "3.0",
+            mod_version = "3.1",
             export_timestamp = timestamp,
             export_date = datestr
         }
@@ -1699,17 +1699,14 @@ end
 -- ============================================================================
 
 function on_player_input(event)
-    local event_class = nil
-    pcall(function() event_class = event:get_class() end)
+    local ok, event_class = pcall(event.get_class, event)
+    if not ok or event_class ~= "InputEventKey" then return end
 
-    if event_class == "InputEventKey" then
-        local keycode = nil
-        local is_pressed = false
-        local is_shift = false
-
-        pcall(function() keycode = event:get_keycode() end)
-        pcall(function() is_pressed = event:is_pressed() end)
-        pcall(function() is_shift = event:is_shift_pressed() end)
+    do
+        local ok1, keycode = pcall(event.get_keycode, event)
+        local ok2, is_pressed = pcall(event.is_pressed, event)
+        local ok3, is_shift = pcall(event.is_shift_pressed, event)
+        if not (ok1 and ok2 and ok3) then return end
 
         -- Shift+R: Re-inspect users (keycode 82)
         if keycode == 82 and is_shift then
