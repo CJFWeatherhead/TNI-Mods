@@ -3,7 +3,7 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display with Shift+O.
 -- Author: CJFWeatherhead
--- Version: 0.1.7
+-- Version: 0.1.8
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
@@ -349,18 +349,15 @@ end
 -- Keyboard input handler for Shift+P shortcut
 function on_player_input(event)
     -- Check if this is a keyboard event
-    local event_class = nil
-    pcall(function() event_class = event:get_class() end)
+    local ok, event_class = pcall(event.get_class, event)
+    if not ok or event_class ~= "InputEventKey" then return end
 
-    if event_class == "InputEventKey" then
+    do
         -- Get keycode and check if it's the P key (ASCII 80)
-        local keycode = nil
-        local is_pressed = false
-        local is_shift = false
-
-        pcall(function() keycode = event:get_keycode() end)
-        pcall(function() is_pressed = event:is_pressed() end)
-        pcall(function() is_shift = event:is_shift_pressed() end)
+        local ok1, keycode = pcall(event.get_keycode, event)
+        local ok2, is_pressed = pcall(event.is_pressed, event)
+        local ok3, is_shift = pcall(event.is_shift_pressed, event)
+        if not (ok1 and ok2 and ok3) then return end
 
         -- Shift+P combination (80 is the keycode for 'P')
         if keycode == 80 and is_shift then
