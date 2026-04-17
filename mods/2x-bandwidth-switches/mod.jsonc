@@ -2,7 +2,7 @@
 	"id": "2x-bandwidth-switches-example",
 	"name": "2x Bandwidth Switches",
 	"authors": [ "modding-kit" ],
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": [
 		"This mod doubles the bandwidth capacity of all switches in the Tower Networking Inc game."
 	],
