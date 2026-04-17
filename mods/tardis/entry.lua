@@ -1,7 +1,7 @@
 -- TARDIS Mod (Time And Relative Dimension In Space)
 -- Purpose: Control game time via keyboard shortcuts
 -- Author: CJFWeatherhead
--- Version: 0.1.0
+-- Version: 0.1.1
 -- Description: This mod provides keyboard shortcuts to control game speed and skip time.
 --              SHIFT+> increases game speed, SHIFT+< decreases game speed,
 --              SHIFT++ skips to end of day. Like the TARDIS, it manipulates time!
@@ -272,21 +272,16 @@ end
 -- Keyboard input handler
 function on_player_input(event)
     -- Check if this is a keyboard event
-    local event_class = nil
-    pcall(function() event_class = event:get_class() end)
-    
-    if event_class ~= "InputEventKey" then
+    local ok, event_class = pcall(event.get_class, event)
+    if not ok or event_class ~= "InputEventKey" then
         return
     end
-    
+
     -- Get keycode and modifiers
-    local keycode = nil
-    local is_pressed = false
-    local is_shift = false
-    
-    pcall(function() keycode = event:get_keycode() end)
-    pcall(function() is_pressed = event:is_pressed() end)
-    pcall(function() is_shift = event:is_shift_pressed() end)
+    local ok1, keycode = pcall(event.get_keycode, event)
+    local ok2, is_pressed = pcall(event.is_pressed, event)
+    local ok3, is_shift = pcall(event.is_shift_pressed, event)
+    if not (ok1 and ok2 and ok3) then return end
     
     -- Only process if Shift is held
     if not is_shift then
