@@ -4,7 +4,7 @@
 -- No gameplay changes are made by this mod.
 
 local MOD_ID      = "supa-mod-loader"
-local MOD_VERSION = "3.7.2"
+local MOD_VERSION = "3.7.7"
 
 -- Report that the mod manager installer is present.
 -- Other mods can check for supa-mod-loader via the optional dependency system
