@@ -35,7 +35,7 @@ $script:SupaModLoaderFolder = Join-Path $script:ModsDirectory "supa-mod-loader"
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
 $script:GitHubApiBase = "https://api.github.com/repos/$script:GitHubRepo"
 $script:LuaJitReleaseTag = "continuous-gnu-beta"
-$script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/$script:LuaJitReleaseTag/luajit.zip"
+$script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/$script:LuaJitReleaseTag/luajit-support.zip"
 
 # Startup logging
 Write-Host "======================================" -ForegroundColor Cyan
