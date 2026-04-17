@@ -30,6 +30,7 @@ $script:LuaJitModFolder = Join-Path $script:ModsDirectory "luajit-support"
 $script:LuaJitPath = Join-Path $script:LuaJitModFolder "entry.elf"
 $script:ModManagerVersion = "3.7.7"
 $script:SupaModLoaderFolder = Join-Path $script:ModsDirectory "supa-mod-loader"
+$script:ManagedMarkerFileName = "mod.managed"
 
 # GitHub Configuration
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
@@ -196,6 +197,12 @@ function Install-LuaJit {
         if (Test-Path $script:LuaJitPath) {
             Write-Host "  [OK] LuaJIT support mod installed successfully" -ForegroundColor Green
             $success = $true
+            
+            # Write mod.managed marker so source detection works without a cache entry
+            $markerPath = Join-Path $script:LuaJitModFolder $script:ManagedMarkerFileName
+            $markerData = @{ managedBy = "TNI-ModManager"; modManagerVersion = $script:ModManagerVersion; installedVersion = "luajit"; installedAt = (Get-Date).ToString("o") } | ConvertTo-Json -Compress
+            $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+            [System.IO.File]::WriteAllText($markerPath, $markerData, $utf8NoBom)
         }
         else {
             Write-Host "  [ERROR] entry.elf not found after extraction in luajit-support" -ForegroundColor Red
@@ -676,7 +683,17 @@ function Download-ModFromGitHub {
         # Clean up temp file
         Remove-Item $tempZipPath -Force -ErrorAction SilentlyContinue
         
-        # Update mod cache to track this as a downloaded mod
+        # Write mod.managed marker file into the mod folder — this is the primary
+        # source-of-truth for "was this installed by the mod manager" checks.
+        # Using a folder-local file avoids cache key mismatches between the release/
+        # folder name and the id declared inside mod.jsonc.
+        $markerPath = Join-Path $modTargetPath $script:ManagedMarkerFileName
+        $markerData = @{ managedBy = "TNI-ModManager"; modManagerVersion = $script:ModManagerVersion; folderId = $modId; installedVersion = $ReleaseInfo.Version; installedAt = (Get-Date).ToString("o") } | ConvertTo-Json -Compress
+        $utf8NoBom = New-Object System.Text.UTF8Encoding $false
+        [System.IO.File]::WriteAllText($markerPath, $markerData, $utf8NoBom)
+        Write-Host "  [OK] Wrote mod.managed marker to $modId" -ForegroundColor Gray
+        
+        # Also update the cache (kept for supplementary tracking / backwards compat)
         $script:ModCache[$modId] = @{
             Source = $script:ModSourceType.Downloaded
             Version = $ReleaseInfo.Version
@@ -1791,10 +1808,28 @@ function Get-InstalledMods {
                 $metadata['Enabled'] = $true
                 $metadata['MetadataSource'] = $metadataSource
                 
-                # Determine source type from cache
-                if ($script:ModCache.ContainsKey($metadata['ID'])) {
-                    $metadata['Source'] = $script:ModCache[$metadata['ID']].Source
-                    $metadata['InstalledVersion'] = $script:ModCache[$metadata['ID']].Version
+                # Determine source type using the mod.managed marker file.
+                # This is the primary detection method and is immune to ID mismatches
+                # between the release/folder name and the id inside mod.jsonc.
+                $markerPath = Join-Path $folder.FullName $script:ManagedMarkerFileName
+                if (Test-Path $markerPath) {
+                    $metadata['Source'] = $script:ModSourceType.Downloaded
+                    try {
+                        $markerData = Get-Content $markerPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                        $metadata['InstalledVersion'] = if ($markerData.installedVersion) { $markerData.installedVersion } else { $metadata['Version'] }
+                    }
+                    catch {
+                        $metadata['InstalledVersion'] = $metadata['Version']
+                    }
+                }
+                elseif ($script:ModCache.ContainsKey($metadata['ID']) -or $script:ModCache.ContainsKey($folder.Name)) {
+                    # Legacy fallback: cache entries written before mod.managed was introduced.
+                    # Also tries the folder name as a key so mods whose mod.jsonc id differs
+                    # from the release/folder name (e.g. 2x-bandwidth-switches-example vs
+                    # 2x-bandwidth-switches) are still matched correctly.
+                    $cacheEntry = if ($script:ModCache.ContainsKey($metadata['ID'])) { $script:ModCache[$metadata['ID']] } else { $script:ModCache[$folder.Name] }
+                    $metadata['Source'] = $cacheEntry.Source
+                    $metadata['InstalledVersion'] = if ($cacheEntry.Version) { $cacheEntry.Version } else { $metadata['Version'] }
                 }
                 else {
                     $metadata['Source'] = $script:ModSourceType.Manual
@@ -1852,8 +1887,26 @@ function Get-InstalledMods {
             if ($metadata) {
                 $metadata['Folder'] = $folder.Name
                 $metadata['Enabled'] = $false
-                $metadata['Source'] = $script:ModSourceType.Manual
-                $metadata['InstalledVersion'] = $metadata['Version']
+                
+                # Check for mod.managed marker even in the disabled folder
+                $markerPath = Join-Path $folder.FullName $script:ManagedMarkerFileName
+                if (Test-Path $markerPath) {
+                    $metadata['Source'] = $script:ModSourceType.Downloaded
+                    try {
+                        $markerData = Get-Content $markerPath -Raw -Encoding UTF8 | ConvertFrom-Json
+                        $metadata['InstalledVersion'] = if ($markerData.installedVersion) { $markerData.installedVersion } else { $metadata['Version'] }
+                    }
+                    catch { $metadata['InstalledVersion'] = $metadata['Version'] }
+                }
+                elseif ($script:ModCache.ContainsKey($metadata['ID']) -or $script:ModCache.ContainsKey($folder.Name)) {
+                    $cacheEntry = if ($script:ModCache.ContainsKey($metadata['ID'])) { $script:ModCache[$metadata['ID']] } else { $script:ModCache[$folder.Name] }
+                    $metadata['Source'] = $cacheEntry.Source
+                    $metadata['InstalledVersion'] = if ($cacheEntry.Version) { $cacheEntry.Version } else { $metadata['Version'] }
+                }
+                else {
+                    $metadata['Source'] = $script:ModSourceType.Manual
+                    $metadata['InstalledVersion'] = $metadata['Version']
+                }
                 
                 $mods += $metadata
                 Write-Host "  [OK] $($metadata['Name']) (Manual, Disabled)" -ForegroundColor Gray
