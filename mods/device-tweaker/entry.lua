@@ -2,7 +2,7 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 1.0
+-- Version: 1.1
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
@@ -219,20 +219,20 @@ function on_player_input(event)
         return
     end
 
-    local event_class = nil
-    pcall(function() event_class = event:get_class() end)
-
-    if event_class ~= "InputEventKey" then
+    -- Use pcall(func, args) instead of pcall(function() ... end) to avoid
+    -- allocating a new closure on every input event (called every frame)
+    local ok, event_class = pcall(event.get_class, event)
+    if not ok or event_class ~= "InputEventKey" then
         return
     end
 
-    local keycode = nil
-    local is_pressed = false
-    local is_shift = false
+    local ok1, keycode = pcall(event.get_keycode, event)
+    local ok2, is_pressed = pcall(event.is_pressed, event)
+    local ok3, is_shift = pcall(event.is_shift_pressed, event)
 
-    pcall(function() keycode = event:get_keycode() end)
-    pcall(function() is_pressed = event:is_pressed() end)
-    pcall(function() is_shift = event:is_shift_pressed() end)
+    if not (ok1 and ok2 and ok3) then
+        return
+    end
 
     -- SHIFT+R (82) - Restock all merchants
     if keycode == 82 and is_pressed and is_shift then
