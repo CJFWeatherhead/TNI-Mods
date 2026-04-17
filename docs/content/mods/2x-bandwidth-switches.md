@@ -1,10 +1,10 @@
 ---
 title: "2x Bandwidth Switches"
-date: 2026-04-16
+date: 2026-04-17
 draft: false
 mod_id: "2x-bandwidth-switches"
 author: "treefarmer741"
-version: "0.1.5"
+version: "0.1.8"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ This mod doubles the bandwidth capacity of all switches in the Tower Networking 
 
 | | |
 |---|---|
-| **Version** | 0.1.5 |
+| **Version** | 0.1.8 |
 | **Author** | treefarmer741 |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-16 |
+| **Last Updated** | 2026-04-17 |
 
 </div>
 
@@ -31,7 +31,7 @@ This mod doubles the bandwidth capacity of all switches in the Tower Networking 
 
 <div class="download-section">
 
-**[Download 2x-bandwidth-switches-0.1.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.5/2x-bandwidth-switches-0.1.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download 2x-bandwidth-switches-0.1.8.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.8/2x-bandwidth-switches-0.1.8.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -119,14 +119,14 @@ This mod only affects switches and does not modify other device types.
 |-------|-------|
 | Mod ID | `2x-bandwidth-switches` |
 | Creation Date | 2025-11-20 |
-| Last Updated | 2026-04-16 |
+| Last Updated | 2026-04-17 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/2x-bandwidth-switches-v0.1.5)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.5/2x-bandwidth-switches-0.1.5.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/2x-bandwidth-switches-v0.1.8)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/2x-bandwidth-switches-v0.1.8/2x-bandwidth-switches-0.1.8.zip)
 
 </details>
 
