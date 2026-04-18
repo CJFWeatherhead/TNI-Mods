@@ -1,5 +1,5 @@
-# ui-config.ps1 - ModAPI Diagnostic Tool v3.0
-# Extended UI Configuration Script with JSON Export & API Test Suite
+# ui-config.ps1 - ModAPI Diagnostic Tool v4.0
+# Zero-overhead diagnostic tool — no keyboard hooks
 
 <#
 .SYNOPSIS
@@ -7,11 +7,15 @@
 
 .DESCRIPTION
     This script defines the configuration parameters for the mod.
-    The diagnostic tool is a comprehensive development/debugging tool with:
-    - Event logging (device/user spawn, day events)
-    - JSON game state export (Shift+J)
-    - API test suite (Shift+Q)
+    The diagnostic tool is a zero-overhead development/debugging tool with:
+    - Event logging (device/user/location spawn, day events)
+    - Lifecycle callback tracker (init order and timing)
+    - JSON game state export (console command or auto on day-end)
+    - Comprehensive API test suite (console command)
     - Network configuration inspection
+    
+    NOTE: on_player_input has been removed. All features are available
+    via Lua console commands and automatic lifecycle hooks.
     
 .PARAMETER CurrentConfig
     The current configuration values for this mod.
@@ -30,24 +34,30 @@ $parameters = @()
 
 $parameters += @{
     Type        = "section"
-    Label       = "About ModAPI Diagnostic Tool v3.0"
-    Description = "Developer tool for inspecting game engine callbacks, exporting game state, and testing API endpoints"
+    Label       = "About ModAPI Diagnostic Tool v4.0"
+    Description = "Zero-overhead developer tool for inspecting game engine callbacks, exporting game state, and testing API endpoints"
 }
 
 $parameters += @{
     Type  = "info"
     Label = "Purpose"
     Text  = @"
-This is a comprehensive diagnostic tool for mod developers. Features include:
+Zero-overhead diagnostic tool for mod developers (game version 0.10.11+).
 
-• Engine lifecycle events (load, reload)
-• Device spawns with network configuration
-• User spawns with location and network details  
-• Day start/end events
-• JSON game state export (Shift+J)
-• API endpoint test suite (Shift+Q)
+Features:
+• All 16 lifecycle callbacks registered (on_game_state_ready, on_location_spawned, on_game_host_eod, etc.)
+• Lifecycle callback tracker — shows exact init order and timing
+• Device, user, and location spawn logging with network configuration
+• Day start/end events with auto-export option
+• JSON game state export (console command or auto on day-end)
+• Comprehensive API endpoint test suite
 
-All output goes to the game console. Use this tool to understand game object structures, export game state for external tools, and debug your mods.
+NOTE: Keyboard shortcuts have been removed (on_player_input caused per-frame
+GC pressure). All features are available via Lua console commands:
+  dump_world_overview()      inspect_locations()
+  dump_all_world_devices()   reinspect_all_users()
+  export_to_json()           run_api_test_suite()
+  show_lifecycle_log()       export_test_results_json()
 "@
 }
 
@@ -78,6 +88,14 @@ $parameters += @{
 }
 
 $parameters += @{
+    Name        = "enable_location_logging"
+    Label       = "Enable Location Spawn Logging"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Log when floors/locations are spawned (on_location_spawned callback)"
+}
+
+$parameters += @{
     Name        = "enable_day_events"
     Label       = "Enable Day Event Logging"
     Type        = "boolean"
@@ -94,21 +112,39 @@ $parameters += @{
 }
 
 # ============================================================================
-# JSON Export Options (Shift+J)
+# Auto-trigger Options
 # ============================================================================
 
 $parameters += @{
     Type        = "section"
-    Label       = "JSON Export Options (Shift+J)"
-    Description = "Configure what data is included in JSON export to game logs"
+    Label       = "Auto-trigger Options"
+    Description = "Control when diagnostics run automatically"
 }
 
 $parameters += @{
-    Name        = "json_export_enabled"
-    Label       = "Enable JSON Export"
+    Name        = "auto_diag_on_ready"
+    Label       = "Auto-diagnostics on Game State Ready"
     Type        = "boolean"
     Default     = $true
-    Description = "Enable the Shift+J JSON export feature (exports to log output)"
+    Description = "Run dump_world_overview(), inspect_locations(), and device breakdown automatically when on_game_state_ready fires (world is guaranteed valid at this point)"
+}
+
+$parameters += @{
+    Name        = "auto_export_on_day_end"
+    Label       = "Auto-export JSON on Day End"
+    Type        = "boolean"
+    Default     = $false
+    Description = "Automatically export full game state to JSON at the end of each in-game day. Useful for continuous external tool integration. Writes to mod dir via ModFileSystem, falls back to log output."
+}
+
+# ============================================================================
+# JSON Export Options
+# ============================================================================
+
+$parameters += @{
+    Type        = "section"
+    Label       = "JSON Export Options"
+    Description = "Configure what data is included in JSON export (export_to_json() console command)"
 }
 
 $parameters += @{
@@ -188,25 +224,49 @@ $parameters += @{
     Label       = "Include Merchants"
     Type        = "boolean"
     Default     = $true
-    Description = "Include device merchant data (vendors, prices)"
+    Description = "Include device merchant data with full listing inventory (price, stock, availability)"
+}
+
+$parameters += @{
+    Name        = "json_include_messages"
+    Label       = "Include Player Messages"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Include in-game player messages/emails"
+}
+
+$parameters += @{
+    Name        = "json_include_floor_builders"
+    Label       = "Include Floor Builders"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Include floor builder configuration (build options, intervals, dates)"
+}
+
+$parameters += @{
+    Name        = "json_include_link_controller"
+    Label       = "Include Link Controller"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Include network link controller data (active links count)"
+}
+
+$parameters += @{
+    Name        = "json_include_acquired_techs"
+    Label       = "Include Acquired Technologies"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Include list of unlocked technologies"
 }
 
 # ============================================================================
-# API Test Suite Options (Shift+Q)
+# API Test Suite Options
 # ============================================================================
 
 $parameters += @{
     Type        = "section"
-    Label       = "API Test Suite Options (Shift+Q)"
-    Description = "Configure which API endpoints to test for documentation and debugging"
-}
-
-$parameters += @{
-    Name        = "test_suite_enabled"
-    Label       = "Enable API Test Suite"
-    Type        = "boolean"
-    Default     = $true
-    Description = "Enable the Shift+Q API test suite feature"
+    Label       = "API Test Suite Options"
+    Description = "Configure which API endpoints are tested by run_api_test_suite()"
 }
 
 $parameters += @{
@@ -214,7 +274,7 @@ $parameters += @{
     Label       = "Test Mod API (ModApiV1, Mod global)"
     Type        = "boolean"
     Default     = $true
-    Description = "Test core mod API endpoints: sanity(), get_game_world(), get_devices(), get_users(), etc."
+    Description = "Test all ModApiV1 endpoints: sanity(), get_game_world(), get_devices(), get_users(), get_locations(), get_merchants(), get_game_version(), has_mods_reloaded(). Also tests Mod global fields (mod_dir, manifest, filesystem, config)."
 }
 
 $parameters += @{
@@ -243,10 +303,42 @@ $parameters += @{
 
 $parameters += @{
     Name        = "test_network_api"
-    Label       = "Test Network API"
+    Label       = "Test Network/Control Modules"
     Type        = "boolean"
     Default     = $true
-    Description = "Test NetworkControlModule: hardware_address, network_address, dhcp_enabled, etc."
+    Description = "Test all LogicController control modules: networkctl, routectl, firewallctl, vlanctl, dhcpctl, filesysctl, packetctl"
+}
+
+$parameters += @{
+    Name        = "test_locations_api"
+    Label       = "Test Locations API"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Test Location properties: display_name, floor_num, is_datacenter, surge/outage immunity, spawn_limit, builder_weight"
+}
+
+$parameters += @{
+    Name        = "test_merchants_api"
+    Label       = "Test Merchants API"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Test DeviceMerchant properties and methods: display_name, price_multiplier, listings, restock(), submit_order()"
+}
+
+$parameters += @{
+    Name        = "test_programs_api"
+    Label       = "Test Programs API"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Test Program properties on installed programs: release_name, is_running, cpu_load, code_size, stack_size, install_size"
+}
+
+$parameters += @{
+    Name        = "test_world_methods"
+    Label       = "Test GameWorld Methods"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Test safe, read-only GameWorld methods: lookup_domain(), get_loc_index(). Also verifies method presence for: send_player_message, put_dns_entry, modify_player_cash, etc."
 }
 
 $parameters += @{
@@ -254,7 +346,7 @@ $parameters += @{
     Label       = "Test FileSystem API"
     Type        = "boolean"
     Default     = $true
-    Description = "Test ModFileSystem: get_files_at(), get_directories_at(), open(), etc."
+    Description = "Test ModFileSystem: get_files_at(), get_directories_at(), open() for read, mod_path_to_real()"
 }
 
 $parameters += @{
@@ -312,35 +404,6 @@ Console messages will always be shown regardless of this setting.
 }
 
 # ============================================================================
-# Keyboard Shortcuts
-# ============================================================================
-
-$parameters += @{
-    Type        = "section"
-    Label       = "Keyboard Shortcuts"
-    Description = "Available hotkeys while in-game"
-}
-
-$parameters += @{
-    Type  = "info"
-    Label = "Hotkeys"
-    Text  = @"
-Shift+R - Re-inspect all spawned users (network configuration)
-Shift+D - Dump all devices in the world (finds phones/CCTV)
-Shift+J - Export game state to JSON file
-Shift+Q - Run API test suite (Query endpoints)
-
-You can also call these functions directly from the Lua console:
-• reinspect_all_users()
-• dump_all_world_devices()
-• inspect_scenes()
-• export_to_json_file()
-• run_api_test_suite()
-• export_test_results_json()
-"@
-}
-
-# ============================================================================
 # Usage Information
 # ============================================================================
 
@@ -355,30 +418,29 @@ $parameters += @{
     Label = "Getting Started"
     Text  = @"
 1. Enable this mod and start a game
-2. Open the game console to view diagnostic output
-3. Watch for [DIAGNOSTIC] prefixed messages
-4. Spawn devices and users to see detailed inspection logs
-5. Press Shift+R to re-check user network configurations
+2. Open the game console to view [DIAG] prefixed messages
+3. on_game_state_ready fires automatically and runs initial diagnostics
+4. Use Lua console commands for interactive features
 
-JSON Export (for external tools like Terraform):
-• Press Shift+J to export current game state
-• JSON file is saved to the mod directory
-• Configure which data to include in options above
-• Use for REST API integration or state analysis
+Console Commands:
+  dump_world_overview()       Quick summary: day, cash, counts
+  inspect_locations()         List all floors with user counts
+  dump_all_world_devices()    List devices with class/condition
+  reinspect_all_users()       Re-inspect tracked user network configs
+  export_to_json()            Export full game state to JSON
+  run_api_test_suite()        Test all API endpoints (reports pass/fail)
+  export_test_results_json()  Export test results as JSON
+  show_lifecycle_log()        Show callback order and timing
 
-API Test Suite (for mod developers):
-• Press Shift+Q to run comprehensive API tests
-• Tests all documented ModApiV1 endpoints
-• Reports which APIs are available vs. nil
-• Use to improve documentation and find missing features
+Lifecycle Tracker:
+  After loading, call show_lifecycle_log() to see exactly which
+  callbacks fired, in what order, and at what time. Essential for
+  diagnosing init timing issues in your own mods.
 
-Common Use Cases:
-• Understanding device properties and network config
-• Debugging DNS server assignments
-• Learning game object structure
-• Testing mod API callbacks
-• Exporting game state for external automation
-• Validating API endpoint availability
+JSON Export:
+  Writes to diagnostic-export.json via ModFileSystem if available,
+  otherwise outputs between JSON GAME STATE START/END log markers.
+  Enable auto_export_on_day_end for continuous state capture.
 "@
 }
 
