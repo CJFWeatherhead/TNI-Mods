@@ -373,11 +373,10 @@ function on_game_state_ready()
 
     -- Enable the debug console (disabled by default in the game)
     pcall(function() dbg.enabled = true end)
-    pcall(function() dbg.visible = true end)
 
-    pcall(function() dbg.register_cmd("show_proposals", show_proposals) end)
-    pcall(function() dbg.register_cmd("hide_proposals", hide_proposals) end)
-    print("[All Proposals] Debug console enabled. Registered: show_proposals hide_proposals")
+    pcall(function() dbg.register_cmd("m_show_proposals", show_proposals) end)
+    pcall(function() dbg.register_cmd("m_hide_proposals", hide_proposals) end)
+    print("[All Proposals] Debug console enabled. Registered: m_show_proposals m_hide_proposals")
 end
 
 function on_mod_reload()

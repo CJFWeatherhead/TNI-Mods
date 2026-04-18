@@ -43,8 +43,8 @@ It temporarily increases the proposal batch size to display all eligible proposa
 
 Debug Console Commands:
 Press ~ to open the debug console, then type a command:
-- show_proposals - Show all available proposals
-- hide_proposals - Restore normal proposal batch size
+- m_show_proposals - Show all available proposals
+- m_hide_proposals - Restore normal proposal batch size
 
 The mod safely checks for dependencies and adhoc requirements before including proposals.
 "@
@@ -69,8 +69,8 @@ $parameters += @{
 Display in-game notifications when activating or deactivating the mod.
 
 When enabled:
-- Shows a notification when all proposals are displayed (show_proposals)
-- Shows a notification when normal mode is restored (hide_proposals)
+- Shows a notification when all proposals are displayed (m_show_proposals)
+- Shows a notification when normal mode is restored (m_hide_proposals)
 
 Note: This feature depends on the game's notification system.
 If not supported, only console messages will appear.
