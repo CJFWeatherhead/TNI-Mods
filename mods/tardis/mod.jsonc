@@ -2,7 +2,7 @@
 	"id": "tardis",
 	"name": "TARDIS - Time Controller",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.10",
+	"version": "0.1.11",
 	"description": [
 		"Control game time like a Time Lord! This mod provides keyboard shortcuts to manipulate game speed and skip time.\n\n✨ Features\n• Speed Up: Press SHIFT+> to increase game speed\n• Slow Down: Press SHIFT+< to decrease game speed  \n• Skip Day: Press SHIFT++ to skip to end of current day (23:59)\n• Visual Feedback: On-screen notifications for all actions\n• Configurable: Adjust speed step, min/max speed, and more\n\n❓ Why \"TARDIS\"?\nLike the Doctor's famous time machine, this mod gives you control over the flow of time!\n\n🕹️ Usage\n• SHIFT+> : Speed up time (like drinking coffee)\n• SHIFT+< : Slow down time (like drinking tea)\n• SHIFT++ : Skip to end of day\n\n⚙️ Configuration\n• Speed Step: How much to change speed per keypress (default: 0.5x)\n• Min Speed: Minimum speed multiplier (default: 0.25x)\n• Max Speed: Maximum speed multiplier (default: 10x)\n• Skip To Time: What time to skip to (default: 23:59)\n• Show Notifications: Toggle in-game notifications\n• Debug Logging: Enable detailed console output"
 	],

@@ -1,17 +1,17 @@
 -- TARDIS Mod (Time And Relative Dimension In Space)
 -- Purpose: Control game time via console commands
 -- Author: CJFWeatherhead
--- Version: 1.0.0
+-- Version: 1.1.0
 -- Description: This mod provides console commands to control game speed and skip time.
 --              Like the TARDIS, it manipulates time!
--- Usage: Use console commands during gameplay to control time.
+-- Usage: Open the debug console (~) and type a command name.
 --
 -- Console commands:
---   speed_up()      Increase game speed
---   speed_down()    Decrease game speed
---   speed_reset()   Reset to normal speed (1x)
---   day_skip()      Skip to end of day
---   speed()         Show current speed
+--   speed_up      Increase game speed
+--   speed_down    Decrease game speed
+--   speed_reset   Reset to normal speed (1x)
+--   day_skip      Skip to end of day
+--   speed         Show current speed
 
 local mod_id = "tardis"
 
@@ -242,7 +242,7 @@ function on_engine_load()
         config.min_speed,
         config.max_speed))
     
-    print("[tardis] Console commands: speed_up() speed_down() speed_reset() day_skip() speed()")
+    print("[tardis] Console: speed_up  speed_down  speed_reset  day_skip  speed")
     
     -- Initialize current speed from game if possible
     pcall(function()
@@ -266,4 +266,23 @@ function day_skip()    skip_day() end
 
 function speed()
     print(string.format("[tardis] Current speed: %.2fx", current_speed))
+end
+
+-- Register commands with the debug console when game is fully loaded
+function on_game_state_ready()
+    local world = ModApiV1.get_game_world()
+    if not world then return end
+
+    local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
+    if not ok or not dbg then
+        print("[tardis] DebugLayer not found, commands available as globals only")
+        return
+    end
+
+    pcall(function() dbg.register_cmd("speed_up", speed_up) end)
+    pcall(function() dbg.register_cmd("speed_down", speed_down) end)
+    pcall(function() dbg.register_cmd("speed_reset", speed_reset) end)
+    pcall(function() dbg.register_cmd("day_skip", day_skip) end)
+    pcall(function() dbg.register_cmd("speed", speed) end)
+    print("[tardis] Registered debug console commands")
 end
