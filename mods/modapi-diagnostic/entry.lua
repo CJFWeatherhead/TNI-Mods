@@ -519,7 +519,7 @@ local function export_game_state_json()
     
     local game_state = {
         _metadata = {
-            mod_version = "3.2",
+            mod_version = "3.3",
             export_timestamp = timestamp,
             export_date = datestr
         }
@@ -1561,6 +1561,9 @@ end
 -- ============================================================================
 
 function on_engine_load()
+    collectgarbage("setpause", 100)
+    collectgarbage("setstepmul", 400)
+
     print("\n[DIAGNOSTIC] ========== on_engine_load() ==========")
 
     if ModApiV1 then
@@ -1698,8 +1701,14 @@ end
 -- KEYBOARD INPUT HANDLER
 -- ============================================================================
 
+local _input_gc_counter = 0
+
 function on_player_input(event)
-    collectgarbage("step")
+    _input_gc_counter = _input_gc_counter + 1
+    if _input_gc_counter >= 100 then
+        _input_gc_counter = 0
+        collectgarbage("step")
+    end
 
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then return end
