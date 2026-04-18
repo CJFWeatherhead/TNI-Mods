@@ -8,7 +8,7 @@
 .DESCRIPTION
     This script defines the configuration parameters for the mod.
     It provides a simple interface to configure the amount of money
-    added when the SHIFT+M keyboard shortcut is pressed.
+    added when the money console command is run.
 
 .PARAMETER CurrentConfig
     The current configuration values for this mod.
@@ -35,7 +35,7 @@ $parameters += @{
     Max         = 10000000
     Step        = 100
     Description = @"
-Amount of money to add when SHIFT+M is pressed.
+Amount of money to add when the money console command is run.
 
 Default: `$10,000
 
@@ -45,7 +45,7 @@ Recommended values:
 - `$100,000 - Major financial injection
 - `$1,000,000 - Essentially unlimited funds
 
-Press SHIFT+M during gameplay to activate the cheat.
+Usage: Press ~ to open the debug console, then type: money
 A confirmation message will appear in the console.
 "@
     Section     = "Cheat Settings"
