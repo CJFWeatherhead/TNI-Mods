@@ -1,7 +1,7 @@
 -- Money Cheat Mod
 -- Purpose: Adds configurable amount of money via console command
 -- Author: Unknown
--- Version: 2.1
+-- Version: 2.2
 -- Description: This mod provides a simple money cheat accessible via console command.
 --              Type money in the debug console (~) to add money.
 --              Configure the amount in Mod Manager.
@@ -90,6 +90,10 @@ function on_game_state_ready()
         return
     end
 
+    -- Enable the debug console (disabled by default in the game)
+    pcall(function() dbg.enabled = true end)
+    pcall(function() dbg.visible = true end)
+
     pcall(function() dbg.register_cmd("money", money) end)
-    print("[money-cheat] Registered debug console command: money")
+    print("[money-cheat] Debug console enabled. Registered: money")
 end
