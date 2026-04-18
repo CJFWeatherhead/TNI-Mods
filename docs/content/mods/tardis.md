@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "tardis"
 author: "CJFWeatherhead"
-version: "0.1.13"
+version: "0.1.14"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 | | |
 |---|---|
-| **Version** | 0.1.13 |
+| **Version** | 0.1.14 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 <div class="download-section">
 
-**[Download tardis-0.1.13.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.13/tardis-0.1.13.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download tardis-0.1.14.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.14/tardis-0.1.14.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -107,17 +107,17 @@ Like the Doctor's famous time machine, this mod gives you control over the flow 
 
 # TARDIS - Time Controller
 
-Control game time like a Time Lord! This mod provides keyboard shortcuts to manipulate game speed and skip time in Tower Networking Inc.
+Control game time like a Time Lord! This mod provides debug console commands to manipulate game speed and skip time in Tower Networking Inc.
 
 ## Description
 
 Just like the Doctor's famous time machine (Time And Relative Dimension In Space), this mod gives you control over the flow of time. Speed up boring moments, slow down critical situations, or skip straight to the end of the day.
 
-The game already allows you to speed up time with coffee and slow it down with tea - this mod takes that concept and puts it directly at your fingertips with simple keyboard shortcuts.
+The game already allows you to speed up time with coffee and slow it down with tea - this mod takes that concept and puts it in the debug console for easy access.
 
 ## Features
 
-- **Speed Control**: Increase or decrease game speed with keyboard shortcuts
+- **Speed Control**: Increase or decrease game speed via debug console commands
 - **Day Skip**: Jump straight to 23:59 (end of day)
 - **Visual Feedback**: On-screen notifications for all actions
 - **Fully Configurable**: Adjust all parameters via Mod Manager
@@ -128,20 +128,18 @@ The game already allows you to speed up time with coffee and slow it down with t
 1. Place the `tardis` folder in your `Mods/` directory
 2. Load or reload the game (F11 to reload mods)
 3. You should see "TARDIS mod loaded!" in the console
-4. Use keyboard shortcuts during gameplay
+4. Use debug console commands during gameplay (press `~` to open the console)
 
-## Controls
+## Console Commands
 
-| Shortcut | Action |
-|----------|--------|
-| **SHIFT+>** | Increase game speed by configured step |
-| **SHIFT+<** | Decrease game speed by configured step |
-| **SHIFT++** | Skip to end of day (23:59) |
+Press `~` to open the debug console, then type a command:
 
-Note: The shortcuts use SHIFT combined with:
-- `.` (period) for speed up (appears as `>` when shifted)
-- `,` (comma) for slow down (appears as `<` when shifted)
-- `=` (equals) for day skip (appears as `+` when shifted)
+| Command | Action |
+|---------|--------|
+| **speed_up** | Increase game speed by configured step |
+| **speed_down** | Decrease game speed by configured step |
+| **speed_reset** | Reset game speed to default |
+| **day_skip** | Skip to end of day (23:59) |
 
 ## Configuration
 
@@ -172,20 +170,20 @@ All settings can be configured through the Mod Manager UI or by editing `entry.l
 ## Examples
 
 ### Quick Time Passing
-Need to wait for something? Press SHIFT+> a few times to speed up to 5x or 10x speed, then SHIFT+< to return to normal.
+Need to wait for something? Type `speed_up` a few times to speed up to 5x or 10x speed, then `speed_reset` to return to normal.
 
 ### End of Day Skip
-Need to close out the day? Press SHIFT++ to instantly jump to 23:59.
+Need to close out the day? Type `day_skip` to instantly jump to 23:59.
 
 ### Slow Motion Analysis
-Want to carefully observe something? Press SHIFT+< to slow down to 0.25x speed.
+Want to carefully observe something? Type `speed_down` to slow down to 0.25x speed.
 
 ## Technical Details
 
 - Uses `GameWorld.update_server_timescale()` for speed control
 - Uses `DayCycleController.force_day_clock()` for time manipulation
 - Speed changes persist until manually changed or game restart
-- 0.3 second cooldown between actions to prevent accidental rapid changes
+- Console commands registered via `DebugLayer.register_cmd()` (activated automatically on game load)
 
 ## Compatibility
 
@@ -197,7 +195,7 @@ Want to carefully observe something? Press SHIFT+< to slow down to 0.25x speed.
 
 ### Speed changes don't work
 - Ensure the mod is properly loaded (check console for "TARDIS mod loaded!")
-- Make sure you're holding SHIFT when pressing the keys
+- Press `~` to open the debug console and try typing `speed_up`
 - Check if another mod might be conflicting
 
 ### Day skip doesn't work
@@ -213,8 +211,8 @@ Want to carefully observe something? Press SHIFT+< to slow down to 0.25x speed.
 
 ### v0.1.0 (2026-01-31)
 - Initial release
-- Speed up/down with SHIFT+>/SHIFT+<
-- Day skip with SHIFT++
+- Speed up/down/reset via debug console commands (speed_up, speed_down, speed_reset)
+- Day skip via debug console (day_skip)
 - Configurable parameters
 - In-game notifications
 
@@ -257,8 +255,8 @@ Speed changes persist until manually changed or game restart.
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.13)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.13/tardis-0.1.13.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.14)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.14/tardis-0.1.14.zip)
 
 </details>
 
