@@ -1,15 +1,14 @@
 -- Chaos Engine Mod
 -- Purpose: Introduces controlled chaos into Tower Networking Inc gameplay through
---          keyboard-triggered events and automatic stat randomization.
+--          console commands and automatic stat randomization.
 -- Author: CJFWeatherhead
--- Version: 0.1.4
--- Description: This mod provides keyboard shortcuts to trigger chaos events:
---              - SHIFT+F: Force spawn a random floor
---              - SHIFT+D: Toggle disaster mode (increased event rates)
---              - SHIFT+X: Reset all chaos settings to defaults
+-- Version: 1.0.0
+-- Description: This mod provides console commands to trigger chaos events:
+--              - random_floor(): Force spawn a random floor
+--              - disaster(): Toggle disaster mode (increased event rates)
+--              - chaos_reset(): Reset all chaos settings to defaults
 --              Additionally, user stats are randomized on spawn for varied gameplay.
--- Usage: Use keyboard shortcuts during gameplay. Configure features in Mod Manager.
--- Notes: Uses SHIFT combinations for easy access during gameplay.
+-- Usage: Use console commands during gameplay. Configure features in Mod Manager.
 
 local mod_id = "chaos-engine"
 
@@ -295,9 +294,6 @@ local function reset_to_defaults()
 end
 
 function on_engine_load()
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 400)
-
     log_important("Chaos Engine mod loaded!")
     if ModApiV1 and ModApiV1.sanity then
         ModApiV1.sanity()
@@ -342,7 +338,7 @@ function on_engine_load()
         log_important("No features enabled")
     end
 
-    log_important("Reset hotkey: SHIFT+X")
+    log_important("Console commands: random_floor() disaster() chaos_reset()")
 
     -- Randomize initial floors if enabled
     if config.enable_initial_floor_randomization and world_ref then
@@ -371,78 +367,36 @@ function on_mod_reload()
     disaster_mode_active = false
 end
 
--- Named helpers — see device-tweaker for explanation
-local function _ev_get_class(e)         return e:get_class() end
-local function _ev_get_keycode(e)       return e:get_keycode() end
-local function _ev_is_pressed(e)        return e:is_pressed() end
-local function _ev_is_shift_pressed(e)  return e:is_shift_pressed() end
-
--- Keyboard input handler
-local _input_gc_counter = 0
-
-function on_player_input(event)
-    _input_gc_counter = _input_gc_counter + 1
-    if _input_gc_counter >= 100 then
-        _input_gc_counter = 0
-        collectgarbage("step")
-    end
-
-    local ok, event_class = pcall(_ev_get_class, event)
-    if not ok or event_class ~= "InputEventKey" then
-        return
-    end
-
-    local ok1, keycode    = pcall(_ev_get_keycode, event)
-    local ok2, is_pressed = pcall(_ev_is_pressed, event)
-    local ok3, is_shift   = pcall(_ev_is_shift_pressed, event)
-    if not (ok1 and ok2 and ok3) then return end
-
-    -- We need SHIFT+<key> combinations
-    if not is_shift then
-        return
-    end
-
-    -- Check cooldown
-    local current_time = os.clock()
-    if current_time - last_action_time < COOLDOWN_SECONDS then
-        return
-    end
-
-    -- Update world reference
+-- Console commands (exposed as globals for the game console)
+function random_floor()
     if not world_ref then
         world_ref = ModApiV1.get_game_world()
     end
-
-    -- SHIFT+F (70) - Random Floor
-    if keycode == 70 and is_pressed and config.enable_random_floors then
-        last_action_time = current_time
-        if trigger_random_floor() then
-            notify("Random floor spawned!", 1)  -- tone 1 = positive
-        else
-            notify("Could not spawn floor", 2)  -- tone 2 = negative
-        end
-        return
+    if trigger_random_floor() then
+        notify("Random floor spawned!", 1)
+    else
+        notify("Could not spawn floor", 2)
     end
+end
 
-    -- SHIFT+D (68) - Disaster Mode Toggle
-    if keycode == 68 and is_pressed and config.enable_disaster_mode then
-        last_action_time = current_time
-        local is_active = toggle_disaster_mode()
-        if is_active then
-            notify("DISASTER MODE ACTIVATED!", 2)  -- tone 2 = negative/warning
-        else
-            notify("Disaster mode deactivated", 1)  -- tone 1 = positive
-        end
-        return
+function disaster()
+    if not world_ref then
+        world_ref = ModApiV1.get_game_world()
     end
+    local is_active = toggle_disaster_mode()
+    if is_active then
+        notify("DISASTER MODE ACTIVATED!", 2)
+    else
+        notify("Disaster mode deactivated", 1)
+    end
+end
 
-    -- SHIFT+X (88) - Reset to Defaults
-    if keycode == 88 and is_pressed then
-        last_action_time = current_time
-        reset_to_defaults()
-        notify("Chaos settings reset", 0)  -- tone 0 = neutral
-        return
+function chaos_reset()
+    if not world_ref then
+        world_ref = ModApiV1.get_game_world()
     end
+    reset_to_defaults()
+    notify("Chaos settings reset", 0)
 end
 
 ---@param user User
