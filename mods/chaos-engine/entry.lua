@@ -2,13 +2,13 @@
 -- Purpose: Introduces controlled chaos into Tower Networking Inc gameplay through
 --          console commands and automatic stat randomization.
 -- Author: CJFWeatherhead
--- Version: 1.0.0
+-- Version: 1.1.0
 -- Description: This mod provides console commands to trigger chaos events:
---              - random_floor(): Force spawn a random floor
---              - disaster(): Toggle disaster mode (increased event rates)
---              - chaos_reset(): Reset all chaos settings to defaults
+--              - random_floor: Force spawn a random floor
+--              - disaster: Toggle disaster mode (increased event rates)
+--              - chaos_reset: Reset all chaos settings to defaults
 --              Additionally, user stats are randomized on spawn for varied gameplay.
--- Usage: Use console commands during gameplay. Configure features in Mod Manager.
+-- Usage: Open the debug console (~) and type a command name.
 
 local mod_id = "chaos-engine"
 
@@ -338,7 +338,7 @@ function on_engine_load()
         log_important("No features enabled")
     end
 
-    log_important("Console commands: random_floor() disaster() chaos_reset()")
+    log_important("Console: random_floor  disaster  chaos_reset")
 
     -- Randomize initial floors if enabled
     if config.enable_initial_floor_randomization and world_ref then
@@ -397,6 +397,24 @@ function chaos_reset()
     end
     reset_to_defaults()
     notify("Chaos settings reset", 0)
+end
+
+-- Register commands with the debug console when game is fully loaded
+function on_game_state_ready()
+    local world = ModApiV1.get_game_world()
+    if not world then return end
+    world_ref = world
+
+    local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
+    if not ok or not dbg then
+        log_important("DebugLayer not found, commands available as globals only")
+        return
+    end
+
+    pcall(function() dbg.register_cmd("random_floor", random_floor) end)
+    pcall(function() dbg.register_cmd("disaster", disaster) end)
+    pcall(function() dbg.register_cmd("chaos_reset", chaos_reset) end)
+    log_important("Registered debug console commands")
 end
 
 ---@param user User
