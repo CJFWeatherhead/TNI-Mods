@@ -1,7 +1,7 @@
 -- Money Cheat Mod
 -- Purpose: Adds configurable amount of money when SHIFT+M is pressed
 -- Author: Unknown
--- Version: 1.2
+-- Version: 1.3
 -- Description: This mod provides a simple money cheat accessible via keyboard shortcut.
 --              Press SHIFT+M to instantly add a configurable amount of money to your balance.
 --              Configure the amount in Mod Manager.
@@ -31,6 +31,9 @@ local last_cheat_time = 0
 local COOLDOWN_SECONDS = 0.5 -- Prevent accidental double-activation
 
 function on_engine_load()
+    collectgarbage("setpause", 100)
+    collectgarbage("setstepmul", 400)
+
     print("Money Cheat mod loaded!")
     if ModApiV1 and ModApiV1.sanity then
         ModApiV1.sanity()
@@ -55,9 +58,16 @@ function on_mod_reload()
     print(string.format("[money-cheat] Current amount: $%d", config.money_amount or 10000))
 end
 
+-- Counter for rate-limited GC in the input hot path
+local _input_gc_counter = 0
+
 -- Keyboard input handler for Shift+M shortcut
 function on_player_input(event)
-    collectgarbage("step")
+    _input_gc_counter = _input_gc_counter + 1
+    if _input_gc_counter >= 100 then
+        _input_gc_counter = 0
+        collectgarbage("step")
+    end
 
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then return end
