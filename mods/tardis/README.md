@@ -29,10 +29,10 @@ Press `~` to open the debug console, then type a command:
 
 | Command | Action |
 |---------|--------|
-| **speed_up** | Increase game speed by configured step |
-| **speed_down** | Decrease game speed by configured step |
-| **speed_reset** | Reset game speed to default |
-| **day_skip** | Skip to end of day (23:59) |
+| **m_speed_up** | Increase game speed by configured step |
+| **m_speed_down** | Decrease game speed by configured step |
+| **m_speed_reset** | Reset game speed to default |
+| **m_day_skip** | Skip to end of day (23:59) |
 
 ## Configuration
 
@@ -63,13 +63,13 @@ All settings can be configured through the Mod Manager UI or by editing `entry.l
 ## Examples
 
 ### Quick Time Passing
-Need to wait for something? Type `speed_up` a few times to speed up to 5x or 10x speed, then `speed_reset` to return to normal.
+Need to wait for something? Type `m_speed_up` a few times to speed up to 5x or 10x speed, then `m_speed_reset` to return to normal.
 
 ### End of Day Skip
-Need to close out the day? Type `day_skip` to instantly jump to 23:59.
+Need to close out the day? Type `m_day_skip` to instantly jump to 23:59.
 
 ### Slow Motion Analysis
-Want to carefully observe something? Type `speed_down` to slow down to 0.25x speed.
+Want to carefully observe something? Type `m_speed_down` to slow down to 0.25x speed.
 
 ## Technical Details
 
@@ -77,6 +77,7 @@ Want to carefully observe something? Type `speed_down` to slow down to 0.25x spe
 - Uses `DayCycleController.force_day_clock()` for time manipulation
 - Speed changes persist until manually changed or game restart
 - Console commands registered via `DebugLayer.register_cmd()` (activated automatically on game load)
+- Commands: `m_speed_up`, `m_speed_down`, `m_speed_reset`, `m_day_skip`, `m_speed`
 
 ## Compatibility
 
@@ -104,8 +105,8 @@ Want to carefully observe something? Type `speed_down` to slow down to 0.25x spe
 
 ### v0.1.0 (2026-01-31)
 - Initial release
-- Speed up/down/reset via debug console commands (speed_up, speed_down, speed_reset)
-- Day skip via debug console (day_skip)
+- Speed up/down/reset via debug console commands (m_speed_up, m_speed_down, m_speed_reset)
+- Day skip via debug console (m_day_skip)
 - Configurable parameters
 - In-game notifications
 

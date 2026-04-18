@@ -42,7 +42,7 @@ $parameters += @{
     Max         = 2.0
     Step        = 0.1
     Description = @"
-Amount to change the speed multiplier per speed_up / speed_down command.
+Amount to change the speed multiplier per m_speed_up / m_speed_down command.
 
 Default: 0.5x per command
 
@@ -53,7 +53,7 @@ Examples:
 
 The game enforces hard limits of 0.125x to 8x regardless of this setting.
 
-Usage: Press ~ to open the debug console, then type: speed_up  speed_down  speed_reset  day_skip  speed
+Usage: Press ~ to open the debug console, then type: m_speed_up  m_speed_down  m_speed_reset  m_day_skip  m_speed
 "@
     Section     = "Speed Control"
 }
@@ -112,7 +112,7 @@ Reference value for normal game speed.
 Default: 1.0x
 
 This is for reference only - the mod doesn't automatically
-reset to this value. Type speed_reset in the debug console to
+reset to this value. Type m_speed_reset in the debug console to
 return to 1x speed.
 "@
     Section     = "Speed Control"
@@ -125,7 +125,7 @@ return to 1x speed.
 $parameters += @{
     Type        = "section"
     Label       = "Time Skip"
-    Description = "Configure the day_skip console command"
+    Description = "Configure the m_day_skip console command"
     Collapsed   = $false
 }
 
@@ -138,7 +138,7 @@ $parameters += @{
     Max         = 23.99
     Step        = 0.5
     Description = @"
-Time of day to skip to when the day_skip console command is run.
+Time of day to skip to when the m_day_skip console command is run.
 
 Default: 23.99 (23:59, end of day)
 
