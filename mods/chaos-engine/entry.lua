@@ -2,7 +2,7 @@
 -- Purpose: Introduces controlled chaos into Tower Networking Inc gameplay through
 --          console commands and automatic stat randomization.
 -- Author: CJFWeatherhead
--- Version: 1.1.0
+-- Version: 1.2.0
 -- Description: This mod provides console commands to trigger chaos events:
 --              - random_floor: Force spawn a random floor
 --              - disaster: Toggle disaster mode (increased event rates)
@@ -411,10 +411,14 @@ function on_game_state_ready()
         return
     end
 
+    -- Enable the debug console (disabled by default in the game)
+    pcall(function() dbg.enabled = true end)
+    pcall(function() dbg.visible = true end)
+
     pcall(function() dbg.register_cmd("random_floor", random_floor) end)
     pcall(function() dbg.register_cmd("disaster", disaster) end)
     pcall(function() dbg.register_cmd("chaos_reset", chaos_reset) end)
-    log_important("Registered debug console commands")
+    log_important("Debug console enabled. Registered: random_floor disaster chaos_reset")
 end
 
 ---@param user User
