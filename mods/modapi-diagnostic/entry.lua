@@ -1,4 +1,4 @@
--- ModAPI Diagnostic Tool v4.0
+-- ModAPI Diagnostic Tool v4.1
 -- Development tool for TNI game engine modding (game version 0.10.11+)
 --
 -- CHANGES from v3.x:
@@ -670,7 +670,7 @@ local function build_game_state()
 
     local state = {
         _metadata = {
-            tool_version     = "4.0",
+            tool_version     = "4.1",
             game_version     = game_ver,
             export_timestamp = ts,
             export_date      = ds,
@@ -1722,9 +1722,6 @@ function on_mods_loaded()
 end
 
 function on_engine_load()
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 400)
-
     lifecycle("on_engine_load")
 
     if ModApiV1 then
