@@ -2,7 +2,7 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 2.1
+-- Version: 2.2
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
@@ -179,8 +179,12 @@ function on_game_state_ready()
         return
     end
 
+    -- Enable the debug console (disabled by default in the game)
+    pcall(function() dbg.enabled = true end)
+    pcall(function() dbg.visible = true end)
+
     pcall(function() dbg.register_cmd("restock", restock) end)
-    print("[device-tweaker] Registered debug console command: restock")
+    print("[device-tweaker] Debug console enabled. Registered: restock")
 end
 
 function on_mod_reload()
