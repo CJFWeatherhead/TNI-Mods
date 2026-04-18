@@ -1,7 +1,7 @@
 -- TARDIS Mod (Time And Relative Dimension In Space)
 -- Purpose: Control game time via console commands
 -- Author: CJFWeatherhead
--- Version: 1.1.0
+-- Version: 1.2.0
 -- Description: This mod provides console commands to control game speed and skip time.
 --              Like the TARDIS, it manipulates time!
 -- Usage: Open the debug console (~) and type a command name.
@@ -279,10 +279,14 @@ function on_game_state_ready()
         return
     end
 
+    -- Enable the debug console (disabled by default in the game)
+    pcall(function() dbg.enabled = true end)
+    pcall(function() dbg.visible = true end)
+
     pcall(function() dbg.register_cmd("speed_up", speed_up) end)
     pcall(function() dbg.register_cmd("speed_down", speed_down) end)
     pcall(function() dbg.register_cmd("speed_reset", speed_reset) end)
     pcall(function() dbg.register_cmd("day_skip", day_skip) end)
     pcall(function() dbg.register_cmd("speed", speed) end)
-    print("[tardis] Registered debug console commands")
+    print("[tardis] Debug console enabled. Registered: speed_up speed_down speed_reset day_skip speed")
 end
