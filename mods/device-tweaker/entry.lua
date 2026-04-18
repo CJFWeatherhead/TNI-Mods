@@ -2,7 +2,7 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 1.2
+-- Version: 1.3
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
@@ -111,6 +111,12 @@ local function is_class_enabled(device_class)
 end
 
 function on_engine_load()
+    -- Tune GC to handle the per-event Godot object wrappers the Lua bridge allocates.
+    -- pause=100: start new GC cycle immediately when previous finishes
+    -- stepmul=400: do more work per automatic GC step
+    collectgarbage("setpause", 100)
+    collectgarbage("setstepmul", 400)
+
     print("Device Tweaker Mod loaded!")
     if ModApiV1 and ModApiV1.sanity then
         ModApiV1.sanity()
@@ -213,11 +219,18 @@ local function restock_all_merchants()
     return restock_count > 0
 end
 
+-- Counter for rate-limited GC in the input hot path
+local _input_gc_counter = 0
+
 -- Keyboard input handler for SHIFT+R (restock)
 function on_player_input(event)
-    -- Incremental GC step to reclaim per-event Godot object wrappers
-    -- that the Lua bridge allocates when pushing the event argument
-    collectgarbage("step")
+    -- GC step every 100 input events as a safety net (the aggressive GC
+    -- tuning in on_engine_load does most of the work automatically)
+    _input_gc_counter = _input_gc_counter + 1
+    if _input_gc_counter >= 100 then
+        _input_gc_counter = 0
+        collectgarbage("step")
+    end
 
     if not config.enable_restock_hotkey then
         return
