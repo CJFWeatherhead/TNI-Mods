@@ -1,5 +1,5 @@
-# ui-config.ps1 - ModAPI Diagnostic Tool v4.0
-# Zero-overhead diagnostic tool — no keyboard hooks
+# ui-config.ps1 - ModAPI Diagnostic Tool v4.4
+# Enables the game debug console (~) and provides developer inspection tools
 
 <#
 .SYNOPSIS
@@ -34,15 +34,16 @@ $parameters = @()
 
 $parameters += @{
     Type        = "section"
-    Label       = "About ModAPI Diagnostic Tool v4.0"
-    Description = "Zero-overhead developer tool for inspecting game engine callbacks, exporting game state, and testing API endpoints"
+    Label       = "About ModAPI Diagnostic Tool v4.4"
+    Description = "Developer tool for inspecting game engine callbacks, exporting game state, and testing API endpoints"
 }
 
 $parameters += @{
     Type  = "info"
     Label = "Purpose"
     Text  = @"
-Zero-overhead diagnostic tool for mod developers (game version 0.10.11+).
+Diagnostic tool for mod developers (game version 0.10.11+).
+Also enables the game's built-in debug console (~ key, disabled by default).
 
 Features:
 • All 16 lifecycle callbacks registered (on_game_state_ready, on_location_spawned, on_game_host_eod, etc.)
@@ -52,12 +53,11 @@ Features:
 • JSON game state export (console command or auto on day-end)
 • Comprehensive API endpoint test suite
 
-NOTE: Keyboard shortcuts have been removed (on_player_input caused per-frame
-GC pressure). All features are available via Lua console commands:
-  dump_world_overview()      inspect_locations()
-  dump_all_world_devices()   reinspect_all_users()
-  export_to_json()           run_api_test_suite()
-  show_lifecycle_log()       export_test_results_json()
+Usage: Press ~ to open the debug console, then type a command name:
+  dump_world_overview      inspect_locations
+  dump_all_world_devices   reinspect_all_users
+  export_to_json           run_api_test_suite
+  show_lifecycle_log       export_test_results_json
 "@
 }
 
@@ -382,7 +382,7 @@ $parameters += @{
     Label       = "Track Users for Re-inspection"
     Type        = "boolean"
     Default     = $true
-    Description = "Keep references to spawned users for Shift+R re-inspection feature"
+    Description = "Keep references to spawned users for the reinspect_all_users console command"
 }
 
 $parameters += @{
@@ -390,17 +390,7 @@ $parameters += @{
     Label       = "Show In-Game Notifications"
     Type        = "boolean"
     Default     = $true
-    Description = @"
-Display in-game notifications when using keyboard shortcuts.
-
-When enabled:
-• Shows notification for user re-inspection (Shift+R)
-• Shows notification for device dump (Shift+D)
-• Shows notification for JSON export (Shift+J)
-• Shows notification for API test results (Shift+Q)
-
-Console messages will always be shown regardless of this setting.
-"@
+    Description = "Display in-game notifications when auto-diagnostics complete. Console messages are always shown."
 }
 
 # ============================================================================
@@ -418,24 +408,24 @@ $parameters += @{
     Label = "Getting Started"
     Text  = @"
 1. Enable this mod and start a game
-2. Open the game console to view [DIAG] prefixed messages
-3. on_game_state_ready fires automatically and runs initial diagnostics
-4. Use Lua console commands for interactive features
+2. The debug console (~) is automatically enabled on startup
+3. Press ~ to open the console and type a command name (no parentheses needed)
+4. Watch [DIAG] prefixed messages in the game log for spawn events
 
 Console Commands:
-  dump_world_overview()       Quick summary: day, cash, counts
-  inspect_locations()         List all floors with user counts
-  dump_all_world_devices()    List devices with class/condition
-  reinspect_all_users()       Re-inspect tracked user network configs
-  export_to_json()            Export full game state to JSON
-  run_api_test_suite()        Test all API endpoints (reports pass/fail)
-  export_test_results_json()  Export test results as JSON
-  show_lifecycle_log()        Show callback order and timing
+  dump_world_overview       Quick summary: day, cash, counts
+  inspect_locations         List all floors with user counts
+  dump_all_world_devices    List devices with class/condition
+  reinspect_all_users       Re-inspect tracked user network configs
+  export_to_json            Export full game state to JSON
+  run_api_test_suite        Test all API endpoints (reports pass/fail)
+  export_test_results_json  Export test results as JSON
+  show_lifecycle_log        Show callback order and timing
 
 Lifecycle Tracker:
-  After loading, call show_lifecycle_log() to see exactly which
-  callbacks fired, in what order, and at what time. Essential for
-  diagnosing init timing issues in your own mods.
+  Type show_lifecycle_log to see exactly which callbacks fired,
+  in what order, and at what time. Essential for diagnosing init
+  timing issues in your own mods.
 
 JSON Export:
   Writes to diagnostic-export.json via ModFileSystem if available,
