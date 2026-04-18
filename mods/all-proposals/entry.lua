@@ -1,19 +1,20 @@
 -- All Proposals Mod
--- Purpose: This mod allows players to view all available proposals in the game by pressing Shift+P,
+-- Purpose: This mod allows players to view all available proposals in the game,
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
---          to display all eligible proposals and provides a way to restore normal proposal display with Shift+O.
+--          to display all eligible proposals and provides a way to restore normal proposal display.
 -- Author: CJFWeatherhead
--- Version: 0.2.1
+-- Version: 1.0.0
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
--- Usage: Press Shift+P to activate and show all available proposals.
---        Press Shift+O to restore the normal proposal batch size and reroll proposals.
--- Notes: This mod uses the ModApiV1 to access game world and proposal controller.
---        It stores the original batch size on first use and restores it when deactivating.
---        Proposals with unmet dependencies or failed adhoc requirements are excluded from display.
+-- Usage: Type show_proposals() in the game console to show all proposals.
+--        Type hide_proposals() to restore the normal proposal batch size.
+--
+-- Console commands:
+--   show_proposals()   Show all available proposals
+--   hide_proposals()   Restore normal proposal batch size
 
-print("=== All Proposals Mod v0.1.7 Loaded ===")
+print("=== All Proposals Mod v1.0.0 Loaded ===")
 
 -- ===== MOD CONFIGURATION START =====
 -- This section is parsed and modified by ModManager
@@ -26,7 +27,6 @@ local config = {
 
 -- ===== MOD CONFIGURATION END =====
 
-local shift_p_pressed = false
 local original_batch_size = nil
 local all_proposals_active = false
 
@@ -346,61 +346,20 @@ local function restore_normal_proposals()
     end
 end
 
--- Named helpers — see device-tweaker for explanation
-local function _ev_get_class(e)         return e:get_class() end
-local function _ev_get_keycode(e)       return e:get_keycode() end
-local function _ev_is_pressed(e)        return e:is_pressed() end
-local function _ev_is_shift_pressed(e)  return e:is_shift_pressed() end
+-- Console commands (exposed as globals for the game console)
+function show_proposals()
+    print("[All Proposals] Showing all proposals...")
+    show_all_proposals()
+end
 
--- Counter for rate-limited GC in the input hot path
-local _input_gc_counter = 0
-
--- Keyboard input handler for Shift+P shortcut
-function on_player_input(event)
-    _input_gc_counter = _input_gc_counter + 1
-    if _input_gc_counter >= 100 then
-        _input_gc_counter = 0
-        collectgarbage("step")
-    end
-
-    local ok, event_class = pcall(_ev_get_class, event)
-    if not ok or event_class ~= "InputEventKey" then return end
-
-    do
-        -- Get keycode and check if it's the P key (ASCII 80)
-        local ok1, keycode    = pcall(_ev_get_keycode, event)
-        local ok2, is_pressed = pcall(_ev_is_pressed, event)
-        local ok3, is_shift   = pcall(_ev_is_shift_pressed, event)
-        if not (ok1 and ok2 and ok3) then return end
-
-        -- Shift+P combination (80 is the keycode for 'P')
-        if keycode == 80 and is_shift then
-            if is_pressed and not shift_p_pressed then
-                -- Key was just pressed down
-                shift_p_pressed = true
-                print("[All Proposals] Shift+P detected - Showing all proposals...")
-                show_all_proposals()
-            elseif not is_pressed and shift_p_pressed then
-                -- Key was released
-                shift_p_pressed = false
-            end
-        end
-
-        -- Shift+O combination (79 is the keycode for 'O') - restore normal mode
-        if keycode == 79 and is_shift then
-            if is_pressed then
-                print("[All Proposals] Shift+O detected - Restoring normal mode...")
-                restore_normal_proposals()
-            end
-        end
-    end
+function hide_proposals()
+    print("[All Proposals] Restoring normal mode...")
+    restore_normal_proposals()
 end
 
 function on_engine_load()
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 400)
-
     print("[All Proposals] Mod initialized")
+    print("[All Proposals] Console: show_proposals() hide_proposals()")
 end
 
 function on_mod_reload()
@@ -408,7 +367,6 @@ function on_mod_reload()
 end
 
 print("=== All Proposals Mod Setup Complete ===")
-print("    Press Shift+P to show all available proposals")
-print("    Press Shift+O to restore normal proposal count")
+print("    Console: show_proposals() / hide_proposals()")
 print("    (excludes proposals with unmet dependencies)")
 print("===")
