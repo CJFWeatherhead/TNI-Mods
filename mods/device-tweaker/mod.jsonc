@@ -2,7 +2,7 @@
 	"id": "device-tweaker",
 	"name": "Device Tweaker",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.19",
+	"version": "0.1.20",
 	"description": [
 		"A comprehensive mod for tweaking device properties in Tower Networking Inc.\n\n✨ Features\n• Bandwidth Multiplier: Adjust network bandwidth capacity of devices\n• Warranty Modifications: Set fixed or random warranty multipliers\n• Cost Adjustments: Modify device purchase costs\n• Hardware Multipliers: Scale CPU power, RAM, and storage\n• Network Addressing: Auto-assign addresses based on floor and device type\n• DHCP Configuration: Set DHCP mode (disabled, boot, or periodic)\n• Device Class Filtering: Selectively apply modifications to specific device types\n• Merchant Restock: Press CTRL+SHIFT+R to instantly restock all merchants\n\n🖥️ Device Classes\n• Default (0) - def\n• Network Switch (1) - swt\n• Network Router (2) - rtr\n• Network Tap (3) - tap\n• Network Firewall (4) - fwr\n• Media Line Simplex (5) - mls\n• Media Line Duplex (6) - mld\n• Compute Server (7) - srv\n• Display Monitor (8) - mon\n• Debugger (9) - dbg\n• Load Tester (10) - ldt\n• Power Expansion (11) - pwr\n• Decentro Rigs (12) - dcr\n• Surge Protector (13) - spr\n• UPS (14) - ups\n• Inert (15) - ine\n• CCTV (16) - ccv\n• Phone (17) - phn\n• Printer (18) - prt\n• Network Load Balancer (19) - nlb\n\n📌 Configuration Tips\n• Enable specific modifications using the enable toggles\n• Set multipliers > 1.0 to increase values, < 1.0 to decrease\n• Use random warranty mode for varied warranty periods per device\n• Disable device classes you don't want to modify\n• Network addressing format: @f{floor}/{abbrev}{increment}"
 	],

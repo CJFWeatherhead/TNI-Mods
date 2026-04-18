@@ -2,15 +2,16 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 2.0
+-- Version: 2.1
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
 --
 -- Usage: Configure multipliers and filters in the Mod Loader menu.
+--        Open the debug console (~) and type a command name.
 --
 -- Console commands:
---   restock()     Restock all merchants
+--   restock     Restock all merchants
 --
 -- Device Classes:
 --   0 = server
@@ -164,7 +165,22 @@ function on_engine_load()
         print("[device-tweaker] Enabled device classes: " .. table.concat(enabled_classes, ", "))
     end
 
-    print("[device-tweaker] Console: restock()")
+    print("[device-tweaker] Console: restock")
+end
+
+-- Register commands with the debug console when game is fully loaded
+function on_game_state_ready()
+    local world = ModApiV1.get_game_world()
+    if not world then return end
+
+    local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
+    if not ok or not dbg then
+        print("[device-tweaker] DebugLayer not found, commands available as globals only")
+        return
+    end
+
+    pcall(function() dbg.register_cmd("restock", restock) end)
+    print("[device-tweaker] Registered debug console command: restock")
 end
 
 function on_mod_reload()
