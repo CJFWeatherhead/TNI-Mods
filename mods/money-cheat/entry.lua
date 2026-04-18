@@ -1,15 +1,15 @@
 -- Money Cheat Mod
 -- Purpose: Adds configurable amount of money via console command
 -- Author: Unknown
--- Version: 2.0
+-- Version: 2.1
 -- Description: This mod provides a simple money cheat accessible via console command.
---              Type money() in the game console to add money.
+--              Type money in the debug console (~) to add money.
 --              Configure the amount in Mod Manager.
--- Usage: Type money() in the game console. Check console for confirmation.
+-- Usage: Open the debug console (~) and type: money
 --
 -- Console commands:
---   money()        Add configured amount of money
---   money(50000)   Add specific amount of money
+--   money        Add configured amount of money
+--   money(50000) Add specific amount (globals only)
 
 local mod_id = "money-cheat"
 
@@ -45,7 +45,7 @@ function on_engine_load()
         tostring(debug_logging),
         tostring(config.show_notification)))
 
-    print("[money-cheat] Console: money() or money(50000)")
+    print("[money-cheat] Console: money")
 end
 
 function on_mod_reload()
@@ -77,4 +77,19 @@ function money(amount)
             end
         end)
     end
+end
+
+-- Register commands with the debug console when game is fully loaded
+function on_game_state_ready()
+    local world = ModApiV1.get_game_world()
+    if not world then return end
+
+    local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
+    if not ok or not dbg then
+        print("[money-cheat] DebugLayer not found, commands available as globals only")
+        return
+    end
+
+    pcall(function() dbg.register_cmd("money", money) end)
+    print("[money-cheat] Registered debug console command: money")
 end
