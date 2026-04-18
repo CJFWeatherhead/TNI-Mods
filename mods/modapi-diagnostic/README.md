@@ -1,12 +1,18 @@
-# ModAPI Diagnostic Tool v4.3
+# ModAPI Diagnostic Tool v4.4
 
 Development tool for TNI game engine modding (0.10.11+).
 
 **FOR MOD DEVELOPERS AND EXTERNAL TOOL INTEGRATION**
 
-## What's New in v4.3
+## What's New in v4.4
 
-- **Debug console integration** — all commands registered with `DebugLayer.register_cmd()` so they appear in the debug console (`~` key)
+- **Debug console activation** — the game ships with `DebugLayer.enabled = false`. This mod sets it to `true` on startup, making the `~` key open the debug console
+- **All commands in debug console** — type command names directly (no parentheses)
+- **Netsh terminal documented** — 23 built-in terminal routines mapped (see [Netsh Terminal Reference](#netsh-terminal-reference))
+
+### What was new in v4.3
+
+- **Debug console integration** — all commands registered with `DebugLayer.register_cmd()`
 - **Removed sandbox probes** — findings documented below in [Sandbox API Reference](#sandbox-api-reference)
 
 ### What was new in v4.0
@@ -129,7 +135,7 @@ All 16 known callbacks are registered. Use `show_lifecycle_log()` to see the exa
 
 v3.x used `on_player_input` for Shift+R/D/J/Q shortcuts. This callback fires on **every input event** including mouse movement, and the C++ bridge crashes (`bad_cast: Variant is not an Object for Variant of type 0 (Nil)`) when pushing InputEvent userdata to the Lua stack. This happens *before* any Lua code executes, making it unfixable from Lua. Even without the crash, the per-frame pcall/GC overhead caused OOM in the ~1800-byte Lua arena.
 
-v4.3 uses `DebugLayer.register_cmd()` to register commands with the game's built-in debug console (`~` key). Commands only run when explicitly invoked — zero per-frame overhead.
+v4.4 enables the game's built-in debug console (`DebugLayer`) and registers commands with `register_cmd()`. Commands only run when explicitly invoked — zero per-frame overhead.
 
 ## Sandbox API Reference
 
@@ -150,13 +156,20 @@ Tested on game version 0.10.15. These findings document what the RISC-V mod sand
 | API | How to Access | Notes |
 |-----|---------------|-------|
 | `DebugLayer` | `world.get_node("/root/DebugLayer")` | Game's debug console overlay |
+| `DebugLayer.enabled = true` | Property set | **Required** — disabled by default, enables `~` key |
+| `DebugLayer.visible = true` | Property set | **Required** — hidden by default |
 | `DebugLayer.register_cmd(name, func)` | On the node above | Registers commands in `~` console |
+| `DebugLayer.print_console(msg)` | On the node above | Writes to debug console display |
 | `Engine.has_singleton(name)` | Direct call | Returns true/false, not banned |
 | `create_node("InputEventKey")` | Direct call | Can create and configure input events |
 | `InputEventKey` properties | `.keycode`, `.pressed`, `.shift_pressed` | All settable |
-| `MobileOSLayer` | `world.mobile_os_cvl` | Game state layer |
+| `MobileOSLayer` | `world.mobile_os_cvl` | Game state layer (16 children) |
 | `MobileOSLayer.at_netshell_screen` | On above | Boolean — is netsh terminal open? |
 | `MobileOSLayer.safe_to_use_keyboard` | On above | Boolean — can type? |
+| `MobileOSLayer.find_child("*Shell*")` | Recursive search | Finds `NetShell` (VBoxContainer) |
+| `NetShell.terminal_routines` | Array property | 23 built-in routines (read-only) |
+| `NetShell.has_terminal_routine(name)` | Method call | Check if routine exists |
+| `NetShell.exec_command(cmdstr, stdout)` | Method call | Execute existing terminal commands |
 | `world.get_node(path)` | Scene tree traversal | Arbitrary scene tree access works |
 | `ModApiV1.get_game_world()` | Direct call | Game world reference |
 | `ModApiV1.get_base_ui()` | Direct call | UI reference for notifications |
@@ -171,7 +184,7 @@ function my_command()
     print("Hello from my mod!")
 end
 
--- 2. Register with DebugLayer in on_game_state_ready
+-- 2. Enable debug console and register in on_game_state_ready
 function on_game_state_ready()
     local world = ModApiV1.get_game_world()
     if not world then return end
@@ -184,11 +197,59 @@ function on_game_state_ready()
         return
     end
 
+    -- Enable the debug console (disabled by default)
+    pcall(function() dbg.enabled = true end)
+    pcall(function() dbg.visible = true end)
+
     pcall(function() dbg.register_cmd("my_command", my_command) end)
 end
 ```
 
 Players can then open the debug console with `~` and type `my_command`.
+
+## Netsh Terminal Reference
+
+The in-game "netsh" terminal (the pseudo gameplay terminal on the player's monitor) is
+separate from the debug console. It is a `NetShell` (VBoxContainer) found via
+`world.mobile_os_cvl.find_child("*Shell*")`.
+
+### Built-in Terminal Routines (23)
+
+| # | Name | Description |
+|---|------|-------------|
+| 0 | `man` | Manual / help |
+| 1 | `alias` | Command aliases |
+| 2 | `quit` | Exit terminal |
+| 3 | `clear` | Clear screen |
+| 4 | `lstdbg` | List debuggers |
+| 5 | `god` | God mode |
+| 6 | `scan` | Network scan |
+| 7 | `trace` | Packet trace |
+| 8 | `watch` | Watch mode |
+| 9 | `program` | Program management |
+| 10 | `always` | Always-on rules |
+| 11 | `ping` | Ping host |
+| 12 | `route` | Routing table |
+| 13 | `pcap` | Packet capture |
+| 14 | `net` | Network config |
+| 15 | `dns` | DNS lookup |
+| 16 | `firewall` | Firewall rules |
+| 17 | `dhcp` | DHCP config |
+| 18 | `echo` | Echo text |
+| 19 | `dstat` | Device status |
+| 20 | `vlan` | VLAN config |
+| 21 | `stp` | Spanning tree |
+| 22 | `middlebox` | Middlebox config |
+
+### Netsh Injection — Not Currently Possible
+
+Custom commands **cannot** be injected into the netsh terminal because:
+- `TerminalRoutine` subclasses are not registered in `create_node()` — they cannot be instantiated from Lua
+- The `terminal_routines` array can be read but appending requires a valid `TerminalRoutine` instance
+- `AliasRoutine.alias_expand()` only does string→string substitution between existing commands
+- The netsh reports `unknown routine` for any unregistered command name
+
+Use the debug console (`~`) for mod commands instead.
 
 ## Device Hardware Classes (0.10.11)
 

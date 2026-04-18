@@ -1,9 +1,13 @@
--- ModAPI Diagnostic Tool v4.3
+-- ModAPI Diagnostic Tool v4.4
 -- Development tool for TNI game engine modding (game version 0.10.11+)
 --
+-- CHANGES from v4.3:
+--   * Debug console activation: sets DebugLayer.enabled=true, visible=true
+--     so the ~ key opens the console (disabled by default in the game).
+--   * Removed all probe code (findings documented in README).
+--
 -- CHANGES from v4.2:
---   * Removed sandbox API probes (findings documented in README).
---   * All console commands now registered with DebugLayer.register_cmd()
+--   * All console commands registered with DebugLayer.register_cmd()
 --     so they appear in the debug console (~).
 --   * Globals kept as fallback for direct Lua calls.
 --
@@ -29,7 +33,7 @@
 --   export_to_json              run_api_test_suite
 --   export_test_results_json    show_lifecycle_log
 
-print("=== ModAPI Diagnostic Tool v4.3 Loading ===")
+print("=== ModAPI Diagnostic Tool v4.4 Loading ===")
 
 -- ============================================================================
 -- CONFIGURATION
@@ -676,7 +680,7 @@ local function build_game_state()
 
     local state = {
         _metadata = {
-            tool_version     = "4.3",
+            tool_version     = "4.4",
             game_version     = game_ver,
             export_timestamp = ts,
             export_date      = ds,
@@ -1759,140 +1763,15 @@ end
 function on_game_state_ready()
     lifecycle("on_game_state_ready", "game fully initialized -- world is guaranteed valid")
 
-    -- Register all console commands with DebugLayer
     local world = ModApiV1.get_game_world()
     if world then
         local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
         if ok and dbg then
-            -- ============================================================
-            -- PROBE: DebugLayer state & activation
-            -- The debug console exists but ~ doesn't open it.
-            -- Investigate current state and try to enable it.
-            -- ============================================================
-            print("[PROBE] ======== DEBUG CONSOLE ACTIVATION ========")
+            -- Enable the debug console (disabled by default in the game)
+            pcall(function() dbg.enabled = true end)
+            pcall(function() dbg.visible = true end)
 
-            -- Read current state
-            local ok_en, enabled_val = pcall(function() return dbg.enabled end)
-            print(string.format("[PROBE] DebugLayer.enabled: ok=%s val=%s",
-                tostring(ok_en), tostring(enabled_val)))
-
-            local ok_vis, vis_val = pcall(function() return dbg.visible end)
-            print(string.format("[PROBE] DebugLayer.visible: ok=%s val=%s",
-                tostring(ok_vis), tostring(vis_val)))
-
-            local ok_layer, layer_val = pcall(function() return dbg.layer end)
-            print(string.format("[PROBE] DebugLayer.layer: ok=%s val=%s",
-                tostring(ok_layer), tostring(layer_val)))
-
-            -- Check UI components
-            local ok_ctn, main_ctn = pcall(function() return dbg.main_ctn end)
-            print(string.format("[PROBE] DebugLayer.main_ctn: ok=%s val=%s",
-                tostring(ok_ctn), tostring(main_ctn)))
-            if ok_ctn and main_ctn then
-                local ok_cv, ctn_vis = pcall(function() return main_ctn.visible end)
-                print(string.format("[PROBE]   main_ctn.visible: ok=%s val=%s",
-                    tostring(ok_cv), tostring(ctn_vis)))
-            end
-
-            local ok_cmd, cmd_in = pcall(function() return dbg.cmd_in end)
-            print(string.format("[PROBE] DebugLayer.cmd_in: ok=%s val=%s",
-                tostring(ok_cmd), tostring(cmd_in)))
-
-            local ok_disp, disp_le = pcall(function() return dbg.display_le end)
-            print(string.format("[PROBE] DebugLayer.display_le: ok=%s val=%s",
-                tostring(ok_disp), tostring(disp_le)))
-
-            -- Check ext_cmd dictionary (where register_cmd puts entries)
-            local ok_ext, ext_cmd = pcall(function() return dbg.ext_cmd end)
-            print(string.format("[PROBE] DebugLayer.ext_cmd: ok=%s val=%s",
-                tostring(ok_ext), tostring(ext_cmd)))
-            if ok_ext and ext_cmd then
-                local ok_sz, sz = pcall(function() return ext_cmd:size() end)
-                print(string.format("[PROBE]   ext_cmd size: ok=%s val=%s",
-                    tostring(ok_sz), tostring(sz)))
-            end
-
-            -- Try to enable the debug console
-            local ok_set1, err1 = pcall(function() dbg.enabled = true end)
-            print(string.format("[PROBE] SET DebugLayer.enabled=true: ok=%s err=%s",
-                tostring(ok_set1), tostring(err1)))
-
-            local ok_set2, err2 = pcall(function() dbg.visible = true end)
-            print(string.format("[PROBE] SET DebugLayer.visible=true: ok=%s err=%s",
-                tostring(ok_set2), tostring(err2)))
-
-            -- Re-read to confirm
-            local ok_en2, enabled_after = pcall(function() return dbg.enabled end)
-            print(string.format("[PROBE] DebugLayer.enabled AFTER: ok=%s val=%s",
-                tostring(ok_en2), tostring(enabled_after)))
-
-            local ok_vis2, vis_after = pcall(function() return dbg.visible end)
-            print(string.format("[PROBE] DebugLayer.visible AFTER: ok=%s val=%s",
-                tostring(ok_vis2), tostring(vis_after)))
-
-            -- Try print_console to write something to the debug display
-            local ok_pc, err_pc = pcall(function()
-                dbg.print_console("[modapi-diagnostic] Debug console activated by mod")
-            end)
-            print(string.format("[PROBE] DebugLayer.print_console(): ok=%s err=%s",
-                tostring(ok_pc), tostring(err_pc)))
-
-            -- Also try toggling main_ctn visibility
-            if ok_ctn and main_ctn then
-                local ok_sv, err_sv = pcall(function() main_ctn.visible = true end)
-                print(string.format("[PROBE] SET main_ctn.visible=true: ok=%s err=%s",
-                    tostring(ok_sv), tostring(err_sv)))
-            end
-
-            -- Check if there's a process_mode property (might be disabled)
-            local ok_pm, pm_val = pcall(function() return dbg.process_mode end)
-            print(string.format("[PROBE] DebugLayer.process_mode: ok=%s val=%s",
-                tostring(ok_pm), tostring(pm_val)))
-
-            -- Check if input processing is enabled on the node
-            local ok_ip, ip_val = pcall(function() return dbg.is_processing_input() end)
-            print(string.format("[PROBE] DebugLayer.is_processing_input(): ok=%s val=%s",
-                tostring(ok_ip), tostring(ip_val)))
-
-            local ok_uip, uip_val = pcall(function() return dbg.is_processing_unhandled_input() end)
-            print(string.format("[PROBE] DebugLayer.is_processing_unhandled_input(): ok=%s val=%s",
-                tostring(ok_uip), tostring(uip_val)))
-
-            -- Try enabling input processing
-            local ok_sip, err_sip = pcall(function() dbg.set_process_input(true) end)
-            print(string.format("[PROBE] SET set_process_input(true): ok=%s err=%s",
-                tostring(ok_sip), tostring(err_sip)))
-
-            local ok_suip, err_suip = pcall(function() dbg.set_process_unhandled_input(true) end)
-            print(string.format("[PROBE] SET set_process_unhandled_input(true): ok=%s err=%s",
-                tostring(ok_suip), tostring(err_suip)))
-
-            -- Check class name
-            local ok_cls, cls_name = pcall(function() return dbg.get_class() end)
-            print(string.format("[PROBE] DebugLayer.get_class(): ok=%s val=%s",
-                tostring(ok_cls), tostring(cls_name)))
-
-            -- List children of DebugLayer to understand its structure
-            local ok_cc, child_count = pcall(function() return dbg.get_child_count() end)
-            print(string.format("[PROBE] DebugLayer.get_child_count(): ok=%s val=%s",
-                tostring(ok_cc), tostring(child_count)))
-            if ok_cc and child_count then
-                for i = 0, math.min(child_count - 1, 15) do
-                    local ok_ch, ch = pcall(function() return dbg.get_child(i) end)
-                    if ok_ch and ch then
-                        local ok_cn, cn = pcall(function() return ch.name end)
-                        local ok_ccl, ccl = pcall(function() return ch.get_class() end)
-                        local ok_chv, chv = pcall(function() return ch.visible end)
-                        print(string.format("[PROBE]   child[%d]: name=%s class=%s visible=%s",
-                            i, tostring(cn), tostring(ccl), tostring(chv)))
-                    end
-                end
-            end
-
-            print("[PROBE] ======== END DEBUG CONSOLE PROBES ========")
-            print("[PROBE] Try pressing ~ now. If still nothing, paste these results.")
-
-            -- Register commands
+            -- Register all console commands
             local cmds = {
                 {"dump_world_overview",      dump_world_overview},
                 {"inspect_locations",        inspect_locations},
@@ -1906,128 +1785,10 @@ function on_game_state_ready()
             for _, cmd in ipairs(cmds) do
                 pcall(function() dbg.register_cmd(cmd[1], cmd[2]) end)
             end
-            print("[DIAG] Registered " .. #cmds .. " debug console commands")
+            print("[DIAG] Debug console enabled. Registered " .. #cmds .. " commands. Press ~ to open.")
         else
             print("[DIAG] DebugLayer not found, commands available as globals only")
         end
-
-        -- ============================================================
-        -- PROBE: NetShell terminal — the in-game "netsh" terminal
-        -- Can we find it, list its routines, and inject commands?
-        -- ============================================================
-        print("[PROBE] ======== NETSH TERMINAL PROBES ========")
-
-        -- Search common scene tree paths for NetShell
-        local netshell_paths = {
-            "/root/MobileOSLayer",
-            "/root/Main/MobileOSLayer",
-            "/root/BaseUI",
-        }
-        local mobile_os = nil
-        pcall(function() mobile_os = world.mobile_os_cvl end)
-        print(string.format("[PROBE] world.mobile_os_cvl: %s", tostring(mobile_os)))
-
-        -- Try to find NetShell via MobileOSLayer children
-        if mobile_os then
-            local ok_cc2, cc2 = pcall(function() return mobile_os.get_child_count() end)
-            print(string.format("[PROBE] MobileOSLayer child_count: ok=%s val=%s",
-                tostring(ok_cc2), tostring(cc2)))
-            if ok_cc2 and cc2 then
-                for i = 0, math.min(cc2 - 1, 20) do
-                    local ok_ch2, ch2 = pcall(function() return mobile_os.get_child(i) end)
-                    if ok_ch2 and ch2 then
-                        local ok_cn2, cn2 = pcall(function() return ch2.name end)
-                        local ok_ccl2, ccl2 = pcall(function() return ch2.get_class() end)
-                        print(string.format("[PROBE]   MobileOS child[%d]: name=%s class=%s",
-                            i, tostring(cn2), tostring(ccl2)))
-                    end
-                end
-            end
-
-            -- Try common netshell property names
-            local ns_props = {"net_shell", "netshell", "terminal", "shell"}
-            for _, prop in ipairs(ns_props) do
-                local ok_ns, ns = pcall(function() return mobile_os[prop] end)
-                if ok_ns and ns then
-                    print(string.format("[PROBE] mobile_os.%s: FOUND %s", prop, tostring(ns)))
-                end
-            end
-        end
-
-        -- Also search scene tree directly for NetShell-type nodes
-        local shell_search_paths = {
-            "/root/MobileOSLayer/NetShell",
-            "/root/MobileOSLayer/TerminalShell",
-            "/root/MobileOSLayer/Shell",
-        }
-        local found_shell = nil
-        for _, path in ipairs(shell_search_paths) do
-            local ok_sh, sh = pcall(function() return world.get_node(path) end)
-            if ok_sh and sh then
-                print(string.format("[PROBE] world.get_node('%s'): FOUND %s", path, tostring(sh)))
-                found_shell = sh
-                break
-            end
-        end
-
-        -- If MobileOSLayer was found, try to find shell in its tree
-        if not found_shell and mobile_os then
-            -- Try find_child which searches recursively
-            local ok_fc, fc = pcall(function()
-                return mobile_os.find_child("*Shell*", true, false)
-            end)
-            print(string.format("[PROBE] MobileOS.find_child('*Shell*'): ok=%s val=%s",
-                tostring(ok_fc), tostring(fc)))
-            if ok_fc and fc then found_shell = fc end
-        end
-
-        -- If we found a shell, probe its terminal_routines
-        if found_shell then
-            local ok_cls3, cls3 = pcall(function() return found_shell.get_class() end)
-            print(string.format("[PROBE] Shell class: %s", tostring(cls3)))
-
-            local ok_tr, tr = pcall(function() return found_shell.terminal_routines end)
-            print(string.format("[PROBE] Shell.terminal_routines: ok=%s val=%s",
-                tostring(ok_tr), tostring(tr)))
-            if ok_tr and tr then
-                local ok_trsz, trsz = pcall(function() return tr:size() end)
-                print(string.format("[PROBE]   routines count: %s", tostring(trsz)))
-                if ok_trsz and trsz then
-                    for i = 0, math.min(trsz - 1, 30) do
-                        local ok_r, r = pcall(function() return tr:get(i) end)
-                        if ok_r and r then
-                            local ok_rn, rn = pcall(function() return r.name end)
-                            local ok_rcl, rcl = pcall(function() return r.get_class() end)
-                            local ok_re, re = pcall(function() return r.enabled end)
-                            print(string.format("[PROBE]   routine[%d]: name=%s class=%s enabled=%s",
-                                i, tostring(rn), tostring(rcl), tostring(re)))
-                        end
-                    end
-                end
-            end
-
-            -- Test: can we create a TerminalRoutine?
-            local routine_types = {"TerminalRoutine", "AliasRoutine", "NetRoutine"}
-            for _, rtype in ipairs(routine_types) do
-                local ok_cr, cr = pcall(function()
-                    return create_node(rtype, "probe_test_" .. rtype)
-                end)
-                print(string.format("[PROBE] create_node('%s'): ok=%s val=%s",
-                    rtype, tostring(ok_cr), tostring(cr)))
-            end
-
-            -- Test: has_terminal_routine for known commands
-            local known_cmds = {"man", "net", "trace", "alias", "power", "program", "help"}
-            for _, cmd in ipairs(known_cmds) do
-                local ok_htr, htr = pcall(function()
-                    return found_shell.has_terminal_routine(cmd)
-                end)
-                print(string.format("[PROBE] has_terminal_routine('%s'): ok=%s val=%s",
-                    cmd, tostring(ok_htr), tostring(htr)))
-            end
-        end
-
-        print("[PROBE] ======== END NETSH PROBES ========")
     end
 
     -- This is the reliable point where world + all objects are available
@@ -2199,8 +1960,8 @@ end
 -- STARTUP
 -- ============================================================================
 
-print("=== ModAPI Diagnostic Tool v4.3 Ready ===")
-print("    Commands registered with debug console (~)")
+print("=== ModAPI Diagnostic Tool v4.4 Ready ===")
+print("    Press ~ to open the debug console")
 print("")
 print("    Console commands:")
 print("      dump_world_overview       -- quick world summary")
