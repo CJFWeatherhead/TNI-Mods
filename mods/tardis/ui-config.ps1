@@ -42,16 +42,18 @@ $parameters += @{
     Max         = 2.0
     Step        = 0.1
     Description = @"
-Amount to change the speed multiplier when pressing SHIFT+> or SHIFT+<.
+Amount to change the speed multiplier per speed_up / speed_down command.
 
-Default: 0.5x per keypress
+Default: 0.5x per command
 
 Examples:
-- 0.1 = Fine control (10 presses to go from 1x to 2x)
-- 0.5 = Moderate steps (2 presses to go from 1x to 2x)
-- 1.0 = Large jumps (double/halve with each press)
+- 0.1 = Fine control (10 steps to go from 1x to 2x)
+- 0.5 = Moderate steps (2 steps to go from 1x to 2x)
+- 1.0 = Large jumps (double/halve with each command)
 
 The game enforces hard limits of 0.125x to 8x regardless of this setting.
+
+Usage: Press ~ to open the debug console, then type: speed_up  speed_down  speed_reset  day_skip  speed
 "@
     Section     = "Speed Control"
 }
@@ -110,8 +112,8 @@ Reference value for normal game speed.
 Default: 1.0x
 
 This is for reference only - the mod doesn't automatically
-reset to this value. Use SHIFT+< or SHIFT+> to manually
-adjust speed back to your preferred level.
+reset to this value. Type speed_reset in the debug console to
+return to 1x speed.
 "@
     Section     = "Speed Control"
 }
@@ -123,7 +125,7 @@ adjust speed back to your preferred level.
 $parameters += @{
     Type        = "section"
     Label       = "Time Skip"
-    Description = "Configure the day skip feature (SHIFT++)"
+    Description = "Configure the day_skip console command"
     Collapsed   = $false
 }
 
@@ -136,7 +138,7 @@ $parameters += @{
     Max         = 23.99
     Step        = 0.5
     Description = @"
-Time of day to skip to when pressing SHIFT++.
+Time of day to skip to when the day_skip console command is run.
 
 Default: 23.99 (23:59, end of day)
 
