@@ -1,27 +1,27 @@
 ---
 title: "ModAPI Diagnostic Tool"
-date: 2026-04-16
+date: 2026-04-18
 draft: false
 mod_id: "modapi-diagnostic"
 author: "CJFWeatherhead"
-version: "3.0.10"
+version: "4.0.0"
 status: "Active Development"
 game_version: "beta"
 ---
 
 # ModAPI Diagnostic Tool
 
-Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
+Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
 <div class="mod-header-info">
 
 | | |
 |---|---|
-| **Version** | 3.0.10 |
+| **Version** | 4.0.0 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-16 |
+| **Last Updated** | 2026-04-18 |
 
 </div>
 
@@ -31,7 +31,7 @@ Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
 
 <div class="download-section">
 
-**[Download modapi-diagnostic-3.0.10.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.10/modapi-diagnostic-3.0.10.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download modapi-diagnostic-4.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.0/modapi-diagnostic-4.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -59,256 +59,206 @@ Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
 
 ## About This Mod
 
-Comprehensive diagnostic, inspection, and API testing tool for TNI game engine.
+Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
-## Features v3.0
+## v4.0 — Zero-overhead rewrite
 
-### Event Logging
-- **Engine Event Logging**: Tracks engine load, mod reload, and game lifecycle events
-- **Device Spawn Inspection**: Logs detailed device properties and network configuration
-- **User Spawn Analysis**: Comprehensive user property inspection with network/DNS details
-- **Network Configuration Monitoring**: Track DHCP settings, IP addresses, and DNS servers
+### Architecture
+- **REMOVED on_player_input** — eliminates per-frame pcall/GC memory pressure
+- All functionality via console commands and automatic lifecycle hooks
+- Lifecycle callback tracker shows exact init order and timing
 
-### JSON Game State Export (Shift+J)
-- Export complete game state to JSON file
-- Configurable data sections (devices, users, finances, network, etc.)
-- Designed for external tool integration (Terraform, REST APIs)
-- Human-readable formatted output
+### All Lifecycle Callbacks
+- on_mod_load, on_mods_loaded, on_engine_load
+- **on_game_state_ready** (auto-diagnostic on game init)
+- on_game_host_eod, on_mod_reload
+- on_device_spawned, on_user_spawned, **on_location_spawned**
+- on_day_start, on_day_end, on_tick
+- on_world_ready, on_world_created, on_game_start, on_scenario_start
 
-### API Test Suite (Shift+Q)
-- Comprehensive testing of all ModApiV1 endpoints
-- Tests GameWorld, DeviceUnit, User, NetworkControl APIs
-- Reports passed/failed/skipped with detailed output
-- Export test results as JSON for documentation
+### JSON Game State Export
+- All 0.10.11 fields: PlayOptions, LogicControllerUser, FloorBuilders
+- New sections: player_messages, link_controller, acquired_techs
+- File write via ModFileSystem + log fallback
+- Auto-export on day end (configurable)
 
-### Keyboard Shortcuts
-- **Shift+R**: Re-inspect all spawned users
-- **Shift+D**: Dump all devices in the world
-- **Shift+J**: Export game state to JSON
-- **Shift+Q**: Run API test suite (Query)
+### API Test Suite
+- Tests get_locations(), get_merchants(), get_game_version()
+- Tests all control modules: networkctl, routectl, firewallctl, vlanctl, dhcpctl, filesysctl, packetctl
+- Tests GameWorld methods, Programs API, Merchants API
+- NETWORK_STORAGE (class 20) device support
 
-### Lua Console Commands
-- `reinspect_all_users()` - Re-inspect user network configs
-- `dump_all_world_devices()` - List all devices
-- `inspect_scenes()` - Inspect available floors
-- `export_to_json_file()` - Export JSON state
-- `run_api_test_suite()` - Run API tests
-- `export_test_results_json()` - Export test results
+### Console Commands
+- `dump_world_overview()` — quick world summary
+- `inspect_locations()` — list all floors
+- `dump_all_world_devices()` — list all devices
+- `reinspect_all_users()` — re-inspect tracked users
+- `export_to_json()` — export full game state
+- `run_api_test_suite()` — test all API endpoints
+- `export_test_results_json()` — export test results
+- `show_lifecycle_log()` — show callback order and timing
 
 ## Use Cases
 - Debug mod development issues
 - Export game state for external automation tools
 - Test and document API endpoint availability
-- Understand game object structures
-- Track network configurations
+- Diagnose callback init order and timing
 - Build Terraform/OpenTofu providers
-
-## Output
-All diagnostic information is printed to the game console. JSON exports are
-saved to files in the mod directory.
 
 ---
 
 <details>
 <summary><strong>Full Documentation</strong></summary>
 
-# ModAPI Diagnostic Tool v3.0
+# ModAPI Diagnostic Tool v4.0
 
-THIS MOD IS FOR MOD DEVELOPERS AND EXTERNAL TOOL INTEGRATION!
+Development tool for TNI game engine modding (0.10.11+).
 
-This mod provides comprehensive diagnostic capabilities for Tower Networking Inc's mod system, including detailed inspection of spawned objects, JSON game state export, and API endpoint testing.
+**FOR MOD DEVELOPERS AND EXTERNAL TOOL INTEGRATION**
 
-## What's New in v3.0
+## What's New in v4.0
 
-- **JSON Game State Export (Shift+J)**: Export complete game state to logs for external tools
-- **API Test Suite (Shift+Q)**: Comprehensive testing of all documented API endpoints
-- **Enhanced Configuration**: UI config with selectable data sections and test categories
-- **In-Game Notifications**: Visual feedback for all operations
-
-## Purpose
-
-- Enumerate all methods available on ModApiV1
-- Test various possible callback function names
-- Inspect user network configurations in detail
-- Track spawned users for re-inspection after manual changes
-- **Export game state as JSON for REST API bridges**
-- **Test and document API endpoint availability**
-- Determine when game world and PlayOptions become accessible
-- Discover the correct timing to modify game settings
+- **Removed `on_player_input` entirely** — eliminates the per-frame pcall/GC memory pressure that caused the memory leak in v3.x
+- **Added `on_game_state_ready`** — the correct entrypoint for post-init diagnostics (world guaranteed valid)
+- **Added all missing callbacks**: `on_mod_load`, `on_mods_loaded`, `on_game_host_eod`, `on_location_spawned`
+- **Lifecycle tracker** — records exact callback order and timing for debugging init issues
+- **Expanded API coverage** for game version 0.10.11: new PlayOptions fields, LogicControllerUser fields, all control modules, NETWORK_STORAGE device class, GameWorld methods
+- **New API getters tested**: `get_locations()`, `get_merchants()`, `get_game_version()`, `has_mods_reloaded()`
+- **File write support** — JSON export tries `ModFileSystem` before falling back to log output
 
 ## Usage
 
 1. Place in `mods/modapi-diagnostic/`
-2. Load the game and check console output
-3. Look for `[DIAGNOSTIC]` prefixed messages
-4. Use keyboard shortcuts for interactive features
-
-### Keyboard Shortcuts
-
-| Shortcut | Function | Description |
-|----------|----------|-------------|
-| **Shift+R** | Re-inspect Users | Re-inspect all spawned users' network configs |
-| **Shift+D** | Dump Devices | List all devices in the world |
-| **Shift+J** | Export JSON | Export game state to logs (copy from console) |
-| **Shift+Q** | API Test Suite | Run comprehensive API endpoint tests |
+2. Load the game — `on_game_state_ready` runs automatic diagnostics
+3. Use console commands for interactive features
+4. Check `[DIAG]` prefixed messages in the game console
 
 ### Console Commands
 
-You can also use the Lua console to manually trigger functions:
-
 ```lua
-reinspect_all_users()      -- Re-inspect all tracked users
-dump_all_world_devices()   -- List all devices with details
-inspect_scenes()           -- Inspect available floors/locations
-export_to_json_file()      -- Export game state to JSON
-run_api_test_suite()       -- Run API endpoint tests
-export_test_results_json() -- Export test results as JSON
+dump_world_overview()       -- Quick world summary (day, cash, counts)
+inspect_locations()         -- List all floors with user counts
+dump_all_world_devices()    -- List all devices with class/condition
+reinspect_all_users()       -- Re-inspect tracked users' network configs
+export_to_json()            -- Export full game state to JSON
+run_api_test_suite()        -- Test all API endpoints
+export_test_results_json()  -- Export test results as JSON
+show_lifecycle_log()        -- Show callback order and timing
 ```
 
-## JSON Export (Shift+J)
+### Auto-triggers
 
-The JSON export feature outputs a comprehensive snapshot of game state to the game logs. The output appears between `=== JSON GAME STATE START ===` and `=== JSON GAME STATE END ===` markers.
+| Trigger | Config Key | Default |
+|---------|-----------|---------|
+| Diagnostics on game ready | `auto_diag_on_ready` | `true` |
+| JSON export on day end | `auto_export_on_day_end` | `false` |
 
-**Note**: Due to sandbox restrictions, mods cannot write files to disk. Copy the JSON from the game logs/console instead.
+## Lifecycle Callbacks
 
-Includes:
-
-- **World Info**: Day count, cash balance, scenario name, difficulty
-- **Devices**: All devices with hardware class, network config, specs
-- **Users**: All users with profiles, locations, network settings
-- **Locations**: All floors with display names and properties
-- **Finances**: Cash balance, transactions, payment breakdowns
-- **Network**: DNS lookup tables, network address mappings
-- **Statistics**: Game statistics (user counts, bandwidth, etc.)
-- **Loans**: Player loan data
-- **Hostings**: Player hosting contracts
-- **Merchants**: Device merchant data
-
-### Example JSON Output Structure
-
-```json
-{
-  "_metadata": {
-    "mod_version": "3.0",
-    "export_timestamp": 1706745600,
-    "export_date": "2026-02-01T12:00:00"
-  },
-  "world": {
-    "scenario_name": "career_mode",
-    "n_days": 15,
-    "player_cash_balance": 25000.50
-  },
-  "devices": [...],
-  "users": [...],
-  "locations": [...],
-  "finances": {...},
-  "statistics": {...}
-}
-```
-
-## API Test Suite (Shift+Q)
-
-The test suite validates all documented API endpoints and reports:
-
-- **ModApiV1**: sanity(), get_game_world(), get_devices(), get_users(), etc.
-- **Mod Global**: mod_dir, mod_type, filesystem, config
-- **GameWorld**: scenario_name, n_days, play_options, locations, etc.
-- **DeviceUnit**: product_name, device_hardware_class, logic_controller
-- **User**: username, daily_rate, satiety_ratio, location
-- **NetworkControlModule**: hardware_address, network_address, dhcp_enabled
-- **ModFileSystem**: get_files_at(), get_directories_at(), open()
-
-### Test Output Example
+All 16 known callbacks are registered. Use `show_lifecycle_log()` to see the exact order they fired:
 
 ```
-[DIAGNOSTIC] ========== Test Results Summary ==========
-[DIAGNOSTIC] Total: 45 | Passed: 42 | Failed: 2 | Skipped: 1
-
-[DIAGNOSTIC] Failed Tests:
-[DIAGNOSTIC]   ✗ GameWorld.get_game_settings: Method not available
-[DIAGNOSTIC]   ✗ ModFileSystem.write: Permission denied
+[DIAG]    1. [0.0012s] on_mod_load -- mod binary/script loaded
+[DIAG]    2. [0.0015s] on_mods_loaded -- all mods finished loading
+[DIAG]    3. [0.0340s] on_engine_load
+[DIAG]    4. [0.1200s] on_game_state_ready -- game fully initialized
+[DIAG]    5. [0.1500s] on_location_spawned -- Floor 1: Lobby
+[DIAG]    6. [0.1800s] on_device_spawned -- Switch-8 (NETWORK_SWITCH)
+...
 ```
 
-## Configuration
+### Complete Callback List
 
-Use the PowerShell UI config to customize:
+| Callback | When | v3.x? |
+|----------|------|-------|
+| `on_mod_load()` | Mod script loaded | NEW |
+| `on_mods_loaded()` | All mods loaded | NEW |
+| `on_engine_load()` | Engine startup | Yes |
+| `on_game_state_ready()` | World fully initialized | NEW |
+| `on_game_host_eod()` | End-of-day host processing | NEW |
+| `on_mod_reload()` | F11 mod reload | Yes |
+| `on_device_spawned(device)` | Device placed | Yes |
+| `on_user_spawned(user)` | Customer appears | Yes |
+| `on_location_spawned(location)` | Floor spawned | NEW |
+| `on_day_start()` | Day begins | Yes |
+| `on_day_end()` | Day ends | Yes |
+| `on_tick(delta)` | Every frame (empty) | Yes |
+| `on_world_ready(world)` | World ready | Yes |
+| `on_world_created(world)` | World created | Yes |
+| `on_game_start(world)` | Game session starts | Yes |
+| `on_scenario_start(world)` | Scenario begins | Yes |
 
-### Event Logging
-- Enable/disable device spawn logging
-- Enable/disable user spawn logging
-- Enable/disable day event logging
-- Enable/disable network inspection
+## JSON Export
 
-### JSON Export Options
-- Select which data sections to include
-- Set custom export filename
-- Toggle individual categories (devices, users, finances, etc.)
+`export_to_json()` outputs a comprehensive game state snapshot. Tries writing to `diagnostic-export.json` via ModFileSystem, falls back to log output between `=== JSON GAME STATE START ===` / `=== JSON GAME STATE END ===` markers.
 
-### API Test Suite Options
-- Select which API categories to test
-- Enable verbose mode for detailed output
-- Toggle individual test groups
+### Data Sections
 
-## What It Tests
+| Section | Config Key | Content |
+|---------|-----------|---------|
+| World | always | Day, cash, scenario, difficulty |
+| Play Options | `json_include_play_options` | All PlayOptions fields (expanded in 0.10.11) |
+| Devices | `json_include_devices` | Full device tree with logic/power controllers |
+| Users | `json_include_users` | LogicControllerUser fields, visitor stats |
+| Locations | `json_include_locations` | Floors with user counts |
+| Finances | `json_include_finances` | Transactions, payment breakdown |
+| Network | `json_include_network` | DNS lookup, network address tables |
+| Statistics | `json_include_statistics` | Game statistics |
+| Loans | `json_include_loans` | Player loans |
+| Hostings | `json_include_hostings` | Player hosting contracts |
+| Merchants | `json_include_merchants` | Merchants with full listing data |
+| Messages | `json_include_messages` | Player messages |
+| Floor Builders | `json_include_floor_builders` | Floor build config |
+| Link Controller | `json_include_link_controller` | Network links |
+| Acquired Techs | `json_include_acquired_techs` | Unlocked technologies |
 
-### Callbacks Tested:
+## API Test Suite
 
-- on_engine_load()
-- on_mod_reload()
-- on_world_ready()
-- on_world_created()
-- on_game_start()
-- on_scenario_start()
-- on_device_spawned()
-- on_user_spawned()
-- on_day_start()
-- on_day_end()
-- on_player_input() (for keyboard shortcuts)
+`run_api_test_suite()` tests all documented API endpoints:
 
-### User Network Inspection
+- **ModApiV1**: sanity, get_game_world, get_devices, get_users, get_locations, get_merchants, get_game_version, has_mods_reloaded
+- **Mod Global**: mod_dir, mod_type, manifest, filesystem, config
+- **GameWorld**: 17 properties + 8 methods (send_player_message, put_dns_entry, lookup_domain, etc.)
+- **DeviceUnit**: 10 properties + methods
+- **User/LogicControllerUser**: Base + extended fields (payment_calculation_method, csr, vsr, etc.)
+- **Locations**: display_name, floor_num, is_datacenter, surge/outage immunity, etc.
+- **Network/Control Modules**: networkctl, routectl, firewallctl, vlanctl, dhcpctl, filesysctl, packetctl
+- **Merchants**: Properties + restock/submit_order methods
+- **Programs**: release_name, cpu_load, install_size, etc.
+- **FileSystem**: get_files_at, get_directories_at, open/read, mod_path_to_real
+- **GameWorld Methods**: lookup_domain, get_loc_index (safe read-only calls)
 
-When users spawn, the tool automatically inspects:
+## Why No Keyboard Shortcuts?
 
-- User hardware address
-- DHCP mode setting
-- Network address
-- DNS server array
-- Location properties (floor number, etc.)
+v3.x used `on_player_input` for Shift+R/D/J/Q shortcuts. This callback fires on **every input event** including mouse movement, requiring pcall overhead on every frame. Even with named function helpers and incremental GC steps, this caused measurable memory pressure.
 
-### API Methods Checked:
+v4.0 removes input handling entirely. All functionality is available through console commands (which only run when you explicitly call them) and automatic lifecycle hooks (`on_game_state_ready`, `on_day_end`).
 
-- ModApiV1 availability and all methods
-- Mod global properties
-- Engine global
-- GameWorld properties and methods
-- DeviceUnit properties
-- User properties
-- NetworkControlModule
-- ModFileSystem operations
+## Device Hardware Classes (0.10.11)
 
-## External Tool Integration
-
-This mod is designed to support external tools:
-
-### REST API Bridge
-Export game state via JSON and use a file watcher or polling mechanism to serve via HTTP.
-
-### Terraform/OpenTofu Provider
-Use the JSON export as a data source for infrastructure-as-code tooling:
-
-```hcl
-data "tni_game_state" "current" {
-  json_file = "game_state.json"
-}
-
-resource "tni_device" "new_switch" {
-  depends_on = [data.tni_game_state.current]
-  # ...
-}
-```
-
-### Log File Streaming
-Combine with game log file parsing for real-time event streaming.
+| ID | Name |
+|----|------|
+| 0 | DEFAULT |
+| 1 | NETWORK_SWITCH |
+| 2 | NETWORK_ROUTER |
+| 3 | NETWORK_TAP |
+| 4 | NETWORK_FIREWALL |
+| 5 | MEDIA_LINE_SIMPLEX |
+| 6 | MEDIA_LINE_DUPLEX |
+| 7 | COMPUTE_SERVER |
+| 8 | DISPLAY_MONITOR |
+| 9 | DEBUGGER |
+| 10 | LOAD_TESTER |
+| 11 | POWER_EXPANSION |
+| 12 | DECENTRO_RIGS |
+| 13 | SURGE_PROTECTOR |
+| 14 | UPS |
+| 15 | INERT |
+| 16 | CCTV |
+| 17 | PHONE |
+| 18 | PRINTER |
+| 19 | NETWORK_LOAD_BALANCER |
+| 20 | NETWORK_STORAGE |
 
 
 </details>
@@ -337,14 +287,14 @@ No gameplay impact. Ideal for:
 |-------|-------|
 | Mod ID | `modapi-diagnostic` |
 | Creation Date | 2026-01-20 |
-| Last Updated | 2026-04-16 |
+| Last Updated | 2026-04-18 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v3.0.10)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v3.0.10/modapi-diagnostic-3.0.10.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v4.0.0)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.0/modapi-diagnostic-4.0.0.zip)
 
 </details>
 

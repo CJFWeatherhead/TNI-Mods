@@ -1,10 +1,10 @@
 ---
 title: "Money Cheat"
-date: 2026-04-16
+date: 2026-04-18
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
-version: "0.1.9"
+version: "0.1.13"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 | | |
 |---|---|
-| **Version** | 0.1.9 |
+| **Version** | 0.1.13 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-16 |
+| **Last Updated** | 2026-04-18 |
 
 </div>
 
@@ -31,7 +31,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 <div class="download-section">
 
-**[Download money-cheat-0.1.9.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.9/money-cheat-0.1.9.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download money-cheat-0.1.13.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.13/money-cheat-0.1.13.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -248,14 +248,14 @@ Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s c
 |-------|-------|
 | Mod ID | `money-cheat` |
 | Creation Date | 2026-01-21 |
-| Last Updated | 2026-04-16 |
+| Last Updated | 2026-04-18 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.9)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.9/money-cheat-0.1.9.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.13)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.13/money-cheat-0.1.13.zip)
 
 </details>
 

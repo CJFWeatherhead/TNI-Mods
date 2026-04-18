@@ -1,10 +1,10 @@
 ---
 title: "Chaos Engine"
-date: 2026-04-16
+date: 2026-04-18
 draft: false
 mod_id: "chaos-engine"
 author: "CJFWeatherhead"
-version: "0.1.10"
+version: "0.1.14"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 | | |
 |---|---|
-| **Version** | 0.1.10 |
+| **Version** | 0.1.14 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-16 |
+| **Last Updated** | 2026-04-18 |
 
 </div>
 
@@ -31,7 +31,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 <div class="download-section">
 
-**[Download chaos-engine-0.1.10.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.10/chaos-engine-0.1.10.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download chaos-engine-0.1.14.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.14/chaos-engine-0.1.14.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -289,14 +289,14 @@ Original event rates are stored and can be restored with the reset function.
 |-------|-------|
 | Mod ID | `chaos-engine` |
 | Creation Date | 2026-01-31 |
-| Last Updated | 2026-04-16 |
+| Last Updated | 2026-04-18 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.10)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.10/chaos-engine-0.1.10.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.14)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.14/chaos-engine-0.1.14.zip)
 
 </details>
 

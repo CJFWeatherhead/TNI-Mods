@@ -4,7 +4,7 @@ date: 2026-04-17
 draft: false
 mod_id: "supa-mod-loader"
 author: "CJFWeatherhead"
-version: "3.7.6"
+version: "3.7.8"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Automatically added by the ModManager GUI when mods are installed via ModManager
 
 | | |
 |---|---|
-| **Version** | 3.7.6 |
+| **Version** | 3.7.8 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Automatically added by the ModManager GUI when mods are installed via ModManager
 
 <div class="download-section">
 
-**[Download supa-mod-loader-3.7.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v3.7.6/supa-mod-loader-3.7.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download supa-mod-loader-3.7.8.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v3.7.8/supa-mod-loader-3.7.8.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -100,8 +100,8 @@ The version tracks the ModManager GUI version that performed the installation.
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/supa-mod-loader-v3.7.6)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v3.7.6/supa-mod-loader-3.7.6.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/supa-mod-loader-v3.7.8)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v3.7.8/supa-mod-loader-3.7.8.zip)
 
 </details>
 

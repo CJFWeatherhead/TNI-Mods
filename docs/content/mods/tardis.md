@@ -1,10 +1,10 @@
 ---
 title: "TARDIS - Time Controller"
-date: 2026-04-16
+date: 2026-04-18
 draft: false
 mod_id: "tardis"
 author: "CJFWeatherhead"
-version: "0.1.5"
+version: "0.1.9"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 | | |
 |---|---|
-| **Version** | 0.1.5 |
+| **Version** | 0.1.9 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-16 |
+| **Last Updated** | 2026-04-18 |
 
 </div>
 
@@ -31,7 +31,7 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 <div class="download-section">
 
-**[Download tardis-0.1.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.5/tardis-0.1.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download tardis-0.1.9.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.9/tardis-0.1.9.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -251,14 +251,14 @@ Speed changes persist until manually changed or game restart.
 |-------|-------|
 | Mod ID | `tardis` |
 | Creation Date | 2026-01-31 |
-| Last Updated | 2026-04-16 |
+| Last Updated | 2026-04-18 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.5)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.5/tardis-0.1.5.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.9)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.9/tardis-0.1.9.zip)
 
 </details>
 
