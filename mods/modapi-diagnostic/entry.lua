@@ -519,7 +519,7 @@ local function export_game_state_json()
     
     local game_state = {
         _metadata = {
-            mod_version = "3.1",
+            mod_version = "3.2",
             export_timestamp = timestamp,
             export_date = datestr
         }
@@ -1699,6 +1699,8 @@ end
 -- ============================================================================
 
 function on_player_input(event)
+    collectgarbage("step")
+
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then return end
 
