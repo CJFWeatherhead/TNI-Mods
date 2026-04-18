@@ -2,7 +2,7 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 1.1
+-- Version: 1.2
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
@@ -215,12 +215,14 @@ end
 
 -- Keyboard input handler for SHIFT+R (restock)
 function on_player_input(event)
+    -- Incremental GC step to reclaim per-event Godot object wrappers
+    -- that the Lua bridge allocates when pushing the event argument
+    collectgarbage("step")
+
     if not config.enable_restock_hotkey then
         return
     end
 
-    -- Use pcall(func, args) instead of pcall(function() ... end) to avoid
-    -- allocating a new closure on every input event (called every frame)
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then
         return
