@@ -413,12 +413,11 @@ function on_game_state_ready()
 
     -- Enable the debug console (disabled by default in the game)
     pcall(function() dbg.enabled = true end)
-    pcall(function() dbg.visible = true end)
 
-    pcall(function() dbg.register_cmd("random_floor", random_floor) end)
-    pcall(function() dbg.register_cmd("disaster", disaster) end)
-    pcall(function() dbg.register_cmd("chaos_reset", chaos_reset) end)
-    log_important("Debug console enabled. Registered: random_floor disaster chaos_reset")
+    pcall(function() dbg.register_cmd("m_random_floor", random_floor) end)
+    pcall(function() dbg.register_cmd("m_disaster", disaster) end)
+    pcall(function() dbg.register_cmd("m_chaos_reset", chaos_reset) end)
+    log_important("Debug console enabled. Registered: m_random_floor m_disaster m_chaos_reset")
 end
 
 ---@param user User

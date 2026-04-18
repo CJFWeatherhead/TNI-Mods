@@ -41,9 +41,9 @@ $parameters += @{
     Message = @"
 **Debug Console Commands:**
 Press ~ to open the debug console, then type a command:
-- **random_floor** - Spawn a random floor
-- **disaster** - Toggle Disaster Mode on/off
-- **chaos_reset** - Reset all chaos settings to defaults
+- **m_random_floor** - Spawn a random floor
+- **m_disaster** - Toggle Disaster Mode on/off
+- **m_chaos_reset** - Reset all chaos settings to defaults
 "@
 }
 
@@ -64,12 +64,12 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = @"
-Allow the random_floor console command to spawn random floors.
+Allow the m_random_floor console command to spawn random floors.
 
 When run, a random floor builder will be triggered to
 create a new floor immediately.
 
-Usage: Press ~ to open the debug console, then type: random_floor
+Usage: Press ~ to open the debug console, then type: m_random_floor
 "@
 }
 
@@ -82,7 +82,7 @@ $parameters += @{
 Randomize the 3 initial floors when starting a new game session.
 
 Instead of the pre-defined starting floors, 3 random floors 
-will be generated using the same logic as the random_floor command.
+will be generated using the same logic as the m_random_floor command.
 Note: This happens during game initialization and may result 
 in unexpected starting conditions!
 "@
@@ -95,12 +95,12 @@ $parameters += @{
     Default         = $true
     RefreshOnChange = $true
     Description     = @"
-Allow the disaster console command to toggle Disaster Mode.
+Allow the m_disaster console command to toggle Disaster Mode.
 
 When active, all random event rates (device failures, power
 outages, power surges, worm spawns) are multiplied.
 
-Usage: Press ~ to open the debug console, then type: disaster
+Usage: Press ~ to open the debug console, then type: m_disaster
 "@
 }
 
