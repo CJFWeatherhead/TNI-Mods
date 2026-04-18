@@ -2,7 +2,7 @@
 -- Purpose: Introduces controlled chaos into Tower Networking Inc gameplay through
 --          keyboard-triggered events and automatic stat randomization.
 -- Author: CJFWeatherhead
--- Version: 0.1.1
+-- Version: 0.1.2
 -- Description: This mod provides keyboard shortcuts to trigger chaos events:
 --              - SHIFT+F: Force spawn a random floor
 --              - SHIFT+D: Toggle disaster mode (increased event rates)
@@ -370,6 +370,8 @@ end
 
 -- Keyboard input handler
 function on_player_input(event)
+    collectgarbage("step")
+
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then
         return
