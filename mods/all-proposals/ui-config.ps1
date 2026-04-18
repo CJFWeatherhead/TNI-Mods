@@ -36,14 +36,15 @@ $parameters += @{
     Type  = "info"
     Label = "Purpose"
     Text  = @"
-This mod allows you to view all available proposals in the game by pressing Shift+P.
+This mod allows you to view all available proposals in the game.
 Only proposals with unmet dependencies are excluded.
 
 It temporarily increases the proposal batch size to display all eligible proposals.
 
-Keyboard Shortcuts:
-- Shift+P - Show all available proposals
-- Shift+O - Restore normal proposal batch size
+Debug Console Commands:
+Press ~ to open the debug console, then type a command:
+- show_proposals - Show all available proposals
+- hide_proposals - Restore normal proposal batch size
 
 The mod safely checks for dependencies and adhoc requirements before including proposals.
 "@
@@ -68,8 +69,8 @@ $parameters += @{
 Display in-game notifications when activating or deactivating the mod.
 
 When enabled:
-- Shows a notification when all proposals are displayed (Shift+P)
-- Shows a notification when normal mode is restored (Shift+O)
+- Shows a notification when all proposals are displayed (show_proposals)
+- Shows a notification when normal mode is restored (hide_proposals)
 
 Note: This feature depends on the game's notification system.
 If not supported, only console messages will appear.
