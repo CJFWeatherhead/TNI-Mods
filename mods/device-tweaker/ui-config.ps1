@@ -303,21 +303,8 @@ if ($enableCpu -or $enableMemory -or $enableStorage) {
 
 $parameters += @{
     Type        = "section"
-    Label       = "Merchant Restock Settings"
-    Description = "Configure merchant restock hotkey functionality"
-}
-
-$parameters += @{
-    Name        = "enable_restock_hotkey"
-    Label       = "Enable Restock Hotkey"
-    Type        = "boolean"
-    Default     = $true
-    Description = @"
-Enable SHIFT+R hotkey to instantly restock all merchants.
-
-When enabled, pressing SHIFT+R will refresh the inventory
-of all device merchants in the game world.
-"@
+    Label       = "Merchant Restock"
+    Description = "Configure merchant restock console command"
 }
 
 $parameters += @{
@@ -329,7 +316,8 @@ $parameters += @{
 Display an on-screen notification when merchants are restocked.
 
 Shows a brief message confirming the restock action completed.
-Only appears if the restock hotkey is enabled.
+
+Usage: Press ~ to open the debug console, then type: restock
 "@
 }
 
