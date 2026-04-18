@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "chaos-engine"
 author: "CJFWeatherhead"
-version: "0.1.18"
+version: "0.1.19"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 | | |
 |---|---|
-| **Version** | 0.1.18 |
+| **Version** | 0.1.19 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 <div class="download-section">
 
-**[Download chaos-engine-0.1.18.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.18/chaos-engine-0.1.18.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download chaos-engine-0.1.19.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.19/chaos-engine-0.1.19.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -139,20 +139,20 @@ Press `~` to open the debug console, then type a command:
 
 | Command | Action |
 |---------|--------|
-| **random_floor** | Force spawn a random floor immediately |
-| **disaster** | Toggle Disaster Mode on/off |
-| **chaos_reset** | Reset all chaos settings to defaults |
+| **m_random_floor** | Force spawn a random floor immediately |
+| **m_disaster** | Toggle Disaster Mode on/off |
+| **m_chaos_reset** | Reset all chaos settings to defaults |
 
 ### Disaster Mode
 
-When activated (`disaster`), all random event rates are multiplied:
+When activated (`m_disaster`), all random event rates are multiplied:
 
 - Device failures
 - Power outages
 - Power surges  
 - Worm spawns
 
-The multiplier is configurable (default 5x). Run `chaos_reset` to restore original rates.
+The multiplier is configurable (default 5x). Run `m_chaos_reset` to restore original rates.
 
 ### User Stat Randomization
 
@@ -181,9 +181,9 @@ When users spawn, their stats are randomized within configurable ranges:
 ### Quick Start
 
 1. Start a game
-2. Press `~` to open the debug console, type **disaster** - watch events increase!
-3. Type **random_floor** to spawn a random new floor
-4. Type **chaos_reset** to calm things down
+2. Press `~` to open the debug console, type **m_disaster** - watch events increase!
+3. Type **m_random_floor** to spawn a random new floor
+4. Type **m_chaos_reset** to calm things down
 
 ### Gameplay Modes
 
@@ -192,7 +192,7 @@ When users spawn, their stats are randomized within configurable ranges:
 - See how long you can keep your tower running
 
 #### Expansion Challenge
-- Run `random_floor` repeatedly to rapidly expand
+- Run `m_random_floor` repeatedly to rapidly expand
 - Try to manage the influx of random floors
 
 #### Pure Chaos
@@ -206,8 +206,8 @@ Access the Mod Manager to configure each feature:
 ### Feature Toggles
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Enable Random Floors | On | Enable random_floor command |
-| Enable Disaster Mode | On | Enable disaster command |
+| Enable Random Floors | On | Enable m_random_floor command |
+| Enable Disaster Mode | On | Enable m_disaster command |
 | Enable User Randomization | On | Randomize user stats |
 
 ### Disaster Mode
@@ -241,7 +241,7 @@ Console commands registered via `DebugLayer.register_cmd()` (activated automatic
 - Verify the feature is enabled in config
 
 ### Disaster mode not resetting
-- Type `chaos_reset` in the console to force reset
+- Type `m_chaos_reset` in the console to force reset
 - Reload mod with F11
 
 ### Floors not spawning
@@ -253,9 +253,9 @@ Console commands registered via `DebugLayer.register_cmd()` (activated automatic
 
 ### v0.1.0 (2026-01-31)
 - Initial release
-- Random floor spawning (`random_floor` console command)
-- Disaster mode toggle (`disaster` console command)
-- Reset function (`chaos_reset` console command)
+- Random floor spawning (`m_random_floor` console command)
+- Disaster mode toggle (`m_disaster` console command)
+- Reset function (`m_chaos_reset` console command)
 - User stat randomization (excludes daily_rate)
 
 ## License
@@ -296,8 +296,8 @@ Original event rates are stored and can be restored with the reset function.
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.18)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.18/chaos-engine-0.1.18.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/chaos-engine-v0.1.19)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/chaos-engine-v0.1.19/chaos-engine-0.1.19.zip)
 
 </details>
 

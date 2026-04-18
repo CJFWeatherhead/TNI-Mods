@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
-version: "0.1.16"
+version: "0.1.17"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 | | |
 |---|---|
-| **Version** | 0.1.16 |
+| **Version** | 0.1.17 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 <div class="download-section">
 
-**[Download money-cheat-0.1.16.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.16/money-cheat-0.1.16.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download money-cheat-0.1.17.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.17/money-cheat-0.1.17.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -104,7 +104,7 @@ This mod provides a quick and easy way to add money to your balance during gamep
 
 ## Features
 
-- **Debug Console Command**: Type `money` in the debug console to activate the cheat
+- **Debug Console Command**: Type `m_money` in the debug console to activate the cheat
 - **Configurable Amount**: Set any amount from $100 to $10,000,000 (default: $10,000)
 - **Console Feedback**: Confirmation messages when cheat is activated
 - **In-Game Notifications**: Optional visual notifications (if supported)
@@ -172,7 +172,7 @@ The mod can be configured through the Mod Manager UI or by editing the `entry.lu
 
 ### How It Works
 
-The mod registers a `money` command via `DebugLayer.register_cmd()`. When the command is run it uses the game's `modify_player_cash()` API to add money to the player's balance with the category set to INCOME.
+The mod registers a `m_money` command via `DebugLayer.register_cmd()`. When the command is run it uses the game's `modify_player_cash()` API to add money to the player's balance with the category set to INCOME.
 
 ### Configuration System
 
@@ -190,7 +190,7 @@ This mod uses the standardized `===== MOD CONFIGURATION START/END =====` marker 
 
 1. Check that the mod is loaded (look for "Money Cheat mod loaded!" in console)
 2. Press `~` to open the debug console — it should appear on screen
-3. Type `money` and press Enter
+3. Type `m_money` and press Enter
 4. Enable debug logging to see more detail if needed
 
 ### No confirmation message appears
@@ -248,8 +248,8 @@ Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s c
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.16)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.16/money-cheat-0.1.16.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.17)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.17/money-cheat-0.1.17.zip)
 
 </details>
 

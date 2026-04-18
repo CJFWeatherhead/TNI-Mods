@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "0.1.16"
+version: "0.1.17"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 | | |
 |---|---|
-| **Version** | 0.1.16 |
+| **Version** | 0.1.17 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 <div class="download-section">
 
-**[Download all-proposals-0.1.16.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.16/all-proposals-0.1.16.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-0.1.17.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.17/all-proposals-0.1.17.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -72,11 +72,11 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 This mod enhances the proposal system in the game by allowing players to view all available proposals at once. When activated, it temporarily increases the proposal batch size to display all eligible proposals, excluding only those with unmet dependencies or failed adhoc requirements.
 
 ## Features
-- View all available proposals via debug console (`show_proposals` command)
+- View all available proposals via debug console (`m_show_proposals` command)
 - Automatically excludes proposals with unmet dependencies
 - Shows detailed dependency information (what each blocked proposal requires)
 - Checks adhoc requirements before displaying proposals
-- Restore normal proposal display with `hide_proposals` command
+- Restore normal proposal display with `m_hide_proposals` command
 - Provides organized, categorized logging of proposal status:
   - Available proposals
   - Blocked proposals with reasons
@@ -88,8 +88,8 @@ This mod enhances the proposal system in the game by allowing players to view al
 3. Restart the game or reload mods.
 
 ## Usage
-- **Activate All Proposals**: Press `~` to open the debug console, then type `show_proposals`.
-- **Restore Normal Mode**: Type `hide_proposals` in the debug console to return to the default proposal batch size and reroll proposals.
+- **Activate All Proposals**: Press `~` to open the debug console, then type `m_show_proposals`.
+- **Restore Normal Mode**: Type `m_hide_proposals` in the debug console to return to the default proposal batch size and reroll proposals.
 
 The mod will log detailed information about the proposal status in the console, organized into three sections:
 - **AVAILABLE PROPOSALS**: Proposals that can be selected
@@ -176,8 +176,8 @@ CJFWeatherhead
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.16)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.16/all-proposals-0.1.16.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.17)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.17/all-proposals-0.1.17.zip)
 
 </details>
 

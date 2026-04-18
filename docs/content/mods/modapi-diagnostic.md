@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "modapi-diagnostic"
 author: "CJFWeatherhead"
-version: "4.0.5"
+version: "4.0.6"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
 | | |
 |---|---|
-| **Version** | 4.0.5 |
+| **Version** | 4.0.6 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
 <div class="download-section">
 
-**[Download modapi-diagnostic-4.0.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.5/modapi-diagnostic-4.0.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download modapi-diagnostic-4.0.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.6/modapi-diagnostic-4.0.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -422,8 +422,8 @@ No gameplay impact. Ideal for:
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v4.0.5)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.5/modapi-diagnostic-4.0.5.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v4.0.6)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.6/modapi-diagnostic-4.0.6.zip)
 
 </details>
 
