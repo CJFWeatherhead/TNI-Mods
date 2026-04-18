@@ -26,10 +26,10 @@ Description: |
   - **Debug Logging**: Enable detailed console output
 
 Author: CJFWeatherhead
-Version: 0.1.6
+Version: 0.1.7
 Image: icon.png
 Creation Date: 2026-01-31
-Last Updated: 2026-04-17
+Last Updated: 2026-04-18
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis
 Development Status: Active Development
 Game Version Supported: beta
