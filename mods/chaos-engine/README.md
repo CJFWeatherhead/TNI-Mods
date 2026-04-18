@@ -4,30 +4,30 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 
 ## Description
 
-Chaos Engine lets you shake things up in your tower with keyboard shortcuts that trigger random events, plus automatic randomization of user stats for unpredictable gameplay.
+Chaos Engine lets you shake things up in your tower with debug console commands that trigger random events, plus automatic randomization of user stats for unpredictable gameplay.
 
 ## Features
 
-### Keyboard Shortcuts
+### Console Commands
 
-All shortcuts use **SHIFT** combinations:
+Press `~` to open the debug console, then type a command:
 
-| Shortcut | Action |
-|----------|--------|
-| **SHIFT+F** | Force spawn a random floor immediately |
-| **SHIFT+D** | Toggle Disaster Mode on/off |
-| **SHIFT+X** | Reset all chaos settings to defaults |
+| Command | Action |
+|---------|--------|
+| **random_floor** | Force spawn a random floor immediately |
+| **disaster** | Toggle Disaster Mode on/off |
+| **chaos_reset** | Reset all chaos settings to defaults |
 
 ### Disaster Mode
 
-When activated (SHIFT+D), all random event rates are multiplied:
+When activated (`disaster`), all random event rates are multiplied:
 
 - Device failures
 - Power outages
 - Power surges  
 - Worm spawns
 
-The multiplier is configurable (default 5x). Toggle off or press SHIFT+X to restore original rates.
+The multiplier is configurable (default 5x). Run `chaos_reset` to restore original rates.
 
 ### User Stat Randomization
 
@@ -56,9 +56,9 @@ When users spawn, their stats are randomized within configurable ranges:
 ### Quick Start
 
 1. Start a game
-2. Press **SHIFT+D** to activate Disaster Mode - watch events increase!
-3. Press **SHIFT+F** to spawn a random new floor
-4. Press **SHIFT+X** to calm things down
+2. Press `~` to open the debug console, type **disaster** - watch events increase!
+3. Type **random_floor** to spawn a random new floor
+4. Type **chaos_reset** to calm things down
 
 ### Gameplay Modes
 
@@ -67,7 +67,7 @@ When users spawn, their stats are randomized within configurable ranges:
 - See how long you can keep your tower running
 
 #### Expansion Challenge
-- Spam SHIFT+F to rapidly expand
+- Run `random_floor` repeatedly to rapidly expand
 - Try to manage the influx of random floors
 
 #### Pure Chaos
@@ -81,8 +81,8 @@ Access the Mod Manager to configure each feature:
 ### Feature Toggles
 | Setting | Default | Description |
 |---------|---------|-------------|
-| Enable Random Floors | On | Allow SHIFT+F |
-| Enable Disaster Mode | On | Allow SHIFT+D |
+| Enable Random Floors | On | Enable random_floor command |
+| Enable Disaster Mode | On | Enable disaster command |
 | Enable User Randomization | On | Randomize user stats |
 
 ### Disaster Mode
@@ -98,9 +98,10 @@ All user stats have configurable min/max ranges.
 ### Hooks Used
 - `on_engine_load()` - Initialization and storing original rates
 - `on_mod_reload()` - Re-initialization on F11
-- `on_player_input()` - Keyboard shortcut handling
 - `on_user_spawned()` - User stat randomization
 - `on_day_start()` / `on_day_end()` - Day cycle events
+
+Console commands registered via `DebugLayer.register_cmd()` (activated automatically on game load).
 
 ### State Management
 - Original event rates are stored on first load
@@ -109,13 +110,13 @@ All user stats have configurable min/max ranges.
 
 ## Troubleshooting
 
-### Hotkeys not working
-- Ensure the game window has focus
-- Check that SHIFT is held
+### Commands not working
+- Press `~` to open the debug console
+- Check that the mod is loaded (look for "Chaos Engine mod loaded!" in console)
 - Verify the feature is enabled in config
 
 ### Disaster mode not resetting
-- Press SHIFT+X to force reset
+- Type `chaos_reset` in the console to force reset
 - Reload mod with F11
 
 ### Floors not spawning
@@ -127,9 +128,9 @@ All user stats have configurable min/max ranges.
 
 ### v0.1.0 (2026-01-31)
 - Initial release
-- Random floor spawning (SHIFT+F)
-- Disaster mode toggle (SHIFT+D)
-- Reset function (SHIFT+X)
+- Random floor spawning (`random_floor` console command)
+- Disaster mode toggle (`disaster` console command)
+- Reset function (`chaos_reset` console command)
 - User stat randomization (excludes daily_rate)
 
 ## License

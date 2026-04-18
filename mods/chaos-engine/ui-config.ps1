@@ -39,10 +39,11 @@ $enableSatietyDecayRand = if ($CurrentConfig.ContainsKey('enable_satiety_decay_r
 $parameters += @{
     Type    = "info"
     Message = @"
-**Keyboard Shortcuts (SHIFT combinations):**
-- **SHIFT+F** - Spawn a random floor
-- **SHIFT+D** - Toggle Disaster Mode
-- **SHIFT+X** - Reset all chaos settings to defaults
+**Debug Console Commands:**
+Press ~ to open the debug console, then type a command:
+- **random_floor** - Spawn a random floor
+- **disaster** - Toggle Disaster Mode on/off
+- **chaos_reset** - Reset all chaos settings to defaults
 "@
 }
 
@@ -63,10 +64,12 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = @"
-Allow SHIFT+F to spawn random floors.
+Allow the random_floor console command to spawn random floors.
 
-When pressed, a random floor builder will be triggered to 
+When run, a random floor builder will be triggered to
 create a new floor immediately.
+
+Usage: Press ~ to open the debug console, then type: random_floor
 "@
 }
 
@@ -79,8 +82,7 @@ $parameters += @{
 Randomize the 3 initial floors when starting a new game session.
 
 Instead of the pre-defined starting floors, 3 random floors 
-will be generated using the same logic as SHIFT+F.
-
+will be generated using the same logic as the random_floor command.
 Note: This happens during game initialization and may result 
 in unexpected starting conditions!
 "@
@@ -93,10 +95,12 @@ $parameters += @{
     Default         = $true
     RefreshOnChange = $true
     Description     = @"
-Allow SHIFT+D to toggle Disaster Mode.
+Allow the disaster console command to toggle Disaster Mode.
 
-When active, all random event rates (device failures, power 
+When active, all random event rates (device failures, power
 outages, power surges, worm spawns) are multiplied.
+
+Usage: Press ~ to open the debug console, then type: disaster
 "@
 }
 
@@ -439,7 +443,7 @@ $parameters += @{
     Description = @"
 Display toast notifications when chaos events trigger.
 
-Useful for confirming that hotkeys are working.
+Useful for confirming that console commands are working.
 "@
 }
 
