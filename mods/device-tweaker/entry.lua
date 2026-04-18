@@ -2,12 +2,15 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 1.4
+-- Version: 2.0
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
 --
 -- Usage: Configure multipliers and filters in the Mod Loader menu.
+--
+-- Console commands:
+--   restock()     Restock all merchants
 --
 -- Device Classes:
 --   0 = server
@@ -111,12 +114,6 @@ local function is_class_enabled(device_class)
 end
 
 function on_engine_load()
-    -- Tune GC to handle the per-event Godot object wrappers the Lua bridge allocates.
-    -- pause=100: start new GC cycle immediately when previous finishes
-    -- stepmul=400: do more work per automatic GC step
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 400)
-
     print("Device Tweaker Mod loaded!")
     if ModApiV1 and ModApiV1.sanity then
         ModApiV1.sanity()
@@ -166,6 +163,8 @@ function on_engine_load()
     if #enabled_classes > 0 then
         print("[device-tweaker] Enabled device classes: " .. table.concat(enabled_classes, ", "))
     end
+
+    print("[device-tweaker] Console: restock()")
 end
 
 function on_mod_reload()
@@ -219,60 +218,17 @@ local function restock_all_merchants()
     return restock_count > 0
 end
 
--- Named helpers called via pcall so that Godot __index metatable access on the
--- event object happens inside the pcall boundary. This prevents a sandbox
--- bad_cast exception (nil Variant) from escaping when event is not an Object.
--- Using named functions (not closures) avoids per-call heap allocation.
-local function _ev_get_class(e)         return e:get_class() end
-local function _ev_get_keycode(e)       return e:get_keycode() end
-local function _ev_is_pressed(e)        return e:is_pressed() end
-local function _ev_is_shift_pressed(e)  return e:is_shift_pressed() end
-
--- Counter for rate-limited GC in the input hot path
-local _input_gc_counter = 0
-
--- Keyboard input handler for SHIFT+R (restock)
-function on_player_input(event)
-    _input_gc_counter = _input_gc_counter + 1
-    if _input_gc_counter >= 100 then
-        _input_gc_counter = 0
-        collectgarbage("step")
-    end
-
-    if not config.enable_restock_hotkey then
-        return
-    end
-
-    local ok, event_class = pcall(_ev_get_class, event)
-    if not ok or event_class ~= "InputEventKey" then
-        return
-    end
-
-    local ok1, keycode   = pcall(_ev_get_keycode, event)
-    local ok2, is_pressed = pcall(_ev_is_pressed, event)
-    local ok3, is_shift  = pcall(_ev_is_shift_pressed, event)
-
-    if not (ok1 and ok2 and ok3) then
-        return
-    end
-
-    -- SHIFT+R (82) - Restock all merchants
-    if keycode == 82 and is_pressed and is_shift then
-        local current_time = os.clock()
-        if current_time - last_restock_time < RESTOCK_COOLDOWN then
-            return
-        end
-        last_restock_time = current_time
-
-        if restock_all_merchants() then
-            if config.show_restock_notification then
-                pcall(function()
-                    local base_ui = ModApiV1.get_base_ui()
-                    if base_ui and base_ui.display_notification then
-                        base_ui.display_notification("All merchants restocked!", 1)
-                    end
-                end)
-            end
+-- Console command: restock all merchants
+-- Usage: Type restock() in the game console
+function restock()
+    if restock_all_merchants() then
+        if config.show_restock_notification then
+            pcall(function()
+                local base_ui = ModApiV1.get_base_ui()
+                if base_ui and base_ui.display_notification then
+                    base_ui.display_notification("All merchants restocked!", 1)
+                end
+            end)
         end
     end
 end
