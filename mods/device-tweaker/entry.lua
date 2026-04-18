@@ -181,10 +181,9 @@ function on_game_state_ready()
 
     -- Enable the debug console (disabled by default in the game)
     pcall(function() dbg.enabled = true end)
-    pcall(function() dbg.visible = true end)
 
-    pcall(function() dbg.register_cmd("restock", restock) end)
-    print("[device-tweaker] Debug console enabled. Registered: restock")
+    pcall(function() dbg.register_cmd("m_restock", restock) end)
+    print("[device-tweaker] Debug console enabled. Registered: m_restock")
 end
 
 function on_mod_reload()

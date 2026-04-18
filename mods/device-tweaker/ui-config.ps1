@@ -317,7 +317,7 @@ Display an on-screen notification when merchants are restocked.
 
 Shows a brief message confirming the restock action completed.
 
-Usage: Press ~ to open the debug console, then type: restock
+Usage: Press ~ to open the debug console, then type: m_restock
 "@
 }
 
