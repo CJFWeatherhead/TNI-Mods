@@ -3,7 +3,7 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display with Shift+O.
 -- Author: CJFWeatherhead
--- Version: 0.1.8
+-- Version: 0.1.9
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
@@ -348,7 +348,8 @@ end
 
 -- Keyboard input handler for Shift+P shortcut
 function on_player_input(event)
-    -- Check if this is a keyboard event
+    collectgarbage("step")
+
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then return end
 
