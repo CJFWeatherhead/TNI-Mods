@@ -2,7 +2,7 @@
 	"id": "money-cheat",
 	"name": "Money Cheat",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.17",
+	"version": "0.1.18",
 	"description": [
 		"Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.\n\n✨ Features\n• Instant money injection via keyboard shortcut (SHIFT+M)\n• Configurable amount (default: $10,000)\n• Console feedback on activation\n• Optional in-game notifications\n• Cooldown protection to prevent accidental double-activation\n\n🕹️ Usage\nPress SHIFT+M during gameplay to add money to your balance.\nConfigure the amount in the Mod Manager settings.\n\n⚙️ Configuration\n• Money Amount: The amount to add when activated (default: $10,000)\n• Debug Logging: Show detailed console messages\n• Show Notification: Attempt to display in-game notification"
 	],
