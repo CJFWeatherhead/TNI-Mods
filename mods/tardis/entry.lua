@@ -1,12 +1,17 @@
 -- TARDIS Mod (Time And Relative Dimension In Space)
--- Purpose: Control game time via keyboard shortcuts
+-- Purpose: Control game time via console commands
 -- Author: CJFWeatherhead
--- Version: 0.1.4
--- Description: This mod provides keyboard shortcuts to control game speed and skip time.
---              SHIFT+> increases game speed, SHIFT+< decreases game speed,
---              SHIFT++ skips to end of day. Like the TARDIS, it manipulates time!
--- Usage: Use keyboard shortcuts during gameplay to control time.
--- Notes: Uses on_player_input hook to detect keyboard input.
+-- Version: 1.0.0
+-- Description: This mod provides console commands to control game speed and skip time.
+--              Like the TARDIS, it manipulates time!
+-- Usage: Use console commands during gameplay to control time.
+--
+-- Console commands:
+--   speed_up()      Increase game speed
+--   speed_down()    Decrease game speed
+--   speed_reset()   Reset to normal speed (1x)
+--   day_skip()      Skip to end of day
+--   speed()         Show current speed
 
 local mod_id = "tardis"
 
@@ -31,23 +36,11 @@ local config = {
 
 -- ===== MOD CONFIGURATION END =====
 
--- Godot key codes
-local KEY_PERIOD = 46   -- '.' key (Shift+. = '>')
-local KEY_COMMA = 44    -- ',' key (Shift+, = '<')
-local KEY_EQUAL = 61    -- '=' key (Shift+= = '+')
-local KEY_MINUS = 45    -- '-' key (Shift+- = '_')
-
--- Track key states to prevent repeated triggers
-local key_states = {
-    speed_up = false,
-    speed_down = false,
-    skip_day = false,
-    reset_speed = false
-}
-
--- Cooldown tracking
-local last_action_time = 0
-local COOLDOWN_SECONDS = 0.1
+-- Godot key codes (retained for reference)
+local KEY_PERIOD = 46   -- '.' key
+local KEY_COMMA = 44    -- ',' key
+local KEY_EQUAL = 61    -- '=' key
+local KEY_MINUS = 45    -- '-' key
 
 -- Current speed multiplier tracking
 local current_speed = 1.0
@@ -236,9 +229,6 @@ local function skip_day()
 end
 
 function on_engine_load()
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 400)
-
     print("TARDIS mod loaded! Time manipulation at your fingertips.")
     if ModApiV1 and ModApiV1.sanity then
         ModApiV1.sanity()
@@ -252,11 +242,7 @@ function on_engine_load()
         config.min_speed,
         config.max_speed))
     
-    print("[tardis] Controls:")
-    print("[tardis]   SHIFT+> : Increase game speed")
-    print("[tardis]   SHIFT+< : Decrease game speed")
-    print("[tardis]   SHIFT+_ : Reset to normal speed (1x)")
-    print("[tardis]   SHIFT++ : Skip to end of day")
+    print("[tardis] Console commands: speed_up() speed_down() speed_reset() day_skip() speed()")
     
     -- Initialize current speed from game if possible
     pcall(function()
@@ -272,99 +258,12 @@ function on_mod_reload()
     print(string.format("[tardis] Current speed: %.2fx", current_speed))
 end
 
--- Named helpers — see device-tweaker for explanation
-local function _ev_get_class(e)         return e:get_class() end
-local function _ev_get_keycode(e)       return e:get_keycode() end
-local function _ev_is_pressed(e)        return e:is_pressed() end
-local function _ev_is_shift_pressed(e)  return e:is_shift_pressed() end
+-- Console commands (exposed as globals for the game console)
+function speed_up()    increase_speed() end
+function speed_down()  decrease_speed() end
+function speed_reset() reset_speed() end
+function day_skip()    skip_day() end
 
--- Keyboard input handler
-local _input_gc_counter = 0
-
-function on_player_input(event)
-    _input_gc_counter = _input_gc_counter + 1
-    if _input_gc_counter >= 100 then
-        _input_gc_counter = 0
-        collectgarbage("step")
-    end
-
-    local ok, event_class = pcall(_ev_get_class, event)
-    if not ok or event_class ~= "InputEventKey" then
-        return
-    end
-
-    -- Get keycode and modifiers
-    local ok1, keycode    = pcall(_ev_get_keycode, event)
-    local ok2, is_pressed = pcall(_ev_is_pressed, event)
-    local ok3, is_shift   = pcall(_ev_is_shift_pressed, event)
-    if not (ok1 and ok2 and ok3) then return end
-    
-    -- Only process if Shift is held
-    if not is_shift then
-        return
-    end
-    
-    -- Check cooldown
-    local current_time = os.clock()
-    local cooldown_active = (current_time - last_action_time) < COOLDOWN_SECONDS
-    
-    -- SHIFT+> (SHIFT+PERIOD) - Increase speed
-    if keycode == KEY_PERIOD then
-        if is_pressed and not key_states.speed_up then
-            key_states.speed_up = true
-            if not cooldown_active then
-                last_action_time = current_time
-                increase_speed()
-            else
-                debug_log("Cooldown active for speed up")
-            end
-        elseif not is_pressed then
-            key_states.speed_up = false
-        end
-    end
-    
-    -- SHIFT+< (SHIFT+COMMA) - Decrease speed
-    if keycode == KEY_COMMA then
-        if is_pressed and not key_states.speed_down then
-            key_states.speed_down = true
-            if not cooldown_active then
-                last_action_time = current_time
-                decrease_speed()
-            else
-                debug_log("Cooldown active for speed down")
-            end
-        elseif not is_pressed then
-            key_states.speed_down = false
-        end
-    end
-    
-    -- SHIFT+_ (SHIFT+MINUS) - Reset speed
-    if keycode == KEY_MINUS then
-        if is_pressed and not key_states.reset_speed then
-            key_states.reset_speed = true
-            if not cooldown_active then
-                last_action_time = current_time
-                reset_speed()
-            else
-                debug_log("Cooldown active for reset speed")
-            end
-        elseif not is_pressed then
-            key_states.reset_speed = false
-        end
-    end
-    
-    -- SHIFT++ (SHIFT+EQUAL) - Skip day
-    if keycode == KEY_EQUAL then
-        if is_pressed and not key_states.skip_day then
-            key_states.skip_day = true
-            if not cooldown_active then
-                last_action_time = current_time
-                skip_day()
-            else
-                debug_log("Cooldown active for day skip")
-            end
-        elseif not is_pressed then
-            key_states.skip_day = false
-        end
-    end
+function speed()
+    print(string.format("[tardis] Current speed: %.2fx", current_speed))
 end
