@@ -1,4 +1,4 @@
--- ModAPI Diagnostic Tool v4.1
+-- ModAPI Diagnostic Tool v4.2
 -- Development tool for TNI game engine modding (game version 0.10.11+)
 --
 -- CHANGES from v3.x:
@@ -670,7 +670,7 @@ local function build_game_state()
 
     local state = {
         _metadata = {
-            tool_version     = "4.1",
+            tool_version     = "4.2",
             game_version     = game_ver,
             export_timestamp = ts,
             export_date      = ds,
@@ -1753,6 +1753,212 @@ end
 function on_game_state_ready()
     lifecycle("on_game_state_ready", "game fully initialized -- world is guaranteed valid")
 
+    -- ================================================================
+    -- SANDBOX INPUT API PROBES
+    -- Test which Godot APIs are accessible from the mod sandbox.
+    -- Results logged to console with [PROBE] prefix.
+    -- ================================================================
+    print("[PROBE] ======== INPUT API SANDBOX PROBES ========")
+
+    -- Probe 1: Engine.get_singleton("Input")
+    local input_singleton = nil
+    local ok1, err1 = pcall(function()
+        input_singleton = Engine.get_singleton("Input")
+    end)
+    print(string.format("[PROBE] Engine.get_singleton('Input'): ok=%s result=%s err=%s",
+        tostring(ok1), tostring(input_singleton), tostring(err1)))
+
+    -- Probe 2: If Input obtained, can we call is_key_pressed?
+    if input_singleton then
+        local ok2, result2 = pcall(function()
+            return input_singleton.is_key_pressed(82) -- R key
+        end)
+        print(string.format("[PROBE] Input.is_key_pressed(82): ok=%s result=%s",
+            tostring(ok2), tostring(result2)))
+
+        local ok2b, result2b = pcall(function()
+            return input_singleton.is_anything_pressed()
+        end)
+        print(string.format("[PROBE] Input.is_anything_pressed(): ok=%s result=%s",
+            tostring(ok2b), tostring(result2b)))
+
+        local ok2c, result2c = pcall(function()
+            return input_singleton.is_physical_key_pressed(82)
+        end)
+        print(string.format("[PROBE] Input.is_physical_key_pressed(82): ok=%s result=%s",
+            tostring(ok2c), tostring(result2c)))
+    end
+
+    -- Probe 3: Engine.get_singleton("InputMap")
+    local inputmap_singleton = nil
+    local ok3, err3 = pcall(function()
+        inputmap_singleton = Engine.get_singleton("InputMap")
+    end)
+    print(string.format("[PROBE] Engine.get_singleton('InputMap'): ok=%s result=%s err=%s",
+        tostring(ok3), tostring(inputmap_singleton), tostring(err3)))
+
+    -- Probe 4: If InputMap obtained, can we register a custom action?
+    if inputmap_singleton then
+        local ok4a, err4a = pcall(function()
+            return inputmap_singleton.has_action("ui_accept")
+        end)
+        print(string.format("[PROBE] InputMap.has_action('ui_accept'): ok=%s result=%s",
+            tostring(ok4a), tostring(err4a)))
+
+        local ok4b, err4b = pcall(function()
+            inputmap_singleton.add_action("mod_test_probe", 0.2)
+        end)
+        print(string.format("[PROBE] InputMap.add_action('mod_test_probe'): ok=%s err=%s",
+            tostring(ok4b), tostring(err4b)))
+
+        -- Clean up test action
+        if ok4b then
+            pcall(function()
+                inputmap_singleton.erase_action("mod_test_probe")
+            end)
+            print("[PROBE] InputMap.erase_action('mod_test_probe'): cleaned up")
+        end
+
+        local ok4c, err4c = pcall(function()
+            return inputmap_singleton.get_actions()
+        end)
+        print(string.format("[PROBE] InputMap.get_actions(): ok=%s result=%s",
+            tostring(ok4c), tostring(err4c)))
+        if ok4c and err4c then
+            -- err4c is actually the result in this case
+            local actions = err4c
+            local ok_size, size = pcall(function() return actions:size() end)
+            if ok_size then
+                print(string.format("[PROBE]   action count: %d", size))
+                -- Print first 10 actions
+                local limit = math.min(size, 10)
+                for i = 0, limit - 1 do
+                    local ok_a, a = pcall(function() return actions:get(i) end)
+                    if ok_a then
+                        print(string.format("[PROBE]   action[%d]: %s", i, tostring(a)))
+                    end
+                end
+            end
+        end
+    end
+
+    -- Probe 5: Input.is_action_pressed (if input singleton exists and actions work)
+    if input_singleton then
+        local ok5, result5 = pcall(function()
+            return input_singleton.is_action_pressed("ui_accept", false)
+        end)
+        print(string.format("[PROBE] Input.is_action_pressed('ui_accept'): ok=%s result=%s",
+            tostring(ok5), tostring(result5)))
+
+        local ok5b, result5b = pcall(function()
+            return input_singleton.is_action_just_pressed("ui_accept", false)
+        end)
+        print(string.format("[PROBE] Input.is_action_just_pressed('ui_accept'): ok=%s result=%s",
+            tostring(ok5b), tostring(result5b)))
+    end
+
+    -- Probe 6: create_node("InputEventKey") — can we create input events?
+    local ok6, iek = pcall(function()
+        return create_node("InputEventKey", "probe_key")
+    end)
+    print(string.format("[PROBE] create_node('InputEventKey'): ok=%s result=%s",
+        tostring(ok6), tostring(iek)))
+    if ok6 and iek then
+        local ok6b, err6b = pcall(function()
+            iek.keycode = 82
+            iek.pressed = true
+            iek.shift_pressed = true
+        end)
+        print(string.format("[PROBE] InputEventKey property set: ok=%s err=%s",
+            tostring(ok6b), tostring(err6b)))
+    end
+
+    -- Probe 7: Engine.get_singleton_list() — what singletons exist?
+    local ok7, singletons = pcall(function()
+        return Engine.get_singleton_list()
+    end)
+    print(string.format("[PROBE] Engine.get_singleton_list(): ok=%s", tostring(ok7)))
+    if ok7 and singletons then
+        local ok_size, size = pcall(function() return singletons:size() end)
+        if ok_size then
+            print(string.format("[PROBE]   singleton count: %d", size))
+            for i = 0, size - 1 do
+                local ok_s, s = pcall(function() return singletons:get(i) end)
+                if ok_s then
+                    print(string.format("[PROBE]   singleton[%d]: %s", i, tostring(s)))
+                end
+            end
+        end
+    end
+
+    -- Probe 8: Engine.has_singleton checks
+    local singleton_names = {"Input", "InputMap", "DisplayServer", "OS", "Time",
+                              "NavigationServer2D", "PhysicsServer2D", "RenderingServer"}
+    for _, name in ipairs(singleton_names) do
+        local ok8, result8 = pcall(function()
+            return Engine.has_singleton(name)
+        end)
+        print(string.format("[PROBE] Engine.has_singleton('%s'): ok=%s result=%s",
+            name, tostring(ok8), tostring(result8)))
+    end
+
+    -- Probe 9: DebugLayer access
+    -- Try to find it via Engine singleton
+    local ok9a, dbg_layer = pcall(function()
+        return Engine.get_singleton("DebugLayer")
+    end)
+    print(string.format("[PROBE] Engine.get_singleton('DebugLayer'): ok=%s result=%s",
+        tostring(ok9a), tostring(dbg_layer)))
+
+    -- Try via world scene tree
+    local world = ModApiV1.get_game_world()
+    if world then
+        -- Try common paths to find DebugLayer
+        local paths = {"/root/DebugLayer", "/root/Debug", "../DebugLayer",
+                       "/root/Main/DebugLayer", "/root/BaseUI/DebugLayer"}
+        for _, path in ipairs(paths) do
+            local ok9b, node = pcall(function()
+                return world.get_node(path)
+            end)
+            if ok9b and node then
+                print(string.format("[PROBE] world.get_node('%s'): FOUND %s", path, tostring(node)))
+                -- Try register_cmd
+                local ok9c, err9c = pcall(function()
+                    node.register_cmd("diag_probe_test", function() print("[PROBE] test cmd executed") end)
+                end)
+                print(string.format("[PROBE] register_cmd on node: ok=%s err=%s",
+                    tostring(ok9c), tostring(err9c)))
+                break
+            else
+                print(string.format("[PROBE] world.get_node('%s'): not found", path))
+            end
+        end
+
+        -- Also check the MobileOSLayer
+        local ok9d, mobile_os = pcall(function()
+            return world.mobile_os_cvl
+        end)
+        print(string.format("[PROBE] world.mobile_os_cvl: ok=%s result=%s",
+            tostring(ok9d), tostring(mobile_os)))
+        if ok9d and mobile_os then
+            local ok9e, at_ns = pcall(function() return mobile_os.at_netshell_screen end)
+            print(string.format("[PROBE] mobile_os.at_netshell_screen: ok=%s result=%s",
+                tostring(ok9e), tostring(at_ns)))
+            local ok9f, safe_kb = pcall(function() return mobile_os.safe_to_use_keyboard end)
+            print(string.format("[PROBE] mobile_os.safe_to_use_keyboard: ok=%s result=%s",
+                tostring(ok9f), tostring(safe_kb)))
+        end
+    end
+
+    -- Probe 10: on_tick test — store Input singleton for later polling
+    if ok1 and input_singleton then
+        _G._probe_input = input_singleton
+        print("[PROBE] Stored Input singleton in _G._probe_input for on_tick polling test")
+    end
+
+    print("[PROBE] ======== END INPUT API PROBES ========")
+    print("[PROBE] Please paste the above [PROBE] lines back so we can determine which APIs work.")
+
     -- This is the reliable point where world + all objects are available
     if config.auto_diag_on_ready then
         print("[DIAG] Running automatic diagnostics...")
@@ -1894,8 +2100,31 @@ function on_day_end()
     end
 end
 
+-- on_tick probe: test if Input.is_key_pressed works when polled per-frame
+-- Only logs ONCE when Shift+R is detected (to avoid spam)
+local _probe_tick_logged = false
+
 function on_tick(delta)
-    -- Intentionally empty: no per-tick overhead
+    if _probe_tick_logged then return end
+    if not _G._probe_input then return end
+
+    local ok, pressed = pcall(function()
+        -- 4194325 = KEY_SHIFT in Godot 4 (Key enum)
+        -- 82 = KEY_R
+        local shift = _G._probe_input.is_key_pressed(4194325)
+        local r     = _G._probe_input.is_key_pressed(82)
+        return shift and r
+    end)
+    if ok and pressed then
+        _probe_tick_logged = true
+        print("[PROBE:on_tick] Input.is_key_pressed detected Shift+R in on_tick! This works!")
+        pcall(function()
+            local base_ui = ModApiV1.get_base_ui()
+            if base_ui then
+                base_ui.display_notification("PROBE: Shift+R detected via on_tick!", 1)
+            end
+        end)
+    end
 end
 
 -- ============================================================================
