@@ -519,7 +519,7 @@ local function export_game_state_json()
     
     local game_state = {
         _metadata = {
-            mod_version = "3.3",
+            mod_version = "3.4",
             export_timestamp = timestamp,
             export_date = datestr
         }
@@ -1701,6 +1701,12 @@ end
 -- KEYBOARD INPUT HANDLER
 -- ============================================================================
 
+-- Named helpers — see device-tweaker for explanation
+local function _ev_get_class(e)         return e:get_class() end
+local function _ev_get_keycode(e)       return e:get_keycode() end
+local function _ev_is_pressed(e)        return e:is_pressed() end
+local function _ev_is_shift_pressed(e)  return e:is_shift_pressed() end
+
 local _input_gc_counter = 0
 
 function on_player_input(event)
@@ -1710,13 +1716,13 @@ function on_player_input(event)
         collectgarbage("step")
     end
 
-    local ok, event_class = pcall(event.get_class, event)
+    local ok, event_class = pcall(_ev_get_class, event)
     if not ok or event_class ~= "InputEventKey" then return end
 
     do
-        local ok1, keycode = pcall(event.get_keycode, event)
-        local ok2, is_pressed = pcall(event.is_pressed, event)
-        local ok3, is_shift = pcall(event.is_shift_pressed, event)
+        local ok1, keycode    = pcall(_ev_get_keycode, event)
+        local ok2, is_pressed = pcall(_ev_is_pressed, event)
+        local ok3, is_shift   = pcall(_ev_is_shift_pressed, event)
         if not (ok1 and ok2 and ok3) then return end
 
         -- Shift+R: Re-inspect users (keycode 82)
