@@ -1,7 +1,7 @@
 -- TARDIS Mod (Time And Relative Dimension In Space)
 -- Purpose: Control game time via keyboard shortcuts
 -- Author: CJFWeatherhead
--- Version: 0.1.3
+-- Version: 0.1.4
 -- Description: This mod provides keyboard shortcuts to control game speed and skip time.
 --              SHIFT+> increases game speed, SHIFT+< decreases game speed,
 --              SHIFT++ skips to end of day. Like the TARDIS, it manipulates time!
@@ -272,6 +272,12 @@ function on_mod_reload()
     print(string.format("[tardis] Current speed: %.2fx", current_speed))
 end
 
+-- Named helpers — see device-tweaker for explanation
+local function _ev_get_class(e)         return e:get_class() end
+local function _ev_get_keycode(e)       return e:get_keycode() end
+local function _ev_is_pressed(e)        return e:is_pressed() end
+local function _ev_is_shift_pressed(e)  return e:is_shift_pressed() end
+
 -- Keyboard input handler
 local _input_gc_counter = 0
 
@@ -282,15 +288,15 @@ function on_player_input(event)
         collectgarbage("step")
     end
 
-    local ok, event_class = pcall(event.get_class, event)
+    local ok, event_class = pcall(_ev_get_class, event)
     if not ok or event_class ~= "InputEventKey" then
         return
     end
 
     -- Get keycode and modifiers
-    local ok1, keycode = pcall(event.get_keycode, event)
-    local ok2, is_pressed = pcall(event.is_pressed, event)
-    local ok3, is_shift = pcall(event.is_shift_pressed, event)
+    local ok1, keycode    = pcall(_ev_get_keycode, event)
+    local ok2, is_pressed = pcall(_ev_is_pressed, event)
+    local ok3, is_shift   = pcall(_ev_is_shift_pressed, event)
     if not (ok1 and ok2 and ok3) then return end
     
     -- Only process if Shift is held
