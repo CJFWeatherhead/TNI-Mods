@@ -2,7 +2,7 @@ Name: All Proposals
 Description: |
   All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily increase the proposal batch size and display all eligible proposals, excluding those with unmet dependencies or failed adhoc requirements. Press Shift+O to restore normal proposal display.
 Author: CJFWeatherhead
-Version: 0.1.16
+Version: 0.1.17
 Creation Date: 2026-01-01
 Last Updated: 2026-04-18
 Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals"
