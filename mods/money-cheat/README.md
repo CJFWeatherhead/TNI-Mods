@@ -8,7 +8,7 @@ This mod provides a quick and easy way to add money to your balance during gamep
 
 ## Features
 
-- **Debug Console Command**: Type `money` in the debug console to activate the cheat
+- **Debug Console Command**: Type `m_money` in the debug console to activate the cheat
 - **Configurable Amount**: Set any amount from $100 to $10,000,000 (default: $10,000)
 - **Console Feedback**: Confirmation messages when cheat is activated
 - **In-Game Notifications**: Optional visual notifications (if supported)
@@ -76,7 +76,7 @@ The mod can be configured through the Mod Manager UI or by editing the `entry.lu
 
 ### How It Works
 
-The mod registers a `money` command via `DebugLayer.register_cmd()`. When the command is run it uses the game's `modify_player_cash()` API to add money to the player's balance with the category set to INCOME.
+The mod registers a `m_money` command via `DebugLayer.register_cmd()`. When the command is run it uses the game's `modify_player_cash()` API to add money to the player's balance with the category set to INCOME.
 
 ### Configuration System
 
@@ -94,7 +94,7 @@ This mod uses the standardized `===== MOD CONFIGURATION START/END =====` marker 
 
 1. Check that the mod is loaded (look for "Money Cheat mod loaded!" in console)
 2. Press `~` to open the debug console — it should appear on screen
-3. Type `money` and press Enter
+3. Type `m_money` and press Enter
 4. Enable debug logging to see more detail if needed
 
 ### No confirmation message appears

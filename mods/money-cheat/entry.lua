@@ -92,8 +92,7 @@ function on_game_state_ready()
 
     -- Enable the debug console (disabled by default in the game)
     pcall(function() dbg.enabled = true end)
-    pcall(function() dbg.visible = true end)
 
-    pcall(function() dbg.register_cmd("money", money) end)
-    print("[money-cheat] Debug console enabled. Registered: money")
+    pcall(function() dbg.register_cmd("m_money", money) end)
+    print("[money-cheat] Debug console enabled. Registered: m_money")
 end
