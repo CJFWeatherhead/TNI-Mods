@@ -1,10 +1,15 @@
-# ModAPI Diagnostic Tool v4.0
+# ModAPI Diagnostic Tool v4.3
 
 Development tool for TNI game engine modding (0.10.11+).
 
 **FOR MOD DEVELOPERS AND EXTERNAL TOOL INTEGRATION**
 
-## What's New in v4.0
+## What's New in v4.3
+
+- **Debug console integration** — all commands registered with `DebugLayer.register_cmd()` so they appear in the debug console (`~` key)
+- **Removed sandbox probes** — findings documented below in [Sandbox API Reference](#sandbox-api-reference)
+
+### What was new in v4.0
 
 - **Removed `on_player_input` entirely** — eliminates the per-frame pcall/GC memory pressure that caused the memory leak in v3.x
 - **Added `on_game_state_ready`** — the correct entrypoint for post-init diagnostics (world guaranteed valid)
@@ -23,16 +28,20 @@ Development tool for TNI game engine modding (0.10.11+).
 
 ### Console Commands
 
-```lua
-dump_world_overview()       -- Quick world summary (day, cash, counts)
-inspect_locations()         -- List all floors with user counts
-dump_all_world_devices()    -- List all devices with class/condition
-reinspect_all_users()       -- Re-inspect tracked users' network configs
-export_to_json()            -- Export full game state to JSON
-run_api_test_suite()        -- Test all API endpoints
-export_test_results_json()  -- Export test results as JSON
-show_lifecycle_log()        -- Show callback order and timing
+Open the debug console with `~` and type the command name (no parentheses needed):
+
 ```
+dump_world_overview       -- Quick world summary (day, cash, counts)
+inspect_locations         -- List all floors with user counts
+dump_all_world_devices    -- List all devices with class/condition
+reinspect_all_users       -- Re-inspect tracked users' network configs
+export_to_json            -- Export full game state to JSON
+run_api_test_suite        -- Test all API endpoints
+export_test_results_json  -- Export test results as JSON
+show_lifecycle_log        -- Show callback order and timing
+```
+
+Commands are also available as `globals()` for direct Lua calls.
 
 ### Auto-triggers
 
@@ -118,9 +127,68 @@ All 16 known callbacks are registered. Use `show_lifecycle_log()` to see the exa
 
 ## Why No Keyboard Shortcuts?
 
-v3.x used `on_player_input` for Shift+R/D/J/Q shortcuts. This callback fires on **every input event** including mouse movement, requiring pcall overhead on every frame. Even with named function helpers and incremental GC steps, this caused measurable memory pressure.
+v3.x used `on_player_input` for Shift+R/D/J/Q shortcuts. This callback fires on **every input event** including mouse movement, and the C++ bridge crashes (`bad_cast: Variant is not an Object for Variant of type 0 (Nil)`) when pushing InputEvent userdata to the Lua stack. This happens *before* any Lua code executes, making it unfixable from Lua. Even without the crash, the per-frame pcall/GC overhead caused OOM in the ~1800-byte Lua arena.
 
-v4.0 removes input handling entirely. All functionality is available through console commands (which only run when you explicitly call them) and automatic lifecycle hooks (`on_game_state_ready`, `on_day_end`).
+v4.3 uses `DebugLayer.register_cmd()` to register commands with the game's built-in debug console (`~` key). Commands only run when explicitly invoked — zero per-frame overhead.
+
+## Sandbox API Reference
+
+Tested on game version 0.10.15. These findings document what the RISC-V mod sandbox permits.
+
+### BLOCKED — Will Not Work
+
+| API | Result | Notes |
+|-----|--------|-------|
+| `Engine.get_singleton(name)` | **BANNED** | "Banned property accessed: get_singleton" — applies to ALL singletons |
+| `on_player_input(event)` | **CRASH** | C++ `bad_cast` in `push_gd_object_metatable` before Lua runs |
+| Direct `Input` access | Impossible | Requires `Engine.get_singleton("Input")` which is banned |
+| Direct `InputMap` access | Impossible | Same reason |
+| Key polling in `on_tick` | Impossible | No way to obtain `Input` singleton |
+
+### WORKS — Safe to Use
+
+| API | How to Access | Notes |
+|-----|---------------|-------|
+| `DebugLayer` | `world.get_node("/root/DebugLayer")` | Game's debug console overlay |
+| `DebugLayer.register_cmd(name, func)` | On the node above | Registers commands in `~` console |
+| `Engine.has_singleton(name)` | Direct call | Returns true/false, not banned |
+| `create_node("InputEventKey")` | Direct call | Can create and configure input events |
+| `InputEventKey` properties | `.keycode`, `.pressed`, `.shift_pressed` | All settable |
+| `MobileOSLayer` | `world.mobile_os_cvl` | Game state layer |
+| `MobileOSLayer.at_netshell_screen` | On above | Boolean — is netsh terminal open? |
+| `MobileOSLayer.safe_to_use_keyboard` | On above | Boolean — can type? |
+| `world.get_node(path)` | Scene tree traversal | Arbitrary scene tree access works |
+| `ModApiV1.get_game_world()` | Direct call | Game world reference |
+| `ModApiV1.get_base_ui()` | Direct call | UI reference for notifications |
+
+### Command Registration Pattern
+
+The recommended pattern for exposing mod commands:
+
+```lua
+-- 1. Define as global (fallback for direct Lua calls)
+function my_command()
+    print("Hello from my mod!")
+end
+
+-- 2. Register with DebugLayer in on_game_state_ready
+function on_game_state_ready()
+    local world = ModApiV1.get_game_world()
+    if not world then return end
+
+    local ok, dbg = pcall(function()
+        return world.get_node("/root/DebugLayer")
+    end)
+    if not ok or not dbg then
+        print("[my-mod] DebugLayer not found")
+        return
+    end
+
+    pcall(function() dbg.register_cmd("my_command", my_command) end)
+end
+```
+
+Players can then open the debug console with `~` and type `my_command`.
 
 ## Device Hardware Classes (0.10.11)
 
