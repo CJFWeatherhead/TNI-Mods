@@ -3,16 +3,15 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display.
 -- Author: CJFWeatherhead
--- Version: 1.0.0
+-- Version: 1.1.0
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
--- Usage: Type show_proposals() in the game console to show all proposals.
---        Type hide_proposals() to restore the normal proposal batch size.
+-- Usage: Open the debug console (~) and type a command name.
 --
 -- Console commands:
---   show_proposals()   Show all available proposals
---   hide_proposals()   Restore normal proposal batch size
+--   show_proposals   Show all available proposals
+--   hide_proposals   Restore normal proposal batch size
 
 print("=== All Proposals Mod v1.0.0 Loaded ===")
 
@@ -359,7 +358,22 @@ end
 
 function on_engine_load()
     print("[All Proposals] Mod initialized")
-    print("[All Proposals] Console: show_proposals() hide_proposals()")
+    print("[All Proposals] Console: show_proposals  hide_proposals")
+end
+
+function on_game_state_ready()
+    local world = ModApiV1.get_game_world()
+    if not world then return end
+
+    local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
+    if not ok or not dbg then
+        print("[All Proposals] DebugLayer not found, commands available as globals only")
+        return
+    end
+
+    pcall(function() dbg.register_cmd("show_proposals", show_proposals) end)
+    pcall(function() dbg.register_cmd("hide_proposals", hide_proposals) end)
+    print("[All Proposals] Registered debug console commands")
 end
 
 function on_mod_reload()
@@ -367,6 +381,6 @@ function on_mod_reload()
 end
 
 print("=== All Proposals Mod Setup Complete ===")
-print("    Console: show_proposals() / hide_proposals()")
+print("    Console: show_proposals / hide_proposals")
 print("    (excludes proposals with unmet dependencies)")
 print("===")
