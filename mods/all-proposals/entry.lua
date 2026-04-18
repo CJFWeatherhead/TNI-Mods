@@ -3,7 +3,7 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display.
 -- Author: CJFWeatherhead
--- Version: 1.1.0
+-- Version: 1.2.0
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
 --              making all available proposals visible at once. It safely checks for dependencies and
 --              adhoc requirements before including proposals in the display.
@@ -371,9 +371,13 @@ function on_game_state_ready()
         return
     end
 
+    -- Enable the debug console (disabled by default in the game)
+    pcall(function() dbg.enabled = true end)
+    pcall(function() dbg.visible = true end)
+
     pcall(function() dbg.register_cmd("show_proposals", show_proposals) end)
     pcall(function() dbg.register_cmd("hide_proposals", hide_proposals) end)
-    print("[All Proposals] Registered debug console commands")
+    print("[All Proposals] Debug console enabled. Registered: show_proposals hide_proposals")
 end
 
 function on_mod_reload()
