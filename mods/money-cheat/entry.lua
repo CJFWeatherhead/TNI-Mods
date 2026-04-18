@@ -1,7 +1,7 @@
 -- Money Cheat Mod
 -- Purpose: Adds configurable amount of money when SHIFT+M is pressed
 -- Author: Unknown
--- Version: 1.1
+-- Version: 1.2
 -- Description: This mod provides a simple money cheat accessible via keyboard shortcut.
 --              Press SHIFT+M to instantly add a configurable amount of money to your balance.
 --              Configure the amount in Mod Manager.
@@ -57,7 +57,8 @@ end
 
 -- Keyboard input handler for Shift+M shortcut
 function on_player_input(event)
-    -- Check if this is a keyboard event
+    collectgarbage("step")
+
     local ok, event_class = pcall(event.get_class, event)
     if not ok or event_class ~= "InputEventKey" then return end
 
