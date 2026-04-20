@@ -50,6 +50,7 @@ local SPEED_PRESETS = { 0.125, 0.25, 0.5, 1.0, 2.0, 4.0, 8.0 }
 -- Internal state
 local current_preset_idx = 4
 local status_label_ref   = nil    -- panel status label (if framework available)
+local _panel_btns        = {}     -- button refs for on_tick polling
 
 -- =========================================================================
 -- Utilities
@@ -196,6 +197,8 @@ function m_tardis()
     if m_panels then m_panels() end
 end
 
+function m_resume() m_pause() end
+
 -- Aliases
 function faster()       m_faster()  end
 function slower()       m_slower()  end
@@ -223,6 +226,7 @@ local function setup_panel(world)
     end
 
     -- Remove old section if it exists (F11 reload)
+    _panel_btns = {}
     pcall(function()
         local old = content.find_child("mp_tardis", false, false)
         if old then old.queue_free() end
@@ -252,14 +256,16 @@ local function setup_panel(world)
     local btn_slower = create_node("Button", "")
     btn_slower.text = "Slower"
     pcall(function() btn_slower.custom_minimum_size = Vector2(110, 28) end)
+    btn_slower.toggle_mode = true
     row1.add_child(btn_slower)
-    btn_slower.connect("pressed", Mod.callable_args_to_array(m_slower))
+    _panel_btns.slower = btn_slower
 
     local btn_faster = create_node("Button", "")
     btn_faster.text = "Faster"
     pcall(function() btn_faster.custom_minimum_size = Vector2(110, 28) end)
+    btn_faster.toggle_mode = true
     row1.add_child(btn_faster)
-    btn_faster.connect("pressed", Mod.callable_args_to_array(m_faster))
+    _panel_btns.faster = btn_faster
 
     -- Control row
     local row2 = create_node("HBoxContainer", "")
@@ -267,21 +273,24 @@ local function setup_panel(world)
     local btn_pause = create_node("Button", "")
     btn_pause.text = "Pause"
     pcall(function() btn_pause.custom_minimum_size = Vector2(110, 28) end)
+    btn_pause.toggle_mode = true
     row2.add_child(btn_pause)
-    btn_pause.connect("pressed", Mod.callable_args_to_array(m_pause))
+    _panel_btns.pause = btn_pause
 
     local btn_reset = create_node("Button", "")
     btn_reset.text = "Reset"
     pcall(function() btn_reset.custom_minimum_size = Vector2(110, 28) end)
+    btn_reset.toggle_mode = true
     row2.add_child(btn_reset)
-    btn_reset.connect("pressed", Mod.callable_args_to_array(m_normal))
+    _panel_btns.reset = btn_reset
 
     -- Skip button (full width)
     local btn_skip = create_node("Button", "")
     btn_skip.text = "Skip Day"
     pcall(function() btn_skip.custom_minimum_size = Vector2(0, 28) end)
+    btn_skip.toggle_mode = true
     section.add_child(btn_skip)
-    btn_skip.connect("pressed", Mod.callable_args_to_array(m_skip))
+    _panel_btns.skip = btn_skip
 
     content.add_child(section)
     log("Panel section registered with ModPanels")
@@ -317,6 +326,7 @@ function on_game_state_ready()
         pcall(function() dbg.register_cmd("m_pause",   m_pause)   end)
         pcall(function() dbg.register_cmd("m_time",    m_time)    end)
         pcall(function() dbg.register_cmd("m_tardis",  m_tardis)  end)
+        pcall(function() dbg.register_cmd("m_resume",  m_resume)  end)
         log("Console commands registered")
     end
 
@@ -341,4 +351,13 @@ function on_day_end()
     debug_log("Day ended")
 end
 
-function on_tick(delta) end
+function on_tick(delta)
+    pcall(function()
+        local b = _panel_btns
+        if b.slower and b.slower.button_pressed then b.slower.button_pressed = false; m_slower() end
+        if b.faster and b.faster.button_pressed then b.faster.button_pressed = false; m_faster() end
+        if b.pause  and b.pause.button_pressed  then b.pause.button_pressed  = false; m_pause()  end
+        if b.reset  and b.reset.button_pressed  then b.reset.button_pressed  = false; m_normal() end
+        if b.skip   and b.skip.button_pressed   then b.skip.button_pressed   = false; m_skip()   end
+    end)
+end
