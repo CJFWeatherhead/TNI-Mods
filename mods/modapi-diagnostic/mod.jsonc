@@ -18,7 +18,7 @@
 		"luajit-support": "~0.2.0"
 	},
 	"dependencies_optional": {
-		"supa-mod-loader": ">=3.7.0"
+		"supa-mod-loader": ">=4.0.0"
 	},
 	"incompatibilities": {
 	}

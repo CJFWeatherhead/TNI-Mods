@@ -1760,6 +1760,62 @@ function on_engine_load()
     if Engine then print("[DIAG] + Engine global available") end
 end
 
+-- Panel section builder (shared ModPanels framework)
+local function _diag_setup_panel(world)
+    pcall(function()
+        local content = world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
+        if not content then return end
+
+        pcall(function()
+            local old = content.get_node("mp_modapi_diag")
+            if old then old.queue_free() end
+        end)
+
+        local section = create_node("VBoxContainer", "")
+        section.name = "mp_modapi_diag"
+
+        local sep = create_node("HSeparator", "")
+        section.add_child(sep)
+        local title = create_node("Label", "")
+        title.text = "ModAPI Diagnostic"
+        pcall(function() title.add_theme_font_size_override("font_size", 14) end)
+        section.add_child(title)
+
+        local row1 = create_node("HBoxContainer", "")
+        section.add_child(row1)
+
+        local btn_world = create_node("Button", "")
+        btn_world.text = "World Info"
+        pcall(function() btn_world.custom_minimum_size = Vector2(110, 28) end)
+        row1.add_child(btn_world)
+        btn_world.connect("pressed", dump_world_overview)
+
+        local btn_export = create_node("Button", "")
+        btn_export.text = "Export JSON"
+        pcall(function() btn_export.custom_minimum_size = Vector2(110, 28) end)
+        row1.add_child(btn_export)
+        btn_export.connect("pressed", export_to_json)
+
+        local row2 = create_node("HBoxContainer", "")
+        section.add_child(row2)
+
+        local btn_test = create_node("Button", "")
+        btn_test.text = "Run Tests"
+        pcall(function() btn_test.custom_minimum_size = Vector2(110, 28) end)
+        row2.add_child(btn_test)
+        btn_test.connect("pressed", run_api_test_suite)
+
+        local btn_log = create_node("Button", "")
+        btn_log.text = "Lifecycle Log"
+        pcall(function() btn_log.custom_minimum_size = Vector2(110, 28) end)
+        row2.add_child(btn_log)
+        btn_log.connect("pressed", show_lifecycle_log)
+
+        content.add_child(section)
+        print("[DIAG] Panel section registered with ModPanels")
+    end)
+end
+
 function on_game_state_ready()
     lifecycle("on_game_state_ready", "game fully initialized -- world is guaranteed valid")
 
@@ -1817,6 +1873,8 @@ function on_game_state_ready()
 
         notify("Diagnostic Tool ready -- use console commands", 0)
     end
+
+    if world then _diag_setup_panel(world) end
 end
 
 function on_game_host_eod()
@@ -1825,6 +1883,8 @@ end
 
 function on_mod_reload()
     lifecycle("on_mod_reload", "mods reloaded (F11)")
+    local world = ModApiV1 and ModApiV1.get_game_world()
+    if world then _diag_setup_panel(world) end
 end
 
 function on_world_ready(world)
