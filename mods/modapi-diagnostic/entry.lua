@@ -1788,13 +1788,13 @@ local function _diag_setup_panel(world)
         btn_world.text = "World Info"
         pcall(function() btn_world.custom_minimum_size = Vector2(110, 28) end)
         row1.add_child(btn_world)
-        btn_world.connect("pressed", dump_world_overview)
+        btn_world.connect("pressed", Mod.callable_args_to_array(dump_world_overview))
 
         local btn_export = create_node("Button", "")
         btn_export.text = "Export JSON"
         pcall(function() btn_export.custom_minimum_size = Vector2(110, 28) end)
         row1.add_child(btn_export)
-        btn_export.connect("pressed", export_to_json)
+        btn_export.connect("pressed", Mod.callable_args_to_array(export_to_json))
 
         local row2 = create_node("HBoxContainer", "")
         section.add_child(row2)
@@ -1803,13 +1803,13 @@ local function _diag_setup_panel(world)
         btn_test.text = "Run Tests"
         pcall(function() btn_test.custom_minimum_size = Vector2(110, 28) end)
         row2.add_child(btn_test)
-        btn_test.connect("pressed", run_api_test_suite)
+        btn_test.connect("pressed", Mod.callable_args_to_array(run_api_test_suite))
 
         local btn_log = create_node("Button", "")
         btn_log.text = "Lifecycle Log"
         pcall(function() btn_log.custom_minimum_size = Vector2(110, 28) end)
         row2.add_child(btn_log)
-        btn_log.connect("pressed", show_lifecycle_log)
+        btn_log.connect("pressed", Mod.callable_args_to_array(show_lifecycle_log))
 
         content.add_child(section)
         print("[DIAG] Panel section registered with ModPanels")
