@@ -7,8 +7,8 @@
 
 .DESCRIPTION
     This script defines the configuration parameters for the mod.
-    It provides an interface to configure game speed controls and
-    time skip functionality.
+    It provides an interface to configure speed presets, time skip,
+    automation, and notification settings.
 
 .PARAMETER CurrentConfig
     The current configuration values for this mod.
@@ -29,91 +29,30 @@ $parameters = @()
 $parameters += @{
     Type        = "section"
     Label       = "Speed Control"
-    Description = "Configure how game speed changes work"
+    Description = "Configure the default speed preset"
     Collapsed   = $false
 }
 
 $parameters += @{
-    Name        = "speed_step"
-    Label       = "Speed Change Step"
-    Type        = "number"
-    Default     = 0.5
-    Min         = 0.1
-    Max         = 2.0
-    Step        = 0.1
-    Description = @"
-Amount to change the speed multiplier per m_speed_up / m_speed_down command.
-
-Default: 0.5x per command
-
-Examples:
-- 0.1 = Fine control (10 steps to go from 1x to 2x)
-- 0.5 = Moderate steps (2 steps to go from 1x to 2x)
-- 1.0 = Large jumps (double/halve with each command)
-
-The game enforces hard limits of 0.125x to 8x regardless of this setting.
-
-Usage: Press ~ to open the debug console, then type: m_speed_up  m_speed_down  m_speed_reset  m_day_skip  m_speed
-"@
-    Section     = "Speed Control"
-}
-
-$parameters += @{
-    Name        = "min_speed"
-    Label       = "Minimum Speed"
-    Type        = "number"
-    Default     = 0.125
-    Min         = 0.125
-    Max         = 1.0
-    Step        = 0.125
-    Description = @"
-Minimum allowed game speed multiplier.
-
-Default: 0.125x (game's minimum limit)
-
-Note: The game enforces a hard minimum of 0.125x.
-Setting this higher than 0.125 can be useful if you don't
-want to accidentally slow the game down too much.
-"@
-    Section     = "Speed Control"
-}
-
-$parameters += @{
-    Name        = "max_speed"
-    Label       = "Maximum Speed"
-    Type        = "number"
-    Default     = 8.0
-    Min         = 2.0
-    Max         = 8.0
-    Step        = 0.5
-    Description = @"
-Maximum allowed game speed multiplier.
-
-Default: 8x (game's maximum limit)
-
-Note: The game enforces a hard maximum of 8x.
-Setting this lower can be useful if you want to limit
-how fast you can speed up the game.
-"@
-    Section     = "Speed Control"
-}
-
-$parameters += @{
     Name        = "default_speed"
-    Label       = "Default Speed (Reference)"
+    Label       = "Default Speed"
     Type        = "number"
     Default     = 1.0
     Min         = 0.125
     Max         = 8.0
-    Step        = 0.25
+    Step        = 0.125
     Description = @"
-Reference value for normal game speed.
+Speed multiplier to reset to when using the m_normal command.
 
 Default: 1.0x
 
-This is for reference only - the mod doesn't automatically
-reset to this value. Type m_speed_reset in the debug console to
-return to 1x speed.
+The value is snapped to the nearest preset:
+  0.125x  0.25x  0.5x  1x  2x  4x  8x
+
+These match the game's hard limits (0.125x – 8x).
+
+Usage: Press ~ to open the debug console, then type:
+  m_faster  m_slower  m_normal  m_skip  m_pause  m_time
 "@
     Section     = "Speed Control"
 }
@@ -125,7 +64,7 @@ return to 1x speed.
 $parameters += @{
     Type        = "section"
     Label       = "Time Skip"
-    Description = "Configure the m_day_skip console command"
+    Description = "Configure the m_skip console command"
     Collapsed   = $false
 }
 
@@ -138,7 +77,7 @@ $parameters += @{
     Max         = 23.99
     Step        = 0.5
     Description = @"
-Time of day to skip to when the m_day_skip console command is run.
+Time of day to skip to when the m_skip console command is used.
 
 Default: 23.99 (23:59, end of day)
 
@@ -152,6 +91,36 @@ Uses 24-hour decimal format:
 Setting to 23.99 effectively skips to end of day.
 "@
     Section     = "Time Skip"
+}
+
+# ============================================================================
+# Automation Settings
+# ============================================================================
+
+$parameters += @{
+    Type        = "section"
+    Label       = "Automation"
+    Description = "Automatic speed management options"
+    Collapsed   = $false
+}
+
+$parameters += @{
+    Name        = "auto_reset_on_day_start"
+    Label       = "Auto-Reset Speed On Day Start"
+    Type        = "boolean"
+    Default     = $false
+    Description = @"
+Automatically reset the game speed to the default at the
+start of each new in-game day.
+
+When enabled:
+- Speed returns to the configured default (1x) at dawn
+- Useful if you speed up to skip a day but want normal
+  speed when the next day begins
+
+Uses the on_day_start lifecycle hook — zero per-frame cost.
+"@
+    Section     = "Automation"
 }
 
 # ============================================================================
@@ -171,11 +140,8 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = @"
-Display on-screen notifications when speed changes or time skips.
-
-When enabled:
-- Shows current speed multiplier when changed
-- Shows confirmation when time is skipped
+Display on-screen notifications when speed changes, time skips,
+or the day cycle is paused/resumed.
 
 Console messages are always shown regardless of this setting.
 "@
@@ -191,9 +157,9 @@ $parameters += @{
 Show detailed debug messages in the console.
 
 When enabled:
-- Shows cooldown status
-- Displays internal clock values
-- Reports detailed error information
+- Logs preset sync operations
+- Reports internal clock values
+- Shows detailed error information
 
 Recommended: Keep disabled unless troubleshooting issues.
 "@
