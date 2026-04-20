@@ -60,6 +60,8 @@ end
 -- Console command: add money
 -- Usage: money() or money(50000)
 function money(amount)
+    -- amount may be userdata (Array) when called via signal dispatch; coerce
+    if type(amount) ~= "number" then amount = nil end
     local money_amount = amount or config.money_amount or 10000
 
     local world = ModApiV1.get_game_world()
@@ -112,7 +114,7 @@ setup_panel = function()
     btn.text = "Add Money"
     pcall(function() btn.custom_minimum_size = Vector2(110, 28) end)
     section.add_child(btn)
-    btn.connect("pressed", money)
+    btn.connect("pressed", Mod.callable_args_to_array(money))
 
     content.add_child(section)
     print("[money-cheat] Panel section registered with ModPanels")
