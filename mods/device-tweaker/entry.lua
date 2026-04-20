@@ -2,16 +2,18 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 3.0
+-- Version: 3.1.0
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
+--              Own floating panel with toggle-mode buttons polled via on_tick.
 --
 -- Usage: Configure multipliers and filters in the Mod Loader menu.
 --        Open the debug console (~) and type a command name.
 --
 -- Console commands:
---   m_restock     Restock all merchants
+--   m_restock      Restock all merchants
+--   m_dt_panel     Toggle the Device Tweaker panel
 --
 -- Device Hardware Classes (DeviceUnit.DeviceHardwareClass enum):
 --   0  = DEFAULT              11 = POWER_EXPANSION
@@ -100,8 +102,11 @@ local config = {
 
 -- ===== MOD CONFIGURATION END =====
 
-local _dt_setup_panel  -- forward-declared panel builder
 local _dt_btn = nil
+local _dt_panel       = nil
+local _dt_panel_visible = false
+local _dt_panel_close = nil
+local _dt_status      = nil
 
 -- Device class names for logging (from DeviceHardwareClass enum, game 0.10.11)
 local device_class_names = {
@@ -186,64 +191,138 @@ function on_engine_load()
         print("[device-tweaker] Enabled device classes: " .. table.concat(enabled_classes, ", "))
     end
 
-    print("[device-tweaker] Console: m_restock")
+    print("[device-tweaker] Console: m_restock  m_dt_panel")
+end
+
+-- =========================================================================
+-- Panel (standalone CanvasLayer at /root)
+-- =========================================================================
+
+local function destroy_dt_panel()
+    if _dt_panel then pcall(function() _dt_panel.queue_free() end) end
+    _dt_panel = nil; _dt_panel_visible = false; _dt_panel_close = nil
+    _dt_btn = nil; _dt_status = nil
+end
+
+local function build_dt_panel(world)
+    destroy_dt_panel()
+    local ok, err = pcall(function()
+        local root = world.get_node("/root")
+        if not root then print("[device-tweaker] build_panel: /root not found"); return end
+
+        _dt_panel = create_node("CanvasLayer", "")
+        _dt_panel.layer = 100
+        _dt_panel.visible = false
+
+        local container = create_node("PanelContainer", "")
+        _dt_panel.add_child(container)
+        pcall(function()
+            container.anchor_left = 1.0; container.anchor_top = 0.0
+            container.anchor_right = 1.0; container.anchor_bottom = 0.0
+        end)
+        pcall(function()
+            container.offset_left = -270; container.offset_top = 380
+            container.offset_right = -10;  container.offset_bottom = 500
+        end)
+        pcall(function() container.self_modulate = Color(1, 1, 1, 0.92) end)
+
+        local vbox = create_node("VBoxContainer", "")
+        container.add_child(vbox)
+
+        -- Header
+        local header = create_node("HBoxContainer", "")
+        vbox.add_child(header)
+        local title = create_node("Label", "")
+        title.text = "Device Tweaker"
+        pcall(function() title.add_theme_font_size_override("font_size", 15) end)
+        pcall(function() title.size_flags_horizontal = 3 end)
+        header.add_child(title)
+
+        _dt_panel_close = create_node("Button", "")
+        _dt_panel_close.text = "X"
+        _dt_panel_close.flat = true
+        _dt_panel_close.toggle_mode = true
+        pcall(function() _dt_panel_close.custom_minimum_size = Vector2(28, 28) end)
+        header.add_child(_dt_panel_close)
+
+        -- Status
+        _dt_status = create_node("Label", "")
+        _dt_status.text = "Ready"
+        pcall(function() _dt_status.add_theme_font_size_override("font_size", 11) end)
+        vbox.add_child(_dt_status)
+
+        -- Restock button
+        local btn = create_node("Button", "")
+        btn.text = "Restock Merchants"
+        btn.toggle_mode = true
+        pcall(function() btn.custom_minimum_size = Vector2(0, 28) end)
+        vbox.add_child(btn)
+        _dt_btn = btn
+
+        root.add_child(_dt_panel)
+        print("[device-tweaker] Panel built (standalone CanvasLayer at /root)")
+    end)
+    if not ok then print("[device-tweaker] build_panel ERROR: " .. tostring(err)) end
 end
 
 -- Register commands with the debug console when game is fully loaded
 function on_game_state_ready()
+    print("[device-tweaker] on_game_state_ready: begin")
     local world = ModApiV1.get_game_world()
     if not world then return end
 
     local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
-    if not ok or not dbg then
-        print("[device-tweaker] DebugLayer not found, commands available as globals only")
-        return
+    if ok and dbg then
+        pcall(function() dbg.enabled = true end)
+        local cmds = {
+            {"m_restock",  restock},
+            {"m_dt_panel", m_dt_panel},
+        }
+        for _, cmd in ipairs(cmds) do
+            pcall(function() dbg.register_cmd(cmd[1], cmd[2]) end)
+        end
+        print("[device-tweaker] on_game_state_ready: registered " .. #cmds .. " console commands")
+    else
+        print("[device-tweaker] on_game_state_ready: DebugLayer not found")
     end
 
-    -- Enable the debug console (disabled by default in the game)
-    pcall(function() dbg.enabled = true end)
-
-    pcall(function() dbg.register_cmd("m_restock", restock) end)
-    print("[device-tweaker] Debug console enabled. Registered: m_restock")
-
-    -- Register panel section with shared ModPanels framework
-    if _dt_setup_panel then _dt_setup_panel(world) end
+    build_dt_panel(world)
 end
 
 function on_mod_reload()
     print("[device-tweaker] Reloaded (F11)")
     debug_dump_done = {}
-    _dt_btn = nil
-    if _dt_setup_panel then
-        local w = ModApiV1 and ModApiV1.get_game_world()
-        if w then _dt_setup_panel(w) end
-    end
+    destroy_dt_panel()
+    local w = ModApiV1 and ModApiV1.get_game_world()
+    if w then build_dt_panel(w) end
 end
 
 -- Merchant restock functionality using ModApiV1.get_merchants()
 local function restock_all_merchants()
+    print("[device-tweaker] restock_all_merchants: begin")
     local merchants = ModApiV1.get_merchants()
     if not merchants then
-        print("[device-tweaker] Cannot restock: get_merchants() returned nil")
+        print("[device-tweaker] restock_all_merchants: get_merchants() returned nil")
         return false
     end
 
     local restock_count = 0
     local success = pcall(function()
         local size = merchants:size()
-        print(string.format("[device-tweaker] Found %d merchants to restock", size))
+        print(string.format("[device-tweaker] restock_all_merchants: found %d merchants", size))
         for i = 0, size - 1 do
             local merchant = merchants:get(i)
             if merchant then
                 local merchant_name = tostring(merchant.display_name or ("Merchant " .. i))
+                print(string.format("[device-tweaker] restock_all_merchants: restocking %s...", merchant_name))
                 local restock_ok, restock_err = pcall(function()
                     merchant.restock()
                 end)
                 if restock_ok then
                     restock_count = restock_count + 1
-                    print(string.format("[device-tweaker] Restocked: %s", merchant_name))
+                    print(string.format("[device-tweaker] restock_all_merchants: %s OK", merchant_name))
                 else
-                    print(string.format("[device-tweaker] Failed to restock %s: %s",
+                    print(string.format("[device-tweaker] restock_all_merchants: %s FAILED: %s",
                         merchant_name, tostring(restock_err)))
                 end
             end
@@ -251,51 +330,29 @@ local function restock_all_merchants()
     end)
 
     if not success then
-        print("[device-tweaker] Error during merchant iteration")
+        print("[device-tweaker] restock_all_merchants: error during merchant iteration")
     end
 
-    print(string.format("[device-tweaker] Restocked %d merchants", restock_count))
+    print(string.format("[device-tweaker] restock_all_merchants: done (%d restocked)", restock_count))
+    if _dt_status then
+        pcall(function() _dt_status.text = string.format("Restocked %d merchants", restock_count) end)
+    end
     return restock_count > 0
 end
 
 -- Console command: restock all merchants
--- Usage: Open debug console (~) and type: m_restock
 function restock()
+    print("[device-tweaker] restock: begin")
     restock_all_merchants()
-    -- No display_notification — causes sandbox timeout cascades
+    print("[device-tweaker] restock: end")
 end
 
--- Panel section builder (shared ModPanels framework)
-_dt_setup_panel = function(world)
-    local ok, content = pcall(function()
-        return world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
-    end)
-    if not ok or not content then return end
-
-    pcall(function()
-        local old = content.get_node("mp_device_tweaker")
-        if old then old.queue_free() end
-    end)
-
-    local section = create_node("VBoxContainer", "")
-    section.name = "mp_device_tweaker"
-
-    local sep = create_node("HSeparator", "")
-    section.add_child(sep)
-    local title = create_node("Label", "")
-    title.text = "Device Tweaker"
-    pcall(function() title.add_theme_font_size_override("font_size", 14) end)
-    section.add_child(title)
-
-    local btn = create_node("Button", "")
-    btn.text = "Restock Merchants"
-    pcall(function() btn.custom_minimum_size = Vector2(0, 28) end)
-    btn.toggle_mode = true
-    section.add_child(btn)
-    _dt_btn = btn
-
-    content.add_child(section)
-    print("[device-tweaker] Panel section registered with ModPanels")
+-- Console command: toggle panel
+function m_dt_panel()
+    if not _dt_panel then print("[device-tweaker] m_dt_panel: panel not built yet"); return end
+    _dt_panel_visible = not _dt_panel_visible
+    pcall(function() _dt_panel.visible = _dt_panel_visible end)
+    print("[device-tweaker] m_dt_panel: " .. (_dt_panel_visible and "shown" or "hidden"))
 end
 
 -- Helper function to dump device properties for debugging (correct API property names)
@@ -448,6 +505,17 @@ function on_device_spawned(device)
 end
 
 function on_tick(delta)
+    -- Poll close button
+    if _dt_panel_close then
+        pcall(function()
+            if _dt_panel_close.button_pressed then
+                _dt_panel_close.button_pressed = false
+                _dt_panel_visible = false
+                _dt_panel.visible = false
+            end
+        end)
+    end
+    -- Poll restock button
     if _dt_btn then
         pcall(function()
             if _dt_btn.button_pressed then

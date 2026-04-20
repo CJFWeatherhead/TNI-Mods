@@ -3,17 +3,18 @@
 --          excluding only those with unmet dependencies. It temporarily increases the proposal batch size
 --          to display all eligible proposals and provides a way to restore normal proposal display.
 -- Author: CJFWeatherhead
--- Version: 1.2.0
+-- Version: 1.3.0
 -- Description: The mod hooks into the game's proposal system to override the default batch size,
---              making all available proposals visible at once. It safely checks for dependencies and
---              adhoc requirements before including proposals in the display.
+--              making all available proposals visible at once. Own floating panel with
+--              toggle-mode buttons polled via on_tick.
 -- Usage: Open the debug console (~) and type a command name.
 --
 -- Console commands:
---   show_proposals   Show all available proposals
---   hide_proposals   Restore normal proposal batch size
+--   m_show_proposals   Show all available proposals
+--   m_hide_proposals   Restore normal proposal batch size
+--   m_ap_panel         Toggle the All Proposals panel
 
-print("=== All Proposals Mod v1.0.0 Loaded ===")
+print("=== All Proposals Mod v1.3.0 Loading ===")
 
 -- ===== MOD CONFIGURATION START =====
 -- This section is parsed and modified by ModManager
@@ -29,10 +30,13 @@ local config = {
 local original_batch_size = nil
 local all_proposals_active = false
 
-local _ap_status = nil
-local _ap_btn_show = nil
-local _ap_btn_hide = nil
-local _ap_setup_panel  -- forward-declared panel builder
+-- Panel state
+local _ap_panel       = nil
+local _ap_panel_visible = false
+local _ap_panel_close = nil
+local _ap_status      = nil
+local _ap_btn_show    = nil
+local _ap_btn_hide    = nil
 
 -- Helper function to safely check if a proposal has unmet dependencies
 local function has_unmet_dependencies(proposal)
@@ -122,22 +126,20 @@ end
 
 -- Function to show all available proposals
 local function show_all_proposals()
-    print("")
-    print("[All Proposals] ========================================")
-    print("[All Proposals] Activating all available proposals...")
-    print("[All Proposals] ========================================")
+    print("[All Proposals] show_all_proposals: begin")
 
-    local world = ModApiV1.get_game_world()
-    if not world then
-        print("[All Proposals] ERROR - Could not get game world!")
-        return
-    end
+    local ok_outer, err_outer = pcall(function()
+        print("[All Proposals] getting game world...")
+        local world = ModApiV1.get_game_world()
+        if not world then
+            print("[All Proposals] ERROR: no game world"); return
+        end
 
-    local propmod_controller = world.propmod_controller
-    if not propmod_controller then
-        print("[All Proposals] ERROR - Could not get proposal controller!")
-        return
-    end
+        print("[All Proposals] getting propmod_controller...")
+        local propmod_controller = world.propmod_controller
+        if not propmod_controller then
+            print("[All Proposals] ERROR: no propmod_controller"); return
+        end
 
     -- Store original batch size if not already stored
     if not original_batch_size then
@@ -247,192 +249,222 @@ local function show_all_proposals()
 
     -- Set the batch size to show all available proposals
     local new_batch_size = math.max(available_proposals, 50) -- At least 50 to be safe
-    print("")
-    print("[All Proposals] Setting batch size from " ..
-        tostring(original_batch_size or "?") .. " to " .. new_batch_size)
+    print("[All Proposals] show_all_proposals: setting batch_size " ..
+        tostring(original_batch_size or "?") .. " -> " .. new_batch_size)
 
     pcall(function()
         propmod_controller.proposals_per_batch = new_batch_size
+        print("[All Proposals] show_all_proposals: batch_size set OK")
     end)
 
     -- Trigger a reroll to regenerate the proposal list
-    print("[All Proposals] Triggering proposal reroll...")
+    print("[All Proposals] show_all_proposals: triggering reroll...")
     pcall(function()
         propmod_controller:reroll_proposals()
-        print("[All Proposals] Reroll complete")
+        print("[All Proposals] show_all_proposals: reroll done")
     end)
 
-    -- Note: The Secretariat UI may not refresh immediately
-    -- You can manually refresh by:
-    --   1. Closing and reopening the Secretariat app
-    --   2. Clicking "Refresh RFP's" button in the Secretariat
-    --   3. Waiting for the automatic refresh cycle
-    print("[All Proposals] Note: If proposals don't show in Secretariat, close and reopen the app")
+    print("[All Proposals] Note: close/reopen Secretariat if proposals don't refresh")
 
     all_proposals_active = true
 
-    print("")
-    print("[All Proposals] ========================================")
-    print("[All Proposals] SUMMARY")
-    print("[All Proposals]   Total proposals: " .. total_proposals)
-    print("[All Proposals]   Available: " .. available_proposals)
-    print("[All Proposals]   Blocked: " .. blocked_proposals)
-    print("[All Proposals]   Submitted: " .. submitted_proposals)
-    print("[All Proposals] ========================================")
-    print("")
+    print(string.format("[All Proposals] SUMMARY: total=%d available=%d blocked=%d submitted=%d",
+        total_proposals, available_proposals, blocked_proposals, submitted_proposals))
 
-    -- No display_notification — causes sandbox timeout cascades
+    end) -- end pcall wrapper
+    if not ok_outer then print("[All Proposals] show_all_proposals ERROR: " .. tostring(err_outer)) end
+    print("[All Proposals] show_all_proposals: end")
 end
 
 -- Function to restore normal proposal display
 local function restore_normal_proposals()
+    print("[All Proposals] restore_normal_proposals: begin")
     if not all_proposals_active or not original_batch_size then
-        print("[All Proposals] Already in normal mode or no original batch size stored")
+        print("[All Proposals] restore_normal_proposals: already in normal mode")
         return
     end
 
-    print("")
-    print("[All Proposals] ========================================")
-    print("[All Proposals] Restoring normal proposal batch size...")
-    print("[All Proposals] ========================================")
+    local ok, err = pcall(function()
+        local world = ModApiV1.get_game_world()
+        if not world then print("[All Proposals] ERROR: no game world"); return end
+        local propmod_controller = world.propmod_controller
+        if not propmod_controller then print("[All Proposals] ERROR: no propmod_controller"); return end
 
-    local world = ModApiV1.get_game_world()
-    if not world then
-        print("[All Proposals] ERROR - Could not get game world!")
-        return
-    end
-
-    local propmod_controller = world.propmod_controller
-    if not propmod_controller then
-        print("[All Proposals] ERROR - Could not get proposal controller!")
-        return
-    end
-
-    pcall(function()
+        print("[All Proposals] restore_normal_proposals: setting batch_size -> " .. tostring(original_batch_size))
         propmod_controller.proposals_per_batch = original_batch_size
-        print("[All Proposals] Restored batch size to: " .. original_batch_size)
-    end)
+        print("[All Proposals] restore_normal_proposals: batch_size set OK")
 
-    pcall(function()
+        print("[All Proposals] restore_normal_proposals: triggering reroll...")
         propmod_controller:reroll_proposals()
-        print("[All Proposals] Rerolled proposals")
+        print("[All Proposals] restore_normal_proposals: reroll done")
     end)
-
-    print("[All Proposals] Note: If proposals don't refresh in Secretariat, close and reopen the app")
+    if not ok then print("[All Proposals] restore_normal_proposals ERROR: " .. tostring(err)) end
 
     all_proposals_active = false
-    print("[All Proposals] Normal mode restored")
-    print("[All Proposals] ========================================")
-    print("")
-
-    -- No display_notification — causes sandbox timeout cascades
+    print("[All Proposals] restore_normal_proposals: end")
 end
 
 -- Console commands (exposed as globals for the game console)
 function show_proposals()
-    print("[All Proposals] Showing all proposals...")
+    print("[All Proposals] show_proposals: begin")
     show_all_proposals()
     if _ap_status then
         pcall(function()
             _ap_status.text = all_proposals_active and "Showing all proposals" or "Normal mode"
         end)
     end
+    print("[All Proposals] show_proposals: end")
 end
 
 function hide_proposals()
-    print("[All Proposals] Restoring normal mode...")
+    print("[All Proposals] hide_proposals: begin")
     restore_normal_proposals()
     if _ap_status then
         pcall(function() _ap_status.text = "Normal mode" end)
     end
+    print("[All Proposals] hide_proposals: end")
 end
 
+function m_ap_panel()
+    if not _ap_panel then print("[All Proposals] m_ap_panel: panel not built yet"); return end
+    _ap_panel_visible = not _ap_panel_visible
+    pcall(function() _ap_panel.visible = _ap_panel_visible end)
+    print("[All Proposals] m_ap_panel: " .. (_ap_panel_visible and "shown" or "hidden"))
+end
+
+-- =========================================================================
+-- Panel (standalone CanvasLayer at /root)
+-- =========================================================================
+
+local function destroy_ap_panel()
+    if _ap_panel then pcall(function() _ap_panel.queue_free() end) end
+    _ap_panel = nil; _ap_panel_visible = false; _ap_panel_close = nil
+    _ap_status = nil; _ap_btn_show = nil; _ap_btn_hide = nil
+end
+
+local function build_ap_panel(world)
+    destroy_ap_panel()
+    local ok, err = pcall(function()
+        local root = world.get_node("/root")
+        if not root then print("[All Proposals] build_panel: /root not found"); return end
+
+        _ap_panel = create_node("CanvasLayer", "")
+        _ap_panel.layer = 100
+        _ap_panel.visible = false
+
+        local container = create_node("PanelContainer", "")
+        _ap_panel.add_child(container)
+        pcall(function()
+            container.anchor_left = 1.0; container.anchor_top = 0.0
+            container.anchor_right = 1.0; container.anchor_bottom = 0.0
+        end)
+        pcall(function()
+            container.offset_left = -270; container.offset_top = 510
+            container.offset_right = -10;  container.offset_bottom = 640
+        end)
+        pcall(function() container.self_modulate = Color(1, 1, 1, 0.92) end)
+
+        local vbox = create_node("VBoxContainer", "")
+        container.add_child(vbox)
+
+        -- Header
+        local header = create_node("HBoxContainer", "")
+        vbox.add_child(header)
+        local title = create_node("Label", "")
+        title.text = "All Proposals"
+        pcall(function() title.add_theme_font_size_override("font_size", 15) end)
+        pcall(function() title.size_flags_horizontal = 3 end)
+        header.add_child(title)
+
+        _ap_panel_close = create_node("Button", "")
+        _ap_panel_close.text = "X"
+        _ap_panel_close.flat = true
+        _ap_panel_close.toggle_mode = true
+        pcall(function() _ap_panel_close.custom_minimum_size = Vector2(28, 28) end)
+        header.add_child(_ap_panel_close)
+
+        -- Status
+        _ap_status = create_node("Label", "")
+        _ap_status.text = all_proposals_active and "Showing all proposals" or "Normal mode"
+        pcall(function() _ap_status.add_theme_font_size_override("font_size", 11) end)
+        vbox.add_child(_ap_status)
+
+        -- Buttons
+        local row = create_node("HBoxContainer", "")
+        vbox.add_child(row)
+
+        local btn_show = create_node("Button", "")
+        btn_show.text = "Show All"
+        btn_show.toggle_mode = true
+        pcall(function() btn_show.custom_minimum_size = Vector2(120, 28) end)
+        row.add_child(btn_show)
+        _ap_btn_show = btn_show
+
+        local btn_hide = create_node("Button", "")
+        btn_hide.text = "Restore"
+        btn_hide.toggle_mode = true
+        pcall(function() btn_hide.custom_minimum_size = Vector2(120, 28) end)
+        row.add_child(btn_hide)
+        _ap_btn_hide = btn_hide
+
+        root.add_child(_ap_panel)
+        print("[All Proposals] Panel built (standalone CanvasLayer at /root)")
+    end)
+    if not ok then print("[All Proposals] build_panel ERROR: " .. tostring(err)) end
+end
+
+-- =========================================================================
+-- Lifecycle
+-- =========================================================================
+
 function on_engine_load()
-    print("[All Proposals] Mod initialized")
-    print("[All Proposals] Console: show_proposals  hide_proposals")
+    print("[All Proposals] v1.3.0 loaded")
+    print("[All Proposals] Console: m_show_proposals  m_hide_proposals  m_ap_panel")
 end
 
 function on_game_state_ready()
+    print("[All Proposals] on_game_state_ready: begin")
     local world = ModApiV1.get_game_world()
     if not world then return end
 
     local ok, dbg = pcall(function() return world.get_node("/root/DebugLayer") end)
-    if not ok or not dbg then
-        print("[All Proposals] DebugLayer not found, commands available as globals only")
-        return
+    if ok and dbg then
+        pcall(function() dbg.enabled = true end)
+        local cmds = {
+            {"m_show_proposals", show_proposals},
+            {"m_hide_proposals", hide_proposals},
+            {"m_ap_panel",       m_ap_panel},
+        }
+        for _, cmd in ipairs(cmds) do
+            pcall(function() dbg.register_cmd(cmd[1], cmd[2]) end)
+        end
+        print("[All Proposals] on_game_state_ready: registered " .. #cmds .. " console commands")
+    else
+        print("[All Proposals] on_game_state_ready: DebugLayer not found")
     end
 
-    -- Enable the debug console (disabled by default in the game)
-    pcall(function() dbg.enabled = true end)
-
-    pcall(function() dbg.register_cmd("m_show_proposals", show_proposals) end)
-    pcall(function() dbg.register_cmd("m_hide_proposals", hide_proposals) end)
-    print("[All Proposals] Debug console enabled. Registered: m_show_proposals m_hide_proposals")
-
-    -- Register panel section with shared ModPanels framework
-    if _ap_setup_panel then _ap_setup_panel(world) end
-end
-
--- Panel section builder (shared ModPanels framework)
-_ap_setup_panel = function(world)
-    local ok, content = pcall(function()
-        return world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
-    end)
-    if not ok or not content then return end
-
-    pcall(function()
-        local old = content.get_node("mp_all_proposals")
-        if old then old.queue_free() end
-    end)
-
-    local section = create_node("VBoxContainer", "")
-    section.name = "mp_all_proposals"
-
-    local sep = create_node("HSeparator", "")
-    section.add_child(sep)
-    local title = create_node("Label", "")
-    title.text = "All Proposals"
-    pcall(function() title.add_theme_font_size_override("font_size", 14) end)
-    section.add_child(title)
-
-    _ap_status = create_node("Label", "")
-    _ap_status.text = all_proposals_active and "Showing all proposals" or "Normal mode"
-    pcall(function() _ap_status.add_theme_font_size_override("font_size", 11) end)
-    section.add_child(_ap_status)
-
-    local row = create_node("HBoxContainer", "")
-    section.add_child(row)
-
-    local btn_show = create_node("Button", "")
-    btn_show.text = "Show All"
-    pcall(function() btn_show.custom_minimum_size = Vector2(110, 28) end)
-    btn_show.toggle_mode = true
-    row.add_child(btn_show)
-    _ap_btn_show = btn_show
-
-    local btn_hide = create_node("Button", "")
-    btn_hide.text = "Restore"
-    pcall(function() btn_hide.custom_minimum_size = Vector2(110, 28) end)
-    btn_hide.toggle_mode = true
-    row.add_child(btn_hide)
-    _ap_btn_hide = btn_hide
-
-    content.add_child(section)
-    print("[All Proposals] Panel section registered with ModPanels")
+    build_ap_panel(world)
 end
 
 function on_mod_reload()
     print("[All Proposals] Reloaded (F11)")
-    _ap_status = nil
-    _ap_btn_show = nil
-    _ap_btn_hide = nil
-    if _ap_setup_panel then
-        local w = ModApiV1 and ModApiV1.get_game_world()
-        if w then _ap_setup_panel(w) end
-    end
+    destroy_ap_panel()
+    local w = ModApiV1 and ModApiV1.get_game_world()
+    if w then build_ap_panel(w) end
 end
 
 function on_tick(delta)
+    -- Poll close button
+    if _ap_panel_close then
+        pcall(function()
+            if _ap_panel_close.button_pressed then
+                _ap_panel_close.button_pressed = false
+                _ap_panel_visible = false
+                _ap_panel.visible = false
+            end
+        end)
+    end
+    -- Poll action buttons
     pcall(function()
         if _ap_btn_show and _ap_btn_show.button_pressed then
             _ap_btn_show.button_pressed = false; show_proposals()
@@ -443,7 +475,5 @@ function on_tick(delta)
     end)
 end
 
-print("=== All Proposals Mod Setup Complete ===")
-print("    Console: show_proposals / hide_proposals")
-print("    (excludes proposals with unmet dependencies)")
-print("===")
+print("=== All Proposals Mod v1.3.0 Ready ===")
+print("    Console: m_show_proposals / m_hide_proposals / m_ap_panel")

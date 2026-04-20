@@ -1761,66 +1761,103 @@ function on_engine_load()
 end
 
 local _diag_btns = {}
+local _diag_panel       = nil
+local _diag_panel_visible = false
+local _diag_panel_close = nil
 
--- Panel section builder (shared ModPanels framework)
-local function _diag_setup_panel(world)
+-- Panel (standalone CanvasLayer at /root)
+local function destroy_diag_panel()
+    if _diag_panel then pcall(function() _diag_panel.queue_free() end) end
+    _diag_panel = nil; _diag_panel_visible = false; _diag_panel_close = nil
     _diag_btns = {}
+end
+
+local function _diag_setup_panel(world)
+    destroy_diag_panel()
     pcall(function()
-        local content = world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
-        if not content then return end
+        local root = world.get_node("/root")
+        if not root then return end
 
+        _diag_panel = create_node("CanvasLayer", "")
+        _diag_panel.layer = 100
+        _diag_panel.visible = false
+
+        local container = create_node("PanelContainer", "")
+        _diag_panel.add_child(container)
         pcall(function()
-            local old = content.get_node("mp_modapi_diag")
-            if old then old.queue_free() end
+            container.anchor_left = 1.0; container.anchor_top = 0.0
+            container.anchor_right = 1.0; container.anchor_bottom = 0.0
         end)
+        pcall(function()
+            container.offset_left = -270; container.offset_top = 650
+            container.offset_right = -10;  container.offset_bottom = 800
+        end)
+        pcall(function() container.self_modulate = Color(1, 1, 1, 0.92) end)
 
-        local section = create_node("VBoxContainer", "")
-        section.name = "mp_modapi_diag"
+        local vbox = create_node("VBoxContainer", "")
+        container.add_child(vbox)
 
-        local sep = create_node("HSeparator", "")
-        section.add_child(sep)
+        -- Header
+        local header = create_node("HBoxContainer", "")
+        vbox.add_child(header)
         local title = create_node("Label", "")
         title.text = "ModAPI Diagnostic"
-        pcall(function() title.add_theme_font_size_override("font_size", 14) end)
-        section.add_child(title)
+        pcall(function() title.add_theme_font_size_override("font_size", 15) end)
+        pcall(function() title.size_flags_horizontal = 3 end)
+        header.add_child(title)
+
+        _diag_panel_close = create_node("Button", "")
+        _diag_panel_close.text = "X"
+        _diag_panel_close.flat = true
+        _diag_panel_close.toggle_mode = true
+        pcall(function() _diag_panel_close.custom_minimum_size = Vector2(28, 28) end)
+        header.add_child(_diag_panel_close)
 
         local row1 = create_node("HBoxContainer", "")
-        section.add_child(row1)
+        vbox.add_child(row1)
 
         local btn_world = create_node("Button", "")
         btn_world.text = "World Info"
-        pcall(function() btn_world.custom_minimum_size = Vector2(110, 28) end)
+        pcall(function() btn_world.custom_minimum_size = Vector2(120, 28) end)
         btn_world.toggle_mode = true
         row1.add_child(btn_world)
         _diag_btns.world = btn_world
 
         local btn_export = create_node("Button", "")
         btn_export.text = "Export JSON"
-        pcall(function() btn_export.custom_minimum_size = Vector2(110, 28) end)
+        pcall(function() btn_export.custom_minimum_size = Vector2(120, 28) end)
         btn_export.toggle_mode = true
         row1.add_child(btn_export)
         _diag_btns.export = btn_export
 
         local row2 = create_node("HBoxContainer", "")
-        section.add_child(row2)
+        vbox.add_child(row2)
 
         local btn_test = create_node("Button", "")
         btn_test.text = "Run Tests"
-        pcall(function() btn_test.custom_minimum_size = Vector2(110, 28) end)
+        pcall(function() btn_test.custom_minimum_size = Vector2(120, 28) end)
         btn_test.toggle_mode = true
         row2.add_child(btn_test)
         _diag_btns.test = btn_test
 
         local btn_log = create_node("Button", "")
         btn_log.text = "Lifecycle Log"
-        pcall(function() btn_log.custom_minimum_size = Vector2(110, 28) end)
+        pcall(function() btn_log.custom_minimum_size = Vector2(120, 28) end)
         btn_log.toggle_mode = true
         row2.add_child(btn_log)
         _diag_btns.log = btn_log
 
-        content.add_child(section)
-        print("[DIAG] Panel section registered with ModPanels")
+        root.add_child(_diag_panel)
+        print("[DIAG] Panel built (standalone CanvasLayer at /root)")
     end)
+end
+
+-- Console command: toggle diagnostic panel
+function m_diag_panel()
+    if not _diag_panel then print("[DIAG] m_diag_panel: panel not built yet"); return end
+    _diag_panel_visible = not _diag_panel_visible
+    pcall(function() _diag_panel.visible = _diag_panel_visible end)
+    print("[DIAG] m_diag_panel: " .. (_diag_panel_visible and "shown" or "hidden"))
 end
 
 function on_game_state_ready()
@@ -1844,6 +1881,7 @@ function on_game_state_ready()
                 {"run_api_test_suite",       run_api_test_suite},
                 {"export_test_results_json", export_test_results_json},
                 {"show_lifecycle_log",       show_lifecycle_log},
+                {"m_diag_panel",             m_diag_panel},
             }
             for _, cmd in ipairs(cmds) do
                 pcall(function() dbg.register_cmd(cmd[1], cmd[2]) end)
@@ -1890,7 +1928,7 @@ end
 
 function on_mod_reload()
     lifecycle("on_mod_reload", "mods reloaded (F11)")
-    _diag_btns = {}
+    destroy_diag_panel()
     local world = ModApiV1 and ModApiV1.get_game_world()
     if world then _diag_setup_panel(world) end
 end
@@ -2000,8 +2038,19 @@ function on_day_end()
     end
 end
 
--- on_tick: poll toggle-mode buttons for the ModPanels UI
+-- on_tick: poll toggle-mode buttons for standalone panel
 function on_tick(delta)
+    -- Poll close button
+    if _diag_panel_close then
+        pcall(function()
+            if _diag_panel_close.button_pressed then
+                _diag_panel_close.button_pressed = false
+                _diag_panel_visible = false
+                _diag_panel.visible = false
+            end
+        end)
+    end
+    -- Poll action buttons
     pcall(function()
         local b = _diag_btns
         if b.world  and b.world.button_pressed  then b.world.button_pressed  = false; dump_world_overview() end
