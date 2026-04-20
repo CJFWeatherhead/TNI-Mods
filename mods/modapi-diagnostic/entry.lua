@@ -1760,8 +1760,11 @@ function on_engine_load()
     if Engine then print("[DIAG] + Engine global available") end
 end
 
+local _diag_btns = {}
+
 -- Panel section builder (shared ModPanels framework)
 local function _diag_setup_panel(world)
+    _diag_btns = {}
     pcall(function()
         local content = world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
         if not content then return end
@@ -1787,14 +1790,16 @@ local function _diag_setup_panel(world)
         local btn_world = create_node("Button", "")
         btn_world.text = "World Info"
         pcall(function() btn_world.custom_minimum_size = Vector2(110, 28) end)
+        btn_world.toggle_mode = true
         row1.add_child(btn_world)
-        btn_world.connect("pressed", Mod.callable_args_to_array(dump_world_overview))
+        _diag_btns.world = btn_world
 
         local btn_export = create_node("Button", "")
         btn_export.text = "Export JSON"
         pcall(function() btn_export.custom_minimum_size = Vector2(110, 28) end)
+        btn_export.toggle_mode = true
         row1.add_child(btn_export)
-        btn_export.connect("pressed", Mod.callable_args_to_array(export_to_json))
+        _diag_btns.export = btn_export
 
         local row2 = create_node("HBoxContainer", "")
         section.add_child(row2)
@@ -1802,14 +1807,16 @@ local function _diag_setup_panel(world)
         local btn_test = create_node("Button", "")
         btn_test.text = "Run Tests"
         pcall(function() btn_test.custom_minimum_size = Vector2(110, 28) end)
+        btn_test.toggle_mode = true
         row2.add_child(btn_test)
-        btn_test.connect("pressed", Mod.callable_args_to_array(run_api_test_suite))
+        _diag_btns.test = btn_test
 
         local btn_log = create_node("Button", "")
         btn_log.text = "Lifecycle Log"
         pcall(function() btn_log.custom_minimum_size = Vector2(110, 28) end)
+        btn_log.toggle_mode = true
         row2.add_child(btn_log)
-        btn_log.connect("pressed", Mod.callable_args_to_array(show_lifecycle_log))
+        _diag_btns.log = btn_log
 
         content.add_child(section)
         print("[DIAG] Panel section registered with ModPanels")
@@ -1883,6 +1890,7 @@ end
 
 function on_mod_reload()
     lifecycle("on_mod_reload", "mods reloaded (F11)")
+    _diag_btns = {}
     local world = ModApiV1 and ModApiV1.get_game_world()
     if world then _diag_setup_panel(world) end
 end
@@ -1992,8 +2000,15 @@ function on_day_end()
     end
 end
 
--- on_tick: no-op (kept for lifecycle logging only)
+-- on_tick: poll toggle-mode buttons for the ModPanels UI
 function on_tick(delta)
+    pcall(function()
+        local b = _diag_btns
+        if b.world  and b.world.button_pressed  then b.world.button_pressed  = false; dump_world_overview() end
+        if b.export and b.export.button_pressed then b.export.button_pressed = false; export_to_json() end
+        if b.test   and b.test.button_pressed   then b.test.button_pressed   = false; run_api_test_suite() end
+        if b.log    and b.log.button_pressed    then b.log.button_pressed    = false; show_lifecycle_log() end
+    end)
 end
 
 -- ============================================================================
