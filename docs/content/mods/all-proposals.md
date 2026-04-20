@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "0.1.17"
+version: "0.1.18"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 | | |
 |---|---|
-| **Version** | 0.1.17 |
+| **Version** | 0.1.18 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 <div class="download-section">
 
-**[Download all-proposals-0.1.17.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.17/all-proposals-0.1.17.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-0.1.18.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.18/all-proposals-0.1.18.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -176,8 +176,8 @@ CJFWeatherhead
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.17)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.17/all-proposals-0.1.17.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.18)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.18/all-proposals-0.1.18.zip)
 
 </details>
 

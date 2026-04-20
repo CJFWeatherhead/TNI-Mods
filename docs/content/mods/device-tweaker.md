@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "device-tweaker"
 author: "CJFWeatherhead"
-version: "0.1.24"
+version: "0.1.25"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 | | |
 |---|---|
-| **Version** | 0.1.24 |
+| **Version** | 0.1.25 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 <div class="download-section">
 
-**[Download device-tweaker-0.1.24.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.24/device-tweaker-0.1.24.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download device-tweaker-0.1.25.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.25/device-tweaker-0.1.25.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -173,15 +173,14 @@ A comprehensive mod for Tower Networking Inc that allows you to customize device
 
 ### 🔧 Multiple Modification Types
 
-- **Bandwidth**: Adjust network bandwidth capacity for switches, routers, and other network devices
+- **Bandwidth**: Adjust network bandwidth capacity (`installed_nbw`) for switches, routers, and other network devices
 - **Warranties**: Set fixed or random warranty multipliers for device reliability
-- **Cost**: Modify device purchase prices (make them cheaper or more expensive)
-- **Hardware**: Scale CPU power, RAM, and storage capacity independently (Not Supported by the games API currently)
-- **Network Addressing**: Automatically assign descriptive network addresses based on floor and device type (Not supported by the games API)
+- **Cost**: Modify device purchase prices (`price`) — make them cheaper or more expensive
+- **Hardware**: Scale CPU power (`installed_cpu`), RAM (`installed_mem`), and storage (`installed_sto`) independently
 
 ### 🎯 Device Class Filtering
 
-Selectively apply modifications to specific device types (all 20 classes from game API):
+Selectively apply modifications to specific device types (all 21 classes from game API v0.10.11):
 
 - **Default** (0) - def
 - **Network Switch** (1) - swt
@@ -203,6 +202,7 @@ Selectively apply modifications to specific device types (all 20 classes from ga
 - **Phone** (17) - phn
 - **Printer** (18) - prt
 - **Network Load Balancer** (19) - nlb
+- **Network Storage** (20) - nst
 
 ### ⚙️ Flexible Configuration
 
@@ -221,28 +221,29 @@ Selectively apply modifications to specific device types (all 20 classes from ga
 
 ### Device Class Filters
 
-| Parameter                         | Default | Description                                                     |
-| --------------------------------- | ------- | --------------------------------------------------------------- |
-| Enable for Default Devices        | ✓       | Apply modifications to default devices (class 0)                |
-| Enable for Network Switches       | ✓       | Apply modifications to network switch devices (class 1)         |
-| Enable for Network Routers        | ✓       | Apply modifications to network router devices (class 2)         |
-| Enable for Network Taps           | ✓       | Apply modifications to network tap devices (class 3)            |
-| Enable for Network Firewalls      | ✓       | Apply modifications to network firewall devices (class 4)       |
-| Enable for Media Line Simplex     | ✓       | Apply modifications to media line simplex devices (class 5)     |
-| Enable for Media Line Duplex      | ✓       | Apply modifications to media line duplex devices (class 6)      |
-| Enable for Compute Servers        | ✓       | Apply modifications to compute server devices (class 7)         |
-| Enable for Display Monitors       | ✓       | Apply modifications to display monitor devices (class 8)        |
-| Enable for Debuggers              | ✓       | Apply modifications to debugger devices (class 9)               |
-| Enable for Load Testers           | ✓       | Apply modifications to load tester devices (class 10)           |
-| Enable for Power Expansion        | ✓       | Apply modifications to power expansion devices (class 11)       |
-| Enable for Decentro Rigs          | ✓       | Apply modifications to decentro rig devices (class 12)          |
-| Enable for Surge Protectors       | ✓       | Apply modifications to surge protector devices (class 13)       |
-| Enable for UPS Devices            | ✓       | Apply modifications to UPS devices (class 14)                   |
-| Enable for Inert Devices          | ✓       | Apply modifications to inert devices (class 15)                 |
-| Enable for CCTV                   | ✓       | Apply modifications to CCTV devices (class 16)                  |
-| Enable for Phones                 | ✓       | Apply modifications to phone devices (class 17)                 |
-| Enable for Printers               | ✓       | Apply modifications to printer devices (class 18)               |
-| Enable for Network Load Balancers | ✓       | Apply modifications to network load balancer devices (class 19) |
+| Parameter                         | Default | Description                                                      |
+| --------------------------------- | ------- | ---------------------------------------------------------------- |
+| Enable for Default Devices        | ✓       | Apply modifications to default devices (class 0)                 |
+| Enable for Network Switches       | ✓       | Apply modifications to network switch devices (class 1)          |
+| Enable for Network Routers        | ✓       | Apply modifications to network router devices (class 2)          |
+| Enable for Network Taps           | ✓       | Apply modifications to network tap devices (class 3)             |
+| Enable for Network Firewalls      | ✓       | Apply modifications to network firewall devices (class 4)        |
+| Enable for Media Line Simplex     | ✓       | Apply modifications to media line simplex devices (class 5)      |
+| Enable for Media Line Duplex      | ✓       | Apply modifications to media line duplex devices (class 6)       |
+| Enable for Compute Servers        | ✓       | Apply modifications to compute server devices (class 7)          |
+| Enable for Display Monitors       | ✓       | Apply modifications to display monitor devices (class 8)         |
+| Enable for Debuggers              | ✓       | Apply modifications to debugger devices (class 9)                |
+| Enable for Load Testers           | ✓       | Apply modifications to load tester devices (class 10)            |
+| Enable for Power Expansion        | ✓       | Apply modifications to power expansion devices (class 11)        |
+| Enable for Decentro Rigs          | ✓       | Apply modifications to decentro rig devices (class 12)           |
+| Enable for Surge Protectors       | ✓       | Apply modifications to surge protector devices (class 13)        |
+| Enable for UPS Devices            | ✓       | Apply modifications to UPS devices (class 14)                    |
+| Enable for Inert Devices          | ✓       | Apply modifications to inert devices (class 15)                  |
+| Enable for CCTV                   | ✓       | Apply modifications to CCTV devices (class 16)                   |
+| Enable for Phones                 | ✓       | Apply modifications to phone devices (class 17)                  |
+| Enable for Printers               | ✓       | Apply modifications to printer devices (class 18)                |
+| Enable for Network Load Balancers | ✓       | Apply modifications to network load balancer devices (class 19)  |
+| Enable for Network Storage        | ✓       | Apply modifications to network storage devices (class 20)        |
 
 ### Bandwidth Settings
 
@@ -270,7 +271,7 @@ Selectively apply modifications to specific device types (all 20 classes from ga
 | Enable Cost Modification | ✗       | -          | Enable/disable cost changes     |
 | Cost Multiplier          | 1.0     | 0.01-100.0 | Device purchase cost multiplier |
 
-### Hardware Settings (Currently Unsupported by API)
+### Hardware Settings
 
 | Parameter                   | Default | Range     | Description                      |
 | --------------------------- | ------- | --------- | -------------------------------- |
@@ -281,49 +282,49 @@ Selectively apply modifications to specific device types (all 20 classes from ga
 | Enable Storage Modification | ✗       | -         | Enable/disable storage changes   |
 | Storage Multiplier          | 1.0     | 0.1-100.0 | Storage capacity multiplier      |
 
-### Network Addressing Settings (Currently Unsupported by API)
-
-| Parameter                      | Default | Description                                                                     |
-| ------------------------------ | ------- | ------------------------------------------------------------------------------- |
-| Enable Auto Network Addressing | ✗       | Automatically assign network addresses in format `@f{floor}/{class}{increment}` |
-
-**Address Format**: `@f{floor}/{abbrev}{increment}`
-
-- **Abbreviations**: 
-  - def (default), swt (switch), rtr (router), tap (tap), fwr (firewall)
-  - mls (media line simplex), mld (media line duplex), srv (compute server)
-  - mon (monitor), dbg (debugger), ldt (load tester), pwr (power expansion)
-  - dcr (decentro rigs), spr (surge protector), ups (ups), ine (inert)
-  - ccv (cctv), phn (phone), prt (printer), nlb (load balancer)
-- **Examples**: `@f4/srv1`, `@f2/swt3`, `@f18/nlb2`
-- **Increments**: Per floor and device class combination
-
 ## Technical Details
+
+### API Property Mapping (game v0.10.11)
+
+| Mod Feature | API Property | Object |
+|-------------|-------------|--------|
+| Bandwidth | `installed_nbw` | `LogicController` |
+| CPU | `installed_cpu` | `LogicController` |
+| Memory | `installed_mem` | `LogicController` |
+| Storage | `installed_sto` | `LogicController` |
+| Price | `price` | `DeviceUnit` |
+| Warranty Days | `base_warranty_days` | `DeviceUnit` |
+| Warranty Cycles | `base_warranty_cycles` | `DeviceUnit` |
+| Warranty Remaining | `warranty_period_remaining` | `DeviceUnit` |
+| Device Class | `device_hardware_class` | `DeviceUnit` |
 
 ### Device Classes Reference
 
-The mod uses the `device_hardware_class` property to identify device types based on the DeviceHardwareClass enum:
+The mod uses the `device_hardware_class` property to identify device types based on the `DeviceUnit.DeviceHardwareClass` enum:
 
-- `0` = Default (def)
-- `1` = Network Switch (swt)
-- `2` = Network Router (rtr)
-- `3` = Network Tap (tap)
-- `4` = Network Firewall (fwr)
-- `5` = Media Line Simplex (mls)
-- `6` = Media Line Duplex (mld)
-- `7` = Compute Server (srv)
-- `8` = Display Monitor (mon)
-- `9` = Debugger (dbg)
-- `10` = Load Tester (ldt)
-- `11` = Power Expansion (pwr)
-- `12` = Decentro Rigs (dcr)
-- `13` = Surge Protector (spr)
-- `14` = UPS (ups)
-- `15` = Inert (ine)
-- `16` = CCTV (ccv)
-- `17` = Phone (phn)
-- `18` = Printer (prt)
-- `19` = Network Load Balancer (nlb)
+| ID | Enum Name | Abbreviation |
+|----|-----------|-------------|
+| 0 | DEFAULT | def |
+| 1 | NETWORK_SWITCH | swt |
+| 2 | NETWORK_ROUTER | rtr |
+| 3 | NETWORK_TAP | tap |
+| 4 | NETWORK_FIREWALL | fwr |
+| 5 | MEDIA_LINE_SIMPLEX | mls |
+| 6 | MEDIA_LINE_DUPLEX | mld |
+| 7 | COMPUTE_SERVER | srv |
+| 8 | DISPLAY_MONITOR | mon |
+| 9 | DEBUGGER | dbg |
+| 10 | LOAD_TESTER | ldt |
+| 11 | POWER_EXPANSION | pwr |
+| 12 | DECENTRO_RIGS | dcr |
+| 13 | SURGE_PROTECTOR | spr |
+| 14 | UPS | ups |
+| 15 | INERT | ine |
+| 16 | CCTV | ccv |
+| 17 | PHONE | phn |
+| 18 | PRINTER | prt |
+| 19 | NETWORK_LOAD_BALANCER | nlb |
+| 20 | NETWORK_STORAGE | nst |
 
 ### Modification Timing
 
@@ -332,6 +333,10 @@ All modifications are applied when devices spawn via the `on_device_spawned()` c
 - Changes apply to newly purchased devices
 - Modifications persist for the device's lifetime
 - No performance impact on existing devices
+
+### Merchant Restock
+
+Use the debug console (`~` key) and type `m_restock` to restock all merchants. The restock function uses `ModApiV1.get_merchants()` to retrieve merchants and calls `merchant.restock()` on each one.
 
 ### Logging
 
@@ -344,32 +349,16 @@ The mod logs all modifications to the console with details about:
 Example log output:
 
 ```
-[device-tweaker] Active modifications: Bandwidth x2.00, Warranty x5.50 (random), Cost x0.75, Auto Network Addressing
-[device-tweaker] Enabled device classes: server, switch, router
-[device-tweaker] SuperSwitch 3000 (switch): BW: 1000 -> 2000 (x2.00) | warranty days: 365 -> 2008 | cost: $5000 -> $3750 | netaddr: @f2/swt1
+[device-tweaker] Active modifications: Bandwidth x2.00, Warranty x5.50 (random), Cost x0.75
+[device-tweaker] Enabled device classes: network_switch, network_router, compute_server
+[device-tweaker] SuperSwitch 3000 (network_switch): BW: 1000 -> 2000 (x2.00) | warranty: 365 -> 2008 days (x5.50) | price: $5000 -> $3750
 ```
-
-### Network Address Auto-Assignment
-
-When enabled, devices receive network addresses automatically using this logic:
-
-- **Format**: `@f{floor}/{class_abbrev}{increment}`
-- **Counter**: Tracks increments per floor and device class combination
-- **Reset**: Counters reset when mod is reloaded (F11)
-
-Example progression on floor 4:
-
-- First compute server: `@f4/srv1`
-- Second compute server: `@f4/srv2`
-- First network switch: `@f4/swt1`
-- Third compute server: `@f4/srv3`
-- First network load balancer: `@f4/nlb1`
 
 ## Compatibility
 
-- **Game Version**: Beta
-- **Dependencies**: None required (modloader config system is optional)
-- **Conflicts**: Should be compatible with most other mods
+- **Game Version**: 0.10.7+ (typed for 0.10.11)
+- **Dependencies**: `luajit-support ~0.2.0`
+- **Conflicts**: `random-warranties`, `2x-bandwidth-switches` (both are superseded by this mod)
 
 ## Credits
 
@@ -379,6 +368,23 @@ This mod combines and extends functionality from:
 - `random-warranties` - Random warranty system implementation
 
 ## Version History
+
+### 3.0 (2026-04-20)
+
+- Cleanroom rewrite against game API v0.10.11 typing
+- Fixed CPU modification: `cpu_power` → `installed_cpu`
+- Fixed Memory modification: `installed_ram` → `installed_mem`
+- Fixed Storage modification: `installed_storage` → `installed_sto`
+- Fixed Cost modification: `base_cost_dollars` → `price`
+- Fixed merchant restock: `world.device_merchants` → `ModApiV1.get_merchants()`
+- Added NETWORK_STORAGE (class 20) support
+- Removed non-functional hotkey restock (replaced by debug console command)
+- Updated all debug dump property names to match current API
+
+### 2.2
+
+- Added debug console command registration
+- Added merchant restock functionality
 
 ### 1.0 (2026-01-18)
 
@@ -426,8 +432,8 @@ All modifications are applied when devices spawn.
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.24)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.24/device-tweaker-0.1.24.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.25)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.25/device-tweaker-0.1.25.zip)
 
 </details>
 

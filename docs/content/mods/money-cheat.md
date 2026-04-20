@@ -4,7 +4,7 @@ date: 2026-04-18
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
-version: "0.1.17"
+version: "0.1.18"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 | | |
 |---|---|
-| **Version** | 0.1.17 |
+| **Version** | 0.1.18 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 <div class="download-section">
 
-**[Download money-cheat-0.1.17.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.17/money-cheat-0.1.17.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download money-cheat-0.1.18.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.18/money-cheat-0.1.18.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -248,8 +248,8 @@ Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s c
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.17)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.17/money-cheat-0.1.17.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.18)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.18/money-cheat-0.1.18.zip)
 
 </details>
 
