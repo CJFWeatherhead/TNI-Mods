@@ -253,13 +253,13 @@ local function setup_panel(world)
     btn_slower.text = "Slower"
     pcall(function() btn_slower.custom_minimum_size = Vector2(110, 28) end)
     row1.add_child(btn_slower)
-    btn_slower.connect("pressed", m_slower)
+    btn_slower.connect("pressed", Mod.callable_args_to_array(m_slower))
 
     local btn_faster = create_node("Button", "")
     btn_faster.text = "Faster"
     pcall(function() btn_faster.custom_minimum_size = Vector2(110, 28) end)
     row1.add_child(btn_faster)
-    btn_faster.connect("pressed", m_faster)
+    btn_faster.connect("pressed", Mod.callable_args_to_array(m_faster))
 
     -- Control row
     local row2 = create_node("HBoxContainer", "")
@@ -268,20 +268,20 @@ local function setup_panel(world)
     btn_pause.text = "Pause"
     pcall(function() btn_pause.custom_minimum_size = Vector2(110, 28) end)
     row2.add_child(btn_pause)
-    btn_pause.connect("pressed", m_pause)
+    btn_pause.connect("pressed", Mod.callable_args_to_array(m_pause))
 
     local btn_reset = create_node("Button", "")
     btn_reset.text = "Reset"
     pcall(function() btn_reset.custom_minimum_size = Vector2(110, 28) end)
     row2.add_child(btn_reset)
-    btn_reset.connect("pressed", m_normal)
+    btn_reset.connect("pressed", Mod.callable_args_to_array(m_normal))
 
     -- Skip button (full width)
     local btn_skip = create_node("Button", "")
     btn_skip.text = "Skip Day"
     pcall(function() btn_skip.custom_minimum_size = Vector2(0, 28) end)
     section.add_child(btn_skip)
-    btn_skip.connect("pressed", m_skip)
+    btn_skip.connect("pressed", Mod.callable_args_to_array(m_skip))
 
     content.add_child(section)
     log("Panel section registered with ModPanels")
