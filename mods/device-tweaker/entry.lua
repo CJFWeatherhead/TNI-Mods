@@ -289,7 +289,7 @@ _dt_setup_panel = function(world)
     btn.text = "Restock Merchants"
     pcall(function() btn.custom_minimum_size = Vector2(0, 28) end)
     section.add_child(btn)
-    btn.connect("pressed", restock)
+    btn.connect("pressed", Mod.callable_args_to_array(restock))
 
     content.add_child(section)
     print("[device-tweaker] Panel section registered with ModPanels")
