@@ -56,6 +56,7 @@ local dbg_layer          = nil      -- cached DebugLayer reference
 local panel_overlay      = nil      -- CanvasLayer for the floating panel
 local panel_status_label = nil      -- Label showing current speed/time
 local panel_visible      = false    -- whether the panel is currently shown
+local panel_callbacks     = {}      -- prevent GC of signal callback closures
 
 -- =========================================================================
 -- Utilities
@@ -180,17 +181,22 @@ local function destroy_panel()
         panel_overlay      = nil
         panel_status_label = nil
         panel_visible      = false
+        panel_callbacks    = {}   -- release pinned callbacks
         debug_log("Panel destroyed")
     end
 end
 
 --- Create a styled button and wire its pressed signal.
+--- The callback is stored in panel_callbacks to prevent GC collection.
 --- Returns the Button node (or nil on failure).
 local function make_button(text, callback, parent)
+    -- Pin callback so Lua GC won't collect the closure while Godot
+    -- holds a signal reference the GC can't see.
+    table.insert(panel_callbacks, callback)
+
     local ok, btn = pcall(function()
         local b = create_node("Button", "")
         b.text = text
-        -- Style overrides — keep it readable on the semi-transparent panel
         pcall(function() b.add_theme_font_size_override("font_size", 13) end)
         pcall(function() b.custom_minimum_size = Vector2(90, 28) end)
         parent.add_child(b)
@@ -284,27 +290,31 @@ local function build_panel()
         -- Forward-declare cmd_* wrappers (the actual locals are defined
         -- further down in the file, but we need closures here).  We
         -- wrap through the global aliases which are always available.
-        make_button("Slower",   function() slower()      update_panel_status() end, speed_row)
-        make_button("Faster",   function() faster()      update_panel_status() end, speed_row)
+        -- Note: update_panel_status() is already called inside each cmd_*
+        -- function, so we don't need to call it again here.
+        make_button("Slower",   function() slower()     end, speed_row)
+        make_button("Faster",   function() faster()     end, speed_row)
 
         -- ── Control row ─────────────────────────────────────────────
         local ctrl_row = create_node("HBoxContainer", "")
         vbox.add_child(ctrl_row)
 
-        make_button("Pause",    function() time_pause()  update_panel_status() end, ctrl_row)
-        make_button("Reset",    function() normal()      update_panel_status() end, ctrl_row)
+        make_button("Pause",    function() time_pause() end, ctrl_row)
+        make_button("Reset",    function() normal()     end, ctrl_row)
 
         -- ── Skip button (full width) ────────────────────────────────
-        make_button("Skip Day", function() skip()        update_panel_status() end, vbox)
+        make_button("Skip Day", function() skip()       end, vbox)
 
         -- ── Wire close button ───────────────────────────────────────
-        close_btn.connect("pressed", function()
+        local close_cb = function()
             if panel_overlay then
                 panel_overlay.visible = false
                 panel_visible = false
                 log("Panel hidden (click X to close, m_panel to reopen)")
             end
-        end)
+        end
+        table.insert(panel_callbacks, close_cb)
+        close_btn.connect("pressed", close_cb)
 
         -- Attach the overlay to the mod's own node so it lives in the
         -- scene tree and gets cleaned up automatically with the mod.
