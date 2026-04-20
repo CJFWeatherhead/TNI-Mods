@@ -2,7 +2,7 @@
 	"id": "money-cheat",
 	"name": "Money Cheat",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.26",
+	"version": "0.1.27",
 	"description": [
 		"Simple money cheat mod that adds a configurable amount of money via console command.\n\n✨ Features\n• Instant money injection via console command (m_money)\n• Configurable amount (default: $10,000)\n• Panel button in shared ModPanels sidebar (m_panels)\n• Console feedback on activation\n\n🕹️ Usage\nOpen the debug console (~) and type: m_money\nOr use the Add Money button in the Mod Panels sidebar.\nConfigure the amount in the Mod Manager settings.\n\n⚙️ Configuration\n• Money Amount: The amount to add when activated (default: $10,000)\n• Debug Logging: Show detailed console messages"
 	],
