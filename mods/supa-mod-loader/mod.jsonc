@@ -2,9 +2,9 @@
 	"id": "supa-mod-loader",
 	"name": "Supa Mod Loader",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "3.7.8",
+	"version": "4.0.0",
 	"description": [
-		"SupaNerdo's Mod Loader is automatically added when mods are installed using the ModManager GUI.\n\nIts presence indicates that this mod collection was installed or managed via ModManagerGUI.ps1, allowing other mods to detect whether they were installed manually or through the mod manager.\n\nOther mods may list this as an optional dependency to adjust their behaviour based on the installation method — for example, showing update reminders or manager-specific guidance.\n\nNo gameplay changes are made by this mod."
+		"Supa Mod Loader — marker mod for ModManagerGUI + shared ModPanels UI framework.\n\nProvides a shared, scrollable side-panel overlay that other mods can add buttons and status displays to. Toggle with the m_panels console command (press ~).\n\nMod authors: add your VBoxContainer sections to the well-known scene path /root/ModPanels/Panel/Layout/Scroll/Content in your on_game_state_ready callback.\n\nNo gameplay changes are made by this mod."
 	],
 	"links": {
 		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader",
