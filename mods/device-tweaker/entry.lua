@@ -101,6 +101,7 @@ local config = {
 -- ===== MOD CONFIGURATION END =====
 
 local _dt_setup_panel  -- forward-declared panel builder
+local _dt_btn = nil
 
 -- Device class names for logging (from DeviceHardwareClass enum, game 0.10.11)
 local device_class_names = {
@@ -212,6 +213,7 @@ end
 function on_mod_reload()
     print("[device-tweaker] Reloaded (F11)")
     debug_dump_done = {}
+    _dt_btn = nil
     if _dt_setup_panel then
         local w = ModApiV1 and ModApiV1.get_game_world()
         if w then _dt_setup_panel(w) end
@@ -288,8 +290,9 @@ _dt_setup_panel = function(world)
     local btn = create_node("Button", "")
     btn.text = "Restock Merchants"
     pcall(function() btn.custom_minimum_size = Vector2(0, 28) end)
+    btn.toggle_mode = true
     section.add_child(btn)
-    btn.connect("pressed", Mod.callable_args_to_array(restock))
+    _dt_btn = btn
 
     content.add_child(section)
     print("[device-tweaker] Panel section registered with ModPanels")
@@ -444,4 +447,13 @@ function on_device_spawned(device)
     end
 end
 
-function on_tick(delta) end
+function on_tick(delta)
+    if _dt_btn then
+        pcall(function()
+            if _dt_btn.button_pressed then
+                _dt_btn.button_pressed = false
+                restock()
+            end
+        end)
+    end
+end
