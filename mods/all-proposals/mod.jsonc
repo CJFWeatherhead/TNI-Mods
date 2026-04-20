@@ -2,7 +2,7 @@
 	"id": "all-proposals",
 	"name": "All Proposals",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.18",
+	"version": "0.1.19",
 	"description": [
 		"Enhances the game's proposal system by allowing players to view all available proposals at once. Use the console commands m_show_proposals / m_hide_proposals or the buttons in the shared Mod Panels sidebar (m_panels) to toggle. Excludes proposals with unmet dependencies or failed adhoc requirements."
 	],
