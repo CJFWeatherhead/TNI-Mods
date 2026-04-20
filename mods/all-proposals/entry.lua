@@ -30,6 +30,8 @@ local original_batch_size = nil
 local all_proposals_active = false
 
 local _ap_status = nil
+local _ap_btn_show = nil
+local _ap_btn_hide = nil
 local _ap_setup_panel  -- forward-declared panel builder
 
 -- Helper function to safely check if a proposal has unmet dependencies
@@ -404,14 +406,16 @@ _ap_setup_panel = function(world)
     local btn_show = create_node("Button", "")
     btn_show.text = "Show All"
     pcall(function() btn_show.custom_minimum_size = Vector2(110, 28) end)
+    btn_show.toggle_mode = true
     row.add_child(btn_show)
-    btn_show.connect("pressed", Mod.callable_args_to_array(show_proposals))
+    _ap_btn_show = btn_show
 
     local btn_hide = create_node("Button", "")
     btn_hide.text = "Restore"
     pcall(function() btn_hide.custom_minimum_size = Vector2(110, 28) end)
+    btn_hide.toggle_mode = true
     row.add_child(btn_hide)
-    btn_hide.connect("pressed", Mod.callable_args_to_array(hide_proposals))
+    _ap_btn_hide = btn_hide
 
     content.add_child(section)
     print("[All Proposals] Panel section registered with ModPanels")
@@ -420,13 +424,24 @@ end
 function on_mod_reload()
     print("[All Proposals] Reloaded (F11)")
     _ap_status = nil
+    _ap_btn_show = nil
+    _ap_btn_hide = nil
     if _ap_setup_panel then
         local w = ModApiV1 and ModApiV1.get_game_world()
         if w then _ap_setup_panel(w) end
     end
 end
 
-function on_tick(delta) end
+function on_tick(delta)
+    pcall(function()
+        if _ap_btn_show and _ap_btn_show.button_pressed then
+            _ap_btn_show.button_pressed = false; show_proposals()
+        end
+        if _ap_btn_hide and _ap_btn_hide.button_pressed then
+            _ap_btn_hide.button_pressed = false; hide_proposals()
+        end
+    end)
+end
 
 print("=== All Proposals Mod Setup Complete ===")
 print("    Console: show_proposals / hide_proposals")
