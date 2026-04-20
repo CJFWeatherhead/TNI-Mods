@@ -1,10 +1,10 @@
 ---
 title: "TARDIS - Time Controller"
-date: 2026-04-18
+date: 2026-04-20
 draft: false
 mod_id: "tardis"
 author: "CJFWeatherhead"
-version: "0.1.16"
+version: "0.1.18"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 | | |
 |---|---|
-| **Version** | 0.1.16 |
+| **Version** | 0.1.18 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-18 |
+| **Last Updated** | 2026-04-20 |
 
 </div>
 
@@ -31,7 +31,7 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 <div class="download-section">
 
-**[Download tardis-0.1.16.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.16/tardis-0.1.16.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download tardis-0.1.18.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.18/tardis-0.1.18.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -107,32 +107,32 @@ Like the Doctor's famous time machine, this mod gives you control over the flow 
 
 # TARDIS - Time Controller
 
-Control game time like a Time Lord! Preset-based speed control and time manipulation via the debug console — plus an optional floating UI panel with clickable buttons — in Tower Networking Inc.
+Control game time like a Time Lord! Preset-based speed control and time manipulation via the debug console and shared ModPanels UI in Tower Networking Inc.
 
 ## Description
 
 Just like the Doctor's famous time machine (Time And Relative Dimension In Space), this mod gives you control over the flow of time. Speed up boring moments, slow down critical situations, skip straight to the end of the day, or freeze time entirely.
 
-v2.1 adds a **clickable UI panel** — type `m_panel` once and you get a floating overlay with buttons for every action. No more typing commands repeatedly.
+v2.3 migrates to the **shared ModPanels framework** (provided by supa-mod-loader). Type `m_panels` to open a sidebar with buttons for every mod that supports it. TARDIS adds speed, pause, reset, and skip-day controls.
 
 v2.0 was a cleanroom rewrite. Speed changes use **fixed presets** (0.125x – 8x) instead of arithmetic steps, eliminating the float-drift inconsistencies that affected v1. The hotkey-based input approach from earlier versions was replaced with debug console commands — hotkeys required per-frame or per-input callbacks that caused garbage-collection exhaustion over time.
 
 ## Features
 
 - **Speed Presets**: Cycle through 0.125x, 0.25x, 0.5x, 1x, 2x, 4x, 8x
-- **Clickable UI Panel**: Floating overlay with buttons — toggle with `m_panel`
+- **Shared Panel UI**: Buttons in the ModPanels sidebar — toggle with `m_panels`
 - **Day Skip**: Jump to a configurable time of day (default 23:59)
 - **Pause / Resume**: Freeze and unfreeze the day cycle
 - **Auto-Reset**: Optionally reset speed to default at the start of each day
-- **Visual Feedback**: On-screen notifications for all actions
 - **Fully Configurable**: Adjust settings via Mod Manager
 
 ## Installation
 
 1. Place the `tardis` folder in your `Mods/` directory
-2. Load or reload the game (F11 to reload mods)
-3. You should see `[tardis] TARDIS mod loaded` in the console
-4. Press **~** to open the debug console and type a command
+2. Install `supa-mod-loader` for the shared panel sidebar (optional but recommended)
+3. Load or reload the game (F11 to reload mods)
+4. You should see `[tardis] TARDIS mod loaded` in the console
+5. Press **~** to open the debug console and type a command
 
 ## Console Commands
 
@@ -146,7 +146,8 @@ Press **~** to open the debug console, then type a command:
 | `m_skip`    | Skip to end of day (configurable)            |
 | `m_pause`   | Toggle day-cycle pause / resume              |
 | `m_time`    | Show current speed, day, time, and pause state |
-| `m_panel`   | Toggle the clickable UI panel                  |
+| `m_panels`  | Toggle the shared mod panels sidebar         |
+| `m_tardis`  | Alias for m_panels                           |
 
 ### Global Aliases
 
@@ -160,7 +161,6 @@ These work as direct Lua calls in the console as well:
 | `skip()`      | m_skip     |
 | `time_pause()`| m_pause    |
 | `time_status()`| m_time    |
-| `panel()`   | m_panel    |
 
 Legacy v1 aliases (`speed_up`, `speed_down`, `speed_reset`, `day_skip`, `speed`) are still supported.
 
@@ -173,7 +173,6 @@ All settings can be configured through the Mod Manager UI or by editing the `con
 | **Default Speed** | 1.0 | 0.125 – 8.0 | Speed to reset to with `m_normal` (snapped to nearest preset) |
 | **Skip To Time** | 23.99 | 0.0 – 23.99 | Hour to skip to in 24h decimal format |
 | **Auto Reset On Day Start** | false | — | Reset speed to default at the start of each new day |
-| **Show Notifications** | true | — | Display on-screen notifications |
 | **Debug Logging** | false | — | Show detailed console output |
 
 ### Speed Presets
@@ -200,8 +199,8 @@ Type `m_pause` to freeze the day cycle. Type `m_pause` again to resume.
 ### Automatic Reset
 Enable **Auto Reset On Day Start** in the config. Speed returns to 1x at the start of each new day — useful when you speed up to skip a day but want normal speed the next morning.
 
-### UI Panel
-Type `m_panel` in the debug console to open a floating panel with buttons for Slower, Faster, Pause, Reset, and Skip Day. The panel shows a live status line (speed, time, day, pause state) that updates after each action. Click **X** to hide it, or type `m_panel` again to toggle.
+### Shared Panel
+Type `m_panels` in the debug console (or `m_tardis`) to open the shared mod panels sidebar. TARDIS adds buttons for Slower, Faster, Pause, Reset, and Skip Day, plus a live status line showing speed, time, day, and pause state.
 
 ## Technical Details
 
@@ -212,15 +211,16 @@ Type `m_panel` in the debug console to open a floating panel with buttons for Sl
 - Syncs `current_preset_idx` from `world.time_mult` before each step operation
 - Console commands registered via `DebugLayer.register_cmd()` in `on_game_state_ready`
 - Auto-reset uses `on_day_start` callback — zero per-frame cost
-- No `on_player_input` or `on_tick` callbacks — avoids GC pressure entirely
-- UI panel built with `create_node()` — CanvasLayer > PanelContainer > VBoxContainer > Buttons
-- Button signals (`"pressed"`) connected directly to Lua functions via `Object.connect()`
-- Panel attached to `Mod` node (sandbox) for automatic cleanup; also destroyed on F11 reload
+- Panel section added to shared `/root/ModPanels` overlay (built by supa-mod-loader)
+- Button signals (`"pressed"`) connected to GLOBAL Lua functions — GC-safe because `_G` pins them
+- No `display_notification()` calls — they cause sandbox timeout cascades
+- Graceful degradation: if supa-mod-loader is not installed, console commands still work
 
 ## Compatibility
 
 - **Game Version**: 0.10.7+
 - **Dependencies**: `luajit-support ~0.2.0`
+- **Optional**: `supa-mod-loader >=4.0.0` (for shared panel sidebar)
 - **Conflicts**: May interact unexpectedly with other mods that manipulate game time
 
 ## Troubleshooting
@@ -234,30 +234,32 @@ Type `m_panel` in the debug console to open a floating panel with buttons for Sl
 - The day skip relies on `DayCycleController` which may not be available in all game modes
 - Check the console for error messages after typing `m_skip`
 
-### Notifications don't appear
-- Ensure **Show Notifications** is enabled in config
-- Some game states may not support the notification UI
+### Panel doesn't appear
+- Install `supa-mod-loader` (v4.0.0+) for the shared ModPanels sidebar
+- Type `m_panels` to toggle the sidebar
+- All console commands still work regardless of whether the panel loads
 
 ### Commands not registered
 - If `m_faster` etc. don't work in the debug console, the global aliases (`faster()`, `slower()`, etc.) should still work as direct Lua calls
 
-### UI panel doesn't appear
-- The panel uses `create_node()` to build Godot UI nodes at runtime — this is experimental
-- If `m_panel` reports a failure, check the console error for details
-- All console commands still work regardless of whether the panel loads
-- Try enabling debug logging to see the panel build status
-
 ## Changelog
 
-### v2.1.0 (2026-04-20)
+### v2.3.0
+- Migrated to **shared ModPanels framework** (supa-mod-loader v4.0.0)
+- Removed custom standalone panel — buttons now appear in the shared sidebar
+- Removed `display_notification()` calls (caused sandbox timeout cascades)
+- Removed `show_notifications` config option (no longer applicable)
+- Replaced `m_panel` command with `m_panels` (shared) and `m_tardis` (alias)
+- Panel status auto-refreshes after each command action
+- Graceful degradation: if supa-mod-loader is absent, console commands work normally
+
+### v2.1.0
 - Added **clickable UI panel** — floating overlay with buttons, toggled via `m_panel`
 - Panel shows live status (speed, time, day, pause state) updated after each action
 - Panel built with Godot UI nodes (CanvasLayer, PanelContainer, VBoxContainer, Button)
 - Button press signals wired to Lua functions — experimental, first Lua mod to do this
-- Added `panel()` global alias
-- Panel cleaned up on mod reload (F11) and closeable via X button
 
-### v2.0.0 (2026-04-20)
+### v2.0.0
 - **Cleanroom rewrite** — all logic reimplemented from scratch
 - Replaced arithmetic step-based speed (source of float-drift inconsistencies) with fixed preset cycling
 - Removed `on_player_input` / hotkey approach (caused GC exhaustion)
@@ -269,7 +271,7 @@ Type `m_panel` in the debug console to open a floating panel with buttons for Sl
 - Legacy v1 global aliases preserved for backward compatibility
 - Reduced config surface: removed `speed_step`, `min_speed`, `max_speed` (presets cover the full game range)
 
-### v0.1.0 (2026-01-31)
+### v0.1.0
 - Initial release
 
 ## Credits
@@ -304,14 +306,14 @@ Speed changes persist until manually changed or game restart.
 |-------|-------|
 | Mod ID | `tardis` |
 | Creation Date | 2026-01-31 |
-| Last Updated | 2026-04-18 |
+| Last Updated | 2026-04-20 |
 | Game Version | beta |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.16)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.16/tardis-0.1.16.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.18)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.18/tardis-0.1.18.zip)
 
 </details>
 
