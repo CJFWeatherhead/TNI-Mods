@@ -100,6 +100,8 @@ local config = {
 
 -- ===== MOD CONFIGURATION END =====
 
+local _dt_setup_panel  -- forward-declared panel builder
+
 -- Device class names for logging (from DeviceHardwareClass enum, game 0.10.11)
 local device_class_names = {
     [0]  = "default",
@@ -202,12 +204,18 @@ function on_game_state_ready()
 
     pcall(function() dbg.register_cmd("m_restock", restock) end)
     print("[device-tweaker] Debug console enabled. Registered: m_restock")
+
+    -- Register panel section with shared ModPanels framework
+    if _dt_setup_panel then _dt_setup_panel(world) end
 end
 
 function on_mod_reload()
-    print("[device-tweaker] Reloading configuration...")
-    -- Reset debug dump tracking so first-device dumps happen again after reload
+    print("[device-tweaker] Reloaded (F11)")
     debug_dump_done = {}
+    if _dt_setup_panel then
+        local w = ModApiV1 and ModApiV1.get_game_world()
+        if w then _dt_setup_panel(w) end
+    end
 end
 
 -- Merchant restock functionality using ModApiV1.get_merchants()
@@ -251,16 +259,40 @@ end
 -- Console command: restock all merchants
 -- Usage: Open debug console (~) and type: m_restock
 function restock()
-    if restock_all_merchants() then
-        if config.show_restock_notification then
-            pcall(function()
-                local base_ui = ModApiV1.get_base_ui()
-                if base_ui and base_ui.display_notification then
-                    base_ui.display_notification("All merchants restocked!", 1)
-                end
-            end)
-        end
-    end
+    restock_all_merchants()
+    -- No display_notification — causes sandbox timeout cascades
+end
+
+-- Panel section builder (shared ModPanels framework)
+_dt_setup_panel = function(world)
+    local ok, content = pcall(function()
+        return world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
+    end)
+    if not ok or not content then return end
+
+    pcall(function()
+        local old = content.get_node("mp_device_tweaker")
+        if old then old.queue_free() end
+    end)
+
+    local section = create_node("VBoxContainer", "")
+    section.name = "mp_device_tweaker"
+
+    local sep = create_node("HSeparator", "")
+    section.add_child(sep)
+    local title = create_node("Label", "")
+    title.text = "Device Tweaker"
+    pcall(function() title.add_theme_font_size_override("font_size", 14) end)
+    section.add_child(title)
+
+    local btn = create_node("Button", "")
+    btn.text = "Restock Merchants"
+    pcall(function() btn.custom_minimum_size = Vector2(0, 28) end)
+    section.add_child(btn)
+    btn.connect("pressed", restock)
+
+    content.add_child(section)
+    print("[device-tweaker] Panel section registered with ModPanels")
 end
 
 -- Helper function to dump device properties for debugging (correct API property names)
@@ -411,3 +443,5 @@ function on_device_spawned(device)
             table.concat(modifications, " | ")))
     end
 end
+
+function on_tick(delta) end
