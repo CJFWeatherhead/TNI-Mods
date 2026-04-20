@@ -20,9 +20,12 @@
 --   handler.  It triggers re-entrant sandbox callbacks that cause
 --   timeout cascades.  Use print() for feedback instead.
 --
---   When connecting Lua functions to Godot signals (e.g. button.connect),
---   wrap them with Mod.callable_args_to_array(fn).  Raw Lua functions
---   crash the sandbox's callable bridge on signal dispatch.
+--   Do NOT use Object.connect() with Lua functions for button signals.
+--   The sandbox callable bridge (_ZL15gd_callable_luam5Array) crashes
+--   on signal dispatch — even with Mod.callable_args_to_array().
+--   Instead, set toggle_mode = true on buttons and poll button_pressed
+--   in on_tick().  Lifecycle callbacks use a different dispatch path
+--   that works correctly.
 
 local MOD_ID      = "supa-mod-loader"
 local MOD_VERSION = "4.0.0"
@@ -37,12 +40,14 @@ end
 -- Panel state
 local overlay_ref   = nil
 local panel_showing = false
+local close_btn_ref = nil
 
 -- =========================================================================
 -- Build the shared panel overlay
 -- =========================================================================
 
 local function build_overlay(world)
+    close_btn_ref = nil
     -- Clean up previous overlay (F11 reload)
     pcall(function()
         local old = world.get_node("/root/ModPanels")
@@ -96,7 +101,8 @@ local function build_overlay(world)
     close_btn.flat = true
     pcall(function() close_btn.custom_minimum_size = Vector2(28, 28) end)
     header.add_child(close_btn)
-    close_btn.connect("pressed", Mod.callable_args_to_array(_mp_close))
+    close_btn.toggle_mode = true
+    close_btn_ref = close_btn
 
     -- Separator
     local sep = create_node("HSeparator", "")
@@ -169,4 +175,13 @@ function on_mod_reload()
     if world then build_overlay(world) end
 end
 
-function on_tick(delta) end
+function on_tick(delta)
+    if close_btn_ref then
+        pcall(function()
+            if close_btn_ref.button_pressed then
+                close_btn_ref.button_pressed = false
+                _mp_close()
+            end
+        end)
+    end
+end
