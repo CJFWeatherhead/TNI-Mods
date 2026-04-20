@@ -2,7 +2,7 @@
 	"id": "supa-mod-loader",
 	"name": "Supa Mod Loader",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "4.0.1",
+	"version": "4.0.2",
 	"description": [
 		"Supa Mod Loader — marker mod for ModManagerGUI + shared ModPanels UI framework.\n\nProvides a shared, scrollable side-panel overlay that other mods can add buttons and status displays to. Toggle with the m_panels console command (press ~).\n\nMod authors: add your VBoxContainer sections to the well-known scene path /root/ModPanels/Panel/Layout/Scroll/Content in your on_game_state_ready callback.\n\nNo gameplay changes are made by this mod."
 	],
