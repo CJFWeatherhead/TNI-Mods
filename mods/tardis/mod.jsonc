@@ -2,7 +2,7 @@
 	"id": "tardis",
 	"name": "TARDIS - Time Controller",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.21",
+	"version": "0.1.22",
 	"description": [
 		"Control game time like a Time Lord! Preset-based speed control and time manipulation via the debug console and shared ModPanels UI.\n\n✨ Features\n• Speed presets: cycle through 0.125x, 0.25x, 0.5x, 1x, 2x, 4x, 8x\n• Day skip: jump to end of day (configurable time)\n• Pause/Resume: freeze the day cycle\n• Shared panel UI: buttons in the ModPanels sidebar (toggle with m_panels)\n• Auto-reset: optionally reset speed each new day\n\n❓ Why \"TARDIS\"?\nLike the Doctor's famous time machine, this mod gives you control over the flow of time!\n\n🕹️ Console Commands (press ~ to open)\n• m_faster  — step up to next speed preset\n• m_slower  — step down to previous speed preset\n• m_normal  — reset to default speed (1x)\n• m_skip    — skip to end of day\n• m_pause   — toggle day cycle pause/resume\n• m_time    — show current speed, day, and time\n• m_panels  — toggle the shared mod panels sidebar\n\n⚙️ Configuration\n• Default Speed: speed to reset to (default: 1x)\n• Skip To Time: hour to skip to (default: 23:59)\n• Auto Reset On Day Start: reset speed each new day\n• Debug Logging: enable detailed console output"
 	],
