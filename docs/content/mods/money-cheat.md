@@ -5,7 +5,7 @@ draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
 version: "0.1.18"
-status: "Active Development"
+status: "Discontinued"
 game_version: "beta"
 ---
 
@@ -19,7 +19,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 |---|---|
 | **Version** | 0.1.18 |
 | **Author** | CJFWeatherhead |
-| **Status** | 🟢 Active Development |
+| **Status** | 🔴 Discontinued |
 | **Game Version** | beta |
 | **Last Updated** | 2026-04-18 |
 
