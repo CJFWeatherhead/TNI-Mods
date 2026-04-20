@@ -405,13 +405,13 @@ _ap_setup_panel = function(world)
     btn_show.text = "Show All"
     pcall(function() btn_show.custom_minimum_size = Vector2(110, 28) end)
     row.add_child(btn_show)
-    btn_show.connect("pressed", show_proposals)
+    btn_show.connect("pressed", Mod.callable_args_to_array(show_proposals))
 
     local btn_hide = create_node("Button", "")
     btn_hide.text = "Restore"
     pcall(function() btn_hide.custom_minimum_size = Vector2(110, 28) end)
     row.add_child(btn_hide)
-    btn_hide.connect("pressed", hide_proposals)
+    btn_hide.connect("pressed", Mod.callable_args_to_array(hide_proposals))
 
     content.add_child(section)
     print("[All Proposals] Panel section registered with ModPanels")
