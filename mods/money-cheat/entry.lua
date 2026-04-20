@@ -29,6 +29,7 @@ local config = {
 -- ===== MOD CONFIGURATION END =====
 
 local _mc_status = nil
+local _mc_btn   = nil
 local setup_panel   -- forward-declared; defined after money()
 
 function on_engine_load()
@@ -54,6 +55,7 @@ end
 function on_mod_reload()
     print("[money-cheat] Reloaded (F11)")
     _mc_status = nil
+    _mc_btn = nil
     if setup_panel then setup_panel() end
 end
 
@@ -113,8 +115,9 @@ setup_panel = function()
     local btn = create_node("Button", "")
     btn.text = "Add Money"
     pcall(function() btn.custom_minimum_size = Vector2(110, 28) end)
+    btn.toggle_mode = true
     section.add_child(btn)
-    btn.connect("pressed", Mod.callable_args_to_array(money))
+    _mc_btn = btn
 
     content.add_child(section)
     print("[money-cheat] Panel section registered with ModPanels")
@@ -140,4 +143,13 @@ function on_game_state_ready()
     setup_panel()
 end
 
-function on_tick(delta) end
+function on_tick(delta)
+    if _mc_btn then
+        pcall(function()
+            if _mc_btn.button_pressed then
+                _mc_btn.button_pressed = false
+                money()
+            end
+        end)
+    end
+end
