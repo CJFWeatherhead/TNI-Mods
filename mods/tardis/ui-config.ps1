@@ -124,28 +124,14 @@ Uses the on_day_start lifecycle hook — zero per-frame cost.
 }
 
 # ============================================================================
-# Notification Settings
+# Debug Settings
 # ============================================================================
 
 $parameters += @{
     Type        = "section"
-    Label       = "Notifications"
-    Description = "Configure feedback and logging options"
+    Label       = "Debug"
+    Description = "Troubleshooting and logging options"
     Collapsed   = $true
-}
-
-$parameters += @{
-    Name        = "show_notifications"
-    Label       = "Show In-Game Notifications"
-    Type        = "boolean"
-    Default     = $true
-    Description = @"
-Display on-screen notifications when speed changes, time skips,
-or the day cycle is paused/resumed.
-
-Console messages are always shown regardless of this setting.
-"@
-    Section     = "Notifications"
 }
 
 $parameters += @{
@@ -163,7 +149,7 @@ When enabled:
 
 Recommended: Keep disabled unless troubleshooting issues.
 "@
-    Section     = "Notifications"
+    Section     = "Debug"
 }
 
 # ============================================================================
