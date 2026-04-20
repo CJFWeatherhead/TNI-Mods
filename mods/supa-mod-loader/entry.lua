@@ -19,6 +19,10 @@
 --   NEVER call display_notification() synchronously inside a command
 --   handler.  It triggers re-entrant sandbox callbacks that cause
 --   timeout cascades.  Use print() for feedback instead.
+--
+--   When connecting Lua functions to Godot signals (e.g. button.connect),
+--   wrap them with Mod.callable_args_to_array(fn).  Raw Lua functions
+--   crash the sandbox's callable bridge on signal dispatch.
 
 local MOD_ID      = "supa-mod-loader"
 local MOD_VERSION = "4.0.0"
@@ -92,7 +96,7 @@ local function build_overlay(world)
     close_btn.flat = true
     pcall(function() close_btn.custom_minimum_size = Vector2(28, 28) end)
     header.add_child(close_btn)
-    close_btn.connect("pressed", _mp_close)
+    close_btn.connect("pressed", Mod.callable_args_to_array(_mp_close))
 
     -- Separator
     local sep = create_node("HSeparator", "")
