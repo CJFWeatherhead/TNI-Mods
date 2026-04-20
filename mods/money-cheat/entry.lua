@@ -28,6 +28,9 @@ local config = {
 
 -- ===== MOD CONFIGURATION END =====
 
+local _mc_status = nil
+local setup_panel   -- forward-declared; defined after money()
+
 function on_engine_load()
     print("Money Cheat mod loaded!")
     if ModApiV1 and ModApiV1.sanity then
@@ -49,8 +52,9 @@ function on_engine_load()
 end
 
 function on_mod_reload()
-    print("Pressed the reload action key (F11), reloading Money Cheat mod...")
-    print(string.format("[money-cheat] Current amount: $%d", config.money_amount or 10000))
+    print("[money-cheat] Reloaded (F11)")
+    _mc_status = nil
+    if setup_panel then setup_panel() end
 end
 
 -- Console command: add money
@@ -69,14 +73,49 @@ function money(amount)
     local message = string.format("[money-cheat] Added $%d to your balance!", money_amount)
     print(message)
 
-    if config.show_notification then
-        pcall(function()
-            local base_ui = ModApiV1.get_base_ui()
-            if base_ui and base_ui.display_notification then
-                base_ui.display_notification(string.format("Added $%d", money_amount), 1)
-            end
-        end)
+    -- Update panel status (no display_notification — causes sandbox timeouts)
+    if _mc_status then
+        pcall(function() _mc_status.text = string.format("Last: +$%d", money_amount) end)
     end
+end
+
+-- Panel section builder (shared ModPanels framework)
+setup_panel = function()
+    local world = ModApiV1 and ModApiV1.get_game_world()
+    if not world then return end
+    local ok, content = pcall(function()
+        return world.get_node("/root/ModPanels/Panel/Layout/Scroll/Content")
+    end)
+    if not ok or not content then return end
+
+    pcall(function()
+        local old = content.get_node("mp_money_cheat")
+        if old then old.queue_free() end
+    end)
+
+    local section = create_node("VBoxContainer", "")
+    section.name = "mp_money_cheat"
+
+    local sep = create_node("HSeparator", "")
+    section.add_child(sep)
+    local title = create_node("Label", "")
+    title.text = "Money Cheat"
+    pcall(function() title.add_theme_font_size_override("font_size", 14) end)
+    section.add_child(title)
+
+    _mc_status = create_node("Label", "")
+    _mc_status.text = string.format("Amount: $%d", config.money_amount or 10000)
+    pcall(function() _mc_status.add_theme_font_size_override("font_size", 11) end)
+    section.add_child(_mc_status)
+
+    local btn = create_node("Button", "")
+    btn.text = "Add Money"
+    pcall(function() btn.custom_minimum_size = Vector2(110, 28) end)
+    section.add_child(btn)
+    btn.connect("pressed", money)
+
+    content.add_child(section)
+    print("[money-cheat] Panel section registered with ModPanels")
 end
 
 -- Register commands with the debug console when game is fully loaded
@@ -95,4 +134,8 @@ function on_game_state_ready()
 
     pcall(function() dbg.register_cmd("m_money", money) end)
     print("[money-cheat] Debug console enabled. Registered: m_money")
+
+    setup_panel()
 end
+
+function on_tick(delta) end
