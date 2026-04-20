@@ -69,29 +69,29 @@ $parameters += @{
 
 $parameters += @{
     Name            = "enable_cpu"
-    Label           = "Enable CPU Modification (Currently not Available within API)"
+    Label           = "Enable CPU Modification"
     Type            = "boolean"
     Default         = $false
     RefreshOnChange = $true
-    Description     = "Multiply device CPU power"
+    Description     = "Multiply device CPU power (LogicController.installed_cpu)"
 }
 
 $parameters += @{
     Name            = "enable_memory"
-    Label           = "Enable Memory Modification (Currently not Available within API)"
+    Label           = "Enable Memory Modification"
     Type            = "boolean"
     Default         = $false
     RefreshOnChange = $true
-    Description     = "Multiply device RAM capacity"
+    Description     = "Multiply device RAM capacity (LogicController.installed_mem)"
 }
 
 $parameters += @{
     Name            = "enable_storage"
-    Label           = "Enable Storage Modification (Currently not Available within API)"
+    Label           = "Enable Storage Modification"
     Type            = "boolean"
     Default         = $false
     RefreshOnChange = $true
-    Description     = "Multiply device storage capacity"
+    Description     = "Multiply device storage capacity (LogicController.installed_sto)"
 }
 
 # ============================================================================
@@ -266,7 +266,7 @@ if ($enableCpu -or $enableMemory -or $enableStorage) {
             Min         = 0.1
             Max         = 100.0
             Step        = 0.1
-            Description = "Multiplier for device CPU power. Higher values = more processing capacity."
+            Description = "Multiplier for device CPU power (installed_cpu). Higher values = more processing capacity."
         }
     }
     
@@ -279,7 +279,7 @@ if ($enableCpu -or $enableMemory -or $enableStorage) {
             Min         = 0.1
             Max         = 100.0
             Step        = 0.1
-            Description = "Multiplier for device installed RAM. Higher values = more memory available."
+            Description = "Multiplier for device installed RAM (installed_mem). Higher values = more memory available."
         }
     }
     
@@ -292,7 +292,7 @@ if ($enableCpu -or $enableMemory -or $enableStorage) {
             Min         = 0.1
             Max         = 100.0
             Step        = 0.1
-            Description = "Multiplier for device storage capacity. Higher values = more disk space."
+            Description = "Multiplier for device storage capacity (installed_sto). Higher values = more disk space."
         }
     }
 }
@@ -318,6 +318,8 @@ Display an on-screen notification when merchants are restocked.
 Shows a brief message confirming the restock action completed.
 
 Usage: Press ~ to open the debug console, then type: m_restock
+
+Note: Merchants are retrieved via ModApiV1.get_merchants().
 "@
 }
 
@@ -502,6 +504,14 @@ $parameters += @{
     Type        = "boolean"
     Default     = $true
     Description = "Apply modifications to inert/decorative devices"
+}
+
+$parameters += @{
+    Name        = "enable_network_storage"
+    Label       = "Network Storage"
+    Type        = "boolean"
+    Default     = $true
+    Description = "Apply modifications to network storage devices"
 }
 
 # Return parameters

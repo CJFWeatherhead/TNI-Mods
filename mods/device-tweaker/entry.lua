@@ -2,7 +2,7 @@
 -- A comprehensive mod for tweaking device properties in Tower Networking Inc.
 --
 -- Author: Chris
--- Version: 2.2
+-- Version: 3.0
 -- Description: Allows configurable modifications to device properties including bandwidth,
 --              warranties, costs, and hardware specifications (CPU/memory/storage).
 --              Supports selective application by device class.
@@ -11,15 +11,31 @@
 --        Open the debug console (~) and type a command name.
 --
 -- Console commands:
---   restock     Restock all merchants
+--   m_restock     Restock all merchants
 --
--- Device Classes:
---   0 = server
---   1 = switch
---   2 = router
---   3 = firewall
---   4 = workstation
---   5 = other/misc
+-- Device Hardware Classes (DeviceUnit.DeviceHardwareClass enum):
+--   0  = DEFAULT              11 = POWER_EXPANSION
+--   1  = NETWORK_SWITCH       12 = DECENTRO_RIGS
+--   2  = NETWORK_ROUTER       13 = SURGE_PROTECTOR
+--   3  = NETWORK_TAP          14 = UPS
+--   4  = NETWORK_FIREWALL     15 = INERT
+--   5  = MEDIA_LINE_SIMPLEX   16 = CCTV
+--   6  = MEDIA_LINE_DUPLEX    17 = PHONE
+--   7  = COMPUTE_SERVER       18 = PRINTER
+--   8  = DISPLAY_MONITOR      19 = NETWORK_LOAD_BALANCER
+--   9  = DEBUGGER             20 = NETWORK_STORAGE
+--   10 = LOAD_TESTER
+--
+-- API Property Reference (game version 0.10.11):
+--   DeviceUnit.price                       (integer)
+--   DeviceUnit.base_warranty_days          (integer)
+--   DeviceUnit.base_warranty_cycles        (integer)
+--   DeviceUnit.warranty_period_remaining   (integer)
+--   DeviceUnit.device_hardware_class       (enum)
+--   LogicController.installed_nbw          (integer) - network bandwidth
+--   LogicController.installed_cpu          (integer) - CPU power
+--   LogicController.installed_mem          (integer) - memory/RAM
+--   LogicController.installed_sto          (integer) - storage
 
 local mod_id = "device-tweaker"
 
@@ -55,7 +71,7 @@ local config = {
     memory_multiplier = 4.0,
     storage_multiplier = 8.0,
 
-    -- Device class filters
+    -- Device class filters (keyed by DeviceHardwareClass enum names)
     enable_default = true,
     enable_network_switch = true,
     enable_network_router = true,
@@ -76,26 +92,26 @@ local config = {
     enable_phone = true,
     enable_printer = true,
     enable_network_load_balancer = true,
+    enable_network_storage = true,
 
     -- Merchant restock settings
-    enable_restock_hotkey = true,
     show_restock_notification = true
 }
 
 -- ===== MOD CONFIGURATION END =====
 
--- Device class names for logging (from DeviceHardwareClass enum)
+-- Device class names for logging (from DeviceHardwareClass enum, game 0.10.11)
 local device_class_names = {
-    [0] = "default",
-    [1] = "network_switch",
-    [2] = "network_router",
-    [3] = "network_tap",
-    [4] = "network_firewall",
-    [5] = "media_line_simplex",
-    [6] = "media_line_duplex",
-    [7] = "compute_server",
-    [8] = "display_monitor",
-    [9] = "debugger",
+    [0]  = "default",
+    [1]  = "network_switch",
+    [2]  = "network_router",
+    [3]  = "network_tap",
+    [4]  = "network_firewall",
+    [5]  = "media_line_simplex",
+    [6]  = "media_line_duplex",
+    [7]  = "compute_server",
+    [8]  = "display_monitor",
+    [9]  = "debugger",
     [10] = "load_tester",
     [11] = "power_expansion",
     [12] = "decentro_rigs",
@@ -105,12 +121,14 @@ local device_class_names = {
     [16] = "cctv",
     [17] = "phone",
     [18] = "printer",
-    [19] = "network_load_balancer"
+    [19] = "network_load_balancer",
+    [20] = "network_storage"
 }
 
 -- Check if a device class is enabled for modifications
 local function is_class_enabled(device_class)
-    local class_name = device_class_names[device_class] or "other"
+    local class_name = device_class_names[device_class]
+    if not class_name then return false end
     return config["enable_" .. class_name] ~= false
 end
 
@@ -165,7 +183,7 @@ function on_engine_load()
         print("[device-tweaker] Enabled device classes: " .. table.concat(enabled_classes, ", "))
     end
 
-    print("[device-tweaker] Console: restock")
+    print("[device-tweaker] Console: m_restock")
 end
 
 -- Register commands with the debug console when game is fully loaded
@@ -188,42 +206,35 @@ end
 
 function on_mod_reload()
     print("[device-tweaker] Reloading configuration...")
+    -- Reset debug dump tracking so first-device dumps happen again after reload
+    debug_dump_done = {}
 end
 
--- Merchant restock functionality
-local last_restock_time = 0
-local RESTOCK_COOLDOWN = 1.0
-
+-- Merchant restock functionality using ModApiV1.get_merchants()
 local function restock_all_merchants()
-    local world = ModApiV1.get_game_world()
-    if not world then
-        print("[device-tweaker] Cannot restock: world not available")
-        return false
-    end
-
-    local merchants = world.device_merchants
+    local merchants = ModApiV1.get_merchants()
     if not merchants then
-        print("[device-tweaker] Cannot restock: no merchants available")
+        print("[device-tweaker] Cannot restock: get_merchants() returned nil")
         return false
     end
 
     local restock_count = 0
-    local error_msg = nil
     local success = pcall(function()
         local size = merchants:size()
         print(string.format("[device-tweaker] Found %d merchants to restock", size))
         for i = 0, size - 1 do
             local merchant = merchants:get(i)
             if merchant then
-                local merchant_name = merchant.display_name or ("Merchant " .. i)
-                local restock_success, restock_err = pcall(function()
-                    merchant.restock()  -- Use dot notation for Godot method call
+                local merchant_name = tostring(merchant.display_name or ("Merchant " .. i))
+                local restock_ok, restock_err = pcall(function()
+                    merchant.restock()
                 end)
-                if restock_success then
+                if restock_ok then
                     restock_count = restock_count + 1
-                    print(string.format("[device-tweaker] Restocked: %s", tostring(merchant_name)))
+                    print(string.format("[device-tweaker] Restocked: %s", merchant_name))
                 else
-                    print(string.format("[device-tweaker] Failed to restock %s: %s", tostring(merchant_name), tostring(restock_err)))
+                    print(string.format("[device-tweaker] Failed to restock %s: %s",
+                        merchant_name, tostring(restock_err)))
                 end
             end
         end
@@ -238,7 +249,7 @@ local function restock_all_merchants()
 end
 
 -- Console command: restock all merchants
--- Usage: Type restock() in the game console
+-- Usage: Open debug console (~) and type: m_restock
 function restock()
     if restock_all_merchants() then
         if config.show_restock_notification then
@@ -252,21 +263,22 @@ function restock()
     end
 end
 
--- Helper function to dump device properties for debugging
+-- Helper function to dump device properties for debugging (correct API property names)
 local function dump_device_properties(device, device_name)
     print(string.format("[device-tweaker] === DEBUG: %s ===", device_name))
     print(string.format("  device_hardware_class: %s", tostring(device.device_hardware_class)))
     print(string.format("  product_name: %s", tostring(device.product_name)))
-    print(string.format("  base_cost_dollars: %s", tostring(device.base_cost_dollars)))
+    print(string.format("  price: %s", tostring(device.price)))
     print(string.format("  base_warranty_days: %s", tostring(device.base_warranty_days)))
     print(string.format("  base_warranty_cycles: %s", tostring(device.base_warranty_cycles)))
+    print(string.format("  warranty_period_remaining: %s", tostring(device.warranty_period_remaining)))
 
     if device.logic_controller then
-        print("  logic_controller exists:")
+        print("  logic_controller:")
         print(string.format("    installed_nbw: %s", tostring(device.logic_controller.installed_nbw)))
-        print(string.format("    cpu_power: %s", tostring(device.logic_controller.cpu_power)))
-        print(string.format("    installed_ram: %s", tostring(device.logic_controller.installed_ram)))
-        print(string.format("    installed_storage: %s", tostring(device.logic_controller.installed_storage)))
+        print(string.format("    installed_cpu: %s", tostring(device.logic_controller.installed_cpu)))
+        print(string.format("    installed_mem: %s", tostring(device.logic_controller.installed_mem)))
+        print(string.format("    installed_sto: %s", tostring(device.logic_controller.installed_sto)))
     else
         print("  logic_controller: nil")
     end
@@ -293,7 +305,7 @@ function on_device_spawned(device)
     -- Apply all enabled modifications
     local modifications = {}
 
-    -- Bandwidth modification
+    -- Bandwidth modification (LogicController.installed_nbw)
     if config.enable_bandwidth and device.logic_controller then
         local multiplier = config.bandwidth_multiplier or 1.0
         if multiplier ~= 1.0 then
@@ -301,12 +313,13 @@ function on_device_spawned(device)
             if current_bw and current_bw > 0 then
                 local new_bw = math.ceil(current_bw * multiplier)
                 device.logic_controller.installed_nbw = new_bw
-                modifications[#modifications + 1] = string.format("BW: %d -> %d (x%.2f)", current_bw, new_bw, multiplier)
+                modifications[#modifications + 1] = string.format("BW: %d -> %d (x%.2f)",
+                    current_bw, new_bw, multiplier)
             end
         end
     end
 
-    -- Warranty modification
+    -- Warranty modification (DeviceUnit.base_warranty_days, base_warranty_cycles, warranty_period_remaining)
     if config.enable_warranty then
         local multiplier
 
@@ -335,29 +348,30 @@ function on_device_spawned(device)
         end
     end
 
-    -- Price modification
+    -- Price modification (DeviceUnit.price)
     if config.enable_cost then
         local multiplier = config.cost_multiplier or 1.0
         if multiplier ~= 1.0 then
-            local original_cost = device.base_cost_dollars
-            if original_cost and original_cost > 0 then
-                device.base_cost_dollars = math.ceil(original_cost * multiplier)
-                modifications[#modifications + 1] = string.format("cost: $%d -> $%d", original_cost,
-                    device.base_cost_dollars)
+            local original_price = device.price
+            if original_price and original_price > 0 then
+                device.price = math.ceil(original_price * multiplier)
+                modifications[#modifications + 1] = string.format("price: $%d -> $%d",
+                    original_price, device.price)
             end
         end
     end
 
-    -- Hardware modifications (CPU, RAM, Storage)
+    -- Hardware modifications (LogicController: installed_cpu, installed_mem, installed_sto)
     if device.logic_controller then
         if config.enable_cpu then
             local multiplier = config.cpu_multiplier or 1.0
             if multiplier ~= 1.0 then
-                local original = device.logic_controller.cpu_power
+                local original = device.logic_controller.installed_cpu
                 if original and original > 0 then
                     local new_value = math.ceil(original * multiplier)
-                    device.logic_controller.cpu_power = new_value
-                    modifications[#modifications + 1] = string.format("CPU: %d -> %d", original, new_value)
+                    device.logic_controller.installed_cpu = new_value
+                    modifications[#modifications + 1] = string.format("CPU: %d -> %d",
+                        original, new_value)
                 end
             end
         end
@@ -365,11 +379,12 @@ function on_device_spawned(device)
         if config.enable_memory then
             local multiplier = config.memory_multiplier or 1.0
             if multiplier ~= 1.0 then
-                local original = device.logic_controller.installed_ram
+                local original = device.logic_controller.installed_mem
                 if original and original > 0 then
                     local new_value = math.ceil(original * multiplier)
-                    device.logic_controller.installed_ram = new_value
-                    modifications[#modifications + 1] = string.format("RAM: %d -> %d", original, new_value)
+                    device.logic_controller.installed_mem = new_value
+                    modifications[#modifications + 1] = string.format("MEM: %d -> %d",
+                        original, new_value)
                 end
             end
         end
@@ -377,11 +392,12 @@ function on_device_spawned(device)
         if config.enable_storage then
             local multiplier = config.storage_multiplier or 1.0
             if multiplier ~= 1.0 then
-                local original = device.logic_controller.installed_storage
+                local original = device.logic_controller.installed_sto
                 if original and original > 0 then
                     local new_value = math.ceil(original * multiplier)
-                    device.logic_controller.installed_storage = new_value
-                    modifications[#modifications + 1] = string.format("storage: %d -> %d", original, new_value)
+                    device.logic_controller.installed_sto = new_value
+                    modifications[#modifications + 1] = string.format("STO: %d -> %d",
+                        original, new_value)
                 end
             end
         end
@@ -389,7 +405,6 @@ function on_device_spawned(device)
 
     -- Log modifications if any were made
     if #modifications > 0 then
-        local class_name = device_class_names[device.device_hardware_class] or "unknown"
         print(string.format("[device-tweaker] %s (%s): %s",
             device.product_name,
             class_name,
