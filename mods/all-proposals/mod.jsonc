@@ -2,10 +2,27 @@
 	"id": "all-proposals",
 	"name": "All Proposals",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.22",
+	"version": "2.0.0",
 	"description": [
-		"Enhances the game's proposal system by allowing players to view all available proposals at once. Use the console commands m_show_proposals / m_hide_proposals or the buttons in the shared Mod Panels sidebar (m_panels) to toggle. Excludes proposals with unmet dependencies or failed adhoc requirements."
+		"Enhances the game's proposal system by allowing players to view all available proposals at once. Press SHIFT+O to show all eligible proposals (excluding those with unmet dependencies or failed adhoc requirements). Press SHIFT+U to restore the normal proposal batch size. No panels, no console commands — keyboard shortcuts only."
 	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals",
+		"lua": "https://lua.org/",
+		"luajit": "https://luajit.org/",
+		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+		"supa-mod-loader": ">=4.0.0"
+	},
+	"incompatibilities": {
+	}
+}
 	"links": {
 		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals",
 		"lua": "https://lua.org/",

@@ -1,34 +1,31 @@
 Name: Money Cheat
 Description: |
-  Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.
-  
+  Instantly add money and restock merchants via keyboard shortcuts.
+
+  ## Keyboard Shortcuts
+  - **SHIFT+M**: Add a configurable amount of money to your cash balance
+  - **SHIFT+R**: Instantly restock all merchants
+
   ## Features
-  - Instant money injection via keyboard shortcut (SHIFT+M)
-  - Configurable amount (default: $10,000)
-  - Console feedback on activation
-  - Optional in-game notifications
-  - Cooldown protection to prevent accidental double-activation
-  
-  ## Usage
-  Press SHIFT+M during gameplay to add money to your balance.
-  Configure the amount in the Mod Manager settings.
-  
+  - Configurable money amount (default: $10,000)
+  - Console feedback on every activation
+  - No panels, no console commands — keyboard shortcuts only
+
   ## Configuration
-  - **Money Amount**: The amount to add when activated (default: $10,000)
+  - **Money Amount**: The amount to add per SHIFT+M press (default: $10,000)
   - **Debug Logging**: Show detailed console messages
-  - **Show Notification**: Attempt to display in-game notification
-  
+
 Author: CJFWeatherhead
-Version: 0.1.27
+Version: 5.0.0
 Image: icon.png
 Creation Date: 2026-01-21
-Last Updated: 2026-04-20
-Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat
-Development Status: Discontinued
+Last Updated: 2026-04-21
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat
+Development Status: Active Development
 Game Version Supported: beta
 ID: money-cheat
 Dependencies: []
-Notes: Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s cooldown to prevent accidental double-activation.
+Notes: Uses on_player_input hook to detect SHIFT+M (money) and SHIFT+R (restock) keyboard combinations. Restock functionality was moved here from device-tweaker in v5.0.0.
 Parameters:
   - Name: money_amount
     Label: Money Amount
@@ -41,10 +38,5 @@ Parameters:
   - Name: debug_logging
     Label: Enable Debug Logging
     Type: boolean
-    Default: true
-    Description: Log detailed information to console when cheat is activated
-  - Name: show_notification
-    Label: Show In-Game Notification
-    Type: boolean
-    Default: true
-    Description: Attempt to show an in-game notification when money is added (may not be supported by all game versions)
+    Default: false
+    Description: Log detailed information to console when shortcuts are activated

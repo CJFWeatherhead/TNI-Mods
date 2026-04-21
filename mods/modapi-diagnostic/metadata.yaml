@@ -2,19 +2,23 @@ Name: ModAPI Diagnostic Tool
 Description: |
   Zero-overhead development tool for TNI game engine modding (0.10.11+).
   
+  ## v4.5 — Panel removal
+  - **Removed standalone CanvasLayer panel** and on_tick polling (Callable bridge crash)
+  - All functionality now via console commands only (press ~ to open)
+
   ## v4.0 — Zero-overhead rewrite
-  
+
   ### Architecture
   - **REMOVED on_player_input** — eliminates per-frame pcall/GC memory pressure
   - All functionality via console commands and automatic lifecycle hooks
   - Lifecycle callback tracker shows exact init order and timing
-  
+
   ### All Lifecycle Callbacks
   - on_mod_load, on_mods_loaded, on_engine_load
   - **on_game_state_ready** (auto-diagnostic on game init)
   - on_game_host_eod, on_mod_reload
   - on_device_spawned, on_user_spawned, **on_location_spawned**
-  - on_day_start, on_day_end, on_tick
+  - on_day_start, on_day_end
   - on_world_ready, on_world_created, on_game_start, on_scenario_start
   
   ### JSON Game State Export
@@ -47,10 +51,10 @@ Description: |
   - Build Terraform/OpenTofu providers
   
 Author: CJFWeatherhead
-Version: 4.0.9
+Version: 4.5
 Creation Date: 2026-01-20
-Last Updated: 2026-04-20
-Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic
+Last Updated: 2026-04-21
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic
 Development Status: Active Development
 Game Version Supported: beta
 ID: modapi-diagnostic

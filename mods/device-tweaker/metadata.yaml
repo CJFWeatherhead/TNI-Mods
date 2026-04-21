@@ -1,18 +1,16 @@
-Name: Device Tweaker
+﻿Name: Device Tweaker
 Description: |
   A comprehensive mod for tweaking device properties in Tower Networking Inc.
-  
+  Modifications are applied automatically when devices spawn — no keyboard input needed.
+
   ## Features
-  - **Bandwidth Multiplier**: Adjust network bandwidth capacity of devices
+  - **Bandwidth Multiplier**: Adjust network bandwidth capacity (installed_nbw)
   - **Warranty Modifications**: Set fixed or random warranty multipliers
-  - **Cost Adjustments**: Modify device purchase costs
-  - **Hardware Multipliers**: Scale CPU power, RAM, and storage
-  - **Network Addressing**: Auto-assign addresses based on floor and device type
-  - **DHCP Configuration**: Set DHCP mode (disabled, boot, or periodic)
+  - **Cost Adjustments**: Modify device purchase prices
+  - **Hardware Multipliers**: Scale CPU (installed_cpu), RAM (installed_mem), and storage (installed_sto)
   - **Device Class Filtering**: Selectively apply modifications to specific device types
-  - **Merchant Restock**: Press CTRL+SHIFT+R to instantly restock all merchants
-  
-  ## Device Classes (20 types)
+
+  ## Device Classes (21 types)
   - Default (0) - def
   - Network Switch (1) - swt
   - Network Router (2) - rtr
@@ -33,28 +31,34 @@ Description: |
   - Phone (17) - phn
   - Printer (18) - prt
   - Network Load Balancer (19) - nlb
-  
+  - Network Storage (20) - nst
+
   ## Configuration Tips
   - Enable specific modifications using the enable toggles
   - Set multipliers > 1.0 to increase values, < 1.0 to decrease
   - Use random warranty mode for varied warranty periods per device
   - Disable device classes you don't want to modify
-  - Network addressing format: @f{floor}/{abbrev}{increment}
-  
+  - Restock merchants with SHIFT+R (money-cheat mod)
+
+  ## Notes
+  - No panels, no keyboard input — purely passive on_device_spawned hook
+  - Incompatible with 2x-bandwidth-switches and random-warranties (supersedes both)
+
 Author: CJFWeatherhead
-Version: 0.1.30
+Version: 4.0.0
 Creation Date: 2026-01-18
-Last Updated: 2026-04-20
-Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker
+Last Updated: 2026-04-21
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker
 Development Status: Active Development
 Game Version Supported: beta
 ID: device-tweaker
 Dependencies: []
 Image: icon.png
 Notes: |
-  This mod combines and extends functionality from 2x-bandwidth-switches and random-warranties mods.
-  All modifications are applied when devices spawn.
-  
+  This mod supersedes 2x-bandwidth-switches and random-warranties.
+  All modifications are applied when devices spawn (on_device_spawned hook).
+  No input handling, no panels, no register_cmd.
+
 Parameters:
   # Device Class Filters (based on DeviceHardwareClass enum)
   - Name: enable_default
@@ -176,12 +180,18 @@ Parameters:
     Type: boolean
     Default: true
     Description: Apply modifications to network load balancer devices (class 19)
+
+  - Name: enable_network_storage
+    Label: Enable for Network Storage
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network storage devices (class 20)
   
   # Bandwidth Settings
   - Name: enable_bandwidth
     Label: Enable Bandwidth Modification
     Type: boolean
-    Default: false
+    Default: true
     Description: Enable bandwidth capacity modifications
     
   - Name: bandwidth_multiplier
@@ -197,16 +207,13 @@ Parameters:
   - Name: enable_warranty
     Label: Enable Warranty Modification
     Type: boolean
-    Default: false
+    Default: true
     Description: Enable warranty period modifications
-    
+
   - Name: warranty_mode
     Label: Warranty Mode
     Type: select
-    Default: fixed
-    Options: ["fixed", "random"]
-    Description: Use a fixed multiplier or random range for warranties
-    
+    Default: random
   - Name: warranty_multiplier_fixed
     Label: Fixed Warranty Multiplier
     Type: number
@@ -219,22 +226,19 @@ Parameters:
   - Name: warranty_multiplier_min
     Label: Min Random Warranty Multiplier
     Type: number
-    Default: 2.0
+    Default: 5.0
     Min: 0.1
     Max: 100.0
     Step: 0.1
     Description: Minimum multiplier for random warranties (used when mode is 'random')
-    
+
   - Name: warranty_multiplier_max
     Label: Max Random Warranty Multiplier
     Type: number
-    Default: 25.0
+    Default: 100.0
     Min: 0.1
-    Max: 100.0
-    Step: 0.1
-    Description: Maximum multiplier for random warranties (used when mode is 'random')
-    
-  - Name: warranty_apply_cycles
+    Max: 1000.0
+    Step: 1.0
     Label: Apply to Warranty Cycles
     Type: boolean
     Default: true
@@ -272,7 +276,7 @@ Parameters:
   - Name: cpu_multiplier
     Label: CPU Power Multiplier
     Type: number
-    Default: 1.0
+    Default: 2.0
     Min: 0.1
     Max: 100.0
     Step: 0.1
@@ -288,7 +292,7 @@ Parameters:
   - Name: memory_multiplier
     Label: Memory (RAM) Multiplier
     Type: number
-    Default: 1.0
+    Default: 4.0
     Min: 0.1
     Max: 100.0
     Step: 0.1
@@ -304,46 +308,8 @@ Parameters:
   - Name: storage_multiplier
     Label: Storage Multiplier
     Type: number
-    Default: 1.0
+    Default: 8.0
     Min: 0.1
     Max: 100.0
     Step: 0.1
     Description: Multiplier for device storage capacity
-  
-  # Network Address Settings
-  - Name: enable_netaddr
-    Label: Enable Auto Network Addressing
-    Type: boolean
-    Default: false
-    Description: |
-      Automatically assign network addresses based on floor and device class.
-      Format: @f{floor}/{class}{increment}
-      Examples: @f4/srv1 (compute server on floor 4), @f2/swt1 (switch on floor 2), @f18/nlb2 (load balancer on floor 18)
-      
-      Device class abbreviations (3 letters):
-      def=default, swt=switch, rtr=router, tap=tap, fwr=firewall, mls=media_simplex, mld=media_duplex,
-      srv=server, mon=monitor, dbg=debugger, ldt=load_tester, pwr=power_expansion, dcr=decentro_rigs,
-      spr=surge_protector, ups=ups, ine=inert, ccv=cctv, phn=phone, prt=printer, nlb=load_balancer
-  
-  # DHCP Settings
-  - Name: dhcp_mode
-    Label: DHCP Mode
-    Type: select
-    Default: disabled
-    Options: ["disabled", "boot_dhcp", "periodic_dhcp"]
-    Description: Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or periodic_dhcp (runs periodically)
-
-  # Merchant Restock Settings
-  - Name: enable_restock_hotkey
-    Label: Enable Merchant Restock Hotkey
-    Type: boolean
-    Default: true
-    Description: |
-      Enable CTRL+SHIFT+R hotkey to instantly restock all merchants.
-      Useful when you need more devices but stock is depleted.
-
-  - Name: show_restock_notification
-    Label: Show Restock Notification
-    Type: boolean
-    Default: true
-    Description: Display an in-game notification when merchants are restocked

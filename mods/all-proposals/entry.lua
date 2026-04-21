@@ -14,9 +14,7 @@
 local mod_id = "all-proposals"
 
 -- ===== MOD CONFIGURATION START =====
-local config = {
-    show_notification = true
-}
+-- (no configurable parameters)
 -- ===== MOD CONFIGURATION END =====
 
 local original_batch_size = nil

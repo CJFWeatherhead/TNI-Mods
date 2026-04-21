@@ -2,10 +2,27 @@
 	"id": "money-cheat",
 	"name": "Money Cheat",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "0.1.27",
+	"version": "5.0.0",
 	"description": [
-		"Simple money cheat mod that adds a configurable amount of money via console command.\n\n✨ Features\n• Instant money injection via console command (m_money)\n• Configurable amount (default: $10,000)\n• Panel button in shared ModPanels sidebar (m_panels)\n• Console feedback on activation\n\n🕹️ Usage\nOpen the debug console (~) and type: m_money\nOr use the Add Money button in the Mod Panels sidebar.\nConfigure the amount in the Mod Manager settings.\n\n⚙️ Configuration\n• Money Amount: The amount to add when activated (default: $10,000)\n• Debug Logging: Show detailed console messages"
+		"Instantly add money and restock merchants via keyboard shortcuts.\n\n✨ Features\n• SHIFT+M: Add a configurable amount of money to your balance\n• SHIFT+R: Restock all merchants instantly\n• Configurable money amount (default: $10,000)\n• Console feedback on every activation\n\n🕹️ Usage\nPress SHIFT+M during gameplay to add money.\nPress SHIFT+R to restock all merchants.\nConfigure the amount in the Mod Manager settings.\n\n⚙️ Configuration\n• Money Amount: The amount to add per SHIFT+M press (default: $10,000)\n• Debug Logging: Show detailed console messages\n\n📌 No panels, no console commands, no register_cmd — keyboard shortcuts only."
 	],
+	"links": {
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat",
+		"lua": "https://lua.org/",
+		"luajit": "https://luajit.org/",
+		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+		"supa-mod-loader": ">=4.0.0"
+	},
+	"incompatibilities": {
+	}
+}
 	"links": {
 		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat",
 		"lua": "https://lua.org/",
