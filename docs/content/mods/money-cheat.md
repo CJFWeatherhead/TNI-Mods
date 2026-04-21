@@ -4,7 +4,7 @@ date: 2026-04-21
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
-version: "5.0.0"
+version: "5.0.1"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Instantly add money and restock merchants via keyboard shortcuts.
 
 | | |
 |---|---|
-| **Version** | 5.0.0 |
+| **Version** | 5.0.1 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Instantly add money and restock merchants via keyboard shortcuts.
 
 <div class="download-section">
 
-**[Download money-cheat-5.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.0/money-cheat-5.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download money-cheat-5.0.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.1/money-cheat-5.0.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -244,8 +244,8 @@ Uses on_player_input hook to detect SHIFT+M (money) and SHIFT+R (restock) keyboa
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v5.0.0)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.0/money-cheat-5.0.0.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v5.0.1)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.1/money-cheat-5.0.1.zip)
 
 </details>
 

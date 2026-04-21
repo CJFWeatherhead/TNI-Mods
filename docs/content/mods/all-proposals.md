@@ -4,7 +4,7 @@ date: 2026-04-21
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "2.0.0"
+version: "2.0.1"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ Shows all available proposals at once by overriding the game's proposal batch si
 
 | | |
 |---|---|
-| **Version** | 2.0.0 |
+| **Version** | 2.0.1 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ Shows all available proposals at once by overriding the game's proposal batch si
 
 <div class="download-section">
 
-**[Download all-proposals-2.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.0/all-proposals-2.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-2.0.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.1/all-proposals-2.0.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -190,8 +190,8 @@ CJFWeatherhead
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v2.0.0)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.0/all-proposals-2.0.0.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v2.0.1)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.1/all-proposals-2.0.1.zip)
 
 </details>
 
