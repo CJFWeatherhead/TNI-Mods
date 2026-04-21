@@ -2,7 +2,7 @@
 	"id": "money-cheat",
 	"name": "Money Cheat",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"description": [
 		"Instantly add money and restock merchants via keyboard shortcuts.\n\n✨ Features\n• SHIFT+M: Add a configurable amount of money to your balance\n• SHIFT+R: Restock all merchants instantly\n• Configurable money amount (default: $10,000)\n• Console feedback on every activation\n\n🕹️ Usage\nPress SHIFT+M during gameplay to add money.\nPress SHIFT+R to restock all merchants.\nConfigure the amount in the Mod Manager settings.\n\n⚙️ Configuration\n• Money Amount: The amount to add per SHIFT+M press (default: $10,000)\n• Debug Logging: Show detailed console messages\n\n📌 No panels, no console commands, no register_cmd — keyboard shortcuts only."
 	],
