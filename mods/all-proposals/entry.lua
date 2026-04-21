@@ -148,7 +148,7 @@ end
 function on_player_input(event)
     if event:get_class() ~= "InputEventKey" then return end
     if not event:is_pressed() then return end
-    if not event:get_shift_pressed() then return end
+    if not event:is_shift_pressed() then return end
 
     local key = event:get_keycode()
 
