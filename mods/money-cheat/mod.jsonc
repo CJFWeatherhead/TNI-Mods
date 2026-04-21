@@ -23,20 +23,3 @@
 	"incompatibilities": {
 	}
 }
-	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat",
-		"lua": "https://lua.org/",
-		"luajit": "https://luajit.org/",
-		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
-	},
-	"dependencies": {
-		// See https://devhints.io/semver for syntax.
-		"tower-networking-inc": "^0.10.7",
-		"luajit-support": "~0.2.0"
-	},
-	"dependencies_optional": {
-		"supa-mod-loader": ">=4.0.0"
-	},
-	"incompatibilities": {
-	}
-}

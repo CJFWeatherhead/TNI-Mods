@@ -44,7 +44,10 @@ local config = {
     enable_storage = false,
 
     -- Bandwidth settings
+    bandwidth_mode = "fixed",   -- "fixed" or "random"
     bandwidth_multiplier = 2.0,
+    bandwidth_multiplier_min = 1.5,
+    bandwidth_multiplier_max = 4.0,
 
     -- Warranty settings
     warranty_mode = "random", -- "fixed" or "random"
@@ -59,8 +62,14 @@ local config = {
 
     -- Hardware settings
     cpu_multiplier = 2.0,
+    memory_mode = "fixed",     -- "fixed" or "random"
     memory_multiplier = 4.0,
+    memory_multiplier_min = 2.0,
+    memory_multiplier_max = 8.0,
+    storage_mode = "fixed",    -- "fixed" or "random"
     storage_multiplier = 8.0,
+    storage_multiplier_min = 4.0,
+    storage_multiplier_max = 16.0,
 
     -- Device class filters (keyed by DeviceHardwareClass enum names)
     enable_default = true,
@@ -173,7 +182,14 @@ function on_device_spawned(device)
 
     -- Bandwidth (LogicController.installed_nbw)
     if config.enable_bandwidth and device.logic_controller then
-        local mult = config.bandwidth_multiplier or 1.0
+        local mult
+        if config.bandwidth_mode == "random" then
+            local mn = config.bandwidth_multiplier_min or 1.5
+            local mx = config.bandwidth_multiplier_max or 4.0
+            mult = mn + math.random() * (mx - mn)
+        else
+            mult = config.bandwidth_multiplier or 1.0
+        end
         if mult ~= 1.0 then
             local cur = device.logic_controller.installed_nbw
             if cur and cur > 0 then
@@ -231,7 +247,14 @@ function on_device_spawned(device)
             end
         end
         if config.enable_memory then
-            local mult = config.memory_multiplier or 1.0
+            local mult
+            if config.memory_mode == "random" then
+                local mn = config.memory_multiplier_min or 2.0
+                local mx = config.memory_multiplier_max or 8.0
+                mult = mn + math.random() * (mx - mn)
+            else
+                mult = config.memory_multiplier or 1.0
+            end
             if mult ~= 1.0 then
                 local cur = device.logic_controller.installed_mem
                 if cur and cur > 0 then
@@ -242,7 +265,14 @@ function on_device_spawned(device)
             end
         end
         if config.enable_storage then
-            local mult = config.storage_multiplier or 1.0
+            local mult
+            if config.storage_mode == "random" then
+                local mn = config.storage_multiplier_min or 4.0
+                local mx = config.storage_multiplier_max or 16.0
+                mult = mn + math.random() * (mx - mn)
+            else
+                mult = config.storage_multiplier or 1.0
+            end
             if mult ~= 1.0 then
                 local cur = device.logic_controller.installed_sto
                 if cur and cur > 0 then

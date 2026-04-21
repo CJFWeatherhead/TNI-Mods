@@ -1,4 +1,4 @@
-Name: ModAPI Diagnostic Tool
+﻿Name: ModAPI Diagnostic Tool
 Description: |
   Zero-overhead development tool for TNI game engine modding (0.10.11+).
   
@@ -51,7 +51,7 @@ Description: |
   - Build Terraform/OpenTofu providers
   
 Author: CJFWeatherhead
-Version: 4.5
+Version: 4.5.0
 Creation Date: 2026-01-20
 Last Updated: 2026-04-21
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic

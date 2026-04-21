@@ -22,13 +22,16 @@ param(
 $parameters = @()
 
 # Get current configuration values
-$enableBandwidth = if ($CurrentConfig.ContainsKey('enable_bandwidth')) { $CurrentConfig['enable_bandwidth'] } else { $false }
-$enableWarranty = if ($CurrentConfig.ContainsKey('enable_warranty')) { $CurrentConfig['enable_warranty'] } else { $false }
+$enableBandwidth = if ($CurrentConfig.ContainsKey('enable_bandwidth')) { $CurrentConfig['enable_bandwidth'] } else { $true }
+$enableWarranty = if ($CurrentConfig.ContainsKey('enable_warranty')) { $CurrentConfig['enable_warranty'] } else { $true }
 $enableCost = if ($CurrentConfig.ContainsKey('enable_cost')) { $CurrentConfig['enable_cost'] } else { $false }
 $enableCpu = if ($CurrentConfig.ContainsKey('enable_cpu')) { $CurrentConfig['enable_cpu'] } else { $false }
 $enableMemory = if ($CurrentConfig.ContainsKey('enable_memory')) { $CurrentConfig['enable_memory'] } else { $false }
 $enableStorage = if ($CurrentConfig.ContainsKey('enable_storage')) { $CurrentConfig['enable_storage'] } else { $false }
-$warrantyMode = if ($CurrentConfig.ContainsKey('warranty_mode')) { $CurrentConfig['warranty_mode'] } else { "fixed" }
+$warrantyMode = if ($CurrentConfig.ContainsKey('warranty_mode')) { $CurrentConfig['warranty_mode'] } else { "random" }
+$bandwidthMode = if ($CurrentConfig.ContainsKey('bandwidth_mode')) { $CurrentConfig['bandwidth_mode'] } else { "fixed" }
+$memoryMode = if ($CurrentConfig.ContainsKey('memory_mode')) { $CurrentConfig['memory_mode'] } else { "fixed" }
+$storageMode = if ($CurrentConfig.ContainsKey('storage_mode')) { $CurrentConfig['storage_mode'] } else { "fixed" }
 
 # ============================================================================
 # Feature Toggles Section
@@ -44,7 +47,7 @@ $parameters += @{
     Name            = "enable_bandwidth"
     Label           = "Enable Bandwidth Modification"
     Type            = "boolean"
-    Default         = $false
+    Default         = $true
     RefreshOnChange = $true
     Description     = "Multiply device network bandwidth capacity"
 }
@@ -53,7 +56,7 @@ $parameters += @{
     Name            = "enable_warranty"
     Label           = "Enable Warranty Modification"
     Type            = "boolean"
-    Default         = $false
+    Default         = $true
     RefreshOnChange = $true
     Description     = "Modify device warranty periods (fixed or random)"
 }
@@ -104,25 +107,52 @@ if ($enableBandwidth) {
         Label       = "Bandwidth Settings"
         Description = "Configure network bandwidth multipliers"
     }
-    
+
     $parameters += @{
-        Name        = "bandwidth_multiplier"
-        Label       = "Bandwidth Multiplier"
-        Type        = "number"
-        Default     = 2.0
-        Min         = 0.1
-        Max         = 100.0
-        Step        = 0.1
-        Description = @"
-Multiplier for device network bandwidth capacity.
+        Name            = "bandwidth_mode"
+        Label           = "Bandwidth Mode"
+        Type            = "select"
+        Default         = "fixed"
+        Options         = @("fixed", "random")
+        RefreshOnChange = $true
+        Description     = "fixed: apply a constant multiplier | random: apply a random multiplier per device"
+    }
 
-Examples:
-- 2.0 = Double bandwidth
-- 0.5 = Half bandwidth
-- 10.0 = Ten times bandwidth
+    if ($bandwidthMode -eq "fixed") {
+        $parameters += @{
+            Name        = "bandwidth_multiplier"
+            Label       = "Bandwidth Multiplier"
+            Type        = "number"
+            Default     = 2.0
+            Min         = 0.1
+            Max         = 100.0
+            Step        = 0.1
+            Description = "Fixed multiplier for device bandwidth (e.g., 2.0 = double bandwidth)"
+        }
+    }
 
-Applies to all devices with network interfaces.
-"@
+    if ($bandwidthMode -eq "random") {
+        $parameters += @{
+            Name        = "bandwidth_multiplier_min"
+            Label       = "Min Random Bandwidth Multiplier"
+            Type        = "number"
+            Default     = 1.5
+            Min         = 0.1
+            Max         = 100.0
+            Step        = 0.1
+            Description = "Lower bound for random bandwidth multiplier"
+        }
+
+        $parameters += @{
+            Name        = "bandwidth_multiplier_max"
+            Label       = "Max Random Bandwidth Multiplier"
+            Type        = "number"
+            Default     = 4.0
+            Min         = 0.1
+            Max         = 100.0
+            Step        = 0.1
+            Description = "Upper bound for random bandwidth multiplier. Each device gets a random value between min and max."
+        }
     }
 }
 
@@ -141,7 +171,7 @@ if ($enableWarranty) {
         Name            = "warranty_mode"
         Label           = "Warranty Mode"
         Type            = "select"
-        Default         = "fixed"
+        Default         = "random"
         Options         = @("fixed", "random")
         RefreshOnChange = $true
         Description     = @"
@@ -178,7 +208,7 @@ Example: A device with 30 day warranty × 2.0 = 60 days
             Name        = "warranty_multiplier_min"
             Label       = "Minimum Random Multiplier"
             Type        = "number"
-            Default     = 2.0
+            Default     = 5.0
             Min         = 0.1
             Max         = 100.0
             Step        = 0.1
@@ -189,10 +219,10 @@ Example: A device with 30 day warranty × 2.0 = 60 days
             Name        = "warranty_multiplier_max"
             Label       = "Maximum Random Multiplier"
             Type        = "number"
-            Default     = 25.0
+            Default     = 100.0
             Min         = 0.1
-            Max         = 100.0
-            Step        = 0.1
+            Max         = 1000.0
+            Step        = 1.0
             Description = "Upper bound for random warranty multiplier. Each device gets a random value between min and max."
         }
     }
@@ -262,65 +292,109 @@ if ($enableCpu -or $enableMemory -or $enableStorage) {
             Name        = "cpu_multiplier"
             Label       = "CPU Power Multiplier"
             Type        = "number"
-            Default     = 1.0
+            Default     = 2.0
             Min         = 0.1
             Max         = 100.0
             Step        = 0.1
             Description = "Multiplier for device CPU power (installed_cpu). Higher values = more processing capacity."
         }
     }
-    
+
     if ($enableMemory) {
         $parameters += @{
-            Name        = "memory_multiplier"
-            Label       = "Memory (RAM) Multiplier"
-            Type        = "number"
-            Default     = 1.0
-            Min         = 0.1
-            Max         = 100.0
-            Step        = 0.1
-            Description = "Multiplier for device installed RAM (installed_mem). Higher values = more memory available."
+            Name            = "memory_mode"
+            Label           = "Memory Mode"
+            Type            = "select"
+            Default         = "fixed"
+            Options         = @("fixed", "random")
+            RefreshOnChange = $true
+            Description     = "fixed: constant multiplier | random: random multiplier per device"
+        }
+
+        if ($memoryMode -eq "fixed") {
+            $parameters += @{
+                Name        = "memory_multiplier"
+                Label       = "Memory (RAM) Multiplier"
+                Type        = "number"
+                Default     = 4.0
+                Min         = 0.1
+                Max         = 100.0
+                Step        = 0.1
+                Description = "Fixed multiplier for device installed RAM (installed_mem)."
+            }
+        }
+
+        if ($memoryMode -eq "random") {
+            $parameters += @{
+                Name        = "memory_multiplier_min"
+                Label       = "Min Random Memory Multiplier"
+                Type        = "number"
+                Default     = 2.0
+                Min         = 0.1
+                Max         = 100.0
+                Step        = 0.1
+                Description = "Lower bound for random memory multiplier"
+            }
+            $parameters += @{
+                Name        = "memory_multiplier_max"
+                Label       = "Max Random Memory Multiplier"
+                Type        = "number"
+                Default     = 8.0
+                Min         = 0.1
+                Max         = 100.0
+                Step        = 0.5
+                Description = "Upper bound for random memory multiplier. Each device gets a random value between min and max."
+            }
         }
     }
-    
+
     if ($enableStorage) {
         $parameters += @{
-            Name        = "storage_multiplier"
-            Label       = "Storage Multiplier"
-            Type        = "number"
-            Default     = 1.0
-            Min         = 0.1
-            Max         = 100.0
-            Step        = 0.1
-            Description = "Multiplier for device storage capacity (installed_sto). Higher values = more disk space."
+            Name            = "storage_mode"
+            Label           = "Storage Mode"
+            Type            = "select"
+            Default         = "fixed"
+            Options         = @("fixed", "random")
+            RefreshOnChange = $true
+            Description     = "fixed: constant multiplier | random: random multiplier per device"
+        }
+
+        if ($storageMode -eq "fixed") {
+            $parameters += @{
+                Name        = "storage_multiplier"
+                Label       = "Storage Multiplier"
+                Type        = "number"
+                Default     = 8.0
+                Min         = 0.1
+                Max         = 100.0
+                Step        = 0.1
+                Description = "Fixed multiplier for device storage capacity (installed_sto)."
+            }
+        }
+
+        if ($storageMode -eq "random") {
+            $parameters += @{
+                Name        = "storage_multiplier_min"
+                Label       = "Min Random Storage Multiplier"
+                Type        = "number"
+                Default     = 4.0
+                Min         = 0.1
+                Max         = 100.0
+                Step        = 0.5
+                Description = "Lower bound for random storage multiplier"
+            }
+            $parameters += @{
+                Name        = "storage_multiplier_max"
+                Label       = "Max Random Storage Multiplier"
+                Type        = "number"
+                Default     = 16.0
+                Min         = 0.1
+                Max         = 1000.0
+                Step        = 1.0
+                Description = "Upper bound for random storage multiplier. Each device gets a random value between min and max."
+            }
         }
     }
-}
-
-# ============================================================================
-# Merchant Restock Settings
-# ============================================================================
-
-$parameters += @{
-    Type        = "section"
-    Label       = "Merchant Restock"
-    Description = "Configure merchant restock console command"
-}
-
-$parameters += @{
-    Name        = "show_restock_notification"
-    Label       = "Show Restock Notification"
-    Type        = "boolean"
-    Default     = $true
-    Description = @"
-Display an on-screen notification when merchants are restocked.
-
-Shows a brief message confirming the restock action completed.
-
-Usage: Press ~ to open the debug console, then type: m_restock
-
-Note: Merchants are retrieved via ModApiV1.get_merchants().
-"@
 }
 
 # ============================================================================

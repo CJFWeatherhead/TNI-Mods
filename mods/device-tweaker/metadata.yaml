@@ -194,6 +194,13 @@ Parameters:
     Default: true
     Description: Enable bandwidth capacity modifications
     
+  - Name: bandwidth_mode
+    Label: Bandwidth Mode
+    Type: select
+    Default: fixed
+    Options: ["fixed", "random"]
+    Description: Use a fixed multiplier or random range for bandwidth per device
+
   - Name: bandwidth_multiplier
     Label: Bandwidth Multiplier
     Type: number
@@ -201,7 +208,25 @@ Parameters:
     Min: 0.1
     Max: 100.0
     Step: 0.1
-    Description: Multiplier for device network bandwidth (e.g., 2.0 = double bandwidth)
+    Description: Fixed multiplier for device network bandwidth (used when mode is 'fixed')
+
+  - Name: bandwidth_multiplier_min
+    Label: Min Random Bandwidth Multiplier
+    Type: number
+    Default: 1.5
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Lower bound for random bandwidth multiplier (used when mode is 'random')
+
+  - Name: bandwidth_multiplier_max
+    Label: Max Random Bandwidth Multiplier
+    Type: number
+    Default: 4.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Upper bound for random bandwidth multiplier (used when mode is 'random')
   
   # Warranty Settings
   - Name: enable_warranty
@@ -214,6 +239,9 @@ Parameters:
     Label: Warranty Mode
     Type: select
     Default: random
+    Options: ["fixed", "random"]
+    Description: "fixed: apply a constant multiplier | random: apply a random multiplier per device"
+
   - Name: warranty_multiplier_fixed
     Label: Fixed Warranty Multiplier
     Type: number
@@ -239,6 +267,9 @@ Parameters:
     Min: 0.1
     Max: 1000.0
     Step: 1.0
+    Description: Upper bound for random warranty multiplier (used when mode is 'random')
+
+  - Name: warranty_apply_cycles
     Label: Apply to Warranty Cycles
     Type: boolean
     Default: true
@@ -289,6 +320,13 @@ Parameters:
     Default: false
     Description: Enable RAM modifications
     
+  - Name: memory_mode
+    Label: Memory Mode
+    Type: select
+    Default: fixed
+    Options: ["fixed", "random"]
+    Description: Use a fixed multiplier or random range for memory per device
+
   - Name: memory_multiplier
     Label: Memory (RAM) Multiplier
     Type: number
@@ -296,7 +334,25 @@ Parameters:
     Min: 0.1
     Max: 100.0
     Step: 0.1
-    Description: Multiplier for device installed RAM
+    Description: Fixed multiplier for device installed RAM (used when mode is 'fixed')
+
+  - Name: memory_multiplier_min
+    Label: Min Random Memory Multiplier
+    Type: number
+    Default: 2.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Lower bound for random memory multiplier (used when mode is 'random')
+
+  - Name: memory_multiplier_max
+    Label: Max Random Memory Multiplier
+    Type: number
+    Default: 8.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.5
+    Description: Upper bound for random memory multiplier (used when mode is 'random')
   
   # Storage Settings
   - Name: enable_storage
@@ -305,6 +361,13 @@ Parameters:
     Default: false
     Description: Enable storage capacity modifications
     
+  - Name: storage_mode
+    Label: Storage Mode
+    Type: select
+    Default: fixed
+    Options: ["fixed", "random"]
+    Description: Use a fixed multiplier or random range for storage per device
+
   - Name: storage_multiplier
     Label: Storage Multiplier
     Type: number
@@ -312,4 +375,22 @@ Parameters:
     Min: 0.1
     Max: 100.0
     Step: 0.1
-    Description: Multiplier for device storage capacity
+    Description: Fixed multiplier for device storage capacity (used when mode is 'fixed')
+
+  - Name: storage_multiplier_min
+    Label: Min Random Storage Multiplier
+    Type: number
+    Default: 4.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.5
+    Description: Lower bound for random storage multiplier (used when mode is 'random')
+
+  - Name: storage_multiplier_max
+    Label: Max Random Storage Multiplier
+    Type: number
+    Default: 16.0
+    Min: 0.1
+    Max: 1000.0
+    Step: 1.0
+    Description: Upper bound for random storage multiplier (used when mode is 'random')
