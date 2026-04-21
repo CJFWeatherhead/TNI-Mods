@@ -1,27 +1,27 @@
 ---
 title: "All Proposals"
-date: 2026-04-18
+date: 2026-04-21
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "0.1.18"
+version: "2.0.0"
 status: "Active Development"
 game_version: "beta"
 ---
 
 # All Proposals
 
-All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily in...
+Shows all available proposals at once by overriding the game's proposal batch size.
 
 <div class="mod-header-info">
 
 | | |
 |---|---|
-| **Version** | 0.1.18 |
+| **Version** | 2.0.0 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-18 |
+| **Last Updated** | 2026-04-21 |
 
 </div>
 
@@ -31,7 +31,7 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 <div class="download-section">
 
-**[Download all-proposals-0.1.18.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.18/all-proposals-0.1.18.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-2.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.0/all-proposals-2.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -59,7 +59,21 @@ All Proposals Mod: enhances the game's proposal system by allowing players to vi
 
 ## About This Mod
 
-All Proposals Mod: enhances the game's proposal system by allowing players to view all available proposals at once. Press Shift+P to temporarily increase the proposal batch size and display all eligible proposals, excluding those with unmet dependencies or failed adhoc requirements. Press Shift+O to restore normal proposal display.
+Shows all available proposals at once by overriding the game's proposal batch size.
+
+## Keyboard Shortcuts
+- **SHIFT+O**: Show all eligible proposals (increases batch size, triggers reroll)
+- **SHIFT+U**: Restore normal proposal display (restores original batch size, triggers reroll)
+
+## Logic
+- Excludes proposals with unmet dependencies
+- Excludes proposals that fail adhoc requirements
+- Excludes already-submitted proposals
+- Prints a summary: available / blocked / submitted counts
+
+## Notes
+- No panels, no console commands — keyboard shortcuts only
+- Re-open the Secretariat screen if proposals don't refresh immediately
 
 ---
 
@@ -155,8 +169,8 @@ CJFWeatherhead
 <summary><strong>Additional Notes</strong></summary>
 
 - Uses ModApiV1 for game integration
-- Safely checks proposal dependencies and requirements
-- Provides detailed console logging
+- Safely checks proposal dependencies and adhoc requirements
+- Provides detailed console logging (available / blocked / submitted counts)
 - No known conflicts with other mods
 
 </details>
@@ -170,14 +184,14 @@ CJFWeatherhead
 |-------|-------|
 | Mod ID | `all-proposals` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-18 |
+| Last Updated | 2026-04-21 |
 | Game Version | beta |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/all-proposals) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v0.1.18)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v0.1.18/all-proposals-0.1.18.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v2.0.0)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.0/all-proposals-2.0.0.zip)
 
 </details>
 

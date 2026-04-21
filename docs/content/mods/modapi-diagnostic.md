@@ -1,10 +1,10 @@
 ---
 title: "ModAPI Diagnostic Tool"
-date: 2026-04-18
+date: 2026-04-21
 draft: false
 mod_id: "modapi-diagnostic"
 author: "CJFWeatherhead"
-version: "4.0.6"
+version: "4.5"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
 | | |
 |---|---|
-| **Version** | 4.0.6 |
+| **Version** | 4.5 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-18 |
+| **Last Updated** | 2026-04-21 |
 
 </div>
 
@@ -31,7 +31,7 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
 <div class="download-section">
 
-**[Download modapi-diagnostic-4.0.6.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.6/modapi-diagnostic-4.0.6.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download modapi-diagnostic-4.5.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.5/modapi-diagnostic-4.5.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -61,6 +61,10 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
 Zero-overhead development tool for TNI game engine modding (0.10.11+).
 
+## v4.5 — Panel removal
+- **Removed standalone CanvasLayer panel** and on_tick polling (Callable bridge crash)
+- All functionality now via console commands only (press ~ to open)
+
 ## v4.0 — Zero-overhead rewrite
 
 ### Architecture
@@ -73,7 +77,7 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 - **on_game_state_ready** (auto-diagnostic on game init)
 - on_game_host_eod, on_mod_reload
 - on_device_spawned, on_user_spawned, **on_location_spawned**
-- on_day_start, on_day_end, on_tick
+- on_day_start, on_day_end
 - on_world_ready, on_world_created, on_game_start, on_scenario_start
 
 ### JSON Game State Export
@@ -416,14 +420,14 @@ No gameplay impact. Ideal for:
 |-------|-------|
 | Mod ID | `modapi-diagnostic` |
 | Creation Date | 2026-01-20 |
-| Last Updated | 2026-04-18 |
+| Last Updated | 2026-04-21 |
 | Game Version | beta |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/modapi-diagnostic) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v4.0.6)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.0.6/modapi-diagnostic-4.0.6.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v4.5)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.5/modapi-diagnostic-4.5.zip)
 
 </details>
 

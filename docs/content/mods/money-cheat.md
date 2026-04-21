@@ -1,27 +1,27 @@
 ---
 title: "Money Cheat"
-date: 2026-04-20
+date: 2026-04-21
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
-version: "0.1.19"
-status: "Discontinued"
+version: "5.0.0"
+status: "Active Development"
 game_version: "beta"
 ---
 
 # Money Cheat
 
-Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.
+Instantly add money and restock merchants via keyboard shortcuts.
 
 <div class="mod-header-info">
 
 | | |
 |---|---|
-| **Version** | 0.1.19 |
+| **Version** | 5.0.0 |
 | **Author** | CJFWeatherhead |
-| **Status** | 🔴 Discontinued |
+| **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-20 |
+| **Last Updated** | 2026-04-21 |
 
 </div>
 
@@ -31,7 +31,7 @@ Simple money cheat mod that adds a configurable amount of money when you press S
 
 <div class="download-section">
 
-**[Download money-cheat-0.1.19.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.19/money-cheat-0.1.19.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download money-cheat-5.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.0/money-cheat-5.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -64,30 +64,26 @@ Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edi
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | **Money Amount** | integer (100-10000000) | `10000` | Amount of money to add when SHIFT+M is pressed |
-| **Enable Debug Logging** | boolean | `True` | Log detailed information to console when cheat is activated |
-| **Show In-Game Notification** | boolean | `True` | Attempt to show an in-game notification when money is added (may not be supported by all game versions) |
+| **Enable Debug Logging** | boolean | `False` | Log detailed information to console when shortcuts are activated |
 
 ---
 
 ## About This Mod
 
-Simple money cheat mod that adds a configurable amount of money when you press SHIFT+M.
+Instantly add money and restock merchants via keyboard shortcuts.
+
+## Keyboard Shortcuts
+- **SHIFT+M**: Add a configurable amount of money to your cash balance
+- **SHIFT+R**: Instantly restock all merchants
 
 ## Features
-- Instant money injection via keyboard shortcut (SHIFT+M)
-- Configurable amount (default: $10,000)
-- Console feedback on activation
-- Optional in-game notifications
-- Cooldown protection to prevent accidental double-activation
-
-## Usage
-Press SHIFT+M during gameplay to add money to your balance.
-Configure the amount in the Mod Manager settings.
+- Configurable money amount (default: $10,000)
+- Console feedback on every activation
+- No panels, no console commands — keyboard shortcuts only
 
 ## Configuration
-- **Money Amount**: The amount to add when activated (default: $10,000)
+- **Money Amount**: The amount to add per SHIFT+M press (default: $10,000)
 - **Debug Logging**: Show detailed console messages
-- **Show Notification**: Attempt to display in-game notification
 
 ---
 
@@ -229,7 +225,7 @@ This mod is intended for fun and experimentation. Using cheats may impact your g
 <details>
 <summary><strong>Additional Notes</strong></summary>
 
-Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s cooldown to prevent accidental double-activation.
+Uses on_player_input hook to detect SHIFT+M (money) and SHIFT+R (restock) keyboard combinations. Restock functionality was moved here from device-tweaker in v5.0.0.
 
 </details>
 
@@ -242,14 +238,14 @@ Uses on_key_pressed hook to detect SHIFT+M keyboard combination. Includes 0.5s c
 |-------|-------|
 | Mod ID | `money-cheat` |
 | Creation Date | 2026-01-21 |
-| Last Updated | 2026-04-20 |
+| Last Updated | 2026-04-21 |
 | Game Version | beta |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/money-cheat) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v0.1.19)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v0.1.19/money-cheat-0.1.19.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v5.0.0)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.0/money-cheat-5.0.0.zip)
 
 </details>
 

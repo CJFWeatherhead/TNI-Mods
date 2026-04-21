@@ -1,10 +1,10 @@
 ---
 title: "Device Tweaker"
-date: 2026-04-20
+date: 2026-04-21
 draft: false
 mod_id: "device-tweaker"
 author: "CJFWeatherhead"
-version: "0.1.26"
+version: "4.0.0"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,11 +17,11 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 | | |
 |---|---|
-| **Version** | 0.1.26 |
+| **Version** | 4.0.0 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-20 |
+| **Last Updated** | 2026-04-21 |
 
 </div>
 
@@ -31,7 +31,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 <div class="download-section">
 
-**[Download device-tweaker-0.1.26.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.26/device-tweaker-0.1.26.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download device-tweaker-4.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.0/device-tweaker-4.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -83,55 +83,39 @@ Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edi
 | **Enable for Phones** | boolean | `True` | Apply modifications to phone devices (class 17) |
 | **Enable for Printers** | boolean | `True` | Apply modifications to printer devices (class 18) |
 | **Enable for Network Load Balancers** | boolean | `True` | Apply modifications to network load balancer devices (class 19) |
-| **Enable Bandwidth Modification** | boolean | `False` | Enable bandwidth capacity modifications |
+| **Enable for Network Storage** | boolean | `True` | Apply modifications to network storage devices (class 20) |
+| **Enable Bandwidth Modification** | boolean | `True` | Enable bandwidth capacity modifications |
 | **Bandwidth Multiplier** | number (0.1-100.0) | `2.0` | Multiplier for device network bandwidth (e.g., 2.0 = double bandwidth) |
-| **Enable Warranty Modification** | boolean | `False` | Enable warranty period modifications |
-| **Warranty Mode** | select: fixed, random | `fixed` | Use a fixed multiplier or random range for warranties |
+| **Enable Warranty Modification** | boolean | `True` | Enable warranty period modifications |
+| **Warranty Mode** | select | `random` |  |
 | **Fixed Warranty Multiplier** | number (0.1-100.0) | `1.0` | Fixed multiplier for warranties (used when mode is 'fixed') |
-| **Min Random Warranty Multiplier** | number (0.1-100.0) | `2.0` | Minimum multiplier for random warranties (used when mode is 'random') |
-| **Max Random Warranty Multiplier** | number (0.1-100.0) | `25.0` | Maximum multiplier for random warranties (used when mode is 'random') |
+| **Min Random Warranty Multiplier** | number (0.1-100.0) | `5.0` | Minimum multiplier for random warranties (used when mode is 'random') |
 | **Apply to Warranty Cycles** | boolean | `True` | Whether to also multiply warranty cycles (in addition to days) |
 | **Apply to Remaining Warranty** | boolean | `True` | Whether to also apply multiplier to remaining warranty period |
 | **Enable Cost Modification** | boolean | `False` | Enable device cost modifications |
 | **Cost Multiplier** | number (0.01-100.0) | `1.0` | Multiplier for device purchase costs (e.g., 0.5 = half price, 2.0 = double price) |
 | **Enable CPU Modification** | boolean | `False` | Enable CPU power modifications |
-| **CPU Power Multiplier** | number (0.1-100.0) | `1.0` | Multiplier for device CPU power |
+| **CPU Power Multiplier** | number (0.1-100.0) | `2.0` | Multiplier for device CPU power |
 | **Enable Memory Modification** | boolean | `False` | Enable RAM modifications |
-| **Memory (RAM) Multiplier** | number (0.1-100.0) | `1.0` | Multiplier for device installed RAM |
+| **Memory (RAM) Multiplier** | number (0.1-100.0) | `4.0` | Multiplier for device installed RAM |
 | **Enable Storage Modification** | boolean | `False` | Enable storage capacity modifications |
-| **Storage Multiplier** | number (0.1-100.0) | `1.0` | Multiplier for device storage capacity |
-| **Enable Auto Network Addressing** | boolean | `False` | Automatically assign network addresses based on floor and device class.
-Format: @f{floor}/{class}{increment}
-Examples: @f4/srv1 (compute server on floor 4), @f2/swt1 (switch on floor 2), @f18/nlb2 (load balancer on floor 18)
-
-Device class abbreviations (3 letters):
-def=default, swt=switch, rtr=router, tap=tap, fwr=firewall, mls=media_simplex, mld=media_duplex,
-srv=server, mon=monitor, dbg=debugger, ldt=load_tester, pwr=power_expansion, dcr=decentro_rigs,
-spr=surge_protector, ups=ups, ine=inert, ccv=cctv, phn=phone, prt=printer, nlb=load_balancer
- |
-| **DHCP Mode** | select: disabled, boot_dhcp, periodic_dhcp | `disabled` | Set the DHCP mode for devices - disabled, boot_dhcp (runs once at boot), or periodic_dhcp (runs periodically) |
-| **Enable Merchant Restock Hotkey** | boolean | `True` | Enable CTRL+SHIFT+R hotkey to instantly restock all merchants.
-Useful when you need more devices but stock is depleted.
- |
-| **Show Restock Notification** | boolean | `True` | Display an in-game notification when merchants are restocked |
+| **Storage Multiplier** | number (0.1-100.0) | `8.0` | Multiplier for device storage capacity |
 
 ---
 
 ## About This Mod
 
 A comprehensive mod for tweaking device properties in Tower Networking Inc.
+Modifications are applied automatically when devices spawn — no keyboard input needed.
 
 ## Features
-- **Bandwidth Multiplier**: Adjust network bandwidth capacity of devices
+- **Bandwidth Multiplier**: Adjust network bandwidth capacity (installed_nbw)
 - **Warranty Modifications**: Set fixed or random warranty multipliers
-- **Cost Adjustments**: Modify device purchase costs
-- **Hardware Multipliers**: Scale CPU power, RAM, and storage
-- **Network Addressing**: Auto-assign addresses based on floor and device type
-- **DHCP Configuration**: Set DHCP mode (disabled, boot, or periodic)
+- **Cost Adjustments**: Modify device purchase prices
+- **Hardware Multipliers**: Scale CPU (installed_cpu), RAM (installed_mem), and storage (installed_sto)
 - **Device Class Filtering**: Selectively apply modifications to specific device types
-- **Merchant Restock**: Press CTRL+SHIFT+R to instantly restock all merchants
 
-## Device Classes (20 types)
+## Device Classes (21 types)
 - Default (0) - def
 - Network Switch (1) - swt
 - Network Router (2) - rtr
@@ -152,13 +136,18 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 - Phone (17) - phn
 - Printer (18) - prt
 - Network Load Balancer (19) - nlb
+- Network Storage (20) - nst
 
 ## Configuration Tips
 - Enable specific modifications using the enable toggles
 - Set multipliers > 1.0 to increase values, < 1.0 to decrease
 - Use random warranty mode for varied warranty periods per device
 - Disable device classes you don't want to modify
-- Network addressing format: @f{floor}/{abbrev}{increment}
+- Restock merchants with SHIFT+R (money-cheat mod)
+
+## Notes
+- No panels, no keyboard input — purely passive on_device_spawned hook
+- Incompatible with 2x-bandwidth-switches and random-warranties (supersedes both)
 
 ---
 
@@ -411,8 +400,9 @@ See the LICENSE file in the main repository.
 <details>
 <summary><strong>Additional Notes</strong></summary>
 
-This mod combines and extends functionality from 2x-bandwidth-switches and random-warranties mods.
-All modifications are applied when devices spawn.
+This mod supersedes 2x-bandwidth-switches and random-warranties.
+All modifications are applied when devices spawn (on_device_spawned hook).
+No input handling, no panels, no register_cmd.
 
 
 </details>
@@ -426,14 +416,14 @@ All modifications are applied when devices spawn.
 |-------|-------|
 | Mod ID | `device-tweaker` |
 | Creation Date | 2026-01-18 |
-| Last Updated | 2026-04-20 |
+| Last Updated | 2026-04-21 |
 | Game Version | beta |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/device-tweaker) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v0.1.26)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v0.1.26/device-tweaker-0.1.26.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v4.0.0)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.0/device-tweaker-4.0.0.zip)
 
 </details>
 

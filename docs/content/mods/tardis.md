@@ -1,27 +1,27 @@
 ---
 title: "TARDIS - Time Controller"
-date: 2026-04-20
+date: 2026-04-21
 draft: false
 mod_id: "tardis"
 author: "CJFWeatherhead"
-version: "0.1.18"
+version: "4.0.0"
 status: "Active Development"
 game_version: "beta"
 ---
 
 # TARDIS - Time Controller
 
-Control game time like a Time Lord! This mod provides keyboard shortcuts to manipulate game speed and skip time.
+Control game time like a Time Lord! Preset-based speed control and time manipulation via keyboard shortcuts.
 
 <div class="mod-header-info">
 
 | | |
 |---|---|
-| **Version** | 0.1.18 |
+| **Version** | 4.0.0 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
-| **Last Updated** | 2026-04-20 |
+| **Last Updated** | 2026-04-21 |
 
 </div>
 
@@ -31,7 +31,7 @@ Control game time like a Time Lord! This mod provides keyboard shortcuts to mani
 
 <div class="download-section">
 
-**[Download tardis-0.1.18.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.18/tardis-0.1.18.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download tardis-4.0.0.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.0/tardis-4.0.0.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -63,42 +63,40 @@ Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edi
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| **Speed Change Step** | number (0.1-2.0) | `0.5` | Amount to change the speed multiplier when pressing SHIFT+> or SHIFT+< |
-| **Minimum Speed** | number (0.125-1.0) | `0.125` | Minimum allowed game speed multiplier (game hard limit is 0.125x) |
-| **Maximum Speed** | number (2.0-8.0) | `8.0` | Maximum allowed game speed multiplier (game hard limit is 8x) |
-| **Default Speed** | number (0.25-5.0) | `1.0` | Default game speed to use (for reference) |
-| **Skip To Time (hours)** | number (0.0-23.99) | `23.99` | Time of day to skip to when pressing SHIFT++ (24-hour format, e.g., 23.99 = 23:59) |
-| **Show In-Game Notifications** | boolean | `True` | Display on-screen notifications when speed changes or time skips |
-| **Enable Debug Logging** | boolean | `False` | Show detailed debug messages in the console |
+| **Default Speed** | number (0.125-8.0) | `1.0` | Speed preset to reset to when pressing SHIFT+N (snapped to nearest preset in the ladder) |
+| **Skip To Time (decimal hours)** | number (0.0-23.99) | `23.99` | Time of day to skip to when pressing SHIFT+K (24-hour decimal, e.g. 23.99 = 23:59) |
+| **Auto Reset Speed On Day Start** | boolean | `False` | Automatically reset game speed to the default preset at the start of each new day |
+| **Enable Debug Logging** | boolean | `False` | Show detailed debug messages in the console when shortcuts are used |
 
 ---
 
 ## About This Mod
 
-Control game time like a Time Lord! This mod provides keyboard shortcuts to manipulate game speed and skip time.
+Control game time like a Time Lord! Preset-based speed control and time manipulation via keyboard shortcuts.
 
-## Features
-- **Speed Up**: Press SHIFT+> to increase game speed
-- **Slow Down**: Press SHIFT+< to decrease game speed  
-- **Skip Day**: Press SHIFT++ to skip to end of current day (23:59)
-- **Visual Feedback**: On-screen notifications for all actions
-- **Configurable**: Adjust speed step, min/max speed, and more
+## Keyboard Shortcuts (hold SHIFT)
+- **SHIFT+>** : Step up to next speed preset
+- **SHIFT+<** : Step down to previous speed preset
+- **SHIFT+N** : Reset to default speed
+- **SHIFT+K** : Skip to end of day (configurable time)
+- **SHIFT+P** : Toggle day cycle pause / resume
+- **SHIFT+T** : Print current speed, day number, and time to console
+
+## Speed Presets
+Fixed preset ladder: 0.125x, 0.25x, 0.5x, 1x, 2x, 4x, 8x (game hard limits)
+
+## Configuration
+- **Default Speed**: preset to snap to when pressing SHIFT+N (default: 1x)
+- **Skip To Time**: decimal hour to skip to with SHIFT+K (default: 23.99 = 23:59)
+- **Auto Reset On Day Start**: automatically reset speed each new day
+- **Debug Logging**: enable detailed console output
 
 ## Why "TARDIS"?
 Like the Doctor's famous time machine, this mod gives you control over the flow of time!
 
-## Usage
-- SHIFT+> : Speed up time (like drinking coffee)
-- SHIFT+< : Slow down time (like drinking tea)
-- SHIFT++ : Skip to end of day
-
-## Configuration
-- **Speed Step**: How much to change speed per keypress (default: 0.5x)
-- **Min Speed**: Minimum speed multiplier (default: 0.25x)
-- **Max Speed**: Maximum speed multiplier (default: 10x)
-- **Skip To Time**: What time to skip to (default: 23:59)
-- **Show Notifications**: Toggle in-game notifications
-- **Debug Logging**: Enable detailed console output
+## Notes
+- No panels, no console commands — keyboard shortcuts only
+- Speed preset is synced from the game on load
 
 ---
 
@@ -291,8 +289,9 @@ This mod is released under the same license as the TNI-Mods repository.
 <details>
 <summary><strong>Additional Notes</strong></summary>
 
-Uses GameWorld.update_server_timescale() for speed control and DayCycleController.force_day_clock() for time skipping.
-Speed changes persist until manually changed or game restart.
+Uses world.time_mult for speed reads and world.update_server_timescale() for writes.
+Day skip uses DayCycleController.force_day_clock(). Speed preset ladder is fixed at
+0.125x / 0.25x / 0.5x / 1x / 2x / 4x / 8x to match game hard limits.
 
 
 </details>
@@ -306,14 +305,14 @@ Speed changes persist until manually changed or game restart.
 |-------|-------|
 | Mod ID | `tardis` |
 | Creation Date | 2026-01-31 |
-| Last Updated | 2026-04-20 |
+| Last Updated | 2026-04-21 |
 | Game Version | beta |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/tardis) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/tardis](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/tardis) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v0.1.18)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v0.1.18/tardis-0.1.18.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v4.0.0)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.0/tardis-4.0.0.zip)
 
 </details>
 
