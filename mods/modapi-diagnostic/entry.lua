@@ -1,5 +1,9 @@
--- ModAPI Diagnostic Tool v4.4
+-- ModAPI Diagnostic Tool v4.5
 -- Development tool for TNI game engine modding (game version 0.10.11+)
+--
+-- CHANGES from v4.4:
+--   * Removed standalone panel + on_tick polling (Callable bridge crash).
+--   * All functionality via console commands only (press ~ to open).
 --
 -- CHANGES from v4.3:
 --   * Debug console activation: sets DebugLayer.enabled=true, visible=true
@@ -33,7 +37,7 @@
 --   export_to_json              run_api_test_suite
 --   export_test_results_json    show_lifecycle_log
 
-print("=== ModAPI Diagnostic Tool v4.4 Loading ===")
+print("=== ModAPI Diagnostic Tool v4.5 Loading ===")
 
 -- ============================================================================
 -- CONFIGURATION
@@ -1760,105 +1764,9 @@ function on_engine_load()
     if Engine then print("[DIAG] + Engine global available") end
 end
 
-local _diag_btns = {}
-local _diag_panel       = nil
-local _diag_panel_visible = false
-local _diag_panel_close = nil
+-- Panel code removed (Callable bridge crash — see v4.0 notes)
 
--- Panel (standalone CanvasLayer at /root)
-local function destroy_diag_panel()
-    if _diag_panel then pcall(function() _diag_panel.queue_free() end) end
-    _diag_panel = nil; _diag_panel_visible = false; _diag_panel_close = nil
-    _diag_btns = {}
-end
 
-local function _diag_setup_panel(world)
-    destroy_diag_panel()
-    pcall(function()
-        local root = world.get_node("/root")
-        if not root then return end
-
-        _diag_panel = create_node("CanvasLayer", "")
-        _diag_panel.layer = 100
-        _diag_panel.visible = false
-
-        local container = create_node("PanelContainer", "")
-        _diag_panel.add_child(container)
-        pcall(function()
-            container.anchor_left = 1.0; container.anchor_top = 0.0
-            container.anchor_right = 1.0; container.anchor_bottom = 0.0
-        end)
-        pcall(function()
-            container.offset_left = -270; container.offset_top = 650
-            container.offset_right = -10;  container.offset_bottom = 800
-        end)
-        pcall(function() container.self_modulate = Color(1, 1, 1, 0.92) end)
-
-        local vbox = create_node("VBoxContainer", "")
-        container.add_child(vbox)
-
-        -- Header
-        local header = create_node("HBoxContainer", "")
-        vbox.add_child(header)
-        local title = create_node("Label", "")
-        title.text = "ModAPI Diagnostic"
-        pcall(function() title.add_theme_font_size_override("font_size", 15) end)
-        pcall(function() title.size_flags_horizontal = 3 end)
-        header.add_child(title)
-
-        _diag_panel_close = create_node("Button", "")
-        _diag_panel_close.text = "X"
-        _diag_panel_close.flat = true
-        _diag_panel_close.toggle_mode = true
-        pcall(function() _diag_panel_close.custom_minimum_size = Vector2(28, 28) end)
-        header.add_child(_diag_panel_close)
-
-        local row1 = create_node("HBoxContainer", "")
-        vbox.add_child(row1)
-
-        local btn_world = create_node("Button", "")
-        btn_world.text = "World Info"
-        pcall(function() btn_world.custom_minimum_size = Vector2(120, 28) end)
-        btn_world.toggle_mode = true
-        row1.add_child(btn_world)
-        _diag_btns.world = btn_world
-
-        local btn_export = create_node("Button", "")
-        btn_export.text = "Export JSON"
-        pcall(function() btn_export.custom_minimum_size = Vector2(120, 28) end)
-        btn_export.toggle_mode = true
-        row1.add_child(btn_export)
-        _diag_btns.export = btn_export
-
-        local row2 = create_node("HBoxContainer", "")
-        vbox.add_child(row2)
-
-        local btn_test = create_node("Button", "")
-        btn_test.text = "Run Tests"
-        pcall(function() btn_test.custom_minimum_size = Vector2(120, 28) end)
-        btn_test.toggle_mode = true
-        row2.add_child(btn_test)
-        _diag_btns.test = btn_test
-
-        local btn_log = create_node("Button", "")
-        btn_log.text = "Lifecycle Log"
-        pcall(function() btn_log.custom_minimum_size = Vector2(120, 28) end)
-        btn_log.toggle_mode = true
-        row2.add_child(btn_log)
-        _diag_btns.log = btn_log
-
-        root.add_child(_diag_panel)
-        print("[DIAG] Panel built (standalone CanvasLayer at /root)")
-    end)
-end
-
--- Console command: toggle diagnostic panel
-function m_diag_panel()
-    if not _diag_panel then print("[DIAG] m_diag_panel: panel not built yet"); return end
-    _diag_panel_visible = not _diag_panel_visible
-    pcall(function() _diag_panel.visible = _diag_panel_visible end)
-    print("[DIAG] m_diag_panel: " .. (_diag_panel_visible and "shown" or "hidden"))
-end
 
 function on_game_state_ready()
     lifecycle("on_game_state_ready", "game fully initialized -- world is guaranteed valid")
@@ -1881,7 +1789,6 @@ function on_game_state_ready()
                 {"run_api_test_suite",       run_api_test_suite},
                 {"export_test_results_json", export_test_results_json},
                 {"show_lifecycle_log",       show_lifecycle_log},
-                {"m_diag_panel",             m_diag_panel},
             }
             for _, cmd in ipairs(cmds) do
                 pcall(function() dbg.register_cmd(cmd[1], cmd[2]) end)
@@ -1918,8 +1825,6 @@ function on_game_state_ready()
 
         notify("Diagnostic Tool ready -- use console commands", 0)
     end
-
-    if world then _diag_setup_panel(world) end
 end
 
 function on_game_host_eod()
@@ -1928,9 +1833,6 @@ end
 
 function on_mod_reload()
     lifecycle("on_mod_reload", "mods reloaded (F11)")
-    destroy_diag_panel()
-    local world = ModApiV1 and ModApiV1.get_game_world()
-    if world then _diag_setup_panel(world) end
 end
 
 function on_world_ready(world)
@@ -2038,27 +1940,7 @@ function on_day_end()
     end
 end
 
--- on_tick: poll toggle-mode buttons for standalone panel
-function on_tick(delta)
-    -- Poll close button
-    if _diag_panel_close then
-        pcall(function()
-            if _diag_panel_close.button_pressed then
-                _diag_panel_close.button_pressed = false
-                _diag_panel_visible = false
-                _diag_panel.visible = false
-            end
-        end)
-    end
-    -- Poll action buttons
-    pcall(function()
-        local b = _diag_btns
-        if b.world  and b.world.button_pressed  then b.world.button_pressed  = false; dump_world_overview() end
-        if b.export and b.export.button_pressed then b.export.button_pressed = false; export_to_json() end
-        if b.test   and b.test.button_pressed   then b.test.button_pressed   = false; run_api_test_suite() end
-        if b.log    and b.log.button_pressed    then b.log.button_pressed    = false; show_lifecycle_log() end
-    end)
-end
+-- on_tick removed: panel polling no longer needed (Callable bridge crash)
 
 -- ============================================================================
 -- NOTE: on_player_input INTENTIONALLY REMOVED
@@ -2084,7 +1966,7 @@ end
 -- STARTUP
 -- ============================================================================
 
-print("=== ModAPI Diagnostic Tool v4.4 Ready ===")
+print("=== ModAPI Diagnostic Tool v4.5 Ready ===")
 print("    Press ~ to open the debug console")
 print("")
 print("    Console commands:")
