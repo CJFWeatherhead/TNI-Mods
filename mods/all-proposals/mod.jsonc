@@ -2,7 +2,7 @@
 	"id": "all-proposals",
 	"name": "All Proposals",
 	"authors": [ "CJFWeatherhead" ],
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": [
 		"Enhances the game's proposal system by allowing players to view all available proposals at once. Press SHIFT+O to show all eligible proposals (excluding those with unmet dependencies or failed adhoc requirements). Press SHIFT+U to restore the normal proposal batch size. No panels, no console commands — keyboard shortcuts only."
 	],
