@@ -1647,108 +1647,220 @@ function dump_all_world_devices()
 end
 
 function inspect_fixture_outlets()
-    print("\n[DIAG] ========== Fixture Outlets (PHONE/CCTV Investigation) ==========")
+    print("\n[DIAG] ========== Fixture Outlets & PHONE/CCTV Deep Scan ==========")
     if not ModApiV1 then print("[DIAG] ModApiV1 not available"); return end
     local world = ModApiV1.get_game_world()
     if not world then print("[DIAG] World is nil"); return end
 
-    -- 1) Enumerate fixture_outlet_serials per location
+    -- Recursive scene tree walker: collects info about every descendant node
+    local function walk_node(node, depth, max_depth, results)
+        if depth > max_depth then return end
+        local ok_count, count = pcall(function() return node:get_child_count() end)
+        if not ok_count or not count then return end
+
+        for i = 0, count - 1 do
+            local ok_child, child = pcall(function() return node:get_child(i) end)
+            if ok_child and child then
+                local entry = {}
+                -- Get class name (Godot runtime class)
+                pcall(function() entry.class = child:get_class() end)
+                -- Get node name
+                pcall(function() entry.name = child:get_name() end)
+                -- Check for device properties
+                entry.hw_class = safe_get(child, "device_hardware_class")
+                entry.outlet_name = safe_get(child, "outlet_name")
+                entry.floor_num = safe_get(child, "floor_num")
+                entry.product_name = safe_get(child, "product_name")
+                -- Check for logic controller / network
+                local lc = safe_get(child, "logic_controller")
+                if lc then
+                    entry.has_lc = true
+                    local netctl = safe_get(lc, "networkctl")
+                    if netctl then
+                        entry.hw_addr = safe_get(netctl, "hardware_address")
+                        entry.nw_addr = safe_get(netctl, "network_address")
+                    end
+                end
+                entry.depth = depth
+                entry.node = child
+                results[#results + 1] = entry
+                -- Recurse into children
+                walk_node(child, depth + 1, max_depth, results)
+            end
+        end
+    end
+
+    -- 1) Scan each location's subtree
     local locs = safe_get(world, "locations")
     if locs then
         local lt = array_to_table(locs)
-        print("[DIAG] --- Fixture outlet serials per location ---")
+        print("[DIAG] --- Scanning location subtrees ---")
         for i, loc in ipairs(lt) do
             local name  = safe_get(loc, "display_name") or "?"
             local floor = safe_get(loc, "floor_num") or "?"
-            local serials = safe_get(loc, "fixture_outlet_serials")
-            local st = serials and array_to_table(serials) or {}
-            print(string.format("[DIAG]   Location %d (Floor %s: %s) -- %d fixture outlet serials",
-                i, tostring(floor), tostring(name), #st))
-            for j, serial in ipairs(st) do
-                print(string.format("[DIAG]     [%d] %s", j, tostring(serial)))
+            local results = {}
+            walk_node(loc, 1, 8, results)
+
+            -- Filter for interesting nodes: DeviceOutlet, PoweredDeviceOutlet,
+            -- PhoneActivator, PhoneLabel, or anything with device_hardware_class
+            local interesting = {}
+            for _, r in ipairs(results) do
+                local cls = r.class or ""
+                if r.hw_class ~= nil
+                   or cls == "DeviceOutlet" or cls == "PoweredDeviceOutlet"
+                   or cls:find("Phone") or cls:find("CCTV")
+                   or cls:find("Camera") and not cls:find("Camera3D") and not cls:find("Camera2D")
+                   or cls == "PeripheralSocket" or cls == "PeripheralPlug"
+                   or r.has_lc then
+                    interesting[#interesting + 1] = r
+                end
+            end
+
+            print(string.format("[DIAG]   Location %d (Floor %s: %s) -- %d total nodes, %d interesting",
+                i, tostring(floor), tostring(name), #results, #interesting))
+            for _, r in ipairs(interesting) do
+                local hw_name = r.hw_class and (DEVICE_HW_CLASS[r.hw_class] or tostring(r.hw_class)) or nil
+                print(string.format("[DIAG]     [depth=%d] class=%s name=%s hw_class=%s outlet=%s product=%s lc=%s hw=%s nw=%s",
+                    r.depth,
+                    tostring(r.class),
+                    tostring(r.name),
+                    tostring(hw_name or r.hw_class),
+                    tostring(r.outlet_name),
+                    tostring(r.product_name),
+                    tostring(r.has_lc or false),
+                    tostring(r.hw_addr),
+                    tostring(r.nw_addr)))
             end
         end
     else
         print("[DIAG] No locations available")
     end
 
-    -- 2) Walk fixture_nodes children to find DeviceOutlet / PoweredDeviceOutlet
-    local fixture_root = safe_get(world, "fixture_nodes")
-    if fixture_root then
-        local children = nil
-        pcall(function()
-            local count = fixture_root:get_child_count()
-            children = {}
-            for i = 0, count - 1 do
-                children[#children + 1] = fixture_root:get_child(i)
+    -- 2) Also scan fixture_nodes, device_unit_nodes, component_nodes for overview
+    local containers = {"fixture_nodes", "device_unit_nodes", "component_nodes"}
+    for _, cname in ipairs(containers) do
+        local container = safe_get(world, cname)
+        if container then
+            local ok_count, count = pcall(function() return container:get_child_count() end)
+            if ok_count and count then
+                print(string.format("[DIAG] --- %s: %d direct children ---", cname, count))
+                -- For fixture_nodes, check each child's class
+                if cname == "fixture_nodes" then
+                    for ci = 0, count - 1 do
+                        local ok_c, child = pcall(function() return container:get_child(ci) end)
+                        if ok_c and child then
+                            local cls = nil
+                            pcall(function() cls = child:get_class() end)
+                            local nname = nil
+                            pcall(function() nname = child:get_name() end)
+                            local hw = safe_get(child, "device_hardware_class")
+                            local hw_name = hw and (DEVICE_HW_CLASS[hw] or tostring(hw)) or nil
+                            if hw_name or config.verbose_mode then
+                                print(string.format("[DIAG]     [%d] class=%s name=%s hw_class=%s",
+                                    ci, tostring(cls), tostring(nname), tostring(hw_name)))
+                            end
+                        end
+                    end
+                end
+            else
+                print(string.format("[DIAG] --- %s: exists but cannot count children ---", cname))
             end
-        end)
+        else
+            print(string.format("[DIAG] --- %s: nil ---", cname))
+        end
+    end
 
-        if children then
-            print(string.format("[DIAG] --- fixture_nodes children: %d ---", #children))
-            local phone_count, cctv_count, other_count = 0, 0, 0
-            for i, child in ipairs(children) do
-                local hw_class = safe_get(child, "device_hardware_class")
-                local outlet_name = safe_get(child, "outlet_name")
-                local floor = safe_get(child, "floor_num")
-                local lc = safe_get(child, "logic_controller")
-                local hw_addr = nil
-                local nw_addr = nil
+    -- 3) Quick root-level scan for any "Phone" or "CCTV" named nodes
+    print("[DIAG] --- Root tree scan for Phone/CCTV nodes ---")
+    local root = nil
+    pcall(function() root = world:get_tree():get_root() end)
+    if root then
+        -- Use find_children if available (Godot 4)
+        local found_phone = nil
+        pcall(function() found_phone = root:find_children("*Phone*", "", true, false) end)
+        if found_phone then
+            local ft = array_to_table(found_phone)
+            print(string.format("[DIAG]   find_children('*Phone*'): %d results", #ft))
+            for j, f in ipairs(ft) do
+                local cls = nil
+                pcall(function() cls = f:get_class() end)
+                local path = nil
+                pcall(function() path = tostring(f:get_path()) end)
+                print(string.format("[DIAG]     [%d] class=%s path=%s", j, tostring(cls), tostring(path)))
+                -- If it has device_hardware_class, dump it
+                local hw = safe_get(f, "device_hardware_class")
+                if hw then print(string.format("[DIAG]           hw_class=%s", tostring(DEVICE_HW_CLASS[hw] or hw))) end
+                local lc = safe_get(f, "logic_controller")
                 if lc then
                     local netctl = safe_get(lc, "networkctl")
                     if netctl then
-                        hw_addr = safe_get(netctl, "hardware_address")
-                        nw_addr = safe_get(netctl, "network_address")
-                    end
-                end
-                local cls_name = DEVICE_HW_CLASS[hw_class] or nil
-
-                if hw_class == 17 then
-                    phone_count = phone_count + 1
-                    print(string.format("[DIAG]   [%d] PHONE floor=%s name=%s hw=%s nw=%s",
-                        i, tostring(floor), tostring(outlet_name),
-                        tostring(hw_addr), tostring(nw_addr)))
-                elseif hw_class == 16 then
-                    cctv_count = cctv_count + 1
-                    print(string.format("[DIAG]   [%d] CCTV  floor=%s name=%s hw=%s nw=%s",
-                        i, tostring(floor), tostring(outlet_name),
-                        tostring(hw_addr), tostring(nw_addr)))
-                else
-                    other_count = other_count + 1
-                    if config.verbose_mode then
-                        print(string.format("[DIAG]   [%d] %s floor=%s name=%s class=%s",
-                            i, tostring(child), tostring(floor),
-                            tostring(outlet_name), tostring(cls_name or hw_class)))
+                        print(string.format("[DIAG]           nw=%s hw=%s",
+                            tostring(safe_get(netctl, "network_address")),
+                            tostring(safe_get(netctl, "hardware_address"))))
                     end
                 end
             end
-            print(string.format("[DIAG]   Summary: %d phones, %d CCTV, %d other fixtures",
-                phone_count, cctv_count, other_count))
         else
-            print("[DIAG] Could not enumerate fixture_nodes children (get_child_count may not be available)")
+            print("[DIAG]   find_children not available or failed")
+        end
+
+        local found_cctv = nil
+        pcall(function() found_cctv = root:find_children("*CCTV*", "", true, false) end)
+        if found_cctv then
+            local ft = array_to_table(found_cctv)
+            print(string.format("[DIAG]   find_children('*CCTV*'): %d results", #ft))
+            for j, f in ipairs(ft) do
+                local cls = nil
+                pcall(function() cls = f:get_class() end)
+                local path = nil
+                pcall(function() path = tostring(f:get_path()) end)
+                print(string.format("[DIAG]     [%d] class=%s path=%s", j, tostring(cls), tostring(path)))
+            end
+        end
+
+        -- Also search by class pattern
+        local found_dev_outlet = nil
+        pcall(function() found_dev_outlet = root:find_children("*", "DeviceOutlet", true, false) end)
+        if found_dev_outlet then
+            local ft = array_to_table(found_dev_outlet)
+            print(string.format("[DIAG]   find_children('*', class='DeviceOutlet'): %d results", #ft))
+            for j, f in ipairs(ft) do
+                local cls = nil
+                pcall(function() cls = f:get_class() end)
+                local nname = nil
+                pcall(function() nname = f:get_name() end)
+                local hw = safe_get(f, "device_hardware_class")
+                local hw_name = hw and (DEVICE_HW_CLASS[hw] or tostring(hw)) or nil
+                local fl = safe_get(f, "floor_num")
+                print(string.format("[DIAG]     [%d] class=%s name=%s hw_class=%s floor=%s",
+                    j, tostring(cls), tostring(nname), tostring(hw_name), tostring(fl)))
+            end
+        else
+            print("[DIAG]   find_children by class 'DeviceOutlet' not available or failed")
+        end
+
+        local found_pdo = nil
+        pcall(function() found_pdo = root:find_children("*", "PoweredDeviceOutlet", true, false) end)
+        if found_pdo then
+            local ft = array_to_table(found_pdo)
+            print(string.format("[DIAG]   find_children('*', class='PoweredDeviceOutlet'): %d results", #ft))
+            for j, f in ipairs(ft) do
+                local cls = nil
+                pcall(function() cls = f:get_class() end)
+                local nname = nil
+                pcall(function() nname = f:get_name() end)
+                local hw = safe_get(f, "device_hardware_class")
+                local hw_name = hw and (DEVICE_HW_CLASS[hw] or tostring(hw)) or nil
+                print(string.format("[DIAG]     [%d] class=%s name=%s hw_class=%s",
+                    j, tostring(cls), tostring(nname), tostring(hw_name)))
+            end
         end
     else
-        print("[DIAG] fixture_nodes not accessible on GameWorld")
-    end
-
-    -- 3) Also try link_outlets per location
-    if locs then
-        local lt = array_to_table(locs)
-        print("[DIAG] --- Link outlets per location ---")
-        for i, loc in ipairs(lt) do
-            local name  = safe_get(loc, "display_name") or "?"
-            local floor = safe_get(loc, "floor_num") or "?"
-            local links = safe_get(loc, "link_outlets")
-            local lkt = links and array_to_table(links) or {}
-            if #lkt > 0 then
-                print(string.format("[DIAG]   Location %d (Floor %s: %s) -- %d link outlets",
-                    i, tostring(floor), tostring(name), #lkt))
-            end
-        end
+        print("[DIAG]   Could not access scene root")
     end
 
     print("[DIAG] " .. string.rep("=", 40))
-    notify("Fixture outlet inspection complete -- see logs", 0)
+    notify("Fixture scan complete -- see logs", 0)
 end
 
 function reinspect_all_users()
