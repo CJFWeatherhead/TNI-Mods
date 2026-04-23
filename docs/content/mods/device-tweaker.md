@@ -4,7 +4,7 @@ date: 2026-04-21
 draft: false
 mod_id: "device-tweaker"
 author: "CJFWeatherhead"
-version: "4.0.1"
+version: "4.0.2"
 status: "Active Development"
 game_version: "beta"
 ---
@@ -17,7 +17,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 | | |
 |---|---|
-| **Version** | 4.0.1 |
+| **Version** | 4.0.2 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | beta |
@@ -31,7 +31,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 <div class="download-section">
 
-**[Download device-tweaker-4.0.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.1/device-tweaker-4.0.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download device-tweaker-4.0.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.2/device-tweaker-4.0.2.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -432,8 +432,8 @@ No input handling, no panels, no register_cmd.
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v4.0.1)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.1/device-tweaker-4.0.1.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v4.0.2)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.2/device-tweaker-4.0.2.zip)
 
 </details>
 

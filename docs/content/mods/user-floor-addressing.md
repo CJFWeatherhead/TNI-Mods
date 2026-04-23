@@ -1,12 +1,12 @@
 ---
 title: "User Floor-Based Addressing"
-date: 2026-04-16
+date: 2026-04-24
 draft: false
 mod_id: "user-floor-addressing"
 author: "CJFWeatherhead"
-version: "0.1.9"
+version: "0.1.10"
 status: "Active Development"
-game_version: "beta"
+game_version: "0.10.11+"
 ---
 
 # User Floor-Based Addressing
@@ -17,11 +17,11 @@ This mod sets DHCP mode, DNS servers, and assigns network addresses based on flo
 
 | | |
 |---|---|
-| **Version** | 0.1.9 |
+| **Version** | 0.1.10 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
-| **Last Updated** | 2026-04-16 |
+| **Game Version** | 0.10.11+ |
+| **Last Updated** | 2026-04-24 |
 
 </div>
 
@@ -31,7 +31,7 @@ This mod sets DHCP mode, DNS servers, and assigns network addresses based on flo
 
 <div class="download-section">
 
-**[Download user-floor-addressing-0.1.9.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.9/user-floor-addressing-0.1.9.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download user-floor-addressing-0.1.10.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.10/user-floor-addressing-0.1.10.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -63,15 +63,11 @@ Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edi
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| **Network Address Format** | string | `f%d/usr%d` | Format string for network addresses. %d placeholders are replaced with floor number and user increment (e.g., "f%d/usr%d" becomes "f0/usr1") |
+| **Network Address Format** | string | `@f%d/usr%d` | Format string for network addresses. Two %d placeholders are replaced with floor number and user increment (e.g., "@f%d/usr%d" becomes "@f0/usr1") |
 | **DHCP Mode** | select: disabled, boot_dhcp, periodic_dhcp | `boot_dhcp` | DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only |
 | **Floor DNS Server Format** | string | `@f%d/dns` | Format string for floor-specific DNS servers. %d is replaced with floor number (e.g., "@f%d/dns" becomes "@f0/dns") |
-| **Fallback DNS Server 1** | string | `@f0/dns1` | First fallback DNS server if floor-specific DNS is unavailable |
-| **Fallback DNS Server 2** | string | `@f0/dns2` | Second fallback DNS server |
-| **Disable Hardware Address Refresh** | boolean | `False` | If enabled, users will not refresh their hardware addresses |
-| **Use Predictable Hardware Addresses** | boolean | `False` | If enabled (requires Disable Hardware Address Refresh), hardware addresses will be floor + increment (e.g., floor 5 user 3 = 5003, floor 113 user 321 = 113321) |
-| **Phone Address Format** | string | `@voice/f%d/%d` | Format string for phone network addresses. First %d is floor number, second %d is device increment (e.g., "@voice/f%d/%d" becomes "@voice/f0/1") |
-| **CCTV Address Format** | string | `@cam/f%d/%d` | Format string for CCTV camera network addresses. First %d is floor number, second %d is device increment (e.g., "@cam/f%d/%d" becomes "@cam/f0/1") |
+| **Fallback DNS Server 1** | string | `@srv/dns1` | First fallback DNS server if floor-specific DNS is unavailable |
+| **Fallback DNS Server 2** | string | `@srv/dns2` | Second fallback DNS server |
 
 ---
 
@@ -80,10 +76,16 @@ Configure these settings using the [Mod Manager](/mods/tools/modmanager/) or edi
 This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
 
 ## Features
-- Sets DHCP mode to "boot_dhcp" for all users
-- Assigns addresses like "f{floor}/usr{increment}"
-- Configures DNS servers with floor-specific primary and floor 0 fallbacks
+- Sets DHCP mode (default: "boot_dhcp") for all users
+- Assigns addresses like "@f{floor}/usr{increment}" (configurable format)
+- Configures DNS servers with a floor-specific primary and two configurable fallbacks
 - Tracks user count per floor for incremental addressing
+
+## Limitations
+- Hardware (MAC) address control is not supported -- the mod API does not expose
+  any method to set or refresh hardware addresses.
+- Phone and CCTV addressing is not supported -- these are fixture outlets managed
+  by MultiplayerSpawner nodes and are not accessible via the Lua mod API.
 
 ---
 
@@ -96,12 +98,12 @@ This mod automatically configures network settings for users when they spawn in 
 
 ## Features
 
-- **DHCP Configuration**: Automatically sets DHCP to "boot_dhcp" mode (DHCP on boot)
+- **DHCP Configuration**: Sets DHCP mode per configuration (`boot_dhcp` by default)
 - **Floor-Based Addressing**: Assigns predictable network addresses based on floor number and user count
-  - Format: `f<floor_num>/usr<increment>`
-  - Example: User #5 on floor 3 gets address `f3/usr5`
-  - Example: User #1 on floor 10 gets address `f10/usr1`
-- **Automatic DNS Setup**: All users automatically get DNS servers configured as `@f0/dns1`, `@f0/dns2`, `@f0/dns3`
+  - Format is configurable, default: `@f<floor>/usr<increment>`
+  - Example: User #5 on floor 3 gets address `@f3/usr5`
+  - Example: User #1 on floor 10 gets address `@f10/usr1`
+- **Automatic DNS Setup**: Configures a floor-specific primary DNS plus two fallback DNS servers
 
 ## How It Works
 
@@ -111,12 +113,19 @@ The mod hooks into the `on_user_spawned` callback, triggered whenever a new user
 2. Gets the floor number from the user's location
 3. Maintains a counter of users per floor
 4. Generates a predictable network address based on floor and user count
-5. Sets DHCP mode to "boot_dhcp"
-6. Configures DNS servers to floor 0 DNS (`@f0/dns1`, `@f0/dns2`, `@f0/dns3`)
+5. Sets DHCP mode (default: `boot_dhcp`)
+6. Configures DNS servers: floor-specific primary, then two configurable fallbacks
 
 ## Limitations
 
-**Hardware Addresses**: Hardware addresses are randomly generated by the game's RNG during device creation and cannot be controlled by mods. The mod API does not provide methods to set or modify hardware addresses. This is a game engine limitation.
+**Hardware (MAC) Addresses**: The mod API does not expose any method to set or
+refresh hardware addresses. Hardware addresses are assigned by the game engine
+and cannot be controlled by mods.
+
+**Phone / CCTV Devices**: Phones and CCTVs are fixture outlets
+(`DeviceOutlet`/`PoweredDeviceOutlet`) instantiated by `MultiplayerSpawner`
+nodes in the scene tree. They are not accessible via the Lua mod API — there
+is no `on_fixture_spawned` callback and no API method to enumerate them.
 
 ## Installation
 
@@ -134,28 +143,26 @@ The game supports three DHCP modes:
 - `"boot_dhcp"` - Request DHCP address on boot
 - `"periodic_dhcp"` - Periodically request DHCP updates
 
-This mod uses `"boot_dhcp"` for reliable automatic configuration on user creation.
-
 ### DNS Configuration
 
-DNS servers are set using a Godot Array containing the addresses:
+DNS servers are set using a Godot Array. By default:
 
-- `@f0/dns1`
-- `@f0/dns2`
-- `@f0/dns3`
+- Floor-specific: `@f<floor>/dns`
+- Fallback 1: `@srv/dns1`
+- Fallback 2: `@srv/dns2`
+
+All three are configurable via format strings.
 
 ### Address Format
 
-Addresses follow the pattern `f<floor>/usr<count>` where:
-
-- `floor` is the floor number from the location
-- `count` is an auto-incrementing counter per floor starting at 1
+Addresses use a configurable `printf`-style format with two `%d` placeholders
+(floor number, user increment). Default: `@f%d/usr%d`.
 
 ## Compatibility
 
-- Tested with game version: beta
+- Tested with game version: 0.10.11+
 - Compatible with other mods that don't modify user network settings
-- Works alongside device modification mods and reward scaling mods (like `floor-reward-scaling`)
+- Works alongside device modification mods and reward scaling mods (e.g. `floor-reward-scaling`)
 
 
 </details>
@@ -179,14 +186,14 @@ DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spa
 |-------|-------|
 | Mod ID | `user-floor-addressing` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-16 |
-| Game Version | beta |
+| Last Updated | 2026-04-24 |
+| Game Version | 0.10.11+ |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.9)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.9/user-floor-addressing-0.1.9.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.10)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.10/user-floor-addressing-0.1.10.zip)
 
 </details>
 
