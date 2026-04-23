@@ -1652,8 +1652,19 @@ function inspect_fixture_outlets()
     local world = ModApiV1.get_game_world()
     if not world then print("[DIAG] World is nil"); return end
 
+    -- Guard: confirm a value returned by get_child() is an actual live Object.
+    -- A Nil Variant passes a ~= nil check in Lua but crashes on method calls.
+    -- Calling get_class() is the cheapest probe; if it fails or returns a
+    -- non-string the value is not a usable Node.
+    local function is_valid_node(n)
+        if n == nil then return false end
+        local ok, cls = pcall(function() return n:get_class() end)
+        return ok and type(cls) == "string" and cls ~= ""
+    end
+
     -- Safe node-info helper: extracts info without crashing if node methods
     -- are unavailable in the sandbox (API wrappers vs raw Godot Nodes differ).
+    -- Caller MUST have already verified is_valid_node(n).
     local function node_info(n)
         local info = {}
         pcall(function() info.class = n:get_class() end)
@@ -1683,15 +1694,14 @@ function inspect_fixture_outlets()
         if not ok_count or type(count) ~= "number" then return end
         for i = 0, count - 1 do
             local ok_c, child = pcall(function() return node:get_child(i) end)
-            if ok_c and child ~= nil then
+            if ok_c and is_valid_node(child) then
                 local ok_info, info = pcall(node_info, child)
                 if ok_info then
                     info.depth = depth
                     results[#results + 1] = info
                 end
                 -- Only recurse if child itself is a Node (has get_child_count)
-                local ok_r = pcall(walk_node, child, depth + 1, max_depth, results)
-                if not ok_r then end  -- swallow; recursion failed for this branch
+                pcall(walk_node, child, depth + 1, max_depth, results)
             end
         end
     end
@@ -1710,7 +1720,7 @@ function inspect_fixture_outlets()
                 print(string.format("[DIAG]   %s: %d direct children", cname, count))
                 for ci = 0, count - 1 do
                     local ok_c, child = pcall(function() return container:get_child(ci) end)
-                    if ok_c and child ~= nil then
+                    if ok_c and is_valid_node(child) then
                         local ok_i, info = pcall(node_info, child)
                         if ok_i then
                             local hw_name = info.hw_class and (DEVICE_HW_CLASS[info.hw_class] or tostring(info.hw_class)) or nil
@@ -1747,7 +1757,7 @@ function inspect_fixture_outlets()
     print("[DIAG] --- Root tree find_children scan ---")
     local root = nil
     pcall(function() root = world:get_tree():get_root() end)
-    if not root then
+    if not is_valid_node(root) then
         print("[DIAG]   Could not access scene root")
     else
         -- Helper: safely iterate a find_children result and log each node
@@ -1760,7 +1770,7 @@ function inspect_fixture_outlets()
             print(string.format("[DIAG]   %s: %d results", label, #ft))
             for j = 1, #ft do
                 local f = ft[j]
-                if f ~= nil then
+                if is_valid_node(f) then
                     local ok_i, info = pcall(node_info, f)
                     if ok_i then
                         local hw_name = info.hw_class and (DEVICE_HW_CLASS[info.hw_class] or tostring(info.hw_class)) or nil
