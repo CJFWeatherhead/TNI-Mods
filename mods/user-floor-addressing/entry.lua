@@ -4,10 +4,12 @@
 -- DHCP Modes: "disabled", "boot_dhcp", "periodic_dhcp"
 -- Version: 3.0 - Cleaned up; removed dead PHONE/CCTV device-spawn code
 --
--- NOTE on PHONE/CCTV: These are fixture outlets (DeviceOutlet/PoweredDeviceOutlet),
--- not DeviceUnit instances. They are structural elements of floors and do NOT trigger
--- on_device_spawned. There is no on_fixture_spawned callback in the mod API.
--- See modapi-diagnostic's inspect_fixture_outlets command for investigation.
+-- LIMITATIONS:
+--   Hardware (MAC) address control: not supported -- the mod API does not expose
+--   any method to set or refresh hardware addresses.
+--   Phone / CCTV addressing: not supported -- these are fixture outlets
+--   (DeviceOutlet/PoweredDeviceOutlet) instantiated by MultiplayerSpawner nodes
+--   and are not accessible via the Lua sandbox.
 
 local mod_id = "user-floor-addressing"
 
