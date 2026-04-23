@@ -1,5 +1,10 @@
--- ModAPI Diagnostic Tool v4.5
+-- ModAPI Diagnostic Tool v4.6
 -- Development tool for TNI game engine modding (game version 0.10.11+)
+--
+-- CHANGES from v4.5:
+--   * Added inspect_fixture_outlets command for PHONE/CCTV investigation.
+--     Phones and CCTVs are fixture outlets (DeviceOutlet), NOT DeviceUnit
+--     instances, so on_device_spawned never fires for them.
 --
 -- CHANGES from v4.4:
 --   * Removed standalone panel + on_tick polling (Callable bridge crash).
@@ -34,8 +39,9 @@
 -- Console commands (debug console ~ or global Lua call):
 --   dump_world_overview         reinspect_all_users
 --   inspect_locations           dump_all_world_devices
---   export_to_json              run_api_test_suite
---   export_test_results_json    show_lifecycle_log
+--   inspect_fixture_outlets     export_to_json
+--   run_api_test_suite          export_test_results_json
+--   show_lifecycle_log
 
 print("=== ModAPI Diagnostic Tool v4.5 Loading ===")
 
@@ -1640,6 +1646,111 @@ function dump_all_world_devices()
     notify(string.format("Devices: %d -- see logs", #dt), 0)
 end
 
+function inspect_fixture_outlets()
+    print("\n[DIAG] ========== Fixture Outlets (PHONE/CCTV Investigation) ==========")
+    if not ModApiV1 then print("[DIAG] ModApiV1 not available"); return end
+    local world = ModApiV1.get_game_world()
+    if not world then print("[DIAG] World is nil"); return end
+
+    -- 1) Enumerate fixture_outlet_serials per location
+    local locs = safe_get(world, "locations")
+    if locs then
+        local lt = array_to_table(locs)
+        print("[DIAG] --- Fixture outlet serials per location ---")
+        for i, loc in ipairs(lt) do
+            local name  = safe_get(loc, "display_name") or "?"
+            local floor = safe_get(loc, "floor_num") or "?"
+            local serials = safe_get(loc, "fixture_outlet_serials")
+            local st = serials and array_to_table(serials) or {}
+            print(string.format("[DIAG]   Location %d (Floor %s: %s) -- %d fixture outlet serials",
+                i, tostring(floor), tostring(name), #st))
+            for j, serial in ipairs(st) do
+                print(string.format("[DIAG]     [%d] %s", j, tostring(serial)))
+            end
+        end
+    else
+        print("[DIAG] No locations available")
+    end
+
+    -- 2) Walk fixture_nodes children to find DeviceOutlet / PoweredDeviceOutlet
+    local fixture_root = safe_get(world, "fixture_nodes")
+    if fixture_root then
+        local children = nil
+        pcall(function()
+            local count = fixture_root:get_child_count()
+            children = {}
+            for i = 0, count - 1 do
+                children[#children + 1] = fixture_root:get_child(i)
+            end
+        end)
+
+        if children then
+            print(string.format("[DIAG] --- fixture_nodes children: %d ---", #children))
+            local phone_count, cctv_count, other_count = 0, 0, 0
+            for i, child in ipairs(children) do
+                local hw_class = safe_get(child, "device_hardware_class")
+                local outlet_name = safe_get(child, "outlet_name")
+                local floor = safe_get(child, "floor_num")
+                local lc = safe_get(child, "logic_controller")
+                local hw_addr = nil
+                local nw_addr = nil
+                if lc then
+                    local netctl = safe_get(lc, "networkctl")
+                    if netctl then
+                        hw_addr = safe_get(netctl, "hardware_address")
+                        nw_addr = safe_get(netctl, "network_address")
+                    end
+                end
+                local cls_name = DEVICE_HW_CLASS[hw_class] or nil
+
+                if hw_class == 17 then
+                    phone_count = phone_count + 1
+                    print(string.format("[DIAG]   [%d] PHONE floor=%s name=%s hw=%s nw=%s",
+                        i, tostring(floor), tostring(outlet_name),
+                        tostring(hw_addr), tostring(nw_addr)))
+                elseif hw_class == 16 then
+                    cctv_count = cctv_count + 1
+                    print(string.format("[DIAG]   [%d] CCTV  floor=%s name=%s hw=%s nw=%s",
+                        i, tostring(floor), tostring(outlet_name),
+                        tostring(hw_addr), tostring(nw_addr)))
+                else
+                    other_count = other_count + 1
+                    if config.verbose_mode then
+                        print(string.format("[DIAG]   [%d] %s floor=%s name=%s class=%s",
+                            i, tostring(child), tostring(floor),
+                            tostring(outlet_name), tostring(cls_name or hw_class)))
+                    end
+                end
+            end
+            print(string.format("[DIAG]   Summary: %d phones, %d CCTV, %d other fixtures",
+                phone_count, cctv_count, other_count))
+        else
+            print("[DIAG] Could not enumerate fixture_nodes children (get_child_count may not be available)")
+        end
+    else
+        print("[DIAG] fixture_nodes not accessible on GameWorld")
+    end
+
+    -- 3) Also try link_outlets per location
+    if locs then
+        local lt = array_to_table(locs)
+        print("[DIAG] --- Link outlets per location ---")
+        for i, loc in ipairs(lt) do
+            local name  = safe_get(loc, "display_name") or "?"
+            local floor = safe_get(loc, "floor_num") or "?"
+            local links = safe_get(loc, "link_outlets")
+            local lkt = links and array_to_table(links) or {}
+            if #lkt > 0 then
+                print(string.format("[DIAG]   Location %d (Floor %s: %s) -- %d link outlets",
+                    i, tostring(floor), tostring(name), #lkt))
+            end
+        end
+    end
+
+    print("[DIAG] " .. string.rep("=", 40))
+    notify("Fixture outlet inspection complete -- see logs", 0)
+end
+
 function reinspect_all_users()
     print("\n[DIAG] ========== Re-inspect Tracked Users ==========")
     print("[DIAG] Tracked: " .. #spawned_users)
@@ -1957,6 +2068,7 @@ end
 --   dump_world_overview()     -- NEW
 --   show_lifecycle_log()      -- NEW
 --   inspect_locations()       -- was inspect_scenes()
+--   inspect_fixture_outlets() -- NEW (PHONE/CCTV investigation)
 --   export_test_results_json()
 --
 -- For automated exports, set config.auto_export_on_day_end = true.
@@ -1966,13 +2078,14 @@ end
 -- STARTUP
 -- ============================================================================
 
-print("=== ModAPI Diagnostic Tool v4.5 Ready ===")
+print("=== ModAPI Diagnostic Tool v4.6 Ready ===")
 print("    Press ~ to open the debug console")
 print("")
 print("    Console commands:")
 print("      dump_world_overview       -- quick world summary")
 print("      inspect_locations         -- list all floors")
 print("      dump_all_world_devices    -- list all devices")
+print("      inspect_fixture_outlets   -- PHONE/CCTV fixture investigation")
 print("      reinspect_all_users       -- re-inspect tracked users")
 print("      export_to_json            -- export full game state")
 print("      run_api_test_suite        -- test all API endpoints")
