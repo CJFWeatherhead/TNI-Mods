@@ -1895,6 +1895,7 @@ function on_game_state_ready()
                 {"dump_world_overview",      dump_world_overview},
                 {"inspect_locations",        inspect_locations},
                 {"dump_all_world_devices",   dump_all_world_devices},
+                {"inspect_fixture_outlets",  inspect_fixture_outlets},
                 {"reinspect_all_users",      reinspect_all_users},
                 {"export_to_json",           export_to_json},
                 {"run_api_test_suite",       run_api_test_suite},
