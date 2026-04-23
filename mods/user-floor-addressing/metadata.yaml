@@ -14,9 +14,9 @@ Description: |
   - Phone and CCTV addressing is not supported -- these are fixture outlets managed
     by MultiplayerSpawner nodes and are not accessible via the Lua mod API.
 Author: CJFWeatherhead
-Version: 0.1.10
+Version: 0.1.11
 Creation Date: 2026-01-01
-Last Updated: 2026-04-24
+Last Updated: 2026-04-23
 Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing
 Development Status: Active Development
 Game Version Supported: 0.10.11+
