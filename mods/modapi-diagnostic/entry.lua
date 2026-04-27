@@ -42,6 +42,11 @@
 --   inspect_fixture_outlets     export_to_json
 --   run_api_test_suite          export_test_results_json
 --   show_lifecycle_log
+--
+-- Data extraction commands (LLM-friendly JSON output):
+--   extract_store_catalog       extract_programs
+--   extract_proposals           extract_traffic_types
+--   extract_cli_commands        extract_all
 
 print("=== ModAPI Diagnostic Tool v4.5 Loading ===")
 
@@ -1956,6 +1961,13 @@ function on_game_state_ready()
                 {"run_api_test_suite",       run_api_test_suite},
                 {"export_test_results_json", export_test_results_json},
                 {"show_lifecycle_log",       show_lifecycle_log},
+                -- Data extraction commands
+                {"extract_store_catalog",    extract_store_catalog},
+                {"extract_programs",         extract_programs},
+                {"extract_proposals",        extract_proposals},
+                {"extract_traffic_types",    extract_traffic_types},
+                {"extract_cli_commands",     extract_cli_commands},
+                {"extract_all",              extract_all},
             }
             for _, cmd in ipairs(cmds) do
                 pcall(function() dbg.register_cmd(cmd[1], cmd[2]) end)
@@ -2131,6 +2143,729 @@ end
 -- ============================================================================
 
 -- ============================================================================
+-- DATA EXTRACTION FOR JSON POPULATION (LLM-friendly output)
+-- ============================================================================
+-- These functions extract live game data in structured JSON matching the
+-- schema in data/data-schemas.md. The output is designed to be consumed by
+-- an LLM to populate/update the .json files in the data/ directory.
+--
+-- Console commands:
+--   extract_store_catalog    -- merchants + device listings with full specs
+--   extract_programs         -- all available/installed programs
+--   extract_proposals        -- proposal system state
+--   extract_traffic_types    -- observed traffic classes from live network
+--   extract_cli_commands     -- registered terminal routines
+-- ============================================================================
+
+-- Helper: write JSON output to console in chunks and optionally to file
+local function output_extracted_json(dataset_name, data, version)
+    version = version or "1.0.0"
+
+    local ts, ds = nil, nil
+    pcall(function() ts = os.time(); ds = os.date("%Y-%m-%dT%H:%M:%S") end)
+
+    -- Game version
+    local game_ver = nil
+    if ModApiV1 and ModApiV1.get_game_version then
+        pcall(function()
+            local v = ModApiV1.get_game_version()
+            if v then game_ver = tostring(v) end
+        end)
+    end
+
+    local envelope = {
+        _meta = {
+            game             = "Tower Networking Inc.",
+            dataset          = dataset_name,
+            version          = version,
+            extracted_at     = ds,
+            game_version     = game_ver,
+            extraction_tool  = "modapi-diagnostic v4.6",
+            description      = "Live extraction from running game via ModAPI. Merge with existing data/ JSON files.",
+            llm_instructions = "Compare this extracted data with the existing " .. dataset_name ..
+                               ".json file. Add any NEW entries not present in the existing file. " ..
+                               "Update fields where extracted values are more complete (non-nil/non-placeholder). " ..
+                               "Preserve manually-added fields (notes, corrections, contributors) from the existing file. " ..
+                               "Fields marked '<unavailable>' could not be read from the API and should not overwrite existing data.",
+        },
+        data = data,
+    }
+
+    -- Temporarily increase depth for full extraction
+    local old_depth = config.max_dump_depth
+    config.max_dump_depth = 6
+    local json = to_json(envelope, 2, 0)
+    config.max_dump_depth = old_depth
+
+    local size = #json
+
+    print("\n[EXTRACT] === " .. dataset_name:upper() .. " JSON START ===")
+    local chunk = 4000
+    for i = 1, math.ceil(size / chunk) do
+        local s = (i - 1) * chunk + 1
+        print(json:sub(s, math.min(i * chunk, size)))
+    end
+    print("[EXTRACT] === " .. dataset_name:upper() .. " JSON END ===")
+    print("[EXTRACT] JSON size: " .. size .. " bytes")
+
+    -- Try writing to file
+    local wrote_file = false
+    if Mod and Mod.filesystem then
+        pcall(function()
+            local f = Mod.filesystem:open("data/extracted-" .. dataset_name .. ".json", 2)
+            if f then
+                f:store_string(json)
+                f:close()
+                wrote_file = true
+                print("[EXTRACT] Written to data/extracted-" .. dataset_name .. ".json")
+            end
+        end)
+    end
+
+    if wrote_file then
+        notify("Extracted " .. dataset_name .. " to file (" .. size .. " bytes)", 0)
+    else
+        notify("Extracted " .. dataset_name .. " to logs (" .. size .. " bytes)", 0)
+    end
+    return json
+end
+
+-- ── extract_store_catalog ───────────────────────────────────────────────────
+-- Extracts all merchants and their device listings with full hardware specs.
+-- Attempts to read device_scn properties from instantiated listing data.
+function extract_store_catalog()
+    print("\n[EXTRACT] ========== Store Catalog Extraction ==========")
+    if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
+    local world = ModApiV1.get_game_world()
+    if not world then print("[EXTRACT] World is nil"); return end
+
+    local merchants_data = {}
+
+    -- Get merchants via API or world property
+    local ms = nil
+    if ModApiV1.get_merchants then
+        pcall(function() ms = ModApiV1.get_merchants() end)
+    end
+    if not ms then ms = safe_get(world, "device_merchants") end
+    if not ms then print("[EXTRACT] No merchants available"); return end
+
+    local mt = array_to_table(ms)
+    print("[EXTRACT] Found " .. #mt .. " merchants")
+
+    for _, m in ipairs(mt) do
+        local merchant_entry = {
+            display_name          = safe_get(m, "display_name"),
+            description           = safe_get(m, "description"),
+            price_multiplier      = safe_get(m, "price_multiplier"),
+            price_add_constant    = safe_get(m, "price_add_constant"),
+            warranty_multiplier   = safe_get(m, "warranty_multiplier"),
+            warranty_add_constant = safe_get(m, "warranty_add_constant"),
+            restock_period        = safe_get(m, "restock_period"),
+            restock_mode          = safe_get(m, "restock_mode"),
+            entry_max_stocks      = safe_get(m, "entry_max_stocks"),
+            listings              = {},
+        }
+
+        local listings = safe_get(m, "listings")
+        if listings then
+            local lt = array_to_table(listings)
+            for _, l in ipairs(lt) do
+                local listing_entry = {
+                    listing_title        = safe_get(l, "listing_title"),
+                    description          = safe_get(l, "description"),
+                    price                = safe_get(l, "price"),
+                    warranty_period      = safe_get(l, "warranty_period"),
+                    stock                = safe_get(l, "stock"),
+                    max_stock            = safe_get(l, "max_stock"),
+                    max_stock_override   = safe_get(l, "max_stock_override"),
+                    available            = safe_get(l, "available"),
+                    previous_availability = safe_get(l, "previous_availability"),
+                    listed_on_day        = safe_get(l, "listed_on_day"),
+                    delisted_on_day      = safe_get(l, "delisted_on_day"),
+                    allowed_variant      = safe_get(l, "allowed_variant"),
+                }
+
+                -- Try to get device scene path for reference
+                local scn = safe_get(l, "device_scn")
+                if scn then
+                    listing_entry.device_scene_path = tostring(scn)
+                end
+
+                merchant_entry.listings[#merchant_entry.listings + 1] = listing_entry
+            end
+        end
+
+        merchants_data[#merchants_data + 1] = merchant_entry
+    end
+
+    -- Also extract from actual placed devices to get hardware specs
+    -- (listings don't expose cpu/mem/sto directly, but placed devices do)
+    local device_specs = {}
+    local devs = ModApiV1.get_devices()
+    if devs then
+        local dt = array_to_table(devs)
+        for _, d in ipairs(dt) do
+            local name = safe_get(d, "product_name")
+            if name and not device_specs[name] then
+                local hw = safe_get(d, "device_hardware_class")
+                local lc = safe_get(d, "logic_controller")
+                local pc = safe_get(d, "power_controller")
+                local spec = {
+                    product_name          = name,
+                    device_hardware_class = hw,
+                    hardware_class_name   = DEVICE_HW_CLASS[hw] or "UNKNOWN",
+                    description           = safe_get(d, "description"),
+                    price                 = safe_get(d, "price"),
+                    recycle_price         = safe_get(d, "recycle_price"),
+                    base_warranty_days    = safe_get(d, "base_warranty_days"),
+                    base_warranty_cycles  = safe_get(d, "base_warranty_cycles"),
+                    bw_per_second         = safe_get(d, "bw_per_second"),
+                    reliability_flt       = safe_get(d, "reliability_flt"),
+                    mount_type            = safe_get(d, "mount_type"),
+                    obtained_from         = safe_get(d, "obtained_from"),
+                    device_rendered_description = safe_get(d, "device_rendered_description"),
+                }
+                if lc then
+                    spec.installed_cpu = safe_get(lc, "installed_cpu")
+                    spec.installed_mem = safe_get(lc, "installed_mem")
+                    spec.installed_sto = safe_get(lc, "installed_sto")
+                    spec.installed_nbw = safe_get(lc, "installed_nbw")
+                    spec.power_load    = safe_get(lc, "power_load")
+                    spec.is_network_switch    = safe_get(lc, "is_network_switch")
+                    spec.is_network_router    = safe_get(lc, "is_network_router")
+                    spec.is_network_middlebox = safe_get(lc, "is_network_middlebox")
+                    spec.is_network_tap       = safe_get(lc, "is_network_tap")
+                    spec.is_network_filter    = safe_get(lc, "is_network_filter")
+                    spec.is_hardware_nlb      = safe_get(lc, "is_hardware_nlb")
+                    spec.is_dns_server        = safe_get(lc, "is_dns_server")
+                    spec.is_dhcp_server       = safe_get(lc, "is_dhcp_server")
+                    spec.is_vlan_enabled      = safe_get(lc, "is_vlan_enabled")
+                    spec.is_stp_enabled       = safe_get(lc, "is_stp_enabled")
+                    spec.is_ha_enabled        = safe_get(lc, "is_ha_enabled")
+                    spec.is_user_host         = safe_get(lc, "is_user_host")
+
+                    -- Count ports
+                    local ports = safe_get(lc, "ports")
+                    if ports then spec.port_count = count_table(ports) end
+
+                    -- Installed programs (firmware + software)
+                    local progs = safe_get(lc, "installed_programs")
+                    if progs then
+                        spec.installed_programs = {}
+                        local pt = array_to_table(progs)
+                        for _, p in ipairs(pt) do
+                            spec.installed_programs[#spec.installed_programs + 1] = {
+                                release_name = safe_get(p, "release_name"),
+                                is_running   = safe_get(p, "is_running"),
+                                cpu_load     = safe_get(p, "cpu_load"),
+                                code_size    = safe_get(p, "code_size"),
+                                stack_size   = safe_get(p, "stack_size"),
+                                data_size    = safe_get(p, "data_size"),
+                                install_size = safe_get(p, "install_size"),
+                            }
+                        end
+                    end
+                end
+                if pc then
+                    spec.charge_capacity  = safe_get(pc, "charge_capacity")
+                    spec.charge_rate      = safe_get(pc, "charge_rate")
+                    spec.can_supply_power = safe_get(pc, "can_supply_power")
+                    spec.surge_blocker    = safe_get(pc, "surge_blocker")
+                end
+                device_specs[name] = spec
+            end
+        end
+    end
+
+    -- Convert device_specs map to array
+    local specs_array = {}
+    for _, spec in pairs(device_specs) do
+        specs_array[#specs_array + 1] = spec
+    end
+
+    local result = {
+        merchants    = merchants_data,
+        device_specs = specs_array,
+        device_hardware_class_enum = DEVICE_HW_CLASS,
+    }
+
+    print("[EXTRACT] Merchants: " .. #merchants_data .. ", Unique device specs: " .. #specs_array)
+    return output_extracted_json("tni-store", result)
+end
+
+-- ── extract_programs ────────────────────────────────────────────────────────
+-- Extracts all available programs and programs installed on devices.
+function extract_programs()
+    print("\n[EXTRACT] ========== Programs Extraction ==========")
+    if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
+    local world = ModApiV1.get_game_world()
+    if not world then print("[EXTRACT] World is nil"); return end
+
+    local programs_seen = {}  -- keyed by release_name
+    local program_list = {}
+
+    -- 1) Scan all installed programs on all devices
+    local devs = ModApiV1.get_devices()
+    if devs then
+        local dt = array_to_table(devs)
+        for _, d in ipairs(dt) do
+            local lc = safe_get(d, "logic_controller")
+            if lc then
+                local progs = safe_get(lc, "installed_programs")
+                if progs then
+                    local pt = array_to_table(progs)
+                    for _, p in ipairs(pt) do
+                        local rn = safe_get(p, "release_name")
+                        if rn and not programs_seen[rn] then
+                            programs_seen[rn] = true
+                            local entry = {
+                                release_name            = rn,
+                                description             = safe_get(p, "description"),
+                                cpu_load                = safe_get(p, "cpu_load"),
+                                code_size               = safe_get(p, "code_size"),
+                                stack_size              = safe_get(p, "stack_size"),
+                                data_size               = safe_get(p, "data_size"),
+                                install_size            = safe_get(p, "install_size"),
+                                pkt_processing_priority = safe_get(p, "pkt_processing_priority"),
+                                is_running              = safe_get(p, "is_running"),
+                                found_on_device         = safe_get(d, "product_name"),
+                                found_on_hw_class       = DEVICE_HW_CLASS[safe_get(d, "device_hardware_class")] or "UNKNOWN",
+                            }
+                            -- Try to read modifiers
+                            local mods = safe_get(p, "modifiers")
+                            if mods then
+                                entry.modifiers = {}
+                                local modt = array_to_table(mods)
+                                for _, mv in ipairs(modt) do
+                                    entry.modifiers[#entry.modifiers + 1] = tostring(mv)
+                                end
+                            end
+                            -- Try to read application_unlocks
+                            local unlocks = safe_get(p, "application_unlocks")
+                            if unlocks then
+                                entry.application_unlocks = {}
+                                local ut = array_to_table(unlocks)
+                                for _, uv in ipairs(ut) do
+                                    entry.application_unlocks[#entry.application_unlocks + 1] = tostring(uv)
+                                end
+                            end
+                            -- Try to read required_hardware_device
+                            local req = safe_get(p, "required_hardware_device")
+                            if req then
+                                entry.required_hardware_device = {}
+                                local rt = array_to_table(req)
+                                for _, rv in ipairs(rt) do
+                                    entry.required_hardware_device[#entry.required_hardware_device + 1] = tostring(rv)
+                                end
+                            end
+                            program_list[#program_list + 1] = entry
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    -- 2) Scan users too (they have logic_controller with behaviors)
+    local users = ModApiV1.get_users()
+    if users then
+        local ut = array_to_table(users)
+        for _, u in ipairs(ut) do
+            local lc = safe_get(u, "logic_controller")
+            if lc then
+                local progs = safe_get(lc, "installed_programs")
+                if progs then
+                    local pt = array_to_table(progs)
+                    for _, p in ipairs(pt) do
+                        local rn = safe_get(p, "release_name")
+                        if rn and not programs_seen[rn] then
+                            programs_seen[rn] = true
+                            program_list[#program_list + 1] = {
+                                release_name            = rn,
+                                description             = safe_get(p, "description"),
+                                cpu_load                = safe_get(p, "cpu_load"),
+                                code_size               = safe_get(p, "code_size"),
+                                stack_size              = safe_get(p, "stack_size"),
+                                data_size               = safe_get(p, "data_size"),
+                                install_size            = safe_get(p, "install_size"),
+                                pkt_processing_priority = safe_get(p, "pkt_processing_priority"),
+                                is_running              = safe_get(p, "is_running"),
+                                found_on_user           = safe_get(u, "username"),
+                            }
+                        end
+                    end
+                end
+            end
+            -- Also check behaviors, hosting_behaviors, public_client_behaviors
+            for _, bname in ipairs({"behaviors", "hosting_behaviors", "public_client_behaviors"}) do
+                local bhvs = safe_get(u, bname)
+                if bhvs then
+                    local bt = array_to_table(bhvs)
+                    for _, p in ipairs(bt) do
+                        local rn = safe_get(p, "release_name")
+                        if rn and not programs_seen[rn] then
+                            programs_seen[rn] = true
+                            program_list[#program_list + 1] = {
+                                release_name = rn,
+                                description  = safe_get(p, "description"),
+                                cpu_load     = safe_get(p, "cpu_load"),
+                                code_size    = safe_get(p, "code_size"),
+                                stack_size   = safe_get(p, "stack_size"),
+                                data_size    = safe_get(p, "data_size"),
+                                install_size = safe_get(p, "install_size"),
+                                is_running   = safe_get(p, "is_running"),
+                                found_on_user = safe_get(u, "username"),
+                                behavior_type = bname,
+                                -- User-specific program fields
+                                traffic_class  = safe_get(p, "traffic_class"),
+                                traffic_weight = safe_get(p, "traffic_weight"),
+                                satiety_weight = safe_get(p, "satiety_weight"),
+                            }
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    -- 3) Try available_programs from world (released program scenes)
+    local avail = safe_get(world, "available_programs")
+    if avail then
+        local at = array_to_table(avail)
+        print("[EXTRACT] available_programs scene count: " .. #at)
+    end
+
+    -- 4) Controller modifiers enum for reference
+    local controller_modifiers = {
+        [0]  = "ALLOW_REMOTE_DEBUGGING",
+        [1]  = "ALLOW_PACKET_SWITCHING",
+        [2]  = "ALLOW_PACKET_ROUTING",
+        [3]  = "ALLOW_PACKET_INSPECTION",
+        [4]  = "ALLOW_PACKET_FILTERING",
+        [5]  = "ALLOW_DOMAIN_QUERYING",
+        [6]  = "ALLOW_REMOTE_HOST_CONFIGURATION",
+        [7]  = "ALLOW_HIGH_AVAILABILITY_SETUP",
+        [8]  = "ALLOW_DECENTRO_STORAGE",
+        [9]  = "ALLOW_DECENTRO_TRADING",
+        [10] = "ALLOW_VLAN_TAGGING",
+        [11] = "ALLOW_TRAFFIC_SPLITTING",
+        [12] = "ALLOW_STP_PORT_CONTROL",
+        [13] = "ALLOW_PACKET_TRANSLATION",
+    }
+
+    local result = {
+        programs             = program_list,
+        programs_found_count = #program_list,
+        controller_modifiers_enum = controller_modifiers,
+    }
+
+    print("[EXTRACT] Programs found: " .. #program_list)
+    return output_extracted_json("tni-programs", result)
+end
+
+-- ── extract_proposals ───────────────────────────────────────────────────────
+-- Extracts all proposals from the PropModController.
+function extract_proposals()
+    print("\n[EXTRACT] ========== Proposals Extraction ==========")
+    if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
+    local world = ModApiV1.get_game_world()
+    if not world then print("[EXTRACT] World is nil"); return end
+
+    local pmc = safe_get(world, "propmod_controller")
+    if not pmc then print("[EXTRACT] PropModController not available"); return end
+
+    local proposal_list = {}
+    local mods_arr = safe_get(pmc, "mods")
+    if mods_arr then
+        local mt = array_to_table(mods_arr)
+        print("[EXTRACT] PropMods count: " .. #mt)
+        for _, prop in ipairs(mt) do
+            local entry = {
+                -- Names and text: use method calls which format nicely
+                proposal_name = nil,
+                description   = nil,
+                lore          = nil,
+            }
+            pcall(function() entry.proposal_name = prop:get_proposal_name() end)
+            pcall(function() entry.description = prop:get_description() end)
+            pcall(function() entry.lore = prop:get_lore() end)
+
+            -- State
+            entry.submitted           = safe_get(prop, "submitted")
+            entry.locked              = safe_get(prop, "locked")
+            entry.can_be_proposed     = safe_get(prop, "can_be_proposed")
+            entry.is_active_proposal  = safe_get(prop, "is_active_proposal")
+            entry.can_be_proposed_beginning = safe_get(prop, "can_be_proposed_beginning")
+            entry.force_once_on_day   = safe_get(prop, "force_once_on_day")
+            entry.proposed_on         = safe_get(prop, "proposed_on")
+            entry.weight              = safe_get(prop, "weight")
+
+            -- Dependency
+            local dep = safe_get(prop, "depends_on")
+            if dep then
+                pcall(function() entry.depends_on = dep:get_proposal_name() end)
+            end
+
+            -- Try to detect proposal type from adhoc requirements
+            pcall(function()
+                local adhoc_ok = prop:test_adhoc_requirements()
+                entry.adhoc_requirements_met = adhoc_ok
+            end)
+
+            proposal_list[#proposal_list + 1] = entry
+        end
+    end
+
+    -- Controller meta
+    local controller_info = {
+        batch_day_interval       = safe_get(pmc, "batch_day_interval"),
+        proposals_per_batch      = safe_get(pmc, "proposals_per_batch"),
+        reroll_fee               = safe_get(pmc, "reroll_fee"),
+        current_proposal_count   = safe_get(pmc, "current_proposal_count"),
+        history_proposal_count   = safe_get(pmc, "history_proposal_count"),
+        locked_proposal_count    = safe_get(pmc, "locked_proposal_count"),
+    }
+
+    local result = {
+        proposals           = proposal_list,
+        proposals_count     = #proposal_list,
+        controller          = controller_info,
+    }
+
+    print("[EXTRACT] Proposals found: " .. #proposal_list)
+    return output_extracted_json("tni-proposals", result)
+end
+
+-- ── extract_traffic_types ───────────────────────────────────────────────────
+-- Extracts observed traffic types from device port stats and user programs.
+function extract_traffic_types()
+    print("\n[EXTRACT] ========== Traffic Types Extraction ==========")
+    if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
+
+    local traffic_classes_seen = {}
+    local traffic_list = {}
+
+    local function record_traffic(tc, source)
+        if tc and type(tc) == "string" and tc ~= "" and not traffic_classes_seen[tc] then
+            traffic_classes_seen[tc] = true
+            traffic_list[#traffic_list + 1] = {
+                traffic_class = tc,
+                first_seen_on = source,
+            }
+        end
+    end
+
+    -- 1) Scan port top_traffic_classes on all devices
+    local devs = ModApiV1.get_devices()
+    if devs then
+        local dt = array_to_table(devs)
+        for _, d in ipairs(dt) do
+            local dname = safe_get(d, "product_name") or "unknown"
+            local lc = safe_get(d, "logic_controller")
+            if lc then
+                -- Check network_ports table
+                local np = safe_get(lc, "network_ports")
+                if np and type(np) == "table" then
+                    for port_id, sock in pairs(np) do
+                        local ttc = safe_get(sock, "top_traffic_classes")
+                        if ttc then
+                            local tct = array_to_table(ttc)
+                            for _, tc in ipairs(tct) do
+                                record_traffic(tostring(tc), dname .. ":" .. tostring(port_id))
+                            end
+                        end
+                    end
+                end
+                -- Check ports array
+                local ports = safe_get(lc, "ports")
+                if ports then
+                    local pt = array_to_table(ports)
+                    for _, sock in ipairs(pt) do
+                        local ttc = safe_get(sock, "top_traffic_classes")
+                        if ttc then
+                            local tct = array_to_table(ttc)
+                            for _, tc in ipairs(tct) do
+                                record_traffic(tostring(tc), dname .. ":port")
+                            end
+                        end
+                    end
+                end
+                -- Check traversal_history for traffic classes
+                local th = safe_get(lc, "traversal_history_last_tick")
+                if th then
+                    local tht = array_to_table(th)
+                    for _, hist in ipairs(tht) do
+                        -- TraversalHistory index 2 = TRAFFIC_CLASS
+                        local tc_val = nil
+                        pcall(function() tc_val = hist:get(2) end)
+                        if tc_val then
+                            record_traffic(tostring(tc_val), dname .. ":traversal")
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    -- 2) Scan user programs for traffic_class
+    local users = ModApiV1.get_users()
+    if users then
+        local ut = array_to_table(users)
+        for _, u in ipairs(ut) do
+            local uname = safe_get(u, "username") or "unknown"
+            for _, bname in ipairs({"behaviors", "hosting_behaviors", "public_client_behaviors"}) do
+                local bhvs = safe_get(u, bname)
+                if bhvs then
+                    local bt = array_to_table(bhvs)
+                    for _, p in ipairs(bt) do
+                        local tc = safe_get(p, "traffic_class")
+                        if tc then
+                            record_traffic(tostring(tc), uname .. ":" .. bname)
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    -- 3) Static known types for completeness reference
+    local known_types = {
+        { type = "icmp",          protocol = "icmp", port = nil,  name = "ICMP",           category = "utility" },
+        { type = "tcp/23",        protocol = "tcp",  port = 23,   name = "SSH",            category = "management" },
+        { type = "udp/53",        protocol = "udp",  port = 53,   name = "DNS",            category = "infrastructure" },
+        { type = "udp/67",        protocol = "udp",  port = 67,   name = "DHCP",           category = "infrastructure" },
+        { type = "tcp/80",        protocol = "tcp",  port = 80,   name = "HTTP",           category = "consumer" },
+        { type = "tcp/443",       protocol = "tcp",  port = 443,  name = "HTTPS",          category = "consumer" },
+        { type = "tcp/510-519",   protocol = "tcp",  port = nil,  name = "Worm",           category = "malicious" },
+        { type = "udp/520",       protocol = "udp",  port = 520,  name = "RIP",            category = "routing" },
+        { type = "udp/554",       protocol = "udp",  port = 554,  name = "RTSP",           category = "streaming" },
+        { type = "udp/5060",      protocol = "udp",  port = 5060, name = "SIP",            category = "voip" },
+        { type = "tcp/3306",      protocol = "tcp",  port = 3306, name = "Database MySQL",  category = "database" },
+        { type = "tcp/5432",      protocol = "tcp",  port = 5432, name = "Database PgSQL",  category = "database" },
+        { type = "tcp/8000-8099", protocol = "tcp",  port = nil,  name = "Text Scraping",  category = "malicious" },
+        { type = "tcp/8333",      protocol = "tcp",  port = 8333, name = "Decentro P2P",   category = "decentro" },
+    }
+
+    local result = {
+        observed_traffic_types   = traffic_list,
+        observed_count           = #traffic_list,
+        known_reference_types    = known_types,
+    }
+
+    print("[EXTRACT] Observed traffic types: " .. #traffic_list)
+    return output_extracted_json("tni-traffic-types", result)
+end
+
+-- ── extract_cli_commands ────────────────────────────────────────────────────
+-- Extracts registered terminal routines from the game's NetShell.
+function extract_cli_commands()
+    print("\n[EXTRACT] ========== CLI Commands Extraction ==========")
+    if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
+    local world = ModApiV1.get_game_world()
+    if not world then print("[EXTRACT] World is nil"); return end
+
+    local commands = {}
+
+    -- Try to find a debugger's netshell to enumerate terminal_routines
+    local devs = ModApiV1.get_devices()
+    local found_shell = false
+    if devs then
+        local dt = array_to_table(devs)
+        for _, d in ipairs(dt) do
+            local hw = safe_get(d, "device_hardware_class")
+            -- DEBUGGER = 9
+            if hw == 9 then
+                print("[EXTRACT] Found debugger: " .. tostring(safe_get(d, "product_name")))
+                -- Try to access the netshell/terminal routines
+                -- The debugger's logic controller or the device itself may have a shell
+                local lc = safe_get(d, "logic_controller")
+                if lc then
+                    -- Try to find terminal_routines through various possible paths
+                    local routines = safe_get(lc, "terminal_routines")
+                    if not routines then
+                        -- Try through the device's children
+                        pcall(function()
+                            local child_count = d:get_child_count()
+                            for i = 0, child_count - 1 do
+                                local child = d:get_child(i)
+                                local cname = ""
+                                pcall(function() cname = child:get_class() end)
+                                if cname == "NetShell" or cname == "TerminalShell" then
+                                    routines = safe_get(child, "terminal_routines")
+                                    if routines then
+                                        print("[EXTRACT] Found routines via " .. cname)
+                                    end
+                                end
+                            end
+                        end)
+                    end
+                    if routines then
+                        found_shell = true
+                        local rt = array_to_table(routines)
+                        print("[EXTRACT] Terminal routines: " .. #rt)
+                        for _, r in ipairs(rt) do
+                            local cmd_entry = {
+                                enabled = safe_get(r, "enabled"),
+                            }
+                            -- Get the routine's name (usually node name)
+                            pcall(function() cmd_entry.name = r:get_name() end)
+                            pcall(function() cmd_entry.class = r:get_class() end)
+
+                            commands[#commands + 1] = cmd_entry
+                        end
+                    end
+                end
+                if found_shell then break end
+            end
+        end
+    end
+
+    -- Also extract autocomplete candidates from world
+    local autocomplete = {}
+    local ac = safe_get(world, "auto_complete_candidate_list")
+    if ac then
+        local act = array_to_table(ac)
+        for _, c in ipairs(act) do
+            autocomplete[#autocomplete + 1] = tostring(c)
+        end
+    end
+
+    -- Registered domains for reference
+    local domains = {}
+    local rd = safe_get(world, "registered_domains")
+    if rd then
+        local rdt = array_to_table(rd)
+        for _, d in ipairs(rdt) do
+            domains[#domains + 1] = tostring(d)
+        end
+    end
+
+    local result = {
+        terminal_routines       = commands,
+        terminal_routines_count = #commands,
+        autocomplete_candidates = autocomplete,
+        registered_domains      = domains,
+        shell_found             = found_shell,
+    }
+
+    print("[EXTRACT] CLI routines: " .. #commands .. ", autocomplete: " .. #autocomplete)
+    return output_extracted_json("tni-cli-commands", result)
+end
+
+-- ── extract_all ─────────────────────────────────────────────────────────────
+-- Runs all extraction functions in sequence.
+function extract_all()
+    print("\n[EXTRACT] ========== Running ALL Extractions ==========")
+    extract_store_catalog()
+    extract_programs()
+    extract_proposals()
+    extract_traffic_types()
+    extract_cli_commands()
+    print("\n[EXTRACT] ========== ALL Extractions Complete ==========")
+    notify("All 5 extractions complete -- see logs", 0)
+end
+
+-- ============================================================================
 -- STARTUP
 -- ============================================================================
 
@@ -2147,6 +2882,14 @@ print("      export_to_json            -- export full game state")
 print("      run_api_test_suite        -- test all API endpoints")
 print("      export_test_results_json  -- export test results")
 print("      show_lifecycle_log        -- show callback order")
+print("")
+print("    Data extraction (LLM-friendly JSON for data/ files):")
+print("      extract_store_catalog     -- merchants + device specs")
+print("      extract_programs          -- all program definitions")
+print("      extract_proposals         -- proposal system state")
+print("      extract_traffic_types     -- network traffic classes")
+print("      extract_cli_commands      -- terminal routines")
+print("      extract_all               -- run all 5 extractions")
 print("")
 print("    Lifecycle callbacks registered:")
 print("      on_mod_load  on_mods_loaded  on_engine_load")

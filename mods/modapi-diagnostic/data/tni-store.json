@@ -1,0 +1,1677 @@
+{
+  "_meta": {
+    "game": "Tower Networking Inc.",
+    "dataset": "store",
+    "version": "1.2.1",
+    "last_updated": "2025-12-14",
+    "description": "Nearly complete catalog of purchasable items from D-Market2, Barracks and Sons, and other in-game vendors.",
+    "notes": "Some warranty values may be inaccurate (recorded during LAB session). Other apps still need documentation. Corrections welcome.",
+    "sources": [
+      {
+        "name": "In-game observation",
+        "notes": "Data collected directly from D-Market2 and Barracks and Sons interfaces"
+      },
+      {
+        "name": "Discord Community",
+        "notes": "Data additions, corrections, and suggestions made by members of the discord community"
+      }
+    ],
+    "contributors": [
+      "Salvo Praxis",
+      "Claude (Anthropic)",
+      "Chaotic Crumb",
+      "Singing Pot Beast",
+      "AlinaNova21",
+      "Блинчик",
+      "gamers2000"
+    ],
+    "corrections": [
+      {
+        "version": "1.0.1",
+        "correction": "ICC sata_slots corrected from 2 to 1",
+        "reported_by": "Singing Pot Beast",
+        "corrected_by": "Chaotic Crumb"
+      },
+      {
+        "version": "1.1.0",
+        "correction": "Added cpu, memory, storage, and firmware fields to all network devices (switches, routers, firewalls, TAPs, debuggers)",
+        "suggested_by": "Блинчик",
+        "contributor": "AlinaNova21"
+      },
+      {
+        "version": "1.2.0",
+        "correction": "Added compatible_programs field to all 47 devices with placeholder examples for community contribution",
+        "contributor": "Salvo Praxis"
+      },
+      {
+        "version": "1.2.1",
+        "correction": "Firewalls CPU/MEM/HDD corrected from 4/1/2 to 6/3/3; firmware field expanded to array for multiple pre-installed programs",
+        "reported_by": "gamers2000",
+        "corrected_by": "Salvo Praxis"
+      }
+    ]
+  },
+  "network_switches": [
+    {
+      "model": "Blade5",
+      "vendor": "Blade Networking Inc",
+      "ports": 5,
+      "media": "ethernet",
+      "managed": false,
+      "vlan_support": false,
+      "cpu": 2,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "bladeos",
+      "traversals_per_tick": 25,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 22,
+      "warranty_days": 7,
+      "price": 100,
+      "requires_app": "D-Market2",
+      "notes": "Entry-level L2 switch",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade10",
+      "vendor": "Blade Networking Inc",
+      "ports": 10,
+      "media": "ethernet",
+      "managed": false,
+      "vlan_support": false,
+      "cpu": 2,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "bladeos",
+      "traversals_per_tick": 50,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 41,
+      "warranty_days": 7,
+      "price": 450,
+      "requires_app": "D-Market2",
+      "notes": "Unmanaged mid switch",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade4",
+      "vendor": "Blade Networking Inc",
+      "ports": 4,
+      "media": "fiber",
+      "managed": false,
+      "vlan_support": false,
+      "cpu": 2,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "bladeos",
+      "traversals_per_tick": 36,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 30,
+      "warranty_days": 7,
+      "price": 100,
+      "requires_app": "D-Market2",
+      "notes": "Small fiber switch",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade12",
+      "vendor": "Blade Networking Inc",
+      "ports": 12,
+      "media": "fiber",
+      "managed": true,
+      "vlan_support": true,
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "firmware": "vlanfirm",
+      "traversals_per_tick": 108,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 84,
+      "warranty_days": 14,
+      "price": 1000,
+      "requires_app": "D-Market2",
+      "notes": "Managed; VLAN tagging",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade66",
+      "vendor": "Blade Networking Inc",
+      "ports": 12,
+      "media": "mixed",
+      "managed": false,
+      "vlan_support": false,
+      "cpu": 2,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "bladeos",
+      "traversals_per_tick": 84,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 66,
+      "warranty_days": 14,
+      "price": 950,
+      "requires_app": "D-Market2",
+      "notes": "Hybrid media L2",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade15",
+      "vendor": "Blade Networking Inc",
+      "ports": 15,
+      "media": "ethernet",
+      "managed": true,
+      "vlan_support": true,
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "firmware": "vlanfirm",
+      "traversals_per_tick": 75,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 88,
+      "warranty_days": 14,
+      "price": 900,
+      "requires_app": "D-Market2",
+      "notes": "Managed; VLAN tagging",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade88",
+      "vendor": "Blade Networking Inc",
+      "ports": 16,
+      "media": "mixed",
+      "managed": true,
+      "vlan_support": true,
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "firmware": "vlanfirm",
+      "traversals_per_tick": 112,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 87,
+      "warranty_days": 18,
+      "price": 1600,
+      "requires_app": "D-Market2",
+      "notes": "High-end mixed media",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade88 (Refurb)",
+      "vendor": "Refurb Hut",
+      "ports": 16,
+      "media": "mixed",
+      "managed": true,
+      "vlan_support": true,
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "firmware": "vlanfirm",
+      "traversals_per_tick": 112,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 87,
+      "warranty_days": 3,
+      "price": 480,
+      "requires_app": "D-Market2",
+      "notes": "Refurbished; great value",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade30",
+      "vendor": "Blade Networking Inc",
+      "ports": 30,
+      "media": "ethernet",
+      "managed": true,
+      "vlan_support": true,
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "firmware": "vlanfirm",
+      "traversals_per_tick": 150,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 183,
+      "warranty_days": 21,
+      "price": 1650,
+      "requires_app": "D-Market2",
+      "notes": "Enterprise managed",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Blade1515",
+      "vendor": "Blade Networking Inc",
+      "ports": 30,
+      "media": "mixed",
+      "managed": true,
+      "vlan_support": true,
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "firmware": "vlanfirm",
+      "traversals_per_tick": 210,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 208,
+      "warranty_days": 21,
+      "price": 1850,
+      "requires_app": "D-Market2",
+      "notes": "Enterprise grade mixed-media",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    }
+  ],
+  "servers": [
+    {
+      "model": "MacroHard Boulder SRV",
+      "vendor": "AB compute Ltd.",
+      "ports": 2,
+      "cpu": 4,
+      "memory": 4,
+      "storage": 6,
+      "sata_slots": 0,
+      "traversals_per_tick": 16,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 72,
+      "warranty_days": 14,
+      "price": 540,
+      "requires_app": "D-Market2",
+      "notes": "Small business server",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Boulder+ SRV",
+      "vendor": "AB compute Ltd.",
+      "ports": 2,
+      "cpu": 6,
+      "memory": 8,
+      "storage": 8,
+      "sata_slots": 0,
+      "traversals_per_tick": 28,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 161,
+      "warranty_days": 14,
+      "price": 1020,
+      "requires_app": "D-Market2",
+      "notes": "High performance model",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Boulder+ SRV (Refurb)",
+      "vendor": "Refurb Hut",
+      "ports": 2,
+      "cpu": 6,
+      "memory": 8,
+      "storage": 8,
+      "sata_slots": 0,
+      "traversals_per_tick": 28,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 161,
+      "warranty_days": 3,
+      "price": 255,
+      "requires_app": "D-Market2",
+      "notes": "Refurbished",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Boulder++ SRV",
+      "vendor": "The Server Shoppe",
+      "ports": 3,
+      "cpu": 6,
+      "memory": 10,
+      "storage": 10,
+      "sata_slots": 0,
+      "traversals_per_tick": 48,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 312,
+      "warranty_days": 14,
+      "price": 1750,
+      "requires_app": "D-Market2",
+      "notes": "Extra port; more bandwidth",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Monolith SRV",
+      "vendor": "The Server Shoppe",
+      "ports": 2,
+      "cpu": 16,
+      "memory": 10,
+      "storage": 4,
+      "sata_slots": 2,
+      "traversals_per_tick": 52,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 429,
+      "warranty_days": 14,
+      "price": 2100,
+      "requires_app": "D-Market2",
+      "notes": "Includes 2 SATA 3.5\" bays",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Ledge Two SRV",
+      "vendor": "The Server Shoppe",
+      "ports": 3,
+      "cpu": 24,
+      "memory": 14,
+      "storage": 4,
+      "sata_slots": 2,
+      "traversals_per_tick": 150,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 973,
+      "warranty_days": 21,
+      "price": 2625,
+      "requires_app": "D-Market2",
+      "notes": "Fiber-enabled compute server",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Ledge Three SRV",
+      "vendor": "The Server Shoppe",
+      "ports": 4,
+      "cpu": 24,
+      "memory": 16,
+      "storage": 4,
+      "sata_slots": 2,
+      "traversals_per_tick": 208,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 1125,
+      "warranty_days": 21,
+      "price": 4000,
+      "requires_app": "D-Market2",
+      "notes": "Fiber; very high bandwidth",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard Megalith SRV",
+      "vendor": "The Server Shoppe",
+      "ports": 5,
+      "cpu": 32,
+      "memory": 16,
+      "storage": 4,
+      "sata_slots": 6,
+      "traversals_per_tick": 240,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 1223,
+      "warranty_days": 24,
+      "price": 4750,
+      "requires_app": "D-Market2",
+      "notes": "Comes with 6 SATA 3.5\" expansion slots",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Savannah Meerkat",
+      "vendor": "Savannah Org.",
+      "ports": 2,
+      "cpu": 4,
+      "memory": 4,
+      "storage": 4,
+      "sata_slots": 0,
+      "traversals_per_tick": 16,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 62,
+      "warranty_days": 21,
+      "price": 950,
+      "requires_app": "D-Market2",
+      "notes": "Scalable compute; efficient",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Savannah Gazelle",
+      "vendor": "AB compute Ltd.",
+      "ports": 2,
+      "cpu": 6,
+      "memory": 6,
+      "storage": 6,
+      "sata_slots": 0,
+      "traversals_per_tick": 24,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 108,
+      "warranty_days": 35,
+      "price": 2640,
+      "requires_app": "D-Market2",
+      "notes": "Durable; long-life",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Savannah Gazelle",
+      "vendor": "Savannah Org.",
+      "ports": 2,
+      "cpu": 6,
+      "memory": 6,
+      "storage": 6,
+      "sata_slots": 0,
+      "traversals_per_tick": 24,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 108,
+      "warranty_days": 35,
+      "price": 2200,
+      "requires_app": "D-Market2",
+      "notes": "Same spec; alternate listing",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Savannah Aardvark",
+      "vendor": "Savannah Org.",
+      "ports": 3,
+      "cpu": 10,
+      "memory": 10,
+      "storage": 5,
+      "sata_slots": 2,
+      "traversals_per_tick": 65,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 293,
+      "warranty_days": 42,
+      "price": 4500,
+      "requires_app": "D-Market2",
+      "notes": "2 extensible SATA 3.5\" slots",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Savannah Wildebeest",
+      "vendor": "Savannah Org.",
+      "ports": 3,
+      "cpu": 16,
+      "memory": 16,
+      "storage": 8,
+      "sata_slots": 2,
+      "traversals_per_tick": 104,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 423,
+      "warranty_days": 49,
+      "price": 6800,
+      "requires_app": "D-Market2",
+      "notes": "High-end enterprise compute",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "MacroHard NLB2",
+      "vendor": "The Server Shoppe",
+      "ports": 3,
+      "cpu": 2,
+      "memory": 1,
+      "storage": 1,
+      "sata_slots": 0,
+      "traversals_per_tick": 80,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 83,
+      "warranty_days": 73,
+      "price": 437,
+      "requires_app": "D-Market2",
+      "notes": "2-2 hardware load balancer (round-robin)",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "ICC1",
+      "vendor": "Interchange Compute",
+      "ports": 1,
+      "cpu": 1,
+      "memory": 2,
+      "storage": 2,
+      "sata_slots": 1,
+      "traversals_per_tick": 6,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 19,
+      "warranty_days": 8,
+      "price": 160,
+      "requires_app": "D-Market2",
+      "notes": "Modular computing unit. Homelab equipment.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Golonys-Cinco",
+      "vendor": "Golonys Ltd.",
+      "ports": 1,
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "sata_slots": 5,
+      "traversals_per_tick": 6,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 13,
+      "warranty_days": 17,
+      "price": 400,
+      "requires_app": "D-Market2",
+      "notes": "1-port network storage device. Comes with 5 SATA 3.5\" expansion slots.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    }
+  ],
+  "routers": [
+    {
+      "model": "Disco Nano",
+      "vendor": "AB compute Ltd. / Conduit Systems",
+      "ports": 5,
+      "media": "mixed",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 60,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 21,
+      "warranty_days": 17,
+      "price": 264,
+      "requires_app": "D-Market2",
+      "notes": "Edge router; DC power.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Nano 2G",
+      "vendor": "Conduit Systems",
+      "ports": 4,
+      "media": "mixed",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 65,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 23,
+      "warranty_days": 21,
+      "price": 180,
+      "requires_app": "D-Market2",
+      "notes": "2nd generation edge",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Nano 3H",
+      "vendor": "Conduit Systems",
+      "ports": 4,
+      "media": "mixed",
+      "cpu": 8,
+      "memory": 2,
+      "storage": 4,
+      "firmware": "hakernel",
+      "traversals_per_tick": 75,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 26,
+      "warranty_days": 28,
+      "price": 450,
+      "requires_app": "D-Market2",
+      "notes": "High-availability support",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Milli",
+      "vendor": "Conduit Systems",
+      "ports": 8,
+      "media": "ethernet",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 80,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 27,
+      "warranty_days": 16,
+      "price": 325,
+      "requires_app": "D-Market2",
+      "notes": "Economical medium enterprise",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Milli 2G",
+      "vendor": "Conduit Systems",
+      "ports": 8,
+      "media": "ethernet",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 112,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 30,
+      "warranty_days": 18,
+      "price": 500,
+      "requires_app": "D-Market2",
+      "notes": "Improved performance",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Milli 3G",
+      "vendor": "Conduit Systems",
+      "ports": 8,
+      "media": "ethernet",
+      "cpu": 8,
+      "memory": 2,
+      "storage": 4,
+      "firmware": "hakernel",
+      "traversals_per_tick": 160,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 41,
+      "warranty_days": 21,
+      "price": 800,
+      "requires_app": "D-Market2",
+      "notes": "HA support; 3rd gen",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Milli 4G",
+      "vendor": "Conduit Systems",
+      "ports": 8,
+      "media": "ethernet",
+      "cpu": 8,
+      "memory": 2,
+      "storage": 4,
+      "firmware": "hakernel",
+      "traversals_per_tick": 240,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 60,
+      "warranty_days": 25,
+      "price": 1150,
+      "requires_app": "D-Market2",
+      "notes": "4th gen; very high capacity",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Micro",
+      "vendor": "Conduit Systems",
+      "ports": 10,
+      "media": "mixed",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 125,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 41,
+      "warranty_days": 14,
+      "price": 600,
+      "requires_app": "D-Market2",
+      "notes": "Small business mixed",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Micro 2G",
+      "vendor": "Conduit Systems",
+      "ports": 10,
+      "media": "mixed",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 162,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 47,
+      "warranty_days": 19,
+      "price": 950,
+      "requires_app": "D-Market2",
+      "notes": "Improved performance",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Micro 2G (Refurb)",
+      "vendor": "Refurb Hut",
+      "ports": 10,
+      "media": "mixed",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 162,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 47,
+      "warranty_days": 3,
+      "price": 285,
+      "requires_app": "D-Market2",
+      "notes": "Refurbished",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Micro 3G",
+      "vendor": "Conduit Systems",
+      "ports": 10,
+      "media": "mixed",
+      "cpu": 8,
+      "memory": 2,
+      "storage": 4,
+      "firmware": "hakernel",
+      "traversals_per_tick": 175,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 50,
+      "warranty_days": 21,
+      "price": 1300,
+      "requires_app": "D-Market2",
+      "notes": "3rd gen; High-availability support",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Zodianet Spine Router",
+      "vendor": "Zodiac Networks",
+      "ports": 3,
+      "media": "fiber",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 250,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 78,
+      "warranty_days": 14,
+      "price": 1200,
+      "requires_app": "D-Market2",
+      "notes": "High-bandwidth core router",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Zodianet Beam Router",
+      "vendor": "Zodiac Networks",
+      "ports": 4,
+      "media": "fiber",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "firmware": "rtkernel",
+      "traversals_per_tick": 450,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 138,
+      "warranty_days": 17,
+      "price": 3700,
+      "requires_app": "D-Market2",
+      "notes": "High-bandwidth core router",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    }
+  ],
+  "firewalls_and_taps": [
+    {
+      "model": "FireWatch ES4A",
+      "vendor": "Fortypoint Security",
+      "device_type": "firewall",
+      "ports": 3,
+      "media": "mixed",
+      "cpu": 6,
+      "memory": 3,
+      "storage": 3,
+      "firmware": ["firewatcher", "wirerat"],
+      "traversals_per_tick": 52,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 55,
+      "warranty_days": 19,
+      "price": 550,
+      "requires_app": "D-Market2",
+      "notes": "Inline monitoring and filtering",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "FireWatch CP4E",
+      "vendor": "Fortypoint Security",
+      "device_type": "firewall",
+      "ports": 4,
+      "media": "ethernet",
+      "cpu": 6,
+      "memory": 3,
+      "storage": 3,
+      "firmware": ["firewatcher", "wirerat"],
+      "traversals_per_tick": 160,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 163,
+      "warranty_days": 16,
+      "price": 1500,
+      "requires_app": "D-Market2",
+      "notes": "Ethernet firewall",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "EthTapper",
+      "vendor": "Fortypoint Security",
+      "device_type": "tap",
+      "ports": 3,
+      "media": "ethernet",
+      "cpu": 2,
+      "memory": 2,
+      "storage": 1,
+      "firmware": "wirerat",
+      "traversals_per_tick": 18,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 12,
+      "warranty_days": 21,
+      "price": 300,
+      "requires_app": "D-Market2",
+      "notes": "Inline tap with port mirroring capabilities. Produces packet traffic captures packets.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Bastion 5E",
+      "vendor": "Fortypoint Security",
+      "device_type": "firewall",
+      "ports": 4,
+      "media": "ethernet",
+      "cpu": 6,
+      "memory": 3,
+      "storage": 3,
+      "firmware": ["firewatcher", "wirerat"],
+      "traversals_per_tick": 384,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 387,
+      "warranty_days": 14,
+      "price": 4000,
+      "requires_app": "D-Market2",
+      "notes": "Top-tier enterprise firewall",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    }
+  ],
+  "media_converters_and_repeaters": [
+    {
+      "model": "Duplex 1C",
+      "vendor": "Data Liner Corp.",
+      "type": "converter",
+      "direction": "bidirectional",
+      "media_in": "RJ45",
+      "media_out": "SC",
+      "traversals_per_tick": 18,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 7,
+      "warranty_days": 21,
+      "price": 60,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex 452F 1C",
+      "vendor": "Data Liner Corp.",
+      "type": "converter",
+      "direction": "unidirectional",
+      "media_in": "RJ45",
+      "media_out": "SC",
+      "traversals_per_tick": 30,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 9,
+      "warranty_days": 21,
+      "price": 40,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex SC245 1C",
+      "vendor": "Data Liner Corp.",
+      "type": "converter",
+      "direction": "unidirectional",
+      "media_in": "SC",
+      "media_out": "RJ45",
+      "traversals_per_tick": 30,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 9,
+      "warranty_days": 21,
+      "price": 40,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Duplex 3C",
+      "vendor": "Data Liner Corp.",
+      "type": "converter",
+      "direction": "bidirectional",
+      "media_in": "RJ45",
+      "media_out": "SC",
+      "traversals_per_tick": 54,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 8,
+      "warranty_days": 21,
+      "price": 240,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex 452F 3C",
+      "vendor": "Data Liner Corp.",
+      "type": "converter",
+      "direction": "unidirectional",
+      "media_in": "RJ45",
+      "media_out": "SC",
+      "traversals_per_tick": 90,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 12,
+      "warranty_days": 21,
+      "price": 160,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex SC245 3C",
+      "vendor": "Data Liner Corp.",
+      "type": "converter",
+      "direction": "unidirectional",
+      "media_in": "SC",
+      "media_out": "RJ45",
+      "traversals_per_tick": 90,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 12,
+      "warranty_days": 21,
+      "price": 160,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Duplex SC 1R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "bidirectional",
+      "media_in": "SC",
+      "media_out": "SC",
+      "traversals_per_tick": 24,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 8,
+      "warranty_days": 21,
+      "price": 50,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Duplex RJ45 1R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "bidirectional",
+      "media_in": "RJ45",
+      "media_out": "RJ45",
+      "traversals_per_tick": 12,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 6,
+      "warranty_days": 21,
+      "price": 50,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex RJ45 1R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "unidirectional",
+      "media_in": "RJ45",
+      "media_out": "RJ45",
+      "traversals_per_tick": 20,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 7,
+      "warranty_days": 21,
+      "price": 30,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex SC 1R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "unidirectional",
+      "media_in": "SC",
+      "media_out": "SC",
+      "traversals_per_tick": 40,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 11,
+      "warranty_days": 21,
+      "price": 30,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Duplex RJ45 3R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "bidirectional",
+      "media_in": "RJ45",
+      "media_out": "RJ45",
+      "traversals_per_tick": 36,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 7,
+      "warranty_days": 28,
+      "price": 200,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Duplex SC 3R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "bidirectional",
+      "media_in": "SC",
+      "media_out": "SC",
+      "traversals_per_tick": 72,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 10,
+      "warranty_days": 28,
+      "price": 200,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex RJ45 3R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "unidirectional",
+      "media_in": "RJ45",
+      "media_out": "RJ45",
+      "traversals_per_tick": 60,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 9,
+      "warranty_days": 28,
+      "price": 120,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Simplex SC 3R",
+      "vendor": "Data Liner Corp.",
+      "type": "repeater",
+      "direction": "unidirectional",
+      "media_in": "SC",
+      "media_out": "SC",
+      "traversals_per_tick": 120,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 15,
+      "warranty_days": 28,
+      "price": 120,
+      "requires_app": "D-Market2"
+    }
+  ],
+  "decentro_rigs": [
+    {
+      "model": "Dvergar",
+      "vendor": "AB compute Ltd.",
+      "cpu": 24,
+      "memory": 16,
+      "storage": 8,
+      "traversals_per_tick": 40,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 523,
+      "warranty_days": 7,
+      "price": 1320,
+      "requires_app": "D-Market2",
+      "notes": "Decentro mining rig. Provides Decentro transaction verification to the p2p currency network.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    }
+  ],
+  "peripherals": [
+    {
+      "model": "Data Wiper",
+      "vendor": "Fortypoint Security",
+      "price": 399,
+      "requires_app": "D-Market2",
+      "notes": "Wipes all data when plugged into a powered device; factory reset tool"
+    },
+    {
+      "model": "Storage Extension",
+      "vendor": "Interchange Compute",
+      "price": 75,
+      "compatibility": "SATA 3.5\"",
+      "effect": "+4 storage to attached device",
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Cardboard Box",
+      "vendor": "Mr Cable",
+      "storage_slots": 8,
+      "price": 10,
+      "requires_app": "D-Market2",
+      "notes": "A box for cable/peripheral organization."
+    }
+  ],
+  "ups_and_surge_protection": [
+    {
+      "model": "Tenabolt UPS2",
+      "vendor": "Tenabolt Retail",
+      "watt_support": 200,
+      "price": 750,
+      "warranty_days": 24,
+      "requires_app": "D-Market2",
+      "notes": "UPS base unit"
+    },
+    {
+      "model": "Tenabolt UPS2E",
+      "vendor": "Tenabolt Retail",
+      "watt_support": 800,
+      "price": 2000,
+      "warranty_days": 28,
+      "requires_app": "D-Market2",
+      "notes": "Expanded load UPS"
+    },
+    {
+      "model": "Tenabolt UPS2X",
+      "vendor": "Tenabolt Retail",
+      "watt_support": 1500,
+      "price": 5000,
+      "warranty_days": 28,
+      "requires_app": "D-Market2",
+      "notes": "Extra-expanded load UPS"
+    },
+    {
+      "model": "Tenabolt AVR2",
+      "vendor": "Tenabolt Retail",
+      "watt_support": 400,
+      "price": 150,
+      "warranty_days": 28,
+      "requires_app": "D-Market2",
+      "notes": "Automatic Voltage Regulator (surge protection)"
+    },
+    {
+      "model": "Mountable Tenabolt UPS2E",
+      "vendor": "Tenabolt Retail",
+      "watt_support": 800,
+      "price": 2200,
+      "warranty_days": 28,
+      "requires_app": "D-Market2",
+      "notes": "Mountable UPS base unit"
+    }
+  ],
+  "power_expanders": [
+    {
+      "model": "Tenabolt Expander 1-2",
+      "vendor": "Mr Cable",
+      "outlets": 2,
+      "price": 20,
+      "requires_app": "D-Market2",
+      "notes": "Power distribution strip"
+    },
+    {
+      "model": "Tenabolt Expander 1-2",
+      "vendor": "Tenabolt Retail",
+      "outlets": 2,
+      "price": 20,
+      "requires_app": "D-Market2",
+      "notes": "Power distribution strip"
+    },
+    {
+      "model": "Tenabolt Expander 1-5",
+      "vendor": "Tenabolt Retail",
+      "outlets": 5,
+      "price": 100,
+      "requires_app": "D-Market2",
+      "notes": "Power distribution strip"
+    },
+    {
+      "model": "Tenabolt Expander 1-10",
+      "vendor": "Tenabolt Retail",
+      "outlets": 10,
+      "price": 280,
+      "requires_app": "D-Market2",
+      "notes": "Power distribution strip"
+    },
+    {
+      "model": "Mountable Tenabolt Expander 1-3",
+      "vendor": "Tenabolt Retail",
+      "outlets": 3,
+      "price": 100,
+      "requires_app": "D-Market2",
+      "notes": "Mountable power distribution strip"
+    },
+    {
+      "model": "Mountable Tenabolt Expander 1-6",
+      "vendor": "Tenabolt Retail",
+      "outlets": 6,
+      "price": 180,
+      "requires_app": "D-Market2",
+      "notes": "Mountable power distribution strip"
+    },
+    {
+      "model": "Mountable Tenabolt Expander 1-7",
+      "vendor": "Tenabolt Retail",
+      "outlets": 7,
+      "price": 200,
+      "requires_app": "D-Market2",
+      "notes": "Mountable power distribution strip"
+    }
+  ],
+  "power_cables": [
+    {
+      "model": "Power UK-B 500",
+      "vendor": "Mr Cable",
+      "type": "AC",
+      "length_px": 500,
+      "price": 15,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Power UK-B 1000",
+      "vendor": "Tenabolt Retail",
+      "type": "AC",
+      "length_px": 1000,
+      "price": 40,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "Power UK-B 1500",
+      "vendor": "Mr Cable",
+      "type": "AC",
+      "length_px": 1500,
+      "price": 80,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "DC Adapter 200p",
+      "vendor": "Mr Cable",
+      "type": "DC",
+      "length_px": 200,
+      "price": 50,
+      "requires_app": "D-Market2"
+    },
+    {
+      "model": "DC Adapter 500p",
+      "vendor": "Mr Cable",
+      "type": "DC",
+      "length_px": 500,
+      "price": 120,
+      "requires_app": "D-Market2"
+    }
+  ],
+  "network_cables": {
+    "ethernet_rj45_cat5": [
+      {
+        "length_px": 200,
+        "price": 5
+      },
+      {
+        "length_px": 500,
+        "price": 15
+      },
+      {
+        "length_px": 1000,
+        "price": 40
+      },
+      {
+        "length_px": 1500,
+        "price": 75
+      },
+      {
+        "length_px": 2000,
+        "price": 150
+      }
+    ],
+    "fiber_sc_double_core": [
+      {
+        "length_px": 200,
+        "price": 1
+      },
+      {
+        "length_px": 500,
+        "price": 5
+      },
+      {
+        "length_px": 1500,
+        "price": 25
+      },
+      {
+        "length_px": 3000,
+        "price": 60
+      }
+    ],
+    "color_options": [
+      "Original",
+      "Yellow",
+      "Blue",
+      "Purple",
+      "Orange",
+      "Green",
+      "Red",
+      "Grey"
+    ]
+  },
+  "cabling_tools": [
+    {
+      "model": "Cable-O-Matic RJ45 20kPx",
+      "vendor": "Cabler's Union",
+      "cable_type": "ethernet_rj45_cat5",
+      "capacity_px": 20000,
+      "price": 1500,
+      "colors": [
+        "Original",
+        "Yellow",
+        "Blue",
+        "Purple",
+        "Orange",
+        "Green",
+        "Red",
+        "Grey"
+      ],
+      "requires_app": "D-Market2",
+      "notes": "Cabling toolkit for RJ-45 terminations. Stores up to 20000 length."
+    },
+    {
+      "model": "Cable-O-Matic Fiber SC 20kPx",
+      "vendor": "Cabler's Union",
+      "cable_type": "fiber_sc_double_core",
+      "capacity_px": 20000,
+      "price": 1500,
+      "colors": [
+        "Original",
+        "Yellow",
+        "Blue",
+        "Purple",
+        "Orange",
+        "Green",
+        "Red",
+        "Grey"
+      ],
+      "requires_app": "D-Market2",
+      "notes": "Cabling toolkit for Fiber optic (SC) terminations. Stores up to 20000 length."
+    }
+  ],
+  "racks_and_shelving": [
+    {
+      "model": "Trolley 2C",
+      "vendor": "Barracks and Sons",
+      "price": 800,
+      "requires_app": "D-Market2",
+      "notes": "A trolley to help with moving devices around the tower."
+    },
+    {
+      "model": "Mounting Shelf Piece R500",
+      "vendor": "Barracks and Sons",
+      "rack_type": "narrow",
+      "price": 10,
+      "requires_app": "D-Market2",
+      "notes": "Used as shelf piece of mounting racks (Narrow Rack)."
+    },
+    {
+      "model": "Mounting Shelf Piece R930",
+      "vendor": "Barracks and Sons",
+      "rack_type": "wide",
+      "price": 20,
+      "requires_app": "D-Market2",
+      "notes": "Used as shelf piece of mounting racks (Wide Rack)."
+    },
+    {
+      "model": "Wall Shelf (single)",
+      "vendor": "Barracks and Sons",
+      "price": 10,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Pipe Shelf (3-tier)",
+      "vendor": "Barracks and Sons",
+      "price": 35,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Narrow Rack (425pxW x 220pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 425,
+        "height_px": 220
+      },
+      "price": 40,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Narrow Rack (425pxW x 345pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 425,
+        "height_px": 345
+      },
+      "price": 60,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Narrow Rack (425pxW x 640pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 425,
+        "height_px": 640
+      },
+      "price": 80,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Narrow Rack (425pxW x 920pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 425,
+        "height_px": 920
+      },
+      "price": 95,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Wide Rack (775pxW x 165pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 775,
+        "height_px": 165
+      },
+      "price": 45,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Wide Rack (775pxW x 280pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 775,
+        "height_px": 280
+      },
+      "price": 65,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Wide Rack (775pxW x 500pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 775,
+        "height_px": 500
+      },
+      "price": 85,
+      "requires_app": "Barracks and Sons"
+    },
+    {
+      "model": "Wide Rack (775pxW x 725pxH)",
+      "vendor": "Barracks and Sons",
+      "dimensions": {
+        "width_px": 775,
+        "height_px": 725
+      },
+      "price": 100,
+      "requires_app": "Barracks and Sons"
+    }
+  ],
+  "tower_link_sockets": [
+    {
+      "model": "RJ45 Copper Socket",
+      "media": "ethernet",
+      "price": 100,
+      "requires_app": "Socketeer"
+    },
+    {
+      "model": "SC Fiber",
+      "media": "fiber",
+      "price": 100,
+      "requires_app": "Socketeer"
+    }
+  ],
+  "debuggers_and_test_devices": [
+    {
+      "model": "Debugger Alice",
+      "vendor": "AB compute Ltd.",
+      "ports": 2,
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "netpeeker",
+      "traversals_per_tick": 12,
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": 72,
+      "warranty_days": 21,
+      "price": 1200,
+      "requires_app": "D-Market2",
+      "notes": "2-port ethernet remote debugger.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "DNS Load Test Box",
+      "vendor": "AB compute Ltd.",
+      "ports": 1,
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "dnsspam",
+      "traversals_per_tick": 6,
+      "cpu_cycle": "5 tick(s) / 1.0s",
+      "power_w": 112,
+      "warranty_days": 0,
+      "price": 0,
+      "requires_app": "LAB Mode",
+      "notes": "1-port ethernet DNS load testing box. Not for sale; comes pre-purchased in LAB Mode.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "DNS UDP/53 Load Tester",
+      "vendor": "AB compute Ltd.",
+      "ports": 1,
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "firmware": "dnsspam",
+      "traversals_per_tick": 6,
+      "cpu_cycle": "10 tick(s) / 1.0s",
+      "power_w": 202,
+      "warranty_days": 7,
+      "price": 1200,
+      "requires_app": "D-Market2",
+      "notes": "1-port ethernet load tester. Blasts UDP/53 DNS query traffic.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    }
+  ],
+  "monitoring_displays": [
+    {
+      "model": "Top Issue Monitor",
+      "vendor": "Vision Grid",
+      "power_w": 13,
+      "warranty_days": 14,
+      "price": 300,
+      "requires_app": "D-Market2",
+      "notes": "Extra monitor displaying top floor issues."
+    },
+    {
+      "model": "Visitor Status Monitor",
+      "vendor": "Vision Grid",
+      "power_w": 13,
+      "warranty_days": 14,
+      "price": 300,
+      "requires_app": "D-Market2",
+      "notes": "Extra monitor displaying visitor count by domain name."
+    },
+    {
+      "model": "Satiety Stats Monitor",
+      "vendor": "Vision Grid",
+      "power_w": 13,
+      "warranty_days": 14,
+      "price": 500,
+      "requires_app": "D-Market2",
+      "notes": "Extra monitor displaying resident satiety levels."
+    }
+  ]
+}

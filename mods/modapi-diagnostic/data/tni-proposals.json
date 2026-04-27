@@ -1,0 +1,615 @@
+{
+  "_meta": {
+    "game": "Tower Networking Inc.",
+    "dataset": "proposals",
+    "version": "1.0.0",
+    "last_updated": "2025-12-13",
+    "description": "Complete catalog of in-game proposals with prerequisites, costs, effects, and unlock conditions.",
+    "notes": "Proposals are offered during gameplay based on prerequisites. Some are repeatable with escalating costs. Certain proposals are mutually exclusive (e.g., Tenabolt collaboration vs opposition).",
+    "sources": [
+      {
+        "name": "In-game observation",
+        "notes": "Data collected from proposal descriptions and gameplay testing"
+      },
+      {
+        "name": "Discord Community",
+        "notes": "Data additions, corrections, and suggestions made by members of the discord community"
+      }
+    ],
+    "contributors": [
+      "AlinaNova",
+      "Salvo Praxis",
+      "Claude (Anthropic)"
+    ],
+    "corrections": [],
+    "future_additions": []
+  },
+  "proposals": [
+    {
+      "id": "remote_backups",
+      "name": "Remote Backups",
+      "category": "technology",
+      "lore": "3-2-1, let's back it up!",
+      "cost": 450,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true
+      },
+      "unlocks": {
+        "routines": ["sftp"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Backup configs/files on remote devices", "Remove malware when regular uninstalls fail"],
+      "description": "Adds a new 'sftp' routine to netshell. Allows backup of configs/files on remote devices for price of 450. The routine can also be used to remove malware when regular program uninstalls do not work."
+    },
+    {
+      "id": "botnets_research",
+      "name": "Botnets Research",
+      "category": "technology",
+      "lore": "Not enough users?",
+      "cost": 665,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true,
+        "min_servers": 5,
+        "notes": "Having 5+ compute servers increases selection chance"
+      },
+      "unlocks": {
+        "routines": ["botconf"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Configure bots that generate visitor traffic to enterprises"],
+      "description": "Adds a new 'botconf' routine to netshell. Allow configuration of bots that can generate visitor traffic to enterprises. Funding costs 665."
+    },
+    {
+      "id": "ha_research",
+      "name": "High Availability Research",
+      "category": "technology",
+      "lore": "HA HA HA, no DR!",
+      "cost": 600,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true,
+        "min_routers": 7,
+        "notes": "Having 7+ network routers increases selection chance"
+      },
+      "unlocks": {
+        "routines": ["haconf"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Configure high-availability setup on HA-enabled routers"],
+      "description": "Adds a new 'haconf' routine to netshell. Allow configuration of high-availability setup on ha-enabled routers. Funding costs 600."
+    },
+    {
+      "id": "jailbreaker",
+      "name": "Jailbreaker",
+      "category": "technology",
+      "lore": "Hardware liberation day",
+      "cost": 1000,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true,
+        "requires_proposal": "remote_backups"
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "abilities": ["sftp can install programs extracted from devices"]
+      },
+      "effects": ["The 'sftp' routine can now install programs extracted from devices"],
+      "description": "The 'sftp' routine can now be used to install programs extracted from devices. Costs 1000."
+    },
+    {
+      "id": "netops_research",
+      "name": "NetOps Research",
+      "category": "technology",
+      "lore": "Improvise, adapt, overcome",
+      "cost": 330,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true
+      },
+      "unlocks": {
+        "routines": ["cron", "try", "notify"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Automation utility for managing and monitoring network"],
+      "description": "Adds automation utility for managing and monitoring your network for the price of 330. Unlocks the 'cron', 'try' and 'notify' routines on NetShell."
+    },
+    {
+      "id": "power_management_research",
+      "name": "Power Management Research",
+      "category": "technology",
+      "lore": "Keep bills low and reliability high.",
+      "cost": 225,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true
+      },
+      "unlocks": {
+        "routines": ["power"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Manage device power state"],
+      "description": "Adds power management utility for managing device power state for the price of 225. Unlocks the 'power' routines on NetShell."
+    },
+    {
+      "id": "rip",
+      "name": "Route Discovery Protocol v1 (RIP)",
+      "category": "technology",
+      "lore": "State of the art in 1988",
+      "cost": 1500,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true,
+        "min_routers": 7,
+        "notes": "Having 7+ network routers increases selection chance"
+      },
+      "unlocks": {
+        "routines": ["rip"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Automated route discoveries on routers"],
+      "description": "Adds a new 'rip' routine to netshell. Allow configuration of automated route discoveries on routers for price of 1500."
+    },
+    {
+      "id": "scanning_exploit",
+      "name": "Scanning Exploit",
+      "category": "technology",
+      "lore": "Scans too shall pass.",
+      "cost": 1200,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "abilities": ["netsh and autograph scans bypass all router rules"]
+      },
+      "effects": ["Netsh and autograph scans bypass all router rules", "Exploit can be toggled on/off"],
+      "description": "Allows netsh and autograph scans to bypass all router rules for a cost of 1200. The exploit can be optionally turned on/off."
+    },
+    {
+      "id": "vm_research",
+      "name": "Virtual Machines Research",
+      "category": "technology",
+      "lore": "carrier has arrived.",
+      "cost": 999,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true,
+        "min_servers": 5,
+        "notes": "Having 5+ compute servers increases selection chance"
+      },
+      "unlocks": {
+        "routines": ["vmconf"],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Configure virtual machines on servers"],
+      "description": "Adds a new 'vmconf' routine to netshell. Allow configuration of virtual machines on servers. Funding costs 999."
+    },
+    {
+      "id": "elevator_upgrade",
+      "name": "Elevator Upgrade",
+      "category": "infrastructure",
+      "lore": "Faster travels for those emergencies",
+      "cost": [1250, 2000, 2500, 3000, 3500, 4000, 4500, 5000],
+      "repeatable": true,
+      "max_levels": 8,
+      "prerequisites": {
+        "level_1_guaranteed_day": 9,
+        "requires_previous_level": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Decrease elevator wait time by 50% per level"],
+      "description": "Decrease elevator wait time by 50.0%. Each level provides the same benefit and requires the previous level."
+    },
+    {
+      "id": "second_monitor",
+      "name": "Second Monitor",
+      "category": "infrastructure",
+      "lore": "Screen too small?",
+      "cost": 2500,
+      "repeatable": false,
+      "prerequisites": {
+        "technology_not_acquired": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "abilities": ["Use second monitor via right-alt"]
+      },
+      "effects": ["Allows use of a second monitor by pressing right-alt"],
+      "description": "Allows use of a second monitor by pressing right-alt. Costs 2500"
+    },
+    {
+      "id": "new_data_center",
+      "name": "New Data Center",
+      "category": "infrastructure",
+      "lore": "It's free (?) real-estate baby!",
+      "cost": null,
+      "cost_notes": "No upfront cost, increases admin fees by 10% each",
+      "repeatable": true,
+      "max_levels": 4,
+      "prerequisites": {
+        "guaranteed_days": [6, 15, 24, 30]
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "locations": ["New data center floor"]
+      },
+      "effects": ["Increases administrative fees by 10%", "Adds new location and expands available space"],
+      "description": "Request for a new data center, increases administrative fees by 10.0%. Adds new location and expands available space."
+    },
+    {
+      "id": "internet_exchange_point",
+      "name": "Internet Exchange Point One",
+      "category": "infrastructure",
+      "lore": "Now the whole world had one language and a common speech.",
+      "cost": null,
+      "cost_notes": "TBD - Work in progress feature",
+      "repeatable": false,
+      "prerequisites": {},
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "locations": ["Internet exchange point floor"]
+      },
+      "effects": ["Connection point to another tower", "Cross-tower internet with strict SLA requirements"],
+      "status": "work_in_progress",
+      "description": "Request an internet exchange point with another tower. An internet exchange point is a floor with a connection point to another tower. Allowing cross-tower internet pays handsomely but is risky due to the strict SLA requirements."
+    },
+    {
+      "id": "liability_insurance",
+      "name": "Liability Insurance",
+      "category": "financial",
+      "lore": "Money solves problems",
+      "cost": 300,
+      "cost_notes": "300/day recurring premium, 3000 per breach penalty",
+      "repeatable": false,
+      "prerequisites": {
+        "available_from_day": 5
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["SLA breaches no longer end the game", "3000 financial penalty per breach", "300/day recurring premium cost"],
+      "description": "SLA breaches no longer ends the game, but comes with a financial penalty of 3000 per breach. Adds a recurring premium cost of 300 per day."
+    },
+    {
+      "id": "lean_administration",
+      "name": "Lean Administration",
+      "category": "financial",
+      "lore": "Pain now for gain later",
+      "cost": [600, 700, 800, 900, 1000, 1100],
+      "repeatable": true,
+      "max_levels": 6,
+      "prerequisites": {
+        "requires_previous_level": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Permanently reduce daily admin expenses by 30% per level"],
+      "description": "Permanently reduce daily admin expenses by 30.0% at the cost of upfront payment. Each level provides the same 30% reduction benefit."
+    },
+    {
+      "id": "refurbhut_investment",
+      "name": "Refurbhut Investment",
+      "category": "merchant",
+      "lore": "As long as it works...",
+      "cost": 555,
+      "repeatable": false,
+      "prerequisites": {
+        "merchant_not_exists": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": ["RefurbHut"]
+      },
+      "effects": ["Opens RefurbHut merchant", "Provides cheap refurbished devices (no warranty)"],
+      "description": "Fund 555 to support the opening of the RefurbHut merchant, which provides cheap refurbished (no warranty) devices."
+    },
+    {
+      "id": "cablers_union_base",
+      "name": "Support the Cabler's Union (Basic)",
+      "category": "merchant",
+      "lore": "R&D - Rewire and Distribute equally",
+      "cost": 300,
+      "repeatable": false,
+      "prerequisites": {},
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "proposals": ["cablers_union_discounts", "cablers_union_merchant"]
+      },
+      "effects": ["Unlocks more proposals for the Cabler's Union"],
+      "description": "Fund 300 to support the Cabler's Union, an R&D institute for the benefit of cabling workers. This unlocks more proposals for the Cabler's Union (merchant and discounts)."
+    },
+    {
+      "id": "cablers_union_discounts",
+      "name": "Support the Cabler's Union (Discounts)",
+      "category": "merchant",
+      "lore": "R&D - Rewire and Distribute equally",
+      "cost": 300,
+      "repeatable": false,
+      "prerequisites": {
+        "requires_proposal": "cablers_union_base"
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Cheaper cable prices from DMarket merchants"],
+      "description": "Fund 300 to support the Cabler's Union, an R&D institute for the benefit of cabling workers. In return, they promise to lobby for cheaper cable prices (discount %) from the merchants on the DMarket."
+    },
+    {
+      "id": "cablers_union_merchant",
+      "name": "Support the Cabler's Union (Merchant)",
+      "category": "merchant",
+      "lore": "R&D - Rewire and Distribute equally",
+      "cost": 300,
+      "repeatable": false,
+      "prerequisites": {
+        "requires_proposal": "cablers_union_base",
+        "merchant_not_exists": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": ["Cabler's Union Prototypes"]
+      },
+      "effects": ["Cabler's Union can sell their prototypes on D-Market"],
+      "description": "Fund 300 to support the Cabler's Union, an R&D institute for the benefit of cabling workers. This let's them sell their prototypes on the D-Market."
+    },
+    {
+      "id": "fusion_plant_phase1",
+      "name": "Fusion Plant Funding (Phase 1)",
+      "category": "tenabolt",
+      "lore": "Let's make a Sun.",
+      "cost": 1000,
+      "repeatable": false,
+      "prerequisites": {
+        "excludes_proposals": ["legal_retaliation", "lobby_against_tenabolt"]
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": [],
+        "proposals": ["fusion_plant_phase2"]
+      },
+      "effects": ["Reduce all Data Center power cost by 20%"],
+      "mutual_exclusivity_notes": "Choosing Legal Retaliation or Lobby Against blocks this proposal",
+      "description": "Support Tenabolt Corporation's effort in building a fusion power plant by funding 1000. Reduce all Data Center power cost by 20.0%"
+    },
+    {
+      "id": "fusion_plant_phase2",
+      "name": "Fusion Plant Funding (Phase 2)",
+      "category": "tenabolt",
+      "lore": "Let's make it brighter.",
+      "cost": 2000,
+      "repeatable": false,
+      "prerequisites": {
+        "requires_proposal": "fusion_plant_phase1",
+        "excludes_proposals": ["legal_retaliation", "lobby_against_tenabolt"]
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Reduce all Data Center power cost by 50%", "Reduces probability of power outage/surge by 10%"],
+      "description": "Support Tenabolt Corporation's effort in building a fusion power plant by funding 2000. Reduce all Data Center power cost by 50.0%. Reduces probability of power outage/surge by 10.0%"
+    },
+    {
+      "id": "legal_retaliation",
+      "name": "Legal Retaliation",
+      "category": "tenabolt",
+      "lore": "Another power outage? See you in court!",
+      "cost": null,
+      "cost_notes": "No upfront cost, merchant pricing increases",
+      "repeatable": false,
+      "prerequisites": {},
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Eliminates future Tenabolt collaboration", "Tenabolt pays penalties per outage/surge", "Tenabolt items become more expensive"],
+      "mutual_exclusivity_notes": "Blocks Fusion Plant proposals. Does NOT prevent Lobby Against from appearing (possible bug).",
+      "description": "Lawyer up against Tenabolt Corporation. This proposal eliminates future collaboration with Tenabolt Corporation. Tenabolt Corporation now pays penalties per outage/surge events. All items sold by Tenabolt reseller become more expensive."
+    },
+    {
+      "id": "lobby_against_tenabolt",
+      "name": "Lobby Against Tenabolt Corporation",
+      "category": "tenabolt",
+      "lore": "Power to the people.",
+      "cost": null,
+      "cost_notes": "No upfront cost, merchant pricing increases",
+      "repeatable": false,
+      "prerequisites": {},
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["Eliminates future Tenabolt collaboration", "Tenabolt cannot issue fines for non-DC power use", "Tenabolt items become more expensive"],
+      "mutual_exclusivity_notes": "Blocks Fusion Plant proposals. Does NOT prevent Legal Retaliation from appearing (possible bug).",
+      "description": "Lobby for new law against Tenabolt Corporation. This proposal eliminates future collaboration with Tenabolt Corporation. Tenabolt Corporation can no longer issue fines against non Data Center power use. All items sold by Tenabolt reseller become more expensive."
+    },
+    {
+      "id": "overvoltage_directive",
+      "name": "Overvoltage Directive",
+      "category": "power_grid",
+      "lore": "POWER OVERWHELMING!",
+      "cost": [200, 250, 300],
+      "cost_notes": "Stamp duty costs",
+      "repeatable": true,
+      "max_levels": 3,
+      "prerequisites": {
+        "power_surge_controller_configured": true,
+        "power_outage_controller_configured": true,
+        "requires_previous_level": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["+30% power surge chance per level", "-30% power outage chance per level"],
+      "tradeoff": "More surges (damage risk) but fewer blackouts",
+      "description": "+30.0% of power surge occurring, -30.0% of power outage occurring. Stamp duty costs vary by level. Trade-off: More surges (damage risk) but fewer blackouts. Each level provides the same effect."
+    },
+    {
+      "id": "undervoltage_directive",
+      "name": "Undervoltage Directive",
+      "category": "power_grid",
+      "lore": "Better dark than magic smoke",
+      "cost": [200, 250, 300],
+      "cost_notes": "Stamp duty costs",
+      "repeatable": true,
+      "max_levels": 3,
+      "prerequisites": {
+        "power_surge_controller_configured": true,
+        "power_outage_controller_configured": true,
+        "requires_previous_level": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": [],
+        "merchants": []
+      },
+      "effects": ["-30% power surge chance per level", "+30% power outage chance per level"],
+      "tradeoff": "More blackouts (downtime) but fewer surges (less hardware damage)",
+      "description": "-30.0% of power surge occurring, +30.0% of power outage occurring. Stamp duty costs vary by level. Trade-off: More blackouts (downtime) but fewer surges (less hardware damage). Each level provides the same effect."
+    },
+    {
+      "id": "padu_funding",
+      "name": "PADU Development Funding",
+      "category": "software",
+      "lore": "Everyone's favorite database.",
+      "cost": 300,
+      "repeatable": false,
+      "prerequisites": {
+        "program_not_unlocked": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": ["padu_v3"],
+        "merchants": []
+      },
+      "effects": ["Unlocks PADU v3 database software"],
+      "description": "Fund the development of PADU v3 database software."
+    },
+    {
+      "id": "poems_db",
+      "name": "Poems DB",
+      "category": "software",
+      "lore": "A DB just for the text chads.",
+      "cost": 200,
+      "repeatable": false,
+      "prerequisites": {
+        "program_not_unlocked": true
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": ["poems-db"],
+        "merchants": []
+      },
+      "effects": ["Unlocks Poems DB database software"],
+      "description": "Fund the development of Poems DB database software."
+    },
+    {
+      "id": "sun_dns",
+      "name": "Sun DNS",
+      "category": "software",
+      "lore": "We've got names for everyone.",
+      "cost": 400,
+      "repeatable": false,
+      "prerequisites": {
+        "program_not_unlocked": true,
+        "available_from_day": 5
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": ["sun-dns"],
+        "merchants": []
+      },
+      "effects": ["Unlocks Sun DNS server software"],
+      "description": "Fund the development of Sun DNS server software."
+    },
+    {
+      "id": "kea_dhcp",
+      "name": "KEA DHCP Server",
+      "category": "software",
+      "lore": "Mass host configurations, made easy.",
+      "cost": 200,
+      "repeatable": false,
+      "prerequisites": {
+        "program_not_unlocked": true,
+        "available_from_day": 5
+      },
+      "unlocks": {
+        "routines": [],
+        "programs": ["kea"],
+        "merchants": []
+      },
+      "effects": ["Unlocks KEA DHCP Server software"],
+      "description": "Fund the development of KEA DHCP Server software."
+    }
+  ],
+  "proposal_categories": {
+    "technology": ["remote_backups", "botnets_research", "ha_research", "jailbreaker", "netops_research", "power_management_research", "rip", "scanning_exploit", "vm_research"],
+    "infrastructure": ["elevator_upgrade", "second_monitor", "new_data_center", "internet_exchange_point"],
+    "financial": ["liability_insurance", "lean_administration"],
+    "merchant": ["refurbhut_investment", "cablers_union_base", "cablers_union_discounts", "cablers_union_merchant"],
+    "tenabolt": ["fusion_plant_phase1", "fusion_plant_phase2", "legal_retaliation", "lobby_against_tenabolt"],
+    "power_grid": ["overvoltage_directive", "undervoltage_directive"],
+    "software": ["padu_funding", "poems_db", "sun_dns", "kea_dhcp"]
+  },
+  "starting_proposals": {
+    "notes": "These 15 proposals can appear as starting proposals when beginning a new game. See seed-finder.html for seed database.",
+    "proposals": [
+      "cablers_union_base",
+      "fusion_plant_phase1",
+      "lean_administration",
+      "legal_retaliation",
+      "lobby_against_tenabolt",
+      "netops_research",
+      "overvoltage_directive",
+      "padu_funding",
+      "poems_db",
+      "power_management_research",
+      "refurbhut_investment",
+      "remote_backups",
+      "scanning_exploit",
+      "second_monitor",
+      "undervoltage_directive"
+    ]
+  }
+}

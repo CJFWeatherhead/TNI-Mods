@@ -1,0 +1,231 @@
+{
+  "_meta": {
+    "game": "Tower Networking Inc.",
+    "dataset": "traffic-types",
+    "version": "1.0.1",
+    "last_updated": "2025-12-14",
+    "description": "Network traffic types for firewall rules, router configuration, and traffic analysis",
+    "sources": [
+      {
+        "name": "HackMD - Network Traffic Types",
+        "url": "https://hackmd.io/@tower-network/network-traffic-types",
+        "author": "@tower-network",
+        "retrieved": "2025-12-07",
+        "notes": "Primary source for traffic type definitions. Seeking approval for individual attributions from HackMD team members — Thorinbur confirmed."
+      }
+    ],
+    "contributors": [
+      "Salvo Praxis",
+      "Claude (Anthropic)",
+      "Thorinbur"
+    ],
+    "corrections": [
+      {
+        "version": "1.0.1",
+        "correction": "RTSP corrected from tcp/554 to udp/554 — verified in-game",
+        "verified_by": "Salvo Praxis"
+      }
+    ]
+  },
+  "traffic_types": [
+    {
+      "type": "icmp",
+      "port": null,
+      "protocol": "icmp",
+      "name": "ICMP",
+      "description": "Internet Control Message Protocol",
+      "used_by": [
+        "ping routine"
+      ],
+      "category": "utility",
+      "notes": "Default type for ping routine"
+    },
+    {
+      "type": "tcp/23",
+      "port": 23,
+      "protocol": "tcp",
+      "name": "SSH",
+      "description": "Secure Shell / Debugger Access",
+      "used_by": [
+        "debugger",
+        "netsh commands"
+      ],
+      "category": "management",
+      "notes": "All debugger and netsh commands use this"
+    },
+    {
+      "type": "udp/53",
+      "port": 53,
+      "protocol": "udp",
+      "name": "DNS",
+      "description": "Domain Name System",
+      "used_by": [
+        "dns-server",
+        "reply-dns-queries",
+        "consumer activity"
+      ],
+      "category": "infrastructure",
+      "notes": "Required for any Consumer activity"
+    },
+    {
+      "type": "udp/67",
+      "port": 67,
+      "protocol": "udp",
+      "name": "DHCP",
+      "description": "Dynamic Host Configuration Protocol",
+      "used_by": [
+        "dhcp-server",
+        "reply-dhcp-request",
+        "clients with DHCP enabled"
+      ],
+      "category": "infrastructure",
+      "notes": "Any Client/Device with DHCP enabled"
+    },
+    {
+      "type": "tcp/80",
+      "port": 80,
+      "protocol": "tcp",
+      "name": "HTTP",
+      "description": "Hypertext Transfer Protocol",
+      "used_by": [
+        "consumer activity",
+        "web traffic"
+      ],
+      "category": "consumer",
+      "notes": "Consumer activities not otherwise covered"
+    },
+    {
+      "type": "tcp/443",
+      "port": 443,
+      "protocol": "tcp",
+      "name": "HTTPS",
+      "description": "HTTP Secure",
+      "used_by": [
+        "consumer activity",
+        "secure web traffic"
+      ],
+      "category": "consumer",
+      "notes": "Consumer activities not otherwise covered"
+    },
+    {
+      "type": "tcp/510-519",
+      "port_start": 510,
+      "port_end": 519,
+      "protocol": "tcp",
+      "name": "Worm Transmission",
+      "description": "Malicious worm propagation",
+      "used_by": [
+        "malware",
+        "worm propagation"
+      ],
+      "category": "malicious",
+      "notes": "Block this range to prevent worm spread"
+    },
+    {
+      "type": "udp/520",
+      "port": 520,
+      "protocol": "udp",
+      "name": "RIP",
+      "description": "Routing Information Protocol",
+      "used_by": [
+        "rip routine",
+        "route advertisement"
+      ],
+      "category": "routing",
+      "notes": "Used by rip routine for route advertisement"
+    },
+    {
+      "type": "udp/554",
+      "port": 554,
+      "protocol": "udp",
+      "name": "RTSP",
+      "description": "Real Time Streaming Protocol",
+      "used_by": [
+        "cctv-camera",
+        "cctv-monitor",
+        "stream-live-video consumers"
+      ],
+      "category": "streaming",
+      "notes": "CCTV and video streaming"
+    },
+    {
+      "type": "udp/5060",
+      "port": 5060,
+      "protocol": "udp",
+      "name": "SIP",
+      "description": "Session Initiation Protocol",
+      "used_by": [
+        "voip-phone",
+        "stream-voice consumers"
+      ],
+      "category": "voip",
+      "notes": "VOIP phones and voice streaming"
+    },
+    {
+      "type": "tcp/3306",
+      "port": 3306,
+      "protocol": "tcp",
+      "name": "Database (MySQL)",
+      "description": "Database queries - MySQL style",
+      "used_by": [
+        "store-text",
+        "dns-server"
+      ],
+      "category": "database",
+      "notes": "store-text requests, e.g. from dns-server program"
+    },
+    {
+      "type": "tcp/5432",
+      "port": 5432,
+      "protocol": "tcp",
+      "name": "Database (PostgreSQL)",
+      "description": "Database queries - PostgreSQL style",
+      "used_by": [
+        "store-*",
+        "consumers",
+        "servers"
+      ],
+      "category": "database",
+      "notes": "Any store-* requests from Consumers or Servers (possibly outdated)"
+    },
+    {
+      "type": "tcp/8000-8099",
+      "port_start": 8000,
+      "port_end": 8099,
+      "protocol": "tcp",
+      "name": "Text Scraping",
+      "description": "Malicious text scraping",
+      "used_by": [
+        "malware",
+        "scraping attacks"
+      ],
+      "category": "malicious",
+      "notes": "Block this range to prevent scraping attacks"
+    },
+    {
+      "type": "tcp/8333",
+      "port": 8333,
+      "protocol": "tcp",
+      "name": "Decentro",
+      "description": "Decentro P2P Network",
+      "used_by": [
+        "decentro rigs",
+        "p2p activities"
+      ],
+      "category": "decentro",
+      "notes": "All P2P/Decentro activities"
+    }
+  ],
+  "categories": {
+    "utility": "Basic network utilities (ping, traceroute)",
+    "management": "Device management and remote access",
+    "infrastructure": "Core network services (DNS, DHCP)",
+    "consumer": "End-user web traffic",
+    "routing": "Router-to-router communication",
+    "streaming": "Audio/video streaming",
+    "voip": "Voice over IP",
+    "database": "Database connections",
+    "decentro": "Decentro cryptocurrency network",
+    "malicious": "Known malicious traffic - block these"
+  }
+}
