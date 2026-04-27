@@ -1,5 +1,18 @@
--- ModAPI Diagnostic Tool v4.6
+-- ModAPI Diagnostic Tool v4.7
 -- Development tool for TNI game engine modding (game version 0.10.11+)
+--
+-- CHANGES from v4.6:
+--   * Fixed extract_proposals: uses direct :size()/:get(i) access pattern
+--     (matching proven all-proposals mod pattern). Added node_class, debug
+--     logging per proposal, dependency submitted state.
+--   * Fixed extract_traffic_types: handles Godot Dictionary userdata for
+--     network_ports and traversal_tc_counts_since_up. Scans installed
+--     programs on devices and users for traffic_class field. Scans both
+--     traversal_history and traversal_history_last_tick.
+--   * Fixed extract_cli_commands: uses find_children("*","NetShell") from
+--     scene root (same pattern as inspect_fixture_outlets) instead of
+--     blocked get_child() navigation. Adds multiple fallback strategies,
+--     known_routine_classes reference, and BASE_ACCL autocomplete list.
 --
 -- CHANGES from v4.5:
 --   * Added inspect_fixture_outlets command for PHONE/CCTV investigation.
@@ -48,7 +61,7 @@
 --   extract_proposals           extract_traffic_types
 --   extract_cli_commands        extract_all
 
-print("=== ModAPI Diagnostic Tool v4.5 Loading ===")
+print("=== ModAPI Diagnostic Tool v4.7 Loading ===")
 
 -- ============================================================================
 -- CONFIGURATION
@@ -2565,66 +2578,110 @@ end
 
 -- ── extract_proposals ───────────────────────────────────────────────────────
 -- Extracts all proposals from the PropModController.
+-- Uses direct :size()/:get(i) access pattern (proven in all-proposals mod).
 function extract_proposals()
     print("\n[EXTRACT] ========== Proposals Extraction ==========")
     if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
     local world = ModApiV1.get_game_world()
     if not world then print("[EXTRACT] World is nil"); return end
 
-    local pmc = safe_get(world, "propmod_controller")
+    -- Access propmod_controller directly (not through safe_get)
+    local pmc = nil
+    pcall(function() pmc = world.propmod_controller end)
     if not pmc then print("[EXTRACT] PropModController not available"); return end
 
     local proposal_list = {}
-    local mods_arr = safe_get(pmc, "mods")
-    if mods_arr then
-        local mt = array_to_table(mods_arr)
-        print("[EXTRACT] PropMods count: " .. #mt)
-        for _, prop in ipairs(mt) do
+
+    -- Get mods array directly and iterate with :size()/:get(i) like all-proposals mod
+    local all_mods = nil
+    pcall(function() all_mods = pmc.mods end)
+    if not all_mods then print("[EXTRACT] pmc.mods is nil"); return end
+
+    local mod_count = 0
+    pcall(function() mod_count = all_mods:size() end)
+    print("[EXTRACT] PropMods count: " .. tostring(mod_count))
+
+    for i = 0, mod_count - 1 do
+        local prop = nil
+        pcall(function() prop = all_mods:get(i) end)
+        if prop then
             local entry = {
-                -- Names and text: use method calls which format nicely
                 proposal_name = nil,
                 description   = nil,
                 lore          = nil,
             }
-            pcall(function() entry.proposal_name = prop:get_proposal_name() end)
-            pcall(function() entry.description = prop:get_description() end)
-            pcall(function() entry.lore = prop:get_lore() end)
 
-            -- State
-            entry.submitted           = safe_get(prop, "submitted")
-            entry.locked              = safe_get(prop, "locked")
-            entry.can_be_proposed     = safe_get(prop, "can_be_proposed")
-            entry.is_active_proposal  = safe_get(prop, "is_active_proposal")
-            entry.can_be_proposed_beginning = safe_get(prop, "can_be_proposed_beginning")
-            entry.force_once_on_day   = safe_get(prop, "force_once_on_day")
-            entry.proposed_on         = safe_get(prop, "proposed_on")
-            entry.weight              = safe_get(prop, "weight")
+            -- Method calls for text (same pattern as all-proposals mod)
+            local ok_name, name_val = pcall(function() return prop:get_proposal_name() end)
+            if ok_name and name_val then entry.proposal_name = tostring(name_val) end
 
-            -- Dependency
-            local dep = safe_get(prop, "depends_on")
-            if dep then
-                pcall(function() entry.depends_on = dep:get_proposal_name() end)
-            end
+            local ok_desc, desc_val = pcall(function() return prop:get_description() end)
+            if ok_desc and desc_val then entry.description = tostring(desc_val) end
 
-            -- Try to detect proposal type from adhoc requirements
+            local ok_lore, lore_val = pcall(function() return prop:get_lore() end)
+            if ok_lore and lore_val then entry.lore = tostring(lore_val) end
+
+            -- State fields (direct property access like all-proposals mod)
+            pcall(function() entry.submitted = prop.submitted end)
+            pcall(function() entry.locked = prop.locked end)
+            pcall(function() entry.can_be_proposed = prop.can_be_proposed end)
+            pcall(function() entry.is_active_proposal = prop.is_active_proposal end)
+            pcall(function() entry.can_be_proposed_beginning = prop.can_be_proposed_beginning end)
+            pcall(function() entry.force_once_on_day = prop.force_once_on_day end)
+            pcall(function() entry.proposed_on = prop.proposed_on end)
+            pcall(function() entry.weight = prop.weight end)
+            pcall(function() entry.disabled_due_to_config_errors = prop.disabled_due_to_config_errors end)
             pcall(function()
-                local adhoc_ok = prop:test_adhoc_requirements()
-                entry.adhoc_requirements_met = adhoc_ok
+                entry.disallow_proposal_if_depends_submitted = prop.disallow_proposal_if_depends_submitted
             end)
 
+            -- Dependency (direct access)
+            pcall(function()
+                if prop.depends_on then
+                    local dep_name = prop.depends_on:get_proposal_name()
+                    if dep_name then entry.depends_on = tostring(dep_name) end
+                    -- Also check if dependency is submitted
+                    entry.depends_on_submitted = prop.depends_on.submitted
+                end
+            end)
+
+            -- Test adhoc requirements (returns string error reason or nil on success)
+            pcall(function()
+                local result = prop:test_adhoc_requirements()
+                if result == nil then
+                    entry.adhoc_requirements_met = true
+                elseif type(result) == "string" and result ~= "" then
+                    entry.adhoc_requirements_met = false
+                    entry.adhoc_requirement_msg = tostring(result)
+                else
+                    entry.adhoc_requirements_met = true
+                end
+            end)
+
+            -- Try to get the node name/class for type identification
+            pcall(function() entry.node_name = prop:get_name() end)
+            pcall(function() entry.node_class = prop:get_class() end)
+
+            -- Debug: log each proposal
+            print(string.format("[EXTRACT]   [%d] %s | sub=%s lock=%s class=%s",
+                i, tostring(entry.proposal_name),
+                tostring(entry.submitted), tostring(entry.locked),
+                tostring(entry.node_class)))
+
             proposal_list[#proposal_list + 1] = entry
+        else
+            print("[EXTRACT]   [" .. i .. "] Failed to get proposal")
         end
     end
 
-    -- Controller meta
-    local controller_info = {
-        batch_day_interval       = safe_get(pmc, "batch_day_interval"),
-        proposals_per_batch      = safe_get(pmc, "proposals_per_batch"),
-        reroll_fee               = safe_get(pmc, "reroll_fee"),
-        current_proposal_count   = safe_get(pmc, "current_proposal_count"),
-        history_proposal_count   = safe_get(pmc, "history_proposal_count"),
-        locked_proposal_count    = safe_get(pmc, "locked_proposal_count"),
-    }
+    -- Controller meta (direct access)
+    local controller_info = {}
+    pcall(function() controller_info.batch_day_interval = pmc.batch_day_interval end)
+    pcall(function() controller_info.proposals_per_batch = pmc.proposals_per_batch end)
+    pcall(function() controller_info.reroll_fee = pmc.reroll_fee end)
+    pcall(function() controller_info.current_proposal_count = pmc.current_proposal_count end)
+    pcall(function() controller_info.history_proposal_count = pmc.history_proposal_count end)
+    pcall(function() controller_info.locked_proposal_count = pmc.locked_proposal_count end)
 
     local result = {
         proposals           = proposal_list,
@@ -2637,7 +2694,9 @@ function extract_proposals()
 end
 
 -- ── extract_traffic_types ───────────────────────────────────────────────────
--- Extracts observed traffic types from device port stats and user programs.
+-- Extracts traffic types from installed programs, port stats, and traversal
+-- history.  Uses direct property access (not safe_get for iteration) to handle
+-- both Godot Dictionaries (userdata) and Lua tables.
 function extract_traffic_types()
     print("\n[EXTRACT] ========== Traffic Types Extraction ==========")
     if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
@@ -2645,90 +2704,198 @@ function extract_traffic_types()
     local traffic_classes_seen = {}
     local traffic_list = {}
 
-    local function record_traffic(tc, source)
-        if tc and type(tc) == "string" and tc ~= "" and not traffic_classes_seen[tc] then
-            traffic_classes_seen[tc] = true
-            traffic_list[#traffic_list + 1] = {
-                traffic_class = tc,
+    local function record_traffic(tc, source, extra)
+        if tc == nil then return end
+        local tc_str = tostring(tc)
+        if tc_str == "" or tc_str == "nil" then return end
+        if not traffic_classes_seen[tc_str] then
+            traffic_classes_seen[tc_str] = true
+            local entry = {
+                traffic_class = tc_str,
                 first_seen_on = source,
             }
+            if extra then
+                for k, v in pairs(extra) do entry[k] = v end
+            end
+            traffic_list[#traffic_list + 1] = entry
         end
     end
 
-    -- 1) Scan port top_traffic_classes on all devices
+    -- 1) Scan installed programs on all devices for traffic_class
+    --    Programs of type TraversalBase/TraversalConsume have traffic_class fields
     local devs = ModApiV1.get_devices()
+    local dev_prog_count = 0
     if devs then
         local dt = array_to_table(devs)
+        print("[EXTRACT] Scanning " .. #dt .. " devices for traffic data...")
         for _, d in ipairs(dt) do
             local dname = safe_get(d, "product_name") or "unknown"
             local lc = safe_get(d, "logic_controller")
             if lc then
-                -- Check network_ports table
-                local np = safe_get(lc, "network_ports")
-                if np and type(np) == "table" then
-                    for port_id, sock in pairs(np) do
-                        local ttc = safe_get(sock, "top_traffic_classes")
-                        if ttc then
-                            local tct = array_to_table(ttc)
-                            for _, tc in ipairs(tct) do
-                                record_traffic(tostring(tc), dname .. ":" .. tostring(port_id))
-                            end
+                -- Scan installed programs for traffic_class
+                local progs = nil
+                pcall(function() progs = lc.installed_programs end)
+                if progs then
+                    local pt = array_to_table(progs)
+                    for _, p in ipairs(pt) do
+                        local tc = nil
+                        pcall(function() tc = p.traffic_class end)
+                        if tc then
+                            local rn = nil
+                            pcall(function() rn = p.release_name end)
+                            local tw = nil
+                            pcall(function() tw = p.traffic_weight end)
+                            record_traffic(tc, dname .. ":program:" .. tostring(rn), {
+                                traffic_weight = tw,
+                                program = tostring(rn),
+                            })
+                            dev_prog_count = dev_prog_count + 1
                         end
                     end
                 end
-                -- Check ports array
-                local ports = safe_get(lc, "ports")
+
+                -- Scan ports array for top_traffic_classes and traversal_tc_counts_since_up
+                local ports = nil
+                pcall(function() ports = lc.ports end)
                 if ports then
                     local pt = array_to_table(ports)
                     for _, sock in ipairs(pt) do
-                        local ttc = safe_get(sock, "top_traffic_classes")
+                        local port_id = nil
+                        pcall(function() port_id = sock.port_id end)
+
+                        -- top_traffic_classes: Array of traffic class strings
+                        local ttc = nil
+                        pcall(function() ttc = sock.top_traffic_classes end)
                         if ttc then
                             local tct = array_to_table(ttc)
                             for _, tc in ipairs(tct) do
-                                record_traffic(tostring(tc), dname .. ":port")
+                                record_traffic(tc, dname .. ":" .. tostring(port_id) .. ":top_tc")
+                            end
+                        end
+
+                        -- traversal_tc_counts_since_up: table<traffic_class, count>
+                        local tc_counts = nil
+                        pcall(function() tc_counts = sock.traversal_tc_counts_since_up end)
+                        if tc_counts then
+                            -- This could be a Godot Dictionary or Lua table
+                            local iterated = false
+                            pcall(function()
+                                for tc_key, tc_val in pairs(tc_counts) do
+                                    record_traffic(tc_key,
+                                        dname .. ":" .. tostring(port_id) .. ":tc_counts",
+                                        { observed_count = tc_val })
+                                    iterated = true
+                                end
+                            end)
+                            -- If pairs() didn't work (Godot Dictionary), try .keys() / .values()
+                            if not iterated then
+                                pcall(function()
+                                    local keys = tc_counts:keys()
+                                    if keys then
+                                        local kt = array_to_table(keys)
+                                        for _, k in ipairs(kt) do
+                                            local v = nil
+                                            pcall(function() v = tc_counts:get(k) end)
+                                            record_traffic(k,
+                                                dname .. ":" .. tostring(port_id) .. ":tc_counts",
+                                                { observed_count = v })
+                                        end
+                                    end
+                                end)
                             end
                         end
                     end
                 end
-                -- Check traversal_history for traffic classes
-                local th = safe_get(lc, "traversal_history_last_tick")
+
+                -- Scan traversal_history_last_tick for traffic classes
+                -- TraversalHistory enum: [0]=SRC_NODE_PATH, [1]=PORT_PATH, [2]=TRAFFIC_CLASS,
+                --   [3]=TRAFFIC_WEIGHT, [4]=REQUEST_DATA, [5]=ADDITIONAL_FLAGS, [6]=PORT_ID,
+                --   [7]=DST_LADDR, [8]=HIST_TTL, [9]=HIST_OFFSET
+                local th = nil
+                pcall(function() th = lc.traversal_history_last_tick end)
                 if th then
                     local tht = array_to_table(th)
                     for _, hist in ipairs(tht) do
-                        -- TraversalHistory index 2 = TRAFFIC_CLASS
+                        local tc_val = nil
+                        pcall(function() tc_val = hist:get(2) end) -- TRAFFIC_CLASS index
+                        if tc_val then
+                            local tw_val = nil
+                            pcall(function() tw_val = hist:get(3) end) -- TRAFFIC_WEIGHT
+                            local dst_val = nil
+                            pcall(function() dst_val = hist:get(7) end) -- DST_LADDR
+                            record_traffic(tc_val, dname .. ":traversal_hist", {
+                                traffic_weight = tw_val,
+                                dst_laddr = dst_val and tostring(dst_val) or nil,
+                            })
+                        end
+                    end
+                end
+
+                -- Also check traversal_history (cumulative, not just last tick)
+                local th_all = nil
+                pcall(function() th_all = lc.traversal_history end)
+                if th_all then
+                    local tht = array_to_table(th_all)
+                    for _, hist in ipairs(tht) do
                         local tc_val = nil
                         pcall(function() tc_val = hist:get(2) end)
                         if tc_val then
-                            record_traffic(tostring(tc_val), dname .. ":traversal")
+                            record_traffic(tc_val, dname .. ":traversal")
                         end
                     end
                 end
             end
         end
     end
+    print("[EXTRACT] Device programs with traffic_class: " .. dev_prog_count)
 
-    -- 2) Scan user programs for traffic_class
+    -- 2) Scan user-side programs for traffic_class
     local users = ModApiV1.get_users()
+    local user_prog_count = 0
     if users then
         local ut = array_to_table(users)
+        print("[EXTRACT] Scanning " .. #ut .. " users for traffic data...")
         for _, u in ipairs(ut) do
             local uname = safe_get(u, "username") or "unknown"
-            for _, bname in ipairs({"behaviors", "hosting_behaviors", "public_client_behaviors"}) do
-                local bhvs = safe_get(u, bname)
-                if bhvs then
-                    local bt = array_to_table(bhvs)
-                    for _, p in ipairs(bt) do
-                        local tc = safe_get(p, "traffic_class")
+
+            -- Check user's logic_controller installed programs
+            local lc = nil
+            pcall(function() lc = u.logic_controller end)
+            if lc then
+                local progs = nil
+                pcall(function() progs = lc.installed_programs end)
+                if progs then
+                    local pt = array_to_table(progs)
+                    for _, p in ipairs(pt) do
+                        local tc = nil
+                        pcall(function() tc = p.traffic_class end)
                         if tc then
-                            record_traffic(tostring(tc), uname .. ":" .. bname)
+                            local rn = nil
+                            pcall(function() rn = p.release_name end)
+                            record_traffic(tc, uname .. ":program:" .. tostring(rn))
+                            user_prog_count = user_prog_count + 1
                         end
                     end
                 end
             end
         end
     end
+    print("[EXTRACT] User programs with traffic_class: " .. user_prog_count)
 
-    -- 3) Static known types for completeness reference
+    -- 3) Scan world.user_fqdn_usedescripts for traffic usage descriptions
+    local world = ModApiV1.get_game_world()
+    if world then
+        local ufd = nil
+        pcall(function() ufd = world.user_fqdn_usedescripts end)
+        if ufd then
+            local uft = array_to_table(ufd)
+            print("[EXTRACT] user_fqdn_usedescripts: " .. #uft)
+            -- These are strings describing user usage patterns, not traffic_class
+            -- but useful as context
+        end
+    end
+
+    -- 4) Static known types for completeness reference
     local known_types = {
         { type = "icmp",          protocol = "icmp", port = nil,  name = "ICMP",           category = "utility" },
         { type = "tcp/23",        protocol = "tcp",  port = 23,   name = "SSH",            category = "management" },
@@ -2758,6 +2925,8 @@ end
 
 -- ── extract_cli_commands ────────────────────────────────────────────────────
 -- Extracts registered terminal routines from the game's NetShell.
+-- Uses find_children from scene root (same pattern as inspect_fixture_outlets)
+-- because direct get_child() scene tree navigation is often blocked in sandbox.
 function extract_cli_commands()
     print("\n[EXTRACT] ========== CLI Commands Extraction ==========")
     if not ModApiV1 then print("[EXTRACT] ModApiV1 not available"); return end
@@ -2765,87 +2934,223 @@ function extract_cli_commands()
     if not world then print("[EXTRACT] World is nil"); return end
 
     local commands = {}
-
-    -- Try to find a debugger's netshell to enumerate terminal_routines
-    local devs = ModApiV1.get_devices()
+    local commands_seen = {}
     local found_shell = false
-    if devs then
-        local dt = array_to_table(devs)
-        for _, d in ipairs(dt) do
-            local hw = safe_get(d, "device_hardware_class")
-            -- DEBUGGER = 9
-            if hw == 9 then
-                print("[EXTRACT] Found debugger: " .. tostring(safe_get(d, "product_name")))
-                -- Try to access the netshell/terminal routines
-                -- The debugger's logic controller or the device itself may have a shell
-                local lc = safe_get(d, "logic_controller")
-                if lc then
-                    -- Try to find terminal_routines through various possible paths
-                    local routines = safe_get(lc, "terminal_routines")
-                    if not routines then
-                        -- Try through the device's children
+
+    -- Helper: given a valid node, check if it's a NetShell/TerminalShell type
+    -- and extract terminal_routines from it
+    local function extract_from_shell(shell, shell_label)
+        local routines = nil
+        pcall(function() routines = shell.terminal_routines end)
+        if not routines then return false end
+
+        local rt_count = 0
+        pcall(function() rt_count = routines:size() end)
+        if rt_count == 0 then return false end
+
+        print("[EXTRACT] Found " .. rt_count .. " terminal routines via " .. shell_label)
+        found_shell = true
+
+        for i = 0, rt_count - 1 do
+            local r = nil
+            pcall(function() r = routines:get(i) end)
+            if r then
+                local cmd_entry = {}
+                pcall(function() cmd_entry.name = r:get_name() end)
+                pcall(function() cmd_entry.class = r:get_class() end)
+                pcall(function() cmd_entry.enabled = r.enabled end)
+                pcall(function() cmd_entry.wide_output_shell = r.wide_output_shell end)
+
+                -- Try to get usage help (method exists on all TerminalRoutine)
+                -- We can't easily capture the output since it writes to stdout object
+                -- but we can note the method exists
+
+                local name = cmd_entry.name or ("routine_" .. i)
+                if not commands_seen[name] then
+                    commands_seen[name] = true
+                    commands[#commands + 1] = cmd_entry
+                    print(string.format("[EXTRACT]   [%d] %s (%s) enabled=%s",
+                        i, tostring(cmd_entry.name), tostring(cmd_entry.class),
+                        tostring(cmd_entry.enabled)))
+                end
+            end
+        end
+        return true
+    end
+
+    -- Strategy 1: Find NetShell/TerminalShell via find_children from scene root
+    -- (proven pattern from inspect_fixture_outlets)
+    local root = nil
+    pcall(function() root = world:get_tree():get_root() end)
+    if root then
+        -- Search for NetShell instances
+        local shells = nil
+        pcall(function() shells = root:find_children("*", "NetShell", true, false) end)
+        if shells then
+            local st = array_to_table(shells)
+            print("[EXTRACT] find_children('*', 'NetShell'): " .. #st .. " results")
+            for _, s in ipairs(st) do
+                local sname = ""
+                pcall(function() sname = s:get_name() end)
+                extract_from_shell(s, "NetShell:" .. tostring(sname))
+            end
+        end
+
+        -- Also search for TerminalShell if NetShell didn't find anything
+        if not found_shell then
+            local shells2 = nil
+            pcall(function() shells2 = root:find_children("*", "TerminalShell", true, false) end)
+            if shells2 then
+                local st = array_to_table(shells2)
+                print("[EXTRACT] find_children('*', 'TerminalShell'): " .. #st .. " results")
+                for _, s in ipairs(st) do
+                    local sname = ""
+                    pcall(function() sname = s:get_name() end)
+                    extract_from_shell(s, "TerminalShell:" .. tostring(sname))
+                end
+            end
+        end
+    else
+        print("[EXTRACT] Could not access scene root")
+    end
+
+    -- Strategy 2: Find debugger devices and look for shell via their children
+    if not found_shell then
+        print("[EXTRACT] Trying debugger device scan...")
+        local devs = ModApiV1.get_devices()
+        if devs then
+            local dt = array_to_table(devs)
+            for _, d in ipairs(dt) do
+                local hw = safe_get(d, "device_hardware_class")
+                if hw == 9 then  -- DEBUGGER
+                    local dname = safe_get(d, "product_name") or "debugger"
+                    print("[EXTRACT] Checking debugger: " .. tostring(dname))
+
+                    -- Try find_children on the device node itself
+                    pcall(function()
+                        local results = d:find_children("*", "NetShell", true, false)
+                        if results then
+                            local rt = array_to_table(results)
+                            for _, s in ipairs(rt) do
+                                extract_from_shell(s, "debugger:" .. dname)
+                            end
+                        end
+                    end)
+
+                    -- Try direct child iteration
+                    if not found_shell then
                         pcall(function()
                             local child_count = d:get_child_count()
                             for i = 0, child_count - 1 do
                                 local child = d:get_child(i)
-                                local cname = ""
-                                pcall(function() cname = child:get_class() end)
-                                if cname == "NetShell" or cname == "TerminalShell" then
-                                    routines = safe_get(child, "terminal_routines")
-                                    if routines then
-                                        print("[EXTRACT] Found routines via " .. cname)
+                                if child then
+                                    local cclass = ""
+                                    pcall(function() cclass = child:get_class() end)
+                                    if cclass == "NetShell" or cclass == "TerminalShell" then
+                                        extract_from_shell(child, "child:" .. cclass)
                                     end
+                                    -- Also check grandchildren (shell may be nested)
+                                    pcall(function()
+                                        local gc = child:get_child_count()
+                                        for j = 0, gc - 1 do
+                                            local gchild = child:get_child(j)
+                                            if gchild then
+                                                local gcclass = ""
+                                                pcall(function() gcclass = gchild:get_class() end)
+                                                if gcclass == "NetShell" or gcclass == "TerminalShell" then
+                                                    extract_from_shell(gchild, "grandchild:" .. gcclass)
+                                                end
+                                            end
+                                        end
+                                    end)
                                 end
                             end
                         end)
                     end
-                    if routines then
-                        found_shell = true
-                        local rt = array_to_table(routines)
-                        print("[EXTRACT] Terminal routines: " .. #rt)
-                        for _, r in ipairs(rt) do
-                            local cmd_entry = {
-                                enabled = safe_get(r, "enabled"),
-                            }
-                            -- Get the routine's name (usually node name)
-                            pcall(function() cmd_entry.name = r:get_name() end)
-                            pcall(function() cmd_entry.class = r:get_class() end)
 
-                            commands[#commands + 1] = cmd_entry
-                        end
-                    end
+                    if found_shell then break end
                 end
-                if found_shell then break end
             end
         end
     end
 
-    -- Also extract autocomplete candidates from world
-    local autocomplete = {}
-    local ac = safe_get(world, "auto_complete_candidate_list")
-    if ac then
-        local act = array_to_table(ac)
-        for _, c in ipairs(act) do
-            autocomplete[#autocomplete + 1] = tostring(c)
+    -- Strategy 3: Check if we can access a known shell path directly
+    if not found_shell then
+        print("[EXTRACT] Trying known node paths for NetShell...")
+        local paths_to_try = {
+            "/root/Main/NetShell",
+            "/root/NetShell",
+        }
+        for _, path in ipairs(paths_to_try) do
+            pcall(function()
+                local node = world:get_node(path)
+                if node then
+                    local cls = node:get_class()
+                    if cls == "NetShell" or cls == "TerminalShell" then
+                        extract_from_shell(node, "path:" .. path)
+                    end
+                end
+            end)
+            if found_shell then break end
         end
     end
+
+    if not found_shell then
+        print("[EXTRACT] WARNING: No NetShell found. Terminal routines unavailable.")
+        print("[EXTRACT] This may happen if no Debugger device is placed in the world.")
+    end
+
+    -- Also extract autocomplete candidates from world
+    local autocomplete = {}
+    pcall(function()
+        local ac = world.auto_complete_candidate_list
+        if ac then
+            local act = array_to_table(ac)
+            for _, c in ipairs(act) do
+                autocomplete[#autocomplete + 1] = tostring(c)
+            end
+            print("[EXTRACT] Autocomplete candidates: " .. #act)
+        end
+    end)
+
+    -- BASE_ACCL (static base autocomplete entries from GameWorld)
+    local base_accl = {
+        "using", "from", "with", "rename", "traffic",
+        "/etc/routes.conf", "/etc/dhcpd.conf", "/etc/nftables.conf",
+        "/etc/dns.zone", "/etc/vlan.tags",
+        "/bin/rtkernel", "/bin/vlanfirm", "/bin/wirerat", "/bin/firewatcher",
+    }
 
     -- Registered domains for reference
     local domains = {}
-    local rd = safe_get(world, "registered_domains")
-    if rd then
-        local rdt = array_to_table(rd)
-        for _, d in ipairs(rdt) do
-            domains[#domains + 1] = tostring(d)
+    pcall(function()
+        local rd = world.registered_domains
+        if rd then
+            local rdt = array_to_table(rd)
+            for _, d in ipairs(rdt) do
+                domains[#domains + 1] = tostring(d)
+            end
+            print("[EXTRACT] Registered domains: " .. #rdt)
         end
-    end
+    end)
+
+    -- Known TerminalRoutine subclasses (from lua-typing) for reference
+    local known_routine_classes = {
+        "AliasRoutine", "Always", "Botconf", "Clear", "Cron", "Dhcp", "Dns",
+        "Dstat", "Echo", "Firewall", "God", "Haconf", "Lstdbg", "Man",
+        "NetRoutine", "Notify", "Pcap", "Ping", "Placeholder", "ProgramRoutine",
+        "Proxyconf", "Quit", "Rip", "Route", "RoutinesMiddlebox", "RoutinesPower",
+        "Scan", "Sftp", "Stp", "TraceRoutine", "Try", "Vlan", "Vmconf", "Watch",
+    }
 
     local result = {
-        terminal_routines       = commands,
-        terminal_routines_count = #commands,
-        autocomplete_candidates = autocomplete,
-        registered_domains      = domains,
-        shell_found             = found_shell,
+        terminal_routines        = commands,
+        terminal_routines_count  = #commands,
+        autocomplete_candidates  = autocomplete,
+        base_autocomplete        = base_accl,
+        registered_domains       = domains,
+        shell_found              = found_shell,
+        known_routine_classes    = known_routine_classes,
     }
 
     print("[EXTRACT] CLI routines: " .. #commands .. ", autocomplete: " .. #autocomplete)
@@ -2869,7 +3174,7 @@ end
 -- STARTUP
 -- ============================================================================
 
-print("=== ModAPI Diagnostic Tool v4.6 Ready ===")
+print("=== ModAPI Diagnostic Tool v4.7 Ready ===")
 print("    Press ~ to open the debug console")
 print("")
 print("    Console commands:")
