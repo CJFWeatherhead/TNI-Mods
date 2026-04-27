@@ -2,8 +2,8 @@
   "_meta": {
     "game": "Tower Networking Inc.",
     "dataset": "store",
-    "version": "1.2.1",
-    "last_updated": "2025-12-14",
+    "version": "1.3.1",
+    "last_updated": "2026-04-27",
     "description": "Nearly complete catalog of purchasable items from D-Market2, Barracks and Sons, and other in-game vendors.",
     "notes": "Some warranty values may be inaccurate (recorded during LAB session). Other apps still need documentation. Corrections welcome.",
     "sources": [
@@ -48,9 +48,184 @@
         "correction": "Firewalls CPU/MEM/HDD corrected from 4/1/2 to 6/3/3; firmware field expanded to array for multiple pre-installed programs",
         "reported_by": "gamers2000",
         "corrected_by": "Salvo Praxis"
+      },
+      {
+        "version": "1.3.0",
+        "correction": "Merged live extraction data via modapi-diagnostic extract_store_catalog. Updated switch power_w values (Blade5 22→6, Blade4 30→7, Blade12 84→32, Blade66 66→12). Updated switch traversals (Blade12 108→288, Blade66 84→88). Corrected warranty_days (Blade12 14→21, FireWatch CP4E 16→30, Tenabolt UPS2 24→28, Golonys-Cinco 17→16). Fixed Visitor Status Monitor → Visitor Stats Monitor. Added Mounting Shelf Piece R630 and Mountable Tenabolt Expander 1-5. Added merchants metadata section with 13 merchant entries.",
+        "source": "modapi-diagnostic extract_store_catalog (game v0.10.11)",
+        "contributor": "Salvo Praxis"
+      },
+      {
+        "version": "1.3.1",
+        "correction": "Added Disco Kilo, Disco Kilo 2G, and Disco Kilo 3G backbone routers (detected via lifecycle spawn log, specs pending extraction data).",
+        "source": "modapi-diagnostic lifecycle log (game v0.10.11)",
+        "contributor": "Salvo Praxis"
       }
     ]
   },
+  "merchants": [
+    {
+      "display_name": "Blade Networking Inc.",
+      "description": "Blade Networking © offers high quality network switches in the tower. Your one-stop merchant for all your connectivity needs.",
+      "entry_max_stocks": 3,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["network_switches"]
+    },
+    {
+      "display_name": "Mr Cable",
+      "description": "Your trusted cabling merchant. Get all kinds of network and power cables here at Mr. Cable.",
+      "entry_max_stocks": 5,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 30,
+      "restock_mode": 0,
+      "sells": ["network_cables", "power_cables", "power_expanders", "peripherals"]
+    },
+    {
+      "display_name": "AB compute Ltd.",
+      "description": "At AB compute, we offer a variety of computing devices from different manufacturers at good prices. You need servers? AB compute got you covered.",
+      "entry_max_stocks": 2,
+      "price_multiplier": 1.2,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["servers", "routers", "debuggers_and_test_devices", "decentro_rigs"],
+      "notes": "1.2x price markup on all items"
+    },
+    {
+      "display_name": "Savannah Org.",
+      "description": "The Savannah Organization has decades of experience building and manufacturing server equipment. As part of the Tower sustainability efforts, 10% of profits made by the organization is donated for wildlife preservation.",
+      "entry_max_stocks": 1,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["servers"]
+    },
+    {
+      "display_name": "The Server Shoppe",
+      "description": "The Server Shoppe is your authorized distributor for Macrohard products.",
+      "entry_max_stocks": 1,
+      "price_multiplier": 1.25,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["servers"],
+      "notes": "1.25x price markup on all items. Carries high-end MacroHard servers (Monolith, Ledge, Boulder++, Megalith, NLB2)"
+    },
+    {
+      "display_name": "Conduit Systems",
+      "description": "Official Conduit Systems DMarket store. Quality routers from the disco series and ether series.",
+      "entry_max_stocks": 3,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["routers"],
+      "notes": "Some listings time-limited (delisted after day 7). Higher-gen models appear later."
+    },
+    {
+      "display_name": "Tenabolt Retail",
+      "description": "Tenabolt authorized distributor. Visit the store to find out more about power extensions, UPS. Everything to keep the lights on. Our power appliances are certified quality with good warranty coverage.",
+      "entry_max_stocks": 3,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["ups_and_surge_protection", "power_expanders", "power_cables"]
+    },
+    {
+      "display_name": "Data Liner Corp.",
+      "description": "Welcome to Data Liner Corporation DMarket's store. We offer top of the line media converters and repeaters to transform and extend your physical lines in any way you want it.",
+      "entry_max_stocks": 3,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 60,
+      "restock_mode": 0,
+      "sells": ["media_converters_and_repeaters"]
+    },
+    {
+      "display_name": "Vision Grid",
+      "description": "Get real-time insights on your tower's population with monitors built for data display and analysis.",
+      "entry_max_stocks": 1,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 60,
+      "restock_mode": 0,
+      "sells": ["monitoring_displays"]
+    },
+    {
+      "display_name": "Golonys Ltd.",
+      "description": "Golonys Ltd manages and operates a wide portfolio of IT devices tower-wide.",
+      "entry_max_stocks": 3,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["servers"]
+    },
+    {
+      "display_name": "Fortypoint Security",
+      "description": "Consistently ranking in the leaders segment of the prestigious Partner's Magic Circle for network security infrastructure, Fortypoint security offers industry grade network taps and firewalls. Fortypoint security is a subsidiary of Fortypoint global.",
+      "entry_max_stocks": 1,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 900,
+      "restock_mode": 0,
+      "sells": ["firewalls_and_taps", "peripherals"]
+    },
+    {
+      "display_name": "Barracks and Son's",
+      "description": "Barracks and son's wheel division. We're listing our mobility racks (a.k.a. trolleys) here on the DMarket. Get our app on the Rocketstore for your static shelving needs!",
+      "entry_max_stocks": 1,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 900,
+      "restock_mode": 0,
+      "sells": ["racks_and_shelving"],
+      "notes": "DMarket only sells trolleys and shelf pieces. Full racks/shelves require the Barracks and Sons app."
+    },
+    {
+      "display_name": "Zodiac Networks",
+      "description": "Zodiac Networks is a leading manufacturer of backbone high throughput routers.",
+      "entry_max_stocks": 2,
+      "price_multiplier": 1,
+      "price_add_constant": 0,
+      "warranty_multiplier": 1,
+      "warranty_add_constant": 0,
+      "restock_period": 300,
+      "restock_mode": 0,
+      "sells": ["routers"],
+      "notes": "Some listings time-limited (Spine delisted after day 13). High-end backbone routers."
+    }
+  ],
   "network_switches": [
     {
       "model": "Blade5",
@@ -65,7 +240,7 @@
       "firmware": "bladeos",
       "traversals_per_tick": 25,
       "cpu_cycle": "1 tick / 2.0s",
-      "power_w": 22,
+      "power_w": 6,
       "warranty_days": 7,
       "price": 100,
       "requires_app": "D-Market2",
@@ -111,7 +286,7 @@
       "firmware": "bladeos",
       "traversals_per_tick": 36,
       "cpu_cycle": "1 tick / 2.0s",
-      "power_w": 30,
+      "power_w": 7,
       "warranty_days": 7,
       "price": 100,
       "requires_app": "D-Market2",
@@ -132,10 +307,10 @@
       "memory": 2,
       "storage": 2,
       "firmware": "vlanfirm",
-      "traversals_per_tick": 108,
+      "traversals_per_tick": 288,
       "cpu_cycle": "1 tick / 2.0s",
-      "power_w": 84,
-      "warranty_days": 14,
+      "power_w": 32,
+      "warranty_days": 21,
       "price": 1000,
       "requires_app": "D-Market2",
       "notes": "Managed; VLAN tagging",
@@ -155,9 +330,9 @@
       "memory": 1,
       "storage": 1,
       "firmware": "bladeos",
-      "traversals_per_tick": 84,
+      "traversals_per_tick": 88,
       "cpu_cycle": "1 tick / 2.0s",
-      "power_w": 66,
+      "power_w": 12,
       "warranty_days": 14,
       "price": 950,
       "requires_app": "D-Market2",
@@ -595,7 +770,7 @@
       "traversals_per_tick": 6,
       "cpu_cycle": "1 tick / 2.0s",
       "power_w": 13,
-      "warranty_days": 17,
+      "warranty_days": 16,
       "price": 400,
       "requires_app": "D-Market2",
       "notes": "1-port network storage device. Comes with 5 SATA 3.5\" expansion slots.",
@@ -838,6 +1013,69 @@
       ]
     },
     {
+      "model": "Disco Kilo",
+      "vendor": "Conduit Systems",
+      "ports": "unknown",
+      "media": "unknown",
+      "cpu": "unknown",
+      "memory": "unknown",
+      "storage": "unknown",
+      "firmware": "unknown",
+      "traversals_per_tick": "unknown",
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": "unknown",
+      "warranty_days": "unknown",
+      "price": "unknown",
+      "requires_app": "D-Market2",
+      "notes": "High-port-count backbone router. Detected via lifecycle spawn log. Specs pending extraction.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Kilo 2G",
+      "vendor": "Conduit Systems",
+      "ports": "unknown",
+      "media": "unknown",
+      "cpu": "unknown",
+      "memory": "unknown",
+      "storage": "unknown",
+      "firmware": "unknown",
+      "traversals_per_tick": "unknown",
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": "unknown",
+      "warranty_days": "unknown",
+      "price": "unknown",
+      "requires_app": "D-Market2",
+      "notes": "2nd gen backbone router. Detected via lifecycle spawn log. Specs pending extraction.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
+      "model": "Disco Kilo 3G",
+      "vendor": "Conduit Systems",
+      "ports": "unknown",
+      "media": "unknown",
+      "cpu": "unknown",
+      "memory": "unknown",
+      "storage": "unknown",
+      "firmware": "unknown",
+      "traversals_per_tick": "unknown",
+      "cpu_cycle": "1 tick / 2.0s",
+      "power_w": "unknown",
+      "warranty_days": "unknown",
+      "price": "unknown",
+      "requires_app": "D-Market2",
+      "notes": "3rd gen backbone router. Detected via lifecycle spawn log. Specs pending extraction.",
+      "compatible_programs": [
+        "example",
+        "example2"
+      ]
+    },
+    {
       "model": "Zodianet Spine Router",
       "vendor": "Zodiac Networks",
       "ports": 3,
@@ -916,7 +1154,7 @@
       "traversals_per_tick": 160,
       "cpu_cycle": "1 tick / 2.0s",
       "power_w": 163,
-      "warranty_days": 16,
+      "warranty_days": 30,
       "price": 1500,
       "requires_app": "D-Market2",
       "notes": "Ethernet firewall",
@@ -1219,7 +1457,7 @@
       "vendor": "Tenabolt Retail",
       "watt_support": 200,
       "price": 750,
-      "warranty_days": 24,
+      "warranty_days": 28,
       "requires_app": "D-Market2",
       "notes": "UPS base unit"
     },
@@ -1299,7 +1537,7 @@
       "outlets": 3,
       "price": 100,
       "requires_app": "D-Market2",
-      "notes": "Mountable power distribution strip"
+      "notes": "Mountable power distribution strip. Mountable on 500px racks."
     },
     {
       "model": "Mountable Tenabolt Expander 1-6",
@@ -1307,7 +1545,15 @@
       "outlets": 6,
       "price": 180,
       "requires_app": "D-Market2",
-      "notes": "Mountable power distribution strip"
+      "notes": "Mountable power distribution strip. Mountable on 500px racks."
+    },
+    {
+      "model": "Mountable Tenabolt Expander 1-5",
+      "vendor": "Tenabolt Retail",
+      "outlets": 5,
+      "price": 200,
+      "requires_app": "D-Market2",
+      "notes": "Mountable power distribution strip. Mountable on 630px racks."
     },
     {
       "model": "Mountable Tenabolt Expander 1-7",
@@ -1315,7 +1561,7 @@
       "outlets": 7,
       "price": 200,
       "requires_app": "D-Market2",
-      "notes": "Mountable power distribution strip"
+      "notes": "Mountable power distribution strip. Mountable on 930px racks."
     }
   ],
   "power_cables": [
@@ -1467,6 +1713,14 @@
       "price": 10,
       "requires_app": "D-Market2",
       "notes": "Used as shelf piece of mounting racks (Narrow Rack)."
+    },
+    {
+      "model": "Mounting Shelf Piece R630",
+      "vendor": "Barracks and Sons",
+      "rack_type": "medium",
+      "price": 10,
+      "requires_app": "D-Market2",
+      "notes": "Used as shelf piece of mounting racks (630px Rack)."
     },
     {
       "model": "Mounting Shelf Piece R930",
@@ -1656,7 +1910,7 @@
       "notes": "Extra monitor displaying top floor issues."
     },
     {
-      "model": "Visitor Status Monitor",
+      "model": "Visitor Stats Monitor",
       "vendor": "Vision Grid",
       "power_w": 13,
       "warranty_days": 14,
