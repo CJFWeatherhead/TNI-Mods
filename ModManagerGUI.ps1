@@ -35,7 +35,7 @@ $script:ManagedMarkerFileName = "mod.managed"
 # GitHub Configuration
 $script:GitHubRepo = "CJFWeatherhead/TNI-Mods"
 $script:GitHubApiBase = "https://api.github.com/repos/$script:GitHubRepo"
-$script:LuaJitReleaseTag = "continuous-gnu-beta"
+$script:LuaJitReleaseTag = "continuous-gnu-main"
 $script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/$script:LuaJitReleaseTag/luajit-support.zip"
 
 # Startup logging
@@ -1704,7 +1704,7 @@ function ConvertFrom-ModJsonc {
         'Version'                = $json.version
         'Description'            = if ($json.description -is [array]) { $json.description -join "`n" } else { $json.description }
         'Development Status'     = 'Active Development'
-        'Game Version Supported' = 'beta'
+        'Game Version Supported' = 'stable'
         'Last Updated'           = ''
         'Website'                = ''
         'Dependencies'           = @()
@@ -1969,7 +1969,7 @@ function Get-AllMods {
                 'ReleaseInfo' = $release
                 'Author' = 'Unknown'
                 'Development Status' = 'Active Development'
-                'Game Version Supported' = 'beta'
+                'Game Version Supported' = 'stable'
                 'Description' = "Available for download. Published: $($release.PublishedAt)"
                 'Last Updated' = $release.PublishedAt
             }

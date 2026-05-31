@@ -15,7 +15,7 @@ Each mod in the `/lua` directory now has its own individual GitHub Actions workf
 ## Trigger Conditions
 
 Workflows trigger automatically when:
-- Changes are pushed to `main` or `beta` branches
+- Changes are pushed to the `main` branch
 - The changes affect files in the specific mod's directory (e.g., `lua/money-cheat/**`)
 
 Workflows can also be triggered manually via the GitHub Actions UI with a choice of version bump type.
@@ -157,7 +157,6 @@ on:
   push:
     branches:
       - main
-      - beta
     paths:
       - 'lua/<mod-name>/**'
   workflow_dispatch:
@@ -225,7 +224,7 @@ Before pushing changes:
 ### Workflow doesn't trigger
 
 - Check that files were modified in `lua/<mod-name>/`
-- Ensure you pushed to `main` or `beta` branch
+- Ensure you pushed to the `main` branch
 - Verify the workflow file exists and has correct paths
 
 ### Version not incrementing
@@ -248,7 +247,7 @@ Potential enhancements to consider:
 - [ ] Changelog generation from commits
 - [ ] Release notifications (Discord, email, etc.)
 - [ ] Automated compatibility checking
-- [ ] Branch-based versioning (beta releases with `-beta.1` suffix)
+- [ ] Branch-based versioning (pre-release builds with `-rc.1` suffix)
 - [ ] Rollback mechanism for failed releases
 
 ## Questions?

@@ -189,7 +189,7 @@ DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spa
 | Last Updated | 2026-04-24 |
 | Game Version | 0.10.11+ |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/user-floor-addressing) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.10)

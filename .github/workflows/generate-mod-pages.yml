@@ -2,13 +2,13 @@ name: Generate Mod Documentation Pages
 
 on:
   push:
-    branches: ["beta"]
+    branches: ["main"]
     paths:
       - "mods/**/metadata.yaml"
       - "mods/**/README.md"
       - "docs/generate_mod_pages.py"
   pull_request:
-    branches: ["beta"]
+    branches: ["main"]
     paths:
       - "mods/**/metadata.yaml"
       - "mods/**/README.md"

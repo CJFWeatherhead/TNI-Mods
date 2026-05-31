@@ -11,9 +11,9 @@ Author: CJFWeatherhead
 Version: 0.1.8
 Creation Date: 2026-01-01
 Last Updated: 2026-04-16
-Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling"
+Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/floor-reward-scaling"
 Development Status: Active Development
-Game Version Supported: beta
+Game Version Supported: stable
 ID: floor-reward-scaling
 Dependencies: []
 Image: icon.png

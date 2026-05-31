@@ -4,9 +4,9 @@ Author: treefarmer741
 Version: 0.1.8
 Creation Date: 2025-11-20
 Last Updated: 2026-04-17
-Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/2x-bandwidth-switches
 Development Status: Active Development
-Game Version Supported: beta
+Game Version Supported: stable
 ID: 2x-bandwidth-switches
 Dependencies: []
 Image: icon.png

@@ -29,7 +29,7 @@ I confirm that my `metadata.yaml` file:
   - [ ] `Creation Date` - YYYY-MM-DD format
   - [ ] `Last Updated` - YYYY-MM-DD format
   - [ ] `Development Status` - One of: "Active Development", "Maintenance only", "Discontinued", "Defunct"
-  - [ ] `Game Version Supported` - e.g., "beta", "1.0.0", "1.0.0-1.2.0"
+  - [ ] `Game Version Supported` - e.g., "stable", "1.0.0", "1.0.0-1.2.0"
   - [ ] `ID` - Matches the folder name
 - [ ] Is valid YAML syntax
 - [ ] Follows the [mod-metadata-schema.yaml](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/mod-metadata-schema.yaml)
@@ -57,7 +57,7 @@ I confirm that my `metadata.yaml` file:
   - 
 
 ### Game Version Tested
-<!-- e.g., beta, 1.0.0 -->
+<!-- e.g., stable, 1.0.0 -->
 
 ## License & Intellectual Property
 

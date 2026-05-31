@@ -28,7 +28,7 @@ No additional configuration required. The mod activates automatically when devic
 
 ## Compatibility
 
-- Game Version: beta
+- Game Version: stable
 - Dependencies: None
 
 ## Author

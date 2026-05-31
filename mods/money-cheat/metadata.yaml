@@ -20,9 +20,9 @@ Version: 5.0.2
 Image: icon.png
 Creation Date: 2026-01-21
 Last Updated: 2026-04-21
-Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/money-cheat
 Development Status: Active Development
-Game Version Supported: beta
+Game Version Supported: stable
 ID: money-cheat
 Dependencies: []
 Notes: Uses on_player_input hook to detect SHIFT+M (money) and SHIFT+R (restock) keyboard combinations. Restock functionality was moved here from device-tweaker in v5.0.0.

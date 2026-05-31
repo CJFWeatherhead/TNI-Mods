@@ -7,7 +7,7 @@
 		"Supa Mod Loader — marker mod for ModManagerGUI.\n\nIts presence indicates that the mod collection was installed and managed via ModManagerGUI.ps1. Other mods may declare this as an optional dependency to detect manager-managed installations.\n\nNo gameplay changes are made by this mod."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/supa-mod-loader",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"
 	},
 	"dependencies": {

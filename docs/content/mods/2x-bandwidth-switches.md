@@ -6,7 +6,7 @@ mod_id: "2x-bandwidth-switches"
 author: "treefarmer741"
 version: "0.1.8"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # 2x Bandwidth Switches
@@ -20,7 +20,7 @@ This mod doubles the bandwidth capacity of all switches in the Tower Networking 
 | **Version** | 0.1.8 |
 | **Author** | treefarmer741 |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-17 |
 
 </div>
@@ -88,7 +88,7 @@ No additional configuration required. The mod activates automatically when devic
 
 ## Compatibility
 
-- Game Version: beta
+- Game Version: stable
 - Dependencies: None
 
 ## Author
@@ -120,9 +120,9 @@ This mod only affects switches and does not modify other device types.
 | Mod ID | `2x-bandwidth-switches` |
 | Creation Date | 2025-11-20 |
 | Last Updated | 2026-04-17 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/2x-bandwidth-switches) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/2x-bandwidth-switches](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/2x-bandwidth-switches) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/2x-bandwidth-switches-v0.1.8)

@@ -6,7 +6,7 @@ mod_id: "floor-reward-scaling"
 author: "CJFWeatherhead"
 version: "0.1.8"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Floor Reward Scaling
@@ -20,7 +20,7 @@ game_version: "beta"
 | **Version** | 0.1.8 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-16 |
 
 </div>
@@ -189,9 +189,9 @@ CJFWeatherhead
 | Mod ID | `floor-reward-scaling` |
 | Creation Date | 2026-01-01 |
 | Last Updated | 2026-04-16 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/floor-reward-scaling) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/floor-reward-scaling) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.8)

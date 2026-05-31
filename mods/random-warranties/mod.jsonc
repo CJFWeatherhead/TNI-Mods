@@ -1,4 +1,4 @@
-﻿{
+{
 	"id": "random-warranties",
 	"name": "Random Device Warranties",
 	"authors": [ "CJFWeatherhead" ],
@@ -7,7 +7,7 @@
 		"A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful demonstration mod for new developers."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/random-warranties",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/random-warranties",
 		"lua": "https://lua.org/",
 		"luajit": "https://luajit.org/",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"

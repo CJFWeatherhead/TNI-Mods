@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - beta
     paths:
       - 'mods/2x-bandwidth-switches/**'
   workflow_dispatch:

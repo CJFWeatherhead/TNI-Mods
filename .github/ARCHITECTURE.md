@@ -38,7 +38,7 @@
 │ ┌─────────────────────────────────────────────────────────────────────┐ │
 │ │ on:                                                                 │ │
 │ │   push:                                                             │ │
-│ │     branches: [main, beta]                                          │ │
+│ │     branches: [main]                                                │ │
 │ │     paths: ['lua/money-cheat/**']                                   │ │
 │ │   workflow_dispatch:                                                │ │
 │ │     inputs: { bump_type: [patch, minor, major] }                    │ │

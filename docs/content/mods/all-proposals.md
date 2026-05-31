@@ -6,7 +6,7 @@ mod_id: "all-proposals"
 author: "CJFWeatherhead"
 version: "2.0.3"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # All Proposals
@@ -20,7 +20,7 @@ Shows all available proposals at once by overriding the game's proposal batch si
 | **Version** | 2.0.3 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-21 |
 
 </div>
@@ -148,7 +148,7 @@ The proposals **are updated in the game's backend** - it's only the UI display t
 ```
 
 ## Compatibility
-- Compatible with Tower Networking Inc game version beta
+- Compatible with Tower Networking Inc game version stable
 - Uses ModApiV1 for game integration
 - No known conflicts with other mods
 
@@ -185,9 +185,9 @@ CJFWeatherhead
 | Mod ID | `all-proposals` |
 | Creation Date | 2026-01-01 |
 | Last Updated | 2026-04-21 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/all-proposals) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v2.0.3)

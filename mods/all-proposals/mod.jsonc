@@ -1,4 +1,4 @@
-﻿{
+{
 	"id": "all-proposals",
 	"name": "All Proposals",
 	"authors": [ "CJFWeatherhead" ],
@@ -7,7 +7,7 @@
 		"Enhances the game's proposal system by allowing players to view all available proposals at once. Press SHIFT+O to show all eligible proposals (excluding those with unmet dependencies or failed adhoc requirements). Press SHIFT+U to restore the normal proposal batch size. No panels, no console commands — keyboard shortcuts only."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/all-proposals",
 		"lua": "https://lua.org/",
 		"luajit": "https://luajit.org/",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"

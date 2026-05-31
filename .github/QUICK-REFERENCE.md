@@ -27,7 +27,7 @@ git push origin main
 2. Click: "Release <your-mod>" (e.g., "Release money-cheat")
 3. Click: "Run workflow"
 4. Select:
-   - Branch: main or beta
+   - Branch: main
    - Bump type: patch / minor / major
 5. Click: "Run workflow"
 6. Wait ~2-3 minutes
@@ -50,7 +50,7 @@ Version: 0.1.0
 Creation Date: $(date +%Y-%m-%d)
 Last Updated: $(date +%Y-%m-%d)
 Development Status: Active Development
-Game Version Supported: beta
+Game Version Supported: stable
 ID: my-awesome-mod
 Dependencies: []
 EOF
@@ -307,7 +307,7 @@ TNI-Mods/
 
 | Problem | Solution |
 |---------|----------|
-| Workflow not triggering | Check branch (main/beta), check paths match |
+| Workflow not triggering | Check branch (main), check paths match |
 | Version not updating | Check YAML syntax, ensure Version field exists |
 | Release already exists | Workflow will delete and recreate automatically |
 | Docs not updating | Check Hugo build step logs, verify Python script |

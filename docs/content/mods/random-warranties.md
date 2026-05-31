@@ -6,7 +6,7 @@ mod_id: "random-warranties"
 author: "CJFWeatherhead"
 version: "0.1.7"
 status: "Discontinued"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Random Device Warranties
@@ -20,7 +20,7 @@ A simple example mod that randomizes warranty periods of all devices in Tower Ne
 | **Version** | 0.1.7 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🔴 Discontinued |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-16 |
 
 </div>
@@ -109,7 +109,7 @@ No additional configuration required. The mod activates automatically when devic
 
 ## Compatibility
 
-- Game Version: beta
+- Game Version: stable
 - Dependencies: None
 
 ## Author
@@ -141,9 +141,9 @@ Each device gets its own random multiplier, so warranties vary widely.
 | Mod ID | `random-warranties` |
 | Creation Date | 2026-01-01 |
 | Last Updated | 2026-04-16 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/random-warranties) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-warranties](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/random-warranties) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/random-warranties-v0.1.7)

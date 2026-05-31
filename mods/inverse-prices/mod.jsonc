@@ -1,4 +1,4 @@
-﻿{
+{
 	"id": "inverse-prices",
 	"name": "Inverse Prices",
 	"authors": [ "CJFWeatherhead" ],
@@ -7,7 +7,7 @@
 		"This mod inverts the game's economy by making purchases pay the player instead of costing money."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/inverse-prices",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/inverse-prices",
 		"lua": "https://lua.org/",
 		"luajit": "https://luajit.org/",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"

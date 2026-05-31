@@ -6,7 +6,7 @@ mod_id: "money-cheat"
 author: "CJFWeatherhead"
 version: "5.0.2"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Money Cheat
@@ -20,7 +20,7 @@ Instantly add money and restock merchants via keyboard shortcuts.
 | **Version** | 5.0.2 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-21 |
 
 </div>
@@ -239,9 +239,9 @@ Uses on_player_input hook to detect SHIFT+M (money) and SHIFT+R (restock) keyboa
 | Mod ID | `money-cheat` |
 | Creation Date | 2026-01-21 |
 | Last Updated | 2026-04-21 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/money-cheat) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/money-cheat) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v5.0.2)

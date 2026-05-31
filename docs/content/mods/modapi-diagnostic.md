@@ -6,7 +6,7 @@ mod_id: "modapi-diagnostic"
 author: "CJFWeatherhead"
 version: "4.5.6"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # ModAPI Diagnostic Tool
@@ -20,7 +20,7 @@ Zero-overhead development tool for TNI game engine modding (0.10.11+).
 | **Version** | 4.5.6 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-23 |
 
 </div>
@@ -421,9 +421,9 @@ No gameplay impact. Ideal for:
 | Mod ID | `modapi-diagnostic` |
 | Creation Date | 2026-01-20 |
 | Last Updated | 2026-04-23 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/modapi-diagnostic](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/modapi-diagnostic) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/modapi-diagnostic-v4.5.6)

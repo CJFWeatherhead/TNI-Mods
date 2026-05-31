@@ -43,15 +43,11 @@ For full documentation, see:
 
 If you want to use a Lua based mods, you will need to manually add the `luajit` support mod first. This may be improved in the future.
 
-You can find the mod in the github releases, or [click here](https://github.com/CJFWeatherhead/TNI-Mods/releases/early-0) for the latest stable release. Download the luajit file and place it in your mods folder. Refer to [Loading the mod](#loading-the-mod) for further instructions.
+You can find the mod in the github releases, or [click here](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/continuous-gnu-main) for the latest release. Download the luajit-support zip and extract it into your mods folder. Refer to [Loading the mod](#loading-the-mod) for further instructions.
 
-If you are using the `beta` branch of the game, you'll likely want to use the ["Continuous (gnu) - beta"](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/continuous-gnu-beta) release instead.
+## Stable Branch Support
 
-## Beta branch
-
-There is a `beta` github branch which should work with the game's `beta` branch on steam.
-
-Changes to the modding-kit go through the beta branch first.
+Mods are now fully supported on the stable branch of Tower Networking Inc on Steam. No beta opt-in is required.
 
 ## Automated Mod Releases
 
@@ -159,7 +155,7 @@ For example, to install the `cpp-template` mod, place `.zig/cpp-template` to `mo
 
 ### Lua mods
 
-If you'd like to use Lua instead, you can download the [luajit-support mod](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/continuous-gnu-beta/luajit-support.zip) from the releases section and extract it into your `mods/` directory so that `mods/luajit-support/luajit-support.elf` exists. This enables loading of `.lua` mods.
+If you'd like to use Lua instead, you can download the [luajit-support mod](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/continuous-gnu-main/luajit-support.zip) from the releases section and extract it into your `mods/` directory so that `mods/luajit-support/luajit-support.elf` exists. This enables loading of `.lua` mods.
 
 The engine will always first try to load `luajit-support` before other mods, so you do not need to worry about the naming.
 

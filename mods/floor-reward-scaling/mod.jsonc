@@ -1,4 +1,4 @@
-﻿{
+{
 	"id": "floor-reward-scaling",
 	"name": "Floor Reward Scaling",
 	"authors": [ "CJFWeatherhead" ],
@@ -7,7 +7,7 @@
 		"Floor Reward Scaling Mod automatically scales user daily payment rates based on their floor number using configurable progression systems. Choose from logarithmic, linear, exponential, or randomised scaling to customize reward progression."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/floor-reward-scaling",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/floor-reward-scaling",
 		"lua": "https://lua.org/",
 		"luajit": "https://luajit.org/",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"

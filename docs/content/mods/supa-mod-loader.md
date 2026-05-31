@@ -6,7 +6,7 @@ mod_id: "supa-mod-loader"
 author: "CJFWeatherhead"
 version: "4.1.1"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Supa Mod Loader
@@ -20,7 +20,7 @@ Automatically added by the ModManager GUI when mods are installed via ModManager
 | **Version** | 4.1.1 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-21 |
 
 </div>
@@ -95,9 +95,9 @@ The version tracks the ModManager GUI version that performed the installation.
 | Mod ID | `supa-mod-loader` |
 | Creation Date | 2026-04-16 |
 | Last Updated | 2026-04-21 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/supa-mod-loader) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/supa-mod-loader](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/supa-mod-loader) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/supa-mod-loader-v4.1.1)

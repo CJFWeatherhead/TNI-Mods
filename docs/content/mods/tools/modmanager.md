@@ -62,12 +62,12 @@ A modern Windows application with a graphical interface for managing Tower Netwo
 
 **Alternative: PowerShell Script**
 
-Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/beta/ModManagerGUI.ps1) and run:
+Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/main/ModManagerGUI.ps1) and run:
 ```powershell
 powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1
 ```
 
-Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/beta/ModManager.bat) for easy launching.
+Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/main/ModManager.bat) for easy launching.
 
 [View all releases on GitHub [U+2192]](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v3.7.8)
 
@@ -309,9 +309,9 @@ All Lua mods require LuaJIT support. The mod manager can download this automatic
 
 If you prefer running the PowerShell script directly (cross-platform, no compilation):
 
-1. Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/beta/ModManagerGUI.ps1)
+1. Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/main/ModManagerGUI.ps1)
 2. Run: `powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1`
-3. Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/beta/ModManager.bat) for easy launching
+3. Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/main/ModManager.bat) for easy launching
 
 The PowerShell version has identical features and works on Windows, Linux, and macOS with PowerShell Core.
 

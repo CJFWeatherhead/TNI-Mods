@@ -6,7 +6,7 @@ mod_id: "inverse-prices"
 author: "CJFWeatherhead"
 version: "0.1.5"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Inverse Prices
@@ -20,7 +20,7 @@ This mod inverts the game's economy by making purchases pay the player instead o
 | **Version** | 0.1.5 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-16 |
 
 </div>
@@ -211,9 +211,9 @@ Configure refund multiplier and what to affect via Mod Manager settings. Uses on
 | Mod ID | `inverse-prices` |
 | Creation Date | 2026-01-01 |
 | Last Updated | 2026-04-16 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/inverse-prices](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/inverse-prices) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/inverse-prices-v0.1.5)

@@ -26,7 +26,7 @@
 
 ### Test Environment
 - **OS**: <!-- e.g., Windows 11 -->
-- **Game Version**: <!-- e.g., beta, 1.0.0 -->
+- **Game Version**: <!-- e.g., stable, 1.0.0 -->
 - **PowerShell Version** (if ModManager): <!-- e.g., 5.1, 7.4 -->
 
 ### Testing Performed

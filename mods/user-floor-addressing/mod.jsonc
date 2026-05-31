@@ -1,4 +1,4 @@
-﻿{
+{
 	"id": "user-floor-addressing",
 	"name": "User Floor-Based Addressing",
 	"authors": [ "CJFWeatherhead" ],
@@ -7,7 +7,7 @@
 		"This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment."
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/user-floor-addressing",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/user-floor-addressing",
 		"lua": "https://lua.org/",
 		"luajit": "https://luajit.org/",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"

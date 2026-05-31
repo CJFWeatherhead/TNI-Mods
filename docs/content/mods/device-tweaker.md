@@ -6,7 +6,7 @@ mod_id: "device-tweaker"
 author: "CJFWeatherhead"
 version: "4.0.2"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Device Tweaker
@@ -20,7 +20,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 | **Version** | 4.0.2 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-21 |
 
 </div>
@@ -427,9 +427,9 @@ No input handling, no panels, no register_cmd.
 | Mod ID | `device-tweaker` |
 | Creation Date | 2026-01-18 |
 | Last Updated | 2026-04-21 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
-| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker) |
+| Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/device-tweaker) |
 
 **Release URLs:**
 - [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v4.0.2)

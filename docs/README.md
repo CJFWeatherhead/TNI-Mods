@@ -59,7 +59,7 @@ This directory contains the Hugo-based website and documentation hub for the TNI
 ## Deployment
 
 The website is automatically deployed to Cloudflare Pages via GitHub Actions when:
-- Changes are pushed to the `main` or `beta` branch
+- Changes are pushed to the `main` branch
 - Changes affect the `docs/` or `mods/` directories
 - The workflow is manually triggered
 

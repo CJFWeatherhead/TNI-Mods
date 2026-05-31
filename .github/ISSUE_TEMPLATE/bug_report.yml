@@ -50,7 +50,7 @@ body:
     attributes:
       label: Game Version
       description: What version of Tower Networking Inc are you running?
-      placeholder: "e.g., beta, 1.0.0, 1.2.3"
+      placeholder: "e.g., stable, 1.0.0, 1.2.3"
     validations:
       required: true
 

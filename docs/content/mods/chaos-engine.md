@@ -6,7 +6,7 @@ mod_id: "chaos-engine"
 author: "CJFWeatherhead"
 version: "0.1.20"
 status: "Active Development"
-game_version: "beta"
+game_version: "stable"
 ---
 
 # Chaos Engine
@@ -20,7 +20,7 @@ A controlled chaos mod that introduces randomness and unpredictability to Tower 
 | **Version** | 0.1.20 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
-| **Game Version** | beta |
+| **Game Version** | stable |
 | **Last Updated** | 2026-04-18 |
 
 </div>
@@ -291,7 +291,7 @@ Original event rates are stored and can be restored with the reset function.
 | Mod ID | `chaos-engine` |
 | Creation Date | 2026-01-31 |
 | Last Updated | 2026-04-18 |
-| Game Version | beta |
+| Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/chaos-engine) |
 

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - beta
     paths:
       - 'mods/modapi-diagnostic/**'
   workflow_dispatch:

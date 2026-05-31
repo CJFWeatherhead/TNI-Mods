@@ -66,7 +66,7 @@ The proposals **are updated in the game's backend** - it's only the UI display t
 ```
 
 ## Compatibility
-- Compatible with Tower Networking Inc game version beta
+- Compatible with Tower Networking Inc game version stable
 - Uses ModApiV1 for game integration
 - No known conflicts with other mods
 

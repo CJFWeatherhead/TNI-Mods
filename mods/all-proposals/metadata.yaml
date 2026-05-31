@@ -19,9 +19,9 @@ Author: CJFWeatherhead
 Version: 2.0.3
 Creation Date: 2026-01-01
 Last Updated: 2026-04-21
-Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/all-proposals"
+Website: "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/all-proposals"
 Development Status: Active Development
-Game Version Supported: beta
+Game Version Supported: stable
 ID: all-proposals
 Dependencies: []
 Image: ""

@@ -1,4 +1,4 @@
-﻿{
+{
 	"id": "chaos-engine",
 	"name": "Chaos Engine",
 	"authors": [ "CJFWeatherhead" ],
@@ -7,7 +7,7 @@
 		"A controlled chaos mod that introduces randomness and unpredictability to Tower Networking Inc \nthrough keyboard-triggered events and automatic stat randomization.\n\n✨ Features\n\n⌨️ Keyboard Shortcuts\nAll shortcuts use SHIFT combinations:\n\n• SHIFT+F: Force spawn a random floor immediately\n• SHIFT+D: Toggle Disaster Mode (increases event rates)\n• SHIFT+X: Reset all chaos settings to defaults\n\n💥 Disaster Mode\nWhen activated, all random event rates (device failures, power outages, power surges, \nworm spawns) are multiplied by a configurable factor. Toggle it off or press reset to \nrestore original rates.\n\n🎲 User Stat Randomization\nWhen users spawn, their stats are randomized within configurable ranges:\n• Satiety SLA ratio (satisfaction threshold)\n• Eagerness factor (how demanding they are)\n• Base use period (how often they use services)\n• Initial grace days (forgiveness period)\n• Max satiety decay ratio (how fast satisfaction drops)\n\nNote: Daily rate is NOT modified as it may conflict with other mods.\n\n🕹️ Usage\n\n1. Load the mod and start a game\n2. Press SHIFT+D to activate Disaster Mode for intense chaos\n3. Press SHIFT+F to spawn random floors\n4. Press SHIFT+X to reset everything back to normal"
 	],
 	"links": {
-		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/chaos-engine",
+		"github": "https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/chaos-engine",
 		"lua": "https://lua.org/",
 		"luajit": "https://luajit.org/",
 		"Click here to see all of my other mods!": "https://tower.networking.ink/mods"

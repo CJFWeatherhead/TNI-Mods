@@ -10,7 +10,7 @@
 # - Creation Date: Date in YYYY-MM-DD format
 # - Last Updated: Date in YYYY-MM-DD format
 # - Development Status: One of: "Active Development", "Maintenance only", "Discontinued", "Defunct"
-# - Game Version Supported: Game version or range (e.g., "beta", "1.0.0", "1.0.0-1.2.0")
+# - Game Version Supported: Game version or range (e.g., "stable", "1.0.0", "1.0.0-1.2.0")
 # - ID: Unique identifier, usually the folder name (e.g., "2x-bandwidth-switches")
 
 # Optional fields:
@@ -41,7 +41,7 @@
 # Last Updated: 2026-06-01
 # Website: https://github.com/example/tni-mods
 # Development Status: Discontinued
-# Game Version Supported: beta
+# Game Version Supported: stable
 # ID: random-warranties
 # Dependencies: []
 # Image: images/random-warranties.png
