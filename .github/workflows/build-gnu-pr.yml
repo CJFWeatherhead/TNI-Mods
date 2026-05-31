@@ -1,0 +1,42 @@
+name: Build with GNU RISC-V toolchain on Linux
+
+on:
+  pull_request:
+    branches: [ "**" ]
+    paths-ignore:
+      - "mods/**"
+      - "*.md"
+
+jobs:
+  build:
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v6.0.2
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install -y g++-14-riscv64-linux-gnu
+
+    - name: Build luajit support mod and C++ examples
+      working-directory: ${{github.workspace}}
+      run: ./build-gnu.sh
+
+    - name: Collect Artifact
+      shell: bash
+      run: |
+        mkdir ./artifact
+        # For every directory containing a .elf file, zip it into ./artifact
+        find ./mods/ -name '*.elf' -execdir bash -c "MOD_NAME=\"\$(basename \$(realpath .))\" && cd .. && zip -r \"${PWD}/artifact/\$MOD_NAME.zip\" \"./\$MOD_NAME\"" \;
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: artifact
+        path: ./artifact/**/*

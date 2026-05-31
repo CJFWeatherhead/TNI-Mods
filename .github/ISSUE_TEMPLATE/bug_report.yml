@@ -1,0 +1,160 @@
+name: 🐛 Bug Report
+description: Report a bug or issue with a mod, the ModManager, or the modding framework
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below to help us investigate.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched the existing issues to ensure this bug has not already been reported
+          required: true
+        - label: I understand this is a community project and support is provided as-is
+          required: true
+        - label: I have read and agree to follow the [Code of Conduct](https://github.com/CJFWeatherhead/TNI-Mods/blob/main/CONTRIBUTING.md#code-of-conduct)
+          required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Bug Category
+      description: What area does this bug affect?
+      options:
+        - Specific Mod
+        - ModManager
+        - Mod Framework/API
+        - Documentation
+        - Build System
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: mod-name
+    attributes:
+      label: Affected Mod(s)
+      description: If this bug relates to a specific mod, which one(s)?
+      placeholder: "e.g., 2x-bandwidth-switches, random-warranties"
+    validations:
+      required: false
+
+  - type: input
+    id: game-version
+    attributes:
+      label: Game Version
+      description: What version of Tower Networking Inc are you running?
+      placeholder: "e.g., beta, 1.0.0, 1.2.3"
+    validations:
+      required: true
+
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod/ModManager Version
+      description: What version of the mod or ModManager are you using?
+      placeholder: "e.g., 1.0.0, 3.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Installation Method
+      description: How did you install the mod(s)?
+      options:
+        - ModManager (downloaded)
+        - ModManager (manual)
+        - Manual Installation
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: Describe what happened...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this behavior?
+      placeholder: |
+        1. Launch the game with mod X enabled
+        2. Go to floor Y
+        3. Click on '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: game-logs
+    attributes:
+      label: Game Logs
+      description: |
+        Please attach or paste relevant logs from:
+        `%APPDATA%\Godot\app_userdata\Tower Networking Inc\Logs`
+        
+        Look for the most recent log file (e.g., `godot.log` or dated log files)
+      render: text
+    validations:
+      required: false
+
+  - type: textarea
+    id: modmanager-logs
+    attributes:
+      label: ModManager Logs
+      description: |
+        If the issue involves the ModManager, please include any error messages or console output.
+        You can run ModManager from PowerShell to see detailed output.
+      render: text
+    validations:
+      required: false
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: What OS are you using?
+      placeholder: "e.g., Windows 10, Windows 11"
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context about the problem here.
+        - Screenshots
+        - Video recordings
+        - Related issues
+        - Workarounds you've tried
+    validations:
+      required: false

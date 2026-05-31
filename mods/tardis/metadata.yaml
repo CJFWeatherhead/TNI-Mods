@@ -1,0 +1,69 @@
+Name: TARDIS - Time Controller
+Description: |
+  Control game time like a Time Lord! Preset-based speed control and time manipulation via keyboard shortcuts.
+
+  ## Keyboard Shortcuts (hold SHIFT)
+  - **SHIFT+>** : Step up to next speed preset
+  - **SHIFT+<** : Step down to previous speed preset
+  - **SHIFT+N** : Reset to default speed
+  - **SHIFT+K** : Skip to end of day (configurable time)
+  - **SHIFT+P** : Toggle day cycle pause / resume
+  - **SHIFT+T** : Print current speed, day number, and time to console
+
+  ## Speed Presets
+  Fixed preset ladder: 0.125x, 0.25x, 0.5x, 1x, 2x, 4x, 8x (game hard limits)
+
+  ## Configuration
+  - **Default Speed**: preset to snap to when pressing SHIFT+N (default: 1x)
+  - **Skip To Time**: decimal hour to skip to with SHIFT+K (default: 23.99 = 23:59)
+  - **Auto Reset On Day Start**: automatically reset speed each new day
+  - **Debug Logging**: enable detailed console output
+
+  ## Why "TARDIS"?
+  Like the Doctor's famous time machine, this mod gives you control over the flow of time!
+
+  ## Notes
+  - No panels, no console commands — keyboard shortcuts only
+  - Speed preset is synced from the game on load
+
+Author: CJFWeatherhead
+Version: 4.0.1
+Image: icon.png
+Creation Date: 2026-01-31
+Last Updated: 2026-04-21
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/tardis
+Development Status: Active Development
+Game Version Supported: beta
+ID: tardis
+Dependencies: []
+Notes: |
+  Uses world.time_mult for speed reads and world.update_server_timescale() for writes.
+  Day skip uses DayCycleController.force_day_clock(). Speed preset ladder is fixed at
+  0.125x / 0.25x / 0.5x / 1x / 2x / 4x / 8x to match game hard limits.
+Parameters:
+  - Name: default_speed
+    Label: Default Speed
+    Type: number
+    Default: 1.0
+    Min: 0.125
+    Max: 8.0
+    Step: 0.125
+    Description: Speed preset to reset to when pressing SHIFT+N (snapped to nearest preset in the ladder)
+  - Name: skip_to_time
+    Label: Skip To Time (decimal hours)
+    Type: number
+    Default: 23.99
+    Min: 0.0
+    Max: 23.99
+    Step: 0.5
+    Description: Time of day to skip to when pressing SHIFT+K (24-hour decimal, e.g. 23.99 = 23:59)
+  - Name: auto_reset_on_day_start
+    Label: Auto Reset Speed On Day Start
+    Type: boolean
+    Default: false
+    Description: Automatically reset game speed to the default preset at the start of each new day
+  - Name: debug_logging
+    Label: Enable Debug Logging
+    Type: boolean
+    Default: false
+    Description: Show detailed debug messages in the console when shortcuts are used

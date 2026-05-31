@@ -1,0 +1,54 @@
+Name: User Floor-Based Addressing
+Description: |
+  This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
+
+  ## Features
+  - Sets DHCP mode (default: "boot_dhcp") for all users
+  - Assigns addresses like "@f{floor}/usr{increment}" (configurable format)
+  - Configures DNS servers with a floor-specific primary and two configurable fallbacks
+  - Tracks user count per floor for incremental addressing
+
+  ## Limitations
+  - Hardware (MAC) address control is not supported -- the mod API does not expose
+    any method to set or refresh hardware addresses.
+  - Phone and CCTV addressing is not supported -- these are fixture outlets managed
+    by MultiplayerSpawner nodes and are not accessible via the Lua mod API.
+Author: CJFWeatherhead
+Version: 0.1.11
+Creation Date: 2026-01-01
+Last Updated: 2026-04-23
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/user-floor-addressing
+Development Status: Active Development
+Game Version Supported: 0.10.11+
+ID: user-floor-addressing
+Dependencies: []
+Image: icon.png
+Notes: |
+  DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
+Parameters:
+  - Name: address_format
+    Label: Network Address Format
+    Type: string
+    Default: "@f%d/usr%d"
+    Description: Format string for network addresses. Two %d placeholders are replaced with floor number and user increment (e.g., "@f%d/usr%d" becomes "@f0/usr1")
+  - Name: dhcp_mode
+    Label: DHCP Mode
+    Type: select
+    Default: "boot_dhcp"
+    Options: ["disabled", "boot_dhcp", "periodic_dhcp"]
+    Description: DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only
+  - Name: dns_format
+    Label: Floor DNS Server Format
+    Type: string
+    Default: "@f%d/dns"
+    Description: Format string for floor-specific DNS servers. %d is replaced with floor number (e.g., "@f%d/dns" becomes "@f0/dns")
+  - Name: fallback_dns_1
+    Label: Fallback DNS Server 1
+    Type: string
+    Default: "@srv/dns1"
+    Description: First fallback DNS server if floor-specific DNS is unavailable
+  - Name: fallback_dns_2
+    Label: Fallback DNS Server 2
+    Type: string
+    Default: "@srv/dns2"
+    Description: Second fallback DNS server

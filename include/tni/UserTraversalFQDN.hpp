@@ -1,0 +1,113 @@
+#ifndef TNI_API_HEADER_USERTRAVERSALFQDN
+#define TNI_API_HEADER_USERTRAVERSALFQDN
+// Generated API for game version 0.10.11
+// If any constants or enum's change between versions, a rebuild of your mod with updated headers may be required!
+
+#include <generated_api.hpp>
+#include "structs.hpp"
+#include "UserTraversal.hpp"
+
+struct UserTraversalFQDN : public UserTraversal {
+	using UserTraversal::UserTraversal;
+
+	constexpr UserTraversalFQDN(UserTraversal base) : UserTraversal{base} {}
+	constexpr UserTraversalFQDN(uint64_t addr) : UserTraversal{addr} {}
+	constexpr UserTraversalFQDN(Object obj) : UserTraversalFQDN{obj.address()} {}
+	UserTraversalFQDN(Variant variant) : UserTraversalFQDN{variant.as_object().address()} {}
+
+
+	PROPERTY(manifest_probability, double);
+	PROPERTY(never_manifest_without_any_provider, bool);
+	PROPERTY(host_selection_algorithm, int64_t);
+	PROPERTY(user, LogicControllerUser);
+	PROPERTY(satiety_weight, int64_t);
+	PROPERTY(producer_satiety_change_on_consume, int64_t);
+	PROPERTY(consumer_satiety_change_on_consume, int64_t);
+	PROPERTY(hidden_from_surveys, bool);
+	PROPERTY(will_select_player_providers, bool);
+	PROPERTY(max_acceptable_ppu, double);
+	PROPERTY(surveyor_dialog_target, int64_t);
+	PROPERTY(add_dialog_text_on_success, bool);
+	PROPERTY(dialog_text, String);
+	PROPERTY(surveyor_dialog_ptype, String);
+	PROPERTY(theme_affinity, ThemeConfig);
+	PROPERTY(consumption_history, Variant);
+	PROPERTY(successfully_consumed_this_tick, bool);
+	PROPERTY(will_manifest, bool);
+	PROPERTY(reqshare_accept_hash, int64_t);
+	PROPERTY(reqshare_weight_index, Variant);
+	PROPERTY(produce_use_config, UseConfig);
+	PROPERTY(produce_target, int64_t);
+	PROPERTY(produce_factor, int64_t);
+	PROPERTY(conversion_policy, int64_t);
+	PROPERTY(produce_limit_type, int64_t);
+	PROPERTY(limit_factor, int64_t);
+	PROPERTY(consumption_policy, int64_t);
+	PROPERTY(consume_use_config, UseConfig);
+	PROPERTY(consume_factor, int64_t);
+	PROPERTY(allow_localhost_consumption, bool);
+	PROPERTY(allow_user_consumption, bool);
+	PROPERTY(produced_last_tick, int64_t);
+	PROPERTY(will_produce, bool);
+	PROPERTY(traffic_class, String);
+	PROPERTY(traffic_weight, int64_t);
+	PROPERTY(cpu_load, int64_t);
+	PROPERTY(code_size, int64_t);
+	PROPERTY(stack_size, int64_t);
+	PROPERTY(release_name, String);
+	PROPERTY(description, String);
+	PROPERTY(modifiers, Variant);
+	PROPERTY(application_unlocks, Variant);
+	PROPERTY(required_hardware_device, Variant);
+	PROPERTY(data_size, int64_t);
+	PROPERTY(install_size, int64_t);
+	PROPERTY(rendered_description, String);
+	PROPERTY(pkt_processing_priority, int64_t);
+	PROPERTY(is_running, bool);
+	PROPERTY(host_controller, LogicController);
+
+	inline Variant make_traversal_packet(const NetworkPacketRoot& proot);
+	inline void tick();
+	inline void add_surveyor_msg(String msg);
+	inline Variant get_compatible_hostings();
+	inline Variant filter_acceptable_hostings(Variant initial_candids);
+	inline void select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method);
+	inline Variant produce_limit_reached(const LogicController& node);
+	inline Variant compute_produce_limit(const LogicController& node);
+	inline NetworkPacketRoot make_packet_root();
+	inline void client_sim();
+	inline String colorize_description(String ds);
+	inline void start();
+	inline void stop();
+	inline void uninstall();
+	inline void install(Variant _install_opts);
+	inline bool process_network_packet(const PacketControlModule& pktctl, Variant packet);
+	inline bool is_pkt_for_self(Variant packet);
+};
+
+#include "LogicControllerUser.hpp"
+#include "ThemeConfig.hpp"
+#include "UseConfig.hpp"
+#include "LogicController.hpp"
+#include "NetworkPacketRoot.hpp"
+#include "PacketControlModule.hpp"
+
+inline Variant UserTraversalFQDN::make_traversal_packet(const NetworkPacketRoot& proot) { return this->operator()("make_traversal_packet", Object(reinterpret_cast<const Object*>(&proot)->address())); }
+inline void UserTraversalFQDN::tick() { this->voidcall("tick"); }
+inline void UserTraversalFQDN::add_surveyor_msg(String msg) { this->voidcall("add_surveyor_msg", msg); }
+inline Variant UserTraversalFQDN::get_compatible_hostings() { return this->operator()("get_compatible_hostings"); }
+inline Variant UserTraversalFQDN::filter_acceptable_hostings(Variant initial_candids) { return this->operator()("filter_acceptable_hostings", initial_candids); }
+inline void UserTraversalFQDN::select_host_from_hostings(Variant acceptable_candidates, int64_t selection_method) { this->voidcall("select_host_from_hostings", acceptable_candidates, selection_method); }
+inline Variant UserTraversalFQDN::produce_limit_reached(const LogicController& node) { return this->operator()("produce_limit_reached", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline Variant UserTraversalFQDN::compute_produce_limit(const LogicController& node) { return this->operator()("compute_produce_limit", Object(reinterpret_cast<const Object*>(&node)->address())); }
+inline NetworkPacketRoot UserTraversalFQDN::make_packet_root() { return NetworkPacketRoot(this->operator()("make_packet_root").as_object().address()); }
+inline void UserTraversalFQDN::client_sim() { this->voidcall("client_sim"); }
+inline String UserTraversalFQDN::colorize_description(String ds) { return this->operator()("colorize_description", ds); }
+inline void UserTraversalFQDN::start() { this->voidcall("start"); }
+inline void UserTraversalFQDN::stop() { this->voidcall("stop"); }
+inline void UserTraversalFQDN::uninstall() { this->voidcall("uninstall"); }
+inline void UserTraversalFQDN::install(Variant _install_opts) { this->voidcall("install", _install_opts); }
+inline bool UserTraversalFQDN::process_network_packet(const PacketControlModule& pktctl, Variant packet) { return this->operator()("process_network_packet", Object(reinterpret_cast<const Object*>(&pktctl)->address()), packet); }
+inline bool UserTraversalFQDN::is_pkt_for_self(Variant packet) { return this->operator()("is_pkt_for_self", packet); }
+
+#endif

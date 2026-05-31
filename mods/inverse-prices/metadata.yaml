@@ -1,0 +1,56 @@
+Name: Inverse Prices
+Description: |
+  This mod inverts the game's economy by making purchases pay the player instead of costing money.
+
+  ## Features
+  - Device purchases refund money based on configured multiplier
+  - Proposal costs are refunded when submitted
+  - Tower link and socket costs are refunded
+  - Configurable refund amounts (Free/Double/Custom)
+  - Selectively enable/disable effects on devices, sockets, and proposals
+  - Uses proper transaction system for refunds
+  - Real-time monitoring of expenses and proposals
+Author: CJFWeatherhead
+Version: 0.1.5
+Creation Date: 2026-01-01
+Last Updated: 2026-04-16
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/lua/inverse-prices
+Development Status: Active Development
+Game Version Supported: beta
+ID: inverse-prices
+Dependencies: []
+Image: icon.png
+Notes: Configure refund multiplier and what to affect via Mod Manager settings. Uses on_device_spawned and on_tick hooks for real-time monitoring.
+Parameters:
+  - Name: refund_type
+    Label: Refund Amount
+    Type: select
+    Default: Double
+    Options: ["Free", "Double", "Custom"]
+    Description: |
+      Choose the refund multiplier:
+      - Free (1x Refund): Get back what you paid, making purchases free
+      - Double (2x Refund): Get back double what you paid, earning profit
+      - Custom: Set your own multiplier value
+  - Name: custom_refund_amount
+    Label: Custom Refund Multiplier
+    Type: integer
+    Default: 2
+    Min: 1
+    Max: 100
+    Description: Custom refund multiplier (only used when Refund Amount is set to "Custom")
+  - Name: effects_devices
+    Label: Affect Devices
+    Type: boolean
+    Default: true
+    Description: Whether to refund device purchases
+  - Name: effects_sockets
+    Label: Affect Sockets
+    Type: boolean
+    Default: true
+    Description: Whether to refund socket and link expenses
+  - Name: effects_proposals
+    Label: Affect Proposals
+    Type: boolean
+    Default: true
+    Description: Whether to refund proposal costs when submitting proposals

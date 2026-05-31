@@ -1,0 +1,69 @@
+﻿Name: ModAPI Diagnostic Tool
+Description: |
+  Zero-overhead development tool for TNI game engine modding (0.10.11+).
+  
+  ## v4.5 — Panel removal
+  - **Removed standalone CanvasLayer panel** and on_tick polling (Callable bridge crash)
+  - All functionality now via console commands only (press ~ to open)
+
+  ## v4.0 — Zero-overhead rewrite
+
+  ### Architecture
+  - **REMOVED on_player_input** — eliminates per-frame pcall/GC memory pressure
+  - All functionality via console commands and automatic lifecycle hooks
+  - Lifecycle callback tracker shows exact init order and timing
+
+  ### All Lifecycle Callbacks
+  - on_mod_load, on_mods_loaded, on_engine_load
+  - **on_game_state_ready** (auto-diagnostic on game init)
+  - on_game_host_eod, on_mod_reload
+  - on_device_spawned, on_user_spawned, **on_location_spawned**
+  - on_day_start, on_day_end
+  - on_world_ready, on_world_created, on_game_start, on_scenario_start
+  
+  ### JSON Game State Export
+  - All 0.10.11 fields: PlayOptions, LogicControllerUser, FloorBuilders
+  - New sections: player_messages, link_controller, acquired_techs
+  - File write via ModFileSystem + log fallback
+  - Auto-export on day end (configurable)
+  
+  ### API Test Suite
+  - Tests get_locations(), get_merchants(), get_game_version()
+  - Tests all control modules: networkctl, routectl, firewallctl, vlanctl, dhcpctl, filesysctl, packetctl
+  - Tests GameWorld methods, Programs API, Merchants API
+  - NETWORK_STORAGE (class 20) device support
+  
+  ### Console Commands
+  - `dump_world_overview()` — quick world summary
+  - `inspect_locations()` — list all floors
+  - `dump_all_world_devices()` — list all devices
+  - `reinspect_all_users()` — re-inspect tracked users
+  - `export_to_json()` — export full game state
+  - `run_api_test_suite()` — test all API endpoints
+  - `export_test_results_json()` — export test results
+  - `show_lifecycle_log()` — show callback order and timing
+  
+  ## Use Cases
+  - Debug mod development issues
+  - Export game state for external automation tools
+  - Test and document API endpoint availability
+  - Diagnose callback init order and timing
+  - Build Terraform/OpenTofu providers
+  
+Author: CJFWeatherhead
+Version: 4.5.8
+Creation Date: 2026-01-20
+Last Updated: 2026-04-27
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/modapi-diagnostic
+Development Status: Active Development
+Game Version Supported: beta
+ID: modapi-diagnostic
+Dependencies: []
+Image: icon.png
+Notes: |
+  This is a developer tool for mod creators and external tool integrations.
+  No gameplay impact. Ideal for:
+  - Mod developers learning the API
+  - Building REST API bridges
+  - Terraform/OpenTofu provider development
+  - Game state analysis and automation

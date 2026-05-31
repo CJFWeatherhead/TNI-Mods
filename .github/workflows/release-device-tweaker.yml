@@ -1,0 +1,27 @@
+name: Release device-tweaker
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+    paths:
+      - 'mods/device-tweaker/**'
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: 'Version bump type'
+        required: false
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    uses: ./.github/workflows/mod-release-reusable.yml
+    with:
+      mod_name: 'device-tweaker'
+      bump_type: ${{ inputs.bump_type || 'patch' }}

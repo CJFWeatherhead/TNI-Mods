@@ -1,0 +1,265 @@
+name: Release Mod Manager
+
+on:
+  push:
+    branches:
+      - main
+      - beta
+    paths:
+      - 'ModManagerGUI.ps1'
+      - '.github/workflows/release-mod-manager.yml'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g., 3.0.1)'
+        required: true
+        type: string
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Determine version
+        id: version
+        shell: pwsh
+        run: |
+          if ("${{ github.event_name }}" -eq "workflow_dispatch") {
+            $version = "${{ inputs.version }}"
+          } else {
+            # Extract version from ModManagerGUI.ps1
+            $content = Get-Content "ModManagerGUI.ps1" -Raw
+            if ($content -match 'Version:\s*(\d+\.\d+(?:\.\d+)?)') {
+              $version = $matches[1]
+            } else {
+              $version = "3.0.0"
+            }
+            
+            # Auto-increment patch version on push
+            $parts = $version -split '\.'
+            if ($parts.Count -eq 2) {
+              $version = "$version.0"
+              $parts = $version -split '\.'
+            }
+            $patch = [int]$parts[2] + 1
+            $version = "$($parts[0]).$($parts[1]).$patch"
+          }
+          
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "Version: $version"
+      
+      - name: Update version in script
+        shell: pwsh
+        run: |
+          $content = Get-Content "ModManagerGUI.ps1" -Raw
+          $newVersion = "${{ steps.version.outputs.version }}"
+          $majorMinor = ($newVersion -split '\.')[0..1] -join '.'
+          
+          # Update version in .NOTES section
+          $content = $content -replace '(Version:\s*)\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
+          
+          # Update version in .SYNOPSIS section (major.minor only)
+          $content = $content -replace '(WPF Mod Manager v)\d+\.\d+', "`${1}$majorMinor"
+          
+          # Update window title
+          $content = $content -replace '(Title="Tower Networking Inc - Mod Manager v)\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
+          
+          # Update ModManagerVersion runtime variable
+          $content = $content -replace '(\$script:ModManagerVersion = ")\d+\.\d+(?:\.\d+)?', "`${1}$newVersion"
+          
+          # Update startup log line
+          $content = $content -replace '(TNI Mod Manager v)\d+\.\d+(?:\.\d+)?( - Starting up)', "`${1}$newVersion`${2}"
+          
+          Set-Content "ModManagerGUI.ps1" -Value $content -NoNewline
+          
+          echo "Updated version to $newVersion"
+      
+      - name: Install ps2exe
+        shell: pwsh
+        run: |
+          Install-Module -Name ps2exe -Force -Scope CurrentUser
+          Import-Module ps2exe
+      
+      - name: Build executable
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          
+          # Convert to exe with metadata
+          # Note: Removed -noConsole to allow console output for logging
+          # (prevents Write-Host from creating dialog boxes)
+          ps2exe -inputFile "ModManagerGUI.ps1" `
+                 -outputFile "TNI-ModManager-v$version.exe" `
+                 -title "TNI Mod Manager" `
+                 -version "$version" `
+                 -company "TNI-Mods" `
+                 -product "Tower Networking Inc Mod Manager" `
+                 -copyright "MIT License" `
+                 -requireAdmin
+          
+          echo "Built TNI-ModManager-v$version.exe"
+      
+      - name: Update documentation
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $branchName = "${{ github.ref_name }}"
+          $docPath = "docs/content/mods/tools/modmanager.md"
+          
+          # Read current doc
+          $content = Get-Content $docPath -Raw
+          
+          # Build download section
+          $downloadSection = "## Download`n`n"
+          $downloadSection += "### Latest Release: v$version`n`n"
+          $downloadSection += "**[[U+1F4E6] Download TNI-ModManager-v$version.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v$version/TNI-ModManager-v$version.exe)** *(Recommended)*`n`n"
+          $downloadSection += "**Windows Application** - Double-click to run. No PowerShell knowledge required!`n`n"
+          $downloadSection += "---`n`n"
+          $downloadSection += "**Alternative: PowerShell Script**`n`n"
+          $downloadSection += "Download [ModManagerGUI.ps1](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManagerGUI.ps1) and run:`n"
+          $downloadSection += '```powershell' + "`n"
+          $downloadSection += "powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1`n"
+          $downloadSection += '```' + "`n`n"
+          $downloadSection += "Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/$branchName/ModManager.bat) for easy launching.`n`n"
+          $downloadSection += "[View all releases on GitHub [U+2192]](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v$version)`n`n"
+          
+          # Replace the download section (everything between ## Download and the next ##)
+          $content = $content -replace '(?s)## Download.*?(?=## Quick Start)', $downloadSection
+          
+          # Also update version in the title/header
+          $content = $content -replace 'Mod Manager v\d+\.\d+(\.\d+)?', "Mod Manager v$version"
+          
+          Set-Content $docPath -Value $content -NoNewline
+          echo "Updated documentation with version $version"
+
+      - name: Commit version and docs update
+        shell: pwsh
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "ModManagerGUI.ps1"
+          git add "docs/content/mods/tools/modmanager.md"
+          git diff --staged --quiet || git commit -m "chore(mod-manager): bump version to ${{ steps.version.outputs.version }}"
+          
+          # Retry push with rebase on conflict
+          $maxRetries = 5
+          $retryCount = 0
+          while ($retryCount -lt $maxRetries) {
+            git push
+            if ($LASTEXITCODE -eq 0) {
+              echo "Push successful"
+              break
+            } else {
+              $retryCount++
+              if ($retryCount -lt $maxRetries) {
+                echo "Push failed, attempt $retryCount of $maxRetries. Pulling with rebase..."
+                git pull --rebase origin ${{ github.ref_name }}
+                if ($LASTEXITCODE -ne 0) {
+                  echo "Rebase failed, aborting rebase and trying again..."
+                  git rebase --abort 2>$null
+                }
+                Start-Sleep -Seconds ($retryCount * 2)
+              } else {
+                echo "Push failed after $maxRetries attempts"
+                exit 1
+              }
+            }
+          }
+      
+      - name: Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $releaseTag = "mod-manager-v$version"
+          $releaseName = "Mod Manager v$version"
+          
+          # Create release notes
+          $releaseNotes = @"
+          # TNI Mod Manager v$version
+          
+          A modern Windows application for managing Tower Networking Inc mods.
+          
+          ## Features
+          
+          🌐 **GitHub Integration**
+          - Browse and download mods directly from GitHub releases
+          - Automatic version checking for installed mods
+          - One-click updates when new versions are available
+          - Real-time download progress
+          
+          🎮 **Full Mod Management**
+          - View all installed and available mods
+          - Visual distinction between mod sources (Downloaded, Manual, Available)
+          - Enable/disable manually installed mods
+          - Remove downloaded mods with one click
+          - Configure all mod parameters with validation
+          
+          📁 **Smart Mod Handling**
+          - **Downloaded mods**: Installed from GitHub releases, removed completely when uninstalled
+          - **Manual mods**: Installed by hand, moved to disabled folder when disabled
+          
+          ⌨️ **Command Aliases**
+          - Create and manage in-game command shortcuts
+          - Edit existing aliases or add new ones
+          - Saved to game settings
+          
+          ## Installation
+          
+          1. Download ``TNI-ModManager-v$version.exe`` below
+          2. Run the executable (requires Windows 10/11 with .NET Framework 4.5+)
+          3. The manager will automatically detect your game installation
+          4. Browse, download, and configure mods with ease!
+          
+          ## Alternative: PowerShell Script
+          
+          If you prefer the PowerShell script version:
+          1. Download ``ModManagerGUI.ps1`` from the repository
+          2. Run with ``powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1``
+          
+          ## Requirements
+          
+          - Windows 10/11
+          - .NET Framework 4.5+ (included in Windows)
+          - Internet connection for downloading mods
+          
+          ---
+          
+          For documentation, visit [tower.networking.ink/mods/tools/modmanager](https://tower.networking.ink/mods/tools/modmanager/)
+          "@
+          
+          # Delete existing release if it exists
+          gh release view $releaseTag 2>$null
+          if ($LASTEXITCODE -eq 0) {
+            echo "Deleting existing release $releaseTag"
+            gh release delete $releaseTag --yes
+          }
+          
+          # Create new release
+          gh release create $releaseTag `
+            --title $releaseName `
+            --notes $releaseNotes `
+            "TNI-ModManager-v$version.exe"
+          
+          echo "Created release: $releaseTag"
+
+      - name: Summary
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          
+          echo "## Release Summary" >> $env:GITHUB_STEP_SUMMARY
+          echo "" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Application**: TNI Mod Manager" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Version**: $version" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Release Tag**: mod-manager-v$version" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Executable**: TNI-ModManager-v$version.exe" >> $env:GITHUB_STEP_SUMMARY
+          echo "- **Documentation**: https://tower.networking.ink/mods/tools/modmanager/" >> $env:GITHUB_STEP_SUMMARY

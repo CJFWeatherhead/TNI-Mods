@@ -1,0 +1,95 @@
+name: 📚 Documentation
+description: Report documentation issues, suggest improvements, or request new documentation
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us improve the documentation! Whether it's a typo, unclear explanation, or missing information, we appreciate your feedback.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting
+      options:
+        - label: I have searched existing issues to ensure this hasn't already been reported
+          required: true
+
+  - type: dropdown
+    id: type
+    attributes:
+      label: Documentation Issue Type
+      options:
+        - Incorrect/Outdated Information
+        - Unclear/Confusing Explanation
+        - Missing Documentation
+        - Typo/Grammar
+        - Broken Links
+        - Code Example Not Working
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: affected-doc
+    attributes:
+      label: Affected Documentation
+      description: Which documentation is affected?
+      options:
+        - README.md
+        - CONTRIBUTING.md
+        - ModManager-README.md
+        - CONFIG-SYSTEM.md
+        - Mod README (specify which)
+        - mod-metadata-schema.yaml
+        - API Documentation
+        - Inline Code Comments
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: Where is the issue? (file path, section heading, line number)
+      placeholder: "e.g., README.md#building-cc-mods, line 45"
+    validations:
+      required: false
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Current Documentation
+      description: What does the documentation currently say? (quote or describe)
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: Suggested Change
+      description: What should the documentation say instead? Or what should be added?
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other context that might help (screenshots, related docs, etc.)
+    validations:
+      required: false
+
+  - type: dropdown
+    id: willing-to-fix
+    attributes:
+      label: Would you like to submit a PR to fix this?
+      options:
+        - "Yes - I can submit a PR"
+        - "Yes - with guidance"
+        - "No - just reporting"
+    validations:
+      required: true

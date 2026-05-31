@@ -1,0 +1,396 @@
+﻿Name: Device Tweaker
+Description: |
+  A comprehensive mod for tweaking device properties in Tower Networking Inc.
+  Modifications are applied automatically when devices spawn — no keyboard input needed.
+
+  ## Features
+  - **Bandwidth Multiplier**: Adjust network bandwidth capacity (installed_nbw)
+  - **Warranty Modifications**: Set fixed or random warranty multipliers
+  - **Cost Adjustments**: Modify device purchase prices
+  - **Hardware Multipliers**: Scale CPU (installed_cpu), RAM (installed_mem), and storage (installed_sto)
+  - **Device Class Filtering**: Selectively apply modifications to specific device types
+
+  ## Device Classes (21 types)
+  - Default (0) - def
+  - Network Switch (1) - swt
+  - Network Router (2) - rtr
+  - Network Tap (3) - tap
+  - Network Firewall (4) - fwr
+  - Media Line Simplex (5) - mls
+  - Media Line Duplex (6) - mld
+  - Compute Server (7) - srv
+  - Display Monitor (8) - mon
+  - Debugger (9) - dbg
+  - Load Tester (10) - ldt
+  - Power Expansion (11) - pwr
+  - Decentro Rigs (12) - dcr
+  - Surge Protector (13) - spr
+  - UPS (14) - ups
+  - Inert (15) - ine
+  - CCTV (16) - ccv
+  - Phone (17) - phn
+  - Printer (18) - prt
+  - Network Load Balancer (19) - nlb
+  - Network Storage (20) - nst
+
+  ## Configuration Tips
+  - Enable specific modifications using the enable toggles
+  - Set multipliers > 1.0 to increase values, < 1.0 to decrease
+  - Use random warranty mode for varied warranty periods per device
+  - Disable device classes you don't want to modify
+  - Restock merchants with SHIFT+R (money-cheat mod)
+
+  ## Notes
+  - No panels, no keyboard input — purely passive on_device_spawned hook
+  - Incompatible with 2x-bandwidth-switches and random-warranties (supersedes both)
+
+Author: CJFWeatherhead
+Version: 4.0.2
+Creation Date: 2026-01-18
+Last Updated: 2026-04-21
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/beta/mods/device-tweaker
+Development Status: Active Development
+Game Version Supported: beta
+ID: device-tweaker
+Dependencies: []
+Image: icon.png
+Notes: |
+  This mod supersedes 2x-bandwidth-switches and random-warranties.
+  All modifications are applied when devices spawn (on_device_spawned hook).
+  No input handling, no panels, no register_cmd.
+
+Parameters:
+  # Device Class Filters (based on DeviceHardwareClass enum)
+  - Name: enable_default
+    Label: Enable for Default Devices
+    Type: boolean
+    Default: true
+    Description: Apply modifications to default devices (class 0)
+    
+  - Name: enable_network_switch
+    Label: Enable for Network Switches
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network switch devices (class 1)
+    
+  - Name: enable_network_router
+    Label: Enable for Network Routers
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network router devices (class 2)
+    
+  - Name: enable_network_tap
+    Label: Enable for Network Taps
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network tap devices (class 3)
+    
+  - Name: enable_network_firewall
+    Label: Enable for Network Firewalls
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network firewall devices (class 4)
+    
+  - Name: enable_media_line_simplex
+    Label: Enable for Media Line Simplex
+    Type: boolean
+    Default: true
+    Description: Apply modifications to media line simplex devices (class 5)
+    
+  - Name: enable_media_line_duplex
+    Label: Enable for Media Line Duplex
+    Type: boolean
+    Default: true
+    Description: Apply modifications to media line duplex devices (class 6)
+    
+  - Name: enable_compute_server
+    Label: Enable for Compute Servers
+    Type: boolean
+    Default: true
+    Description: Apply modifications to compute server devices (class 7)
+    
+  - Name: enable_display_monitor
+    Label: Enable for Display Monitors
+    Type: boolean
+    Default: true
+    Description: Apply modifications to display monitor devices (class 8)
+    
+  - Name: enable_debugger
+    Label: Enable for Debuggers
+    Type: boolean
+    Default: true
+    Description: Apply modifications to debugger devices (class 9)
+    
+  - Name: enable_load_tester
+    Label: Enable for Load Testers
+    Type: boolean
+    Default: true
+    Description: Apply modifications to load tester devices (class 10)
+    
+  - Name: enable_power_expansion
+    Label: Enable for Power Expansion
+    Type: boolean
+    Default: true
+    Description: Apply modifications to power expansion devices (class 11)
+    
+  - Name: enable_decentro_rigs
+    Label: Enable for Decentro Rigs
+    Type: boolean
+    Default: true
+    Description: Apply modifications to decentro rig devices (class 12)
+    
+  - Name: enable_surge_protector
+    Label: Enable for Surge Protectors
+    Type: boolean
+    Default: true
+    Description: Apply modifications to surge protector devices (class 13)
+    
+  - Name: enable_ups
+    Label: Enable for UPS Devices
+    Type: boolean
+    Default: true
+    Description: Apply modifications to UPS devices (class 14)
+    
+  - Name: enable_inert
+    Label: Enable for Inert Devices
+    Type: boolean
+    Default: true
+    Description: Apply modifications to inert devices (class 15)
+    
+  - Name: enable_cctv
+    Label: Enable for CCTV
+    Type: boolean
+    Default: true
+    Description: Apply modifications to CCTV devices (class 16)
+    
+  - Name: enable_phone
+    Label: Enable for Phones
+    Type: boolean
+    Default: true
+    Description: Apply modifications to phone devices (class 17)
+    
+  - Name: enable_printer
+    Label: Enable for Printers
+    Type: boolean
+    Default: true
+    Description: Apply modifications to printer devices (class 18)
+    
+  - Name: enable_network_load_balancer
+    Label: Enable for Network Load Balancers
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network load balancer devices (class 19)
+
+  - Name: enable_network_storage
+    Label: Enable for Network Storage
+    Type: boolean
+    Default: true
+    Description: Apply modifications to network storage devices (class 20)
+  
+  # Bandwidth Settings
+  - Name: enable_bandwidth
+    Label: Enable Bandwidth Modification
+    Type: boolean
+    Default: true
+    Description: Enable bandwidth capacity modifications
+    
+  - Name: bandwidth_mode
+    Label: Bandwidth Mode
+    Type: select
+    Default: fixed
+    Options: ["fixed", "random"]
+    Description: Use a fixed multiplier or random range for bandwidth per device
+
+  - Name: bandwidth_multiplier
+    Label: Bandwidth Multiplier
+    Type: number
+    Default: 2.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Fixed multiplier for device network bandwidth (used when mode is 'fixed')
+
+  - Name: bandwidth_multiplier_min
+    Label: Min Random Bandwidth Multiplier
+    Type: number
+    Default: 1.5
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Lower bound for random bandwidth multiplier (used when mode is 'random')
+
+  - Name: bandwidth_multiplier_max
+    Label: Max Random Bandwidth Multiplier
+    Type: number
+    Default: 4.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Upper bound for random bandwidth multiplier (used when mode is 'random')
+  
+  # Warranty Settings
+  - Name: enable_warranty
+    Label: Enable Warranty Modification
+    Type: boolean
+    Default: true
+    Description: Enable warranty period modifications
+
+  - Name: warranty_mode
+    Label: Warranty Mode
+    Type: select
+    Default: random
+    Options: ["fixed", "random"]
+    Description: "fixed: apply a constant multiplier | random: apply a random multiplier per device"
+
+  - Name: warranty_multiplier_fixed
+    Label: Fixed Warranty Multiplier
+    Type: number
+    Default: 1.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Fixed multiplier for warranties (used when mode is 'fixed')
+    
+  - Name: warranty_multiplier_min
+    Label: Min Random Warranty Multiplier
+    Type: number
+    Default: 5.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Minimum multiplier for random warranties (used when mode is 'random')
+
+  - Name: warranty_multiplier_max
+    Label: Max Random Warranty Multiplier
+    Type: number
+    Default: 100.0
+    Min: 0.1
+    Max: 1000.0
+    Step: 1.0
+    Description: Upper bound for random warranty multiplier (used when mode is 'random')
+
+  - Name: warranty_apply_cycles
+    Label: Apply to Warranty Cycles
+    Type: boolean
+    Default: true
+    Description: Whether to also multiply warranty cycles (in addition to days)
+    
+  - Name: warranty_apply_remaining
+    Label: Apply to Remaining Warranty
+    Type: boolean
+    Default: true
+    Description: Whether to also apply multiplier to remaining warranty period
+  
+  # Cost Settings
+  - Name: enable_cost
+    Label: Enable Cost Modification
+    Type: boolean
+    Default: false
+    Description: Enable device cost modifications
+    
+  - Name: cost_multiplier
+    Label: Cost Multiplier
+    Type: number
+    Default: 1.0
+    Min: 0.01
+    Max: 100.0
+    Step: 0.01
+    Description: Multiplier for device purchase costs (e.g., 0.5 = half price, 2.0 = double price)
+  
+  # CPU Settings
+  - Name: enable_cpu
+    Label: Enable CPU Modification
+    Type: boolean
+    Default: false
+    Description: Enable CPU power modifications
+    
+  - Name: cpu_multiplier
+    Label: CPU Power Multiplier
+    Type: number
+    Default: 2.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Multiplier for device CPU power
+  
+  # Memory Settings
+  - Name: enable_memory
+    Label: Enable Memory Modification
+    Type: boolean
+    Default: false
+    Description: Enable RAM modifications
+    
+  - Name: memory_mode
+    Label: Memory Mode
+    Type: select
+    Default: fixed
+    Options: ["fixed", "random"]
+    Description: Use a fixed multiplier or random range for memory per device
+
+  - Name: memory_multiplier
+    Label: Memory (RAM) Multiplier
+    Type: number
+    Default: 4.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Fixed multiplier for device installed RAM (used when mode is 'fixed')
+
+  - Name: memory_multiplier_min
+    Label: Min Random Memory Multiplier
+    Type: number
+    Default: 2.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Lower bound for random memory multiplier (used when mode is 'random')
+
+  - Name: memory_multiplier_max
+    Label: Max Random Memory Multiplier
+    Type: number
+    Default: 8.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.5
+    Description: Upper bound for random memory multiplier (used when mode is 'random')
+  
+  # Storage Settings
+  - Name: enable_storage
+    Label: Enable Storage Modification
+    Type: boolean
+    Default: false
+    Description: Enable storage capacity modifications
+    
+  - Name: storage_mode
+    Label: Storage Mode
+    Type: select
+    Default: fixed
+    Options: ["fixed", "random"]
+    Description: Use a fixed multiplier or random range for storage per device
+
+  - Name: storage_multiplier
+    Label: Storage Multiplier
+    Type: number
+    Default: 8.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.1
+    Description: Fixed multiplier for device storage capacity (used when mode is 'fixed')
+
+  - Name: storage_multiplier_min
+    Label: Min Random Storage Multiplier
+    Type: number
+    Default: 4.0
+    Min: 0.1
+    Max: 100.0
+    Step: 0.5
+    Description: Lower bound for random storage multiplier (used when mode is 'random')
+
+  - Name: storage_multiplier_max
+    Label: Max Random Storage Multiplier
+    Type: number
+    Default: 16.0
+    Min: 0.1
+    Max: 1000.0
+    Step: 1.0
+    Description: Upper bound for random storage multiplier (used when mode is 'random')

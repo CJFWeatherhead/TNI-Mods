@@ -1,0 +1,577 @@
+{
+  "_meta": {
+    "game": "Tower Networking Inc.",
+    "dataset": "programs",
+    "version": "1.1.1",
+    "last_updated": "2025-12-08",
+    "description": "Complete catalog of installable server programs with resource requirements, outputs, and dependencies.",
+    "notes": "Program types: producer (generates uses), converter (transforms inputs to outputs), data storage (persists data), firmware (device operating systems).",
+    "sources": [
+      {
+        "name": "In-game observation",
+        "notes": "Data collected from program list and describe commands"
+      },
+      {
+        "name": "Discord Community",
+        "notes": "Data additions, corrections, and suggestions made by members of the discord community"
+      }
+    ],
+    "contributors": [
+      "Salvo Praxis",
+      "Claude (Anthropic)",
+      "Chaotic Crumb",
+      "gamers2000",
+      "Crona",
+      "AlinaNova21"
+    ],
+    "corrections": [
+      {
+        "version": "1.1.0",
+        "correction": "Added 8 firmware programs (rtkernel, hakernel, bladeos, vlanfirm, firewatcher, wirerat, netpeeker, dnsspam) and 4 new program_categories (router, switch, firewall, debugging)",
+        "suggested_by": "gamers2000",
+        "added_by": "Chaotic Crumb"
+      },
+      {
+        "version": "1.1.1",
+        "correction": "Whitespace cleanup: removed trailing spaces from firmware entries",
+        "contributor": "AlinaNova21"
+      }
+    ],
+    "future_additions": [
+      {
+        "suggestion": "voip_provider category with vonet_edge",
+        "details": "1/1/1 cpu/mem/storage, doesn't run on player devices currently",
+        "suggested_by": "Crona"
+      },
+      {
+        "suggestion": "provider_firmware category",
+        "details": "For CCTV stuff and possibly printer (mod API has enums for printer)",
+        "suggested_by": "Crona"
+      }
+    ]
+  },
+  "programs": [
+    {
+      "name": "dns-lite",
+      "type": "producer",
+      "cpu": 1,
+      "memory": 1,
+      "storage": 2,
+      "output": {
+        "uses": [
+          "reply-dns-queries"
+        ],
+        "amount": 3,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 3,
+      "description": "Replies network-addresses to DNS queries. Production is limited to 3 compatible uses on the device's use stack."
+    },
+    {
+      "name": "dns-server",
+      "type": "converter",
+      "cpu": 4,
+      "memory": 3,
+      "storage": 3,
+      "input": {
+        "uses": [
+          "store-text"
+        ],
+        "amount": 1,
+        "rate": "per tick"
+      },
+      "output": {
+        "uses": [
+          "reply-dns-queries"
+        ],
+        "amount": 20,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": "Running text storage program",
+      "stack_limit": 20,
+      "description": "Replies network-addresses to DNS queries. Requires access to a running text storage program."
+    },
+    {
+      "name": "sun-dns",
+      "type": "converter",
+      "cpu": 10,
+      "memory": 6,
+      "storage": 9,
+      "input": {
+        "uses": [
+          "store-text"
+        ],
+        "amount": 3,
+        "rate": "per tick"
+      },
+      "output": {
+        "uses": [
+          "reply-dns-queries"
+        ],
+        "amount": 40,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": "Running text storage program",
+      "stack_limit": 40,
+      "description": "Enterprise grade DNS server. Requires access to a running text storage program."
+    },
+    {
+      "name": "dnsmasq",
+      "type": "producer",
+      "cpu": 1,
+      "memory": 1,
+      "storage": 2,
+      "output": {
+        "uses": [
+          "reply-dhcp-request"
+        ],
+        "amount": 3,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 3,
+      "description": "Automatically assigns network addresses and designated DNS server to network devices."
+    },
+    {
+      "name": "kea",
+      "type": "converter",
+      "cpu": 6,
+      "memory": 5,
+      "storage": 7,
+      "input": {
+        "uses": [
+          "store-text"
+        ],
+        "amount": 1,
+        "rate": "per tick"
+      },
+      "output": {
+        "uses": [
+          "reply-dhcp-request"
+        ],
+        "amount": 15,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": "Running text storage program",
+      "stack_limit": 15,
+      "description": "Automatically assigns network addresses and designated DNS server to network devices. Requires access to a running text storage program."
+    },
+    {
+      "name": "padu_v1",
+      "type": "producer",
+      "cpu": 1,
+      "memory": 2,
+      "storage": 4,
+      "output": {
+        "uses": [
+          "store-text",
+          "store-image"
+        ],
+        "amount": 1,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 2,
+      "description": "Primary aggregation data unit. Supports text and image storage. Production is limited to 2 compatible uses on the device's use stack."
+    },
+    {
+      "name": "padu_v2",
+      "type": "producer",
+      "cpu": 2,
+      "memory": 4,
+      "storage": 8,
+      "output": {
+        "uses": [
+          "store-text",
+          "store-image",
+          "store-audio"
+        ],
+        "amount": 2,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 2,
+      "description": "Primary aggregation data unit. Supports text, image and audio storage. Improved disk handling algorithm."
+    },
+    {
+      "name": "padu_v3",
+      "type": "producer",
+      "cpu": 4,
+      "memory": 6,
+      "storage": 12,
+      "output": {
+        "uses": [
+          "store-text",
+          "store-image",
+          "store-audio",
+          "store-video"
+        ],
+        "amount": 4,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 4,
+      "description": "Primary aggregation data unit. Supports text, image, audio and video storage. Improved disk handling algorithm."
+    },
+    {
+      "name": "poems-db",
+      "type": "producer",
+      "cpu": 4,
+      "memory": 4,
+      "storage": 6,
+      "output": {
+        "uses": [
+          "store-text"
+        ],
+        "amount": 4,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 4,
+      "description": "Text-based database. Supports text storage usage."
+    },
+    {
+      "name": "gitcoffee",
+      "type": "converter",
+      "cpu": 4,
+      "memory": 2,
+      "storage": 4,
+      "input": {
+        "uses": [
+          "store-text"
+        ],
+        "amount": 2,
+        "rate": "per tick"
+      },
+      "output": {
+        "uses": [
+          "read-text",
+          "update-software"
+        ],
+        "amount": 16,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": "Running text storage program",
+      "stack_limit": 16,
+      "description": "Open-source software repository. Supports software-updates requests."
+    },
+    {
+      "name": "mailer",
+      "type": "converter",
+      "cpu": 5,
+      "memory": 6,
+      "storage": 3,
+      "input": {
+        "uses": [
+          "store-text",
+          "store-image"
+        ],
+        "amount": 3,
+        "rate": "per tick",
+        "logic": "AND"
+      },
+      "output": {
+        "uses": [
+          "read-text",
+          "post-text",
+          "verify-user"
+        ],
+        "amount": 15,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": "Running text AND image storage program",
+      "stack_limit": 15,
+      "description": "Provides exchange email usages to users."
+    },
+    {
+      "name": "voip-server",
+      "type": "producer",
+      "cpu": 5,
+      "memory": 2,
+      "storage": 5,
+      "output": {
+        "uses": [
+          "accept-voip-phone-connection"
+        ],
+        "amount": 10,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 10,
+      "description": "Supports Voice over Internet Protocol for streaming voice messages to phones. Allows voip phones to be connected to produce stream-voice uses."
+    },
+    {
+      "name": "rtsp-diva-r",
+      "type": "producer",
+      "cpu": 6,
+      "memory": 4,
+      "storage": 10,
+      "output": {
+        "uses": [
+          "accept-cctv-camera-connection",
+          "accept-cctv-monitor-connection"
+        ],
+        "amount": 13,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 13,
+      "description": "Support surveillance monitoring services. Allows surveillance accessories to be connected to produce stream-live-video uses."
+    },
+    {
+      "name": "decentro-node",
+      "type": "producer",
+      "cpu": 24,
+      "memory": 12,
+      "storage": 6,
+      "output": {
+        "uses": [
+          "facilitate-p2p-transaction"
+        ],
+        "amount": 10,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 10,
+      "description": "Authenticate Decentro transactions. Decentro peers can connect to this program to perform peer-to-peer transactions. You may only spend decentro currencies that are accessible by decentro nodes."
+    },
+    {
+      "name": "decentro-wallet",
+      "type": "data storage",
+      "cpu": 1,
+      "memory": 2,
+      "storage": 2,
+      "stores": {
+        "uses": [
+          "access-p2p-currency"
+        ],
+        "capacity": "10 per free storage"
+      },
+      "requires": null,
+      "description": "Safeguards your decentro currencies from power loss or unscheduled shutdown events. Stored uses persist across device reboots."
+    },
+    {
+      "name": "decentro-collector",
+      "type": "converter",
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "input": {
+        "uses": [
+          "access-p2p-currency"
+        ],
+        "amount": 1,
+        "rate": "per tick"
+      },
+      "output": {
+        "uses": [
+          "access-p2p-currency"
+        ],
+        "amount": 1,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": null,
+      "stack_limit": "6 per free memory",
+      "description": "Collects decentro currencies over the network and accumulates them on the installed device."
+    },
+    {
+      "name": "ubbt",
+      "type": "converter",
+      "cpu": 4,
+      "memory": 4,
+      "storage": 6,
+      "input": {
+        "uses": [
+          "inspect-user-packets"
+        ],
+        "amount": 4,
+        "rate": "per tick"
+      },
+      "output": {
+        "uses": [
+          "support-bots"
+        ],
+        "amount": 4,
+        "rate": "per tick",
+        "target": "source"
+      },
+      "requires": "Network tap with user traffic",
+      "stack_limit": 4,
+      "description": "Analyzes user traffic behavior from a network tap to support botnet operations."
+    },
+    {
+      "name": "rtkernel",
+      "type": "firmware",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "requires": "/etc/routes.conf",
+      "stack_limit": null,
+      "description": "Normal capacity router firmware."
+    },
+    {
+      "name": "hakernel",
+      "type": "firmware",
+      "cpu": 8,
+      "memory": 2,
+      "storage": 4,
+      "requires": "/etc/routes.conf",
+      "stack_limit": null,
+      "description": "High capacity router firmware."
+    },
+    {
+      "name": "bladeos",
+      "type": "firmware",
+      "cpu": 2,
+      "memory": 1,
+      "storage": 1,
+      "requires": null,
+      "stack_limit": null,
+      "description": "Normal capacity switch firmware."
+    },
+    {
+      "name": "vlanfirm",
+      "type": "firmware",
+      "cpu": 2,
+      "memory": 2,
+      "storage": 2,
+      "requires": "/etc/vlan.tags",
+      "stack_limit": null,
+      "description": "High capacity switch firmware that supports VLAN port tagging."
+    },
+    {
+      "name": "firewatcher",
+      "type": "firmware",
+      "cpu": 4,
+      "memory": 1,
+      "storage": 2,
+      "requires": "/etc/nftables.conf",
+      "stack_limit": null,
+      "description": "Basic Firewall firmware."
+    },
+    {
+      "name": "wirerat",
+      "type": "firmware",
+      "cpu": 2,
+      "memory": 2,
+      "storage": 1,
+      "output": {
+        "uses": [
+          "inspect-user-packets"
+        ],
+        "amount": 4,
+        "rate": "per tick"
+      },
+      "requires": null,
+      "stack_limit": 12,
+      "description": "Network tap firmware that produces inspect-user-packets use stack."
+    },
+    {
+      "name": "netpeeker",
+      "type": "firmware",
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "requires": null,
+      "stack_limit": null,
+      "description": "Basic Debugger firmware."
+    },
+    {
+      "name": "dnsspam",
+      "type": "firmware",
+      "cpu": 1,
+      "memory": 1,
+      "storage": 1,
+      "requires": null,
+      "stack_limit": null,
+      "description": "DNS blasting firmware that rapidly sends out udp/53 requests."
+    }
+  ],
+  "program_categories": {
+    "dns": [
+      "dns-lite",
+      "dns-server",
+      "sun-dns"
+    ],
+    "dhcp": [
+      "dnsmasq",
+      "kea"
+    ],
+    "storage": [
+      "padu_v1",
+      "padu_v2",
+      "padu_v3",
+      "poems-db"
+    ],
+    "services": [
+      "gitcoffee",
+      "mailer",
+      "voip-server",
+      "rtsp-diva-r"
+    ],
+    "decentro": [
+      "decentro-node",
+      "decentro-wallet",
+      "decentro-collector"
+    ],
+    "botnet": [
+      "ubbt"
+    ],
+    "router": [
+      "rtkernel",
+      "hakernel"
+    ],
+    "switch": [
+      "bladeos",
+      "vlanfirm"
+    ],
+    "firewall": [
+      "firewatcher"
+    ],
+    "debugging": [
+      "wirerat",
+      "netpeeker",
+      "dnsspam"
+    ]
+  },
+  "use_types": {
+    "storage": [
+      "store-text",
+      "store-image",
+      "store-audio",
+      "store-video"
+    ],
+    "dns": [
+      "reply-dns-queries"
+    ],
+    "dhcp": [
+      "reply-dhcp-request"
+    ],
+    "services": [
+      "read-text",
+      "post-text",
+      "update-software",
+      "verify-user"
+    ],
+    "connections": [
+      "accept-voip-phone-connection",
+      "accept-cctv-camera-connection",
+      "accept-cctv-monitor-connection"
+    ],
+    "decentro": [
+      "facilitate-p2p-transaction",
+      "access-p2p-currency"
+    ],
+    "network": [
+      "inspect-user-packets",
+      "support-bots"
+    ]
+  }
+}

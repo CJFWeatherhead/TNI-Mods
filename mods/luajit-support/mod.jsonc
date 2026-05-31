@@ -1,0 +1,25 @@
+{
+	"id": "luajit-support",
+	"name": "LuaJIT Support",
+	"authors": [ "modding-kit" ],
+	"version": "0.2.0",
+	"description": [
+		"The unofficial LuaJIT support mod.",
+		"This allows other mods to use Lua, which is much easier and faster to work with than C++ based mods.",
+		"NOTE: This mod doesn't need to be loaded currently as it's special. It should be loaded anyway as this will change!"
+	],
+	"links": {
+		"github": "https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit",
+		"lua": "https://lua.org/",
+		"luajit": "https://luajit.org/"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.11"
+	},
+	"dependencies_optional": {
+		"supa-mod-loader": ">=3.7.0"
+	},
+	"incompatibilities": {
+	}
+}

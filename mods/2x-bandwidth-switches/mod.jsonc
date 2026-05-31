@@ -1,0 +1,25 @@
+﻿{
+	"id": "2x-bandwidth-switches-example",
+	"name": "2x bandwidth switches",
+	"authors": [ "modding-kit" ],
+	"version": "0.1.8",
+	"description": [
+		"This mod doubles the bandwidth capacity of all switches in the Tower Networking Inc game."
+	],
+	"links": {
+		"github": "https://github.com/treefarmer741/Tower-Networking-Inc-modding-kit",
+		"lua": "https://lua.org/",
+		"luajit": "https://luajit.org/",
+		"Click here to see other mods!": "https://tower.networking.ink/mods"
+	},
+	"dependencies": {
+		// See https://devhints.io/semver for syntax.
+		"tower-networking-inc": "^0.10.7",
+		"luajit-support": "~0.2.0"
+	},
+	"dependencies_optional": {
+	},
+	"incompatibilities": {
+		"device-tweaker": "*"
+	}
+}

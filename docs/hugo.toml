@@ -1,0 +1,51 @@
+baseURL = 'https://tower.networking.ink/'
+languageCode = 'en-us'
+title = 'Tower Networking Inc'
+theme = 'terminal'
+
+[params]
+  # Terminal theme specific settings
+  fullWidthTheme = true
+  centerTheme = true
+  
+  # Site info
+  contentTypeName = "mods"
+  showMenuItems = 4
+  showLanguageSelector = false
+  showLastUpdated = false
+  
+  # Logo
+  [params.logo]
+    logoText = "Tower Networking Ink."
+    logoHomeLink = "/"
+
+# Menu configuration
+[[menu.main]]
+  identifier = "home"
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  identifier = "mods"
+  name = "Mods"
+  url = "/mods/"
+  weight = 2
+
+[[menu.main]]
+  identifier = "tools"
+  name = "Tools"
+  url = "/mods/tools/"
+  weight = 3
+
+[[menu.main]]
+  identifier = "github"
+  name = "GitHub"
+  url = "https://github.com/CJFWeatherhead/TNI-Mods"
+  weight = 4
+
+# Markup settings
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

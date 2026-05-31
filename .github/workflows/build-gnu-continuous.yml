@@ -1,0 +1,57 @@
+# TODO: Can we remove the duplication with `-pr` workflows?
+
+name: Build with GNU RISC-V toolchain on Linux and update continuous release
+
+on:
+  push:
+    branches: [ "**" ]
+    paths-ignore:
+      - "*.md"
+  # NOTE: This is privileged, do not run pull_requests.
+
+jobs:
+  build:
+    permissions:
+      contents: write
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+    - uses: actions/checkout@v6.0.2
+      with:
+        submodules: recursive
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install -y g++-14-riscv64-linux-gnu
+
+    - name: Build luajit support mod and C++ examples
+      working-directory: ${{github.workspace}}
+      run: ./build-gnu.sh
+
+    - name: Collect Artifact
+      shell: bash
+      run: |
+        mkdir ./artifact
+        # For every directory containing a .elf file, zip it into ./artifact
+        find ./mods/ -name '*.elf' -execdir bash -c "MOD_NAME=\"\$(basename \$(realpath .))\" && cd .. && zip -r \"${PWD}/artifact/\$MOD_NAME.zip\" \"./\$MOD_NAME\"" \;
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: artifact
+        path: ./artifact/**/*
+
+    - name: Create/Update continuous release
+      shell: bash
+      run: |
+        RELEASE_TAG="continuous-gnu-${{github.ref_name}}"
+        RELEASE_NAME="Continuous (gnu) - ${{github.ref_name}}"
+        RELEASE_NOTES_PATH=".github/workflows/continuous-gnu-release-notes.md"
+        gh release delete --cleanup-tag --yes "$RELEASE_TAG" || true
+        gh release create --target "${{github.sha}}" --title "$RELEASE_NAME" --notes-file "$RELEASE_NOTES_PATH" --draft --prerelease "$RELEASE_TAG"
+        find ./artifact -name '*.zip' -exec gh release upload --clobber "$RELEASE_TAG" "{}" \;
+        gh release edit "$RELEASE_TAG" --draft=false

@@ -1,0 +1,107 @@
+name: Generate Mod Documentation Pages
+
+on:
+  push:
+    branches: ["beta"]
+    paths:
+      - "mods/**/metadata.yaml"
+      - "mods/**/README.md"
+      - "docs/generate_mod_pages.py"
+  pull_request:
+    branches: ["beta"]
+    paths:
+      - "mods/**/metadata.yaml"
+      - "mods/**/README.md"
+      - "docs/generate_mod_pages.py"
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  generate-pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install Python dependencies
+        run: |
+          pip install pyyaml
+      
+      - name: Generate mod pages
+        working-directory: docs
+        run: |
+          python generate_mod_pages.py
+      
+      - name: Check for changes
+        id: changes
+        run: |
+          git add docs/content/mods/
+          if git diff --staged --quiet; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No changes to mod pages"
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Changes detected in mod pages"
+            git diff --staged --name-only
+          fi
+      
+      - name: Commit and push changes
+        if: steps.changes.outputs.has_changes == 'true' && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git commit -m "docs: auto-regenerate mod pages [skip ci]"
+          
+          # Retry push with rebase on conflict (handles concurrent workflow runs)
+          MAX_RETRIES=5
+          RETRY_COUNT=0
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            if git push; then
+              echo "Push successful"
+              break
+            else
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                echo "Push failed, attempt $RETRY_COUNT of $MAX_RETRIES. Pulling with rebase..."
+                git pull --rebase origin ${{ github.ref_name }}
+                sleep $((RETRY_COUNT * 2))  # Exponential backoff
+              else
+                echo "Push failed after $MAX_RETRIES attempts"
+                exit 1
+              fi
+            fi
+          done
+      
+      - name: Comment on PR with preview
+        if: steps.changes.outputs.has_changes == 'true' && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const output = `### 📄 Mod Pages Preview
+            
+            This PR will update the following documentation pages when merged:
+            
+            \`\`\`
+            ${require('child_process').execSync('git diff --staged --name-only').toString()}
+            \`\`\`
+            
+            The pages will be auto-generated from the metadata.yaml files.`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            });
