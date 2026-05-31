@@ -1,6 +1,6 @@
 ---
 title: "Available Mods"
-date: 2026-04-23
+date: 2026-05-31
 draft: false
 ---
 
@@ -32,11 +32,11 @@ Browse and download community-created mods. All mods are open-source Lua scripts
 | **[Device Tweaker](/mods/device-tweaker/)** | A comprehensive mod for tweaking device properties in Tower Networking Inc. | `4.0.2` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.2/device-tweaker-4.0.2.zip" class="button inline">Download</a> |
 | **[Floor Reward Scaling](/mods/floor-reward-scaling/)** | **Floor Reward Scaling Mod** automatically scales user daily payment rates based on their floor number using configurable progression systems. Choo... | `0.1.8` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.8/floor-reward-scaling-0.1.8.zip" class="button inline">Download</a> |
 | **[Inverse Prices](/mods/inverse-prices/)** | This mod inverts the game's economy by making purchases pay the player instead of costing money. | `0.1.5` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/inverse-prices-v0.1.5/inverse-prices-0.1.5.zip" class="button inline">Download</a> |
-| **[ModAPI Diagnostic Tool](/mods/modapi-diagnostic/)** | Zero-overhead development tool for TNI game engine modding (0.10.11+). | `4.5.6` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.5.6/modapi-diagnostic-4.5.6.zip" class="button inline">Download</a> |
+| **[ModAPI Diagnostic Tool](/mods/modapi-diagnostic/)** | Zero-overhead development tool for TNI game engine modding (0.10.11+). | `4.5.8` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/modapi-diagnostic-v4.5.8/modapi-diagnostic-4.5.8.zip" class="button inline">Download</a> |
 | **[Money Cheat](/mods/money-cheat/)** | Instantly add money and restock merchants via keyboard shortcuts. | `5.0.2` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.2/money-cheat-5.0.2.zip" class="button inline">Download</a> |
 | **[Supa Mod Loader](/mods/supa-mod-loader/)** | Automatically added by the ModManager GUI when mods are installed via ModManagerGUI.ps1. | `4.1.1` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v4.1.1/supa-mod-loader-4.1.1.zip" class="button inline">Download</a> |
 | **[TARDIS - Time Controller](/mods/tardis/)** | Control game time like a Time Lord! Preset-based speed control and time manipulation via keyboard shortcuts. | `4.0.1` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.1/tardis-4.0.1.zip" class="button inline">Download</a> |
-| **[User Floor-Based Addressing](/mods/user-floor-addressing/)** | This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment. | `0.1.10` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.10/user-floor-addressing-0.1.10.zip" class="button inline">Download</a> |
+| **[User Floor-Based Addressing](/mods/user-floor-addressing/)** | This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment. | `0.1.11` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.11/user-floor-addressing-0.1.11.zip" class="button inline">Download</a> |
 | **[Random Device Warranties](/mods/random-warranties/)** | A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful de... | `0.1.7` | CJFWeatherhead | 🔴 Discontinued | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.7/random-warranties-0.1.7.zip" class="button inline">Download</a> |
 
 ---
@@ -76,4 +76,4 @@ Interested in modding? Check out the [GitHub repository](https://github.com/CJFW
 
 ---
 
-*Last updated: 2026-04-23 | 12 mods available*
+*Last updated: 2026-05-31 | 12 mods available*
