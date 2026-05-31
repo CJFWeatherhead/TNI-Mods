@@ -454,51 +454,61 @@ Would you like to install it?
 function Get-GitHubReleases {
     <#
     .SYNOPSIS
-        Fetches all mod releases from GitHub
+        Fetches all mod releases from GitHub (paginated)
     #>
     try {
         Write-Host "Fetching releases from GitHub..." -ForegroundColor Cyan
         
-        $uri = "$script:GitHubApiBase/releases"
         $headers = @{
             "Accept" = "application/vnd.github.v3+json"
             "User-Agent" = "TNI-ModManager/3.0"
         }
         
-        $response = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get -TimeoutSec 30
-        
         $modReleases = @{}
+        $page = 1
+        $perPage = 100
+        $maxPages = 5  # Safety limit: 500 releases max
         
-        foreach ($release in $response) {
-            # Parse release tag: format is <mod-id>-v<version>
-            if ($release.tag_name -match '^(.+)-v(\d+\.\d+\.\d+)$') {
-                $modId = $Matches[1]
-                $version = $Matches[2]
-                
-                # Find the zip asset
-                $asset = $release.assets | Where-Object { $_.name -like "*.zip" } | Select-Object -First 1
-                
-                if ($asset) {
-                    $releaseInfo = @{
-                        ModId = $modId
-                        Version = $version
-                        TagName = $release.tag_name
-                        DownloadUrl = $asset.browser_download_url
-                        AssetName = $asset.name
-                        Size = $asset.size
-                        PublishedAt = $release.published_at
-                        ReleaseNotes = $release.body
-                        HtmlUrl = $release.html_url
-                    }
+        do {
+            $uri = "$script:GitHubApiBase/releases?per_page=$perPage&page=$page"
+            $response = Invoke-RestMethod -Uri $uri -Headers $headers -Method Get -TimeoutSec 30
+            
+            if ($response.Count -eq 0) { break }
+            
+            foreach ($release in $response) {
+                # Parse release tag: format is <mod-id>-v<version>
+                if ($release.tag_name -match '^(.+)-v(\d+\.\d+\.\d+)$') {
+                    $modId = $Matches[1]
+                    $version = $Matches[2]
                     
-                    # Keep only the latest version for each mod
-                    if (-not $modReleases.ContainsKey($modId) -or 
-                        (Compare-SemanticVersion $version $modReleases[$modId].Version) -gt 0) {
-                        $modReleases[$modId] = $releaseInfo
+                    # Find the zip asset
+                    $asset = $release.assets | Where-Object { $_.name -like "*.zip" } | Select-Object -First 1
+                    
+                    if ($asset) {
+                        $releaseInfo = @{
+                            ModId = $modId
+                            Version = $version
+                            TagName = $release.tag_name
+                            DownloadUrl = $asset.browser_download_url
+                            AssetName = $asset.name
+                            Size = $asset.size
+                            PublishedAt = $release.published_at
+                            ReleaseNotes = $release.body
+                            HtmlUrl = $release.html_url
+                        }
+                        
+                        # Keep only the latest version for each mod
+                        if (-not $modReleases.ContainsKey($modId) -or 
+                            (Compare-SemanticVersion $version $modReleases[$modId].Version) -gt 0) {
+                            $modReleases[$modId] = $releaseInfo
+                        }
                     }
                 }
             }
-        }
+            
+            Write-Host "  Page $page: fetched $($response.Count) releases" -ForegroundColor Gray
+            $page++
+        } while ($response.Count -eq $perPage -and $page -le $maxPages)
         
         Write-Host "  Found $($modReleases.Count) mod releases" -ForegroundColor Green
         return $modReleases
