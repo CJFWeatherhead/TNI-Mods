@@ -1,10 +1,10 @@
 ---
 title: "All Proposals"
-date: 2026-04-21
+date: 2026-05-31
 draft: false
 mod_id: "all-proposals"
 author: "CJFWeatherhead"
-version: "2.0.3"
+version: "2.0.4"
 status: "Active Development"
 game_version: "stable"
 ---
@@ -17,11 +17,11 @@ Shows all available proposals at once by overriding the game's proposal batch si
 
 | | |
 |---|---|
-| **Version** | 2.0.3 |
+| **Version** | 2.0.4 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | stable |
-| **Last Updated** | 2026-04-21 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ Shows all available proposals at once by overriding the game's proposal batch si
 
 <div class="download-section">
 
-**[Download all-proposals-2.0.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.3/all-proposals-2.0.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download all-proposals-2.0.4.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.4/all-proposals-2.0.4.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -184,14 +184,14 @@ CJFWeatherhead
 |-------|-------|
 | Mod ID | `all-proposals` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-21 |
+| Last Updated | 2026-05-31 |
 | Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/all-proposals](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/all-proposals) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v2.0.3)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.3/all-proposals-2.0.3.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/all-proposals-v2.0.4)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/all-proposals-v2.0.4/all-proposals-2.0.4.zip)
 
 </details>
 

@@ -1,10 +1,10 @@
 ---
 title: "Floor Reward Scaling"
-date: 2026-04-16
+date: 2026-05-31
 draft: false
 mod_id: "floor-reward-scaling"
 author: "CJFWeatherhead"
-version: "0.1.8"
+version: "0.1.9"
 status: "Active Development"
 game_version: "stable"
 ---
@@ -17,11 +17,11 @@ game_version: "stable"
 
 | | |
 |---|---|
-| **Version** | 0.1.8 |
+| **Version** | 0.1.9 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | stable |
-| **Last Updated** | 2026-04-16 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ game_version: "stable"
 
 <div class="download-section">
 
-**[Download floor-reward-scaling-0.1.8.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.8/floor-reward-scaling-0.1.8.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download floor-reward-scaling-0.1.9.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.9/floor-reward-scaling-0.1.9.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -188,14 +188,14 @@ CJFWeatherhead
 |-------|-------|
 | Mod ID | `floor-reward-scaling` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-16 |
+| Last Updated | 2026-05-31 |
 | Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/floor-reward-scaling](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/floor-reward-scaling) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.8)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.8/floor-reward-scaling-0.1.8.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/floor-reward-scaling-v0.1.9)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/floor-reward-scaling-v0.1.9/floor-reward-scaling-0.1.9.zip)
 
 </details>
 

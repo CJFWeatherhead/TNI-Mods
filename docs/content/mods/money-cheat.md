@@ -1,10 +1,10 @@
 ---
 title: "Money Cheat"
-date: 2026-04-21
+date: 2026-05-31
 draft: false
 mod_id: "money-cheat"
 author: "CJFWeatherhead"
-version: "5.0.2"
+version: "5.0.3"
 status: "Active Development"
 game_version: "stable"
 ---
@@ -17,11 +17,11 @@ Instantly add money and restock merchants via keyboard shortcuts.
 
 | | |
 |---|---|
-| **Version** | 5.0.2 |
+| **Version** | 5.0.3 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | stable |
-| **Last Updated** | 2026-04-21 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ Instantly add money and restock merchants via keyboard shortcuts.
 
 <div class="download-section">
 
-**[Download money-cheat-5.0.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.2/money-cheat-5.0.2.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download money-cheat-5.0.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.3/money-cheat-5.0.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -238,14 +238,14 @@ Uses on_player_input hook to detect SHIFT+M (money) and SHIFT+R (restock) keyboa
 |-------|-------|
 | Mod ID | `money-cheat` |
 | Creation Date | 2026-01-21 |
-| Last Updated | 2026-04-21 |
+| Last Updated | 2026-05-31 |
 | Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/money-cheat](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/money-cheat) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v5.0.2)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.2/money-cheat-5.0.2.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/money-cheat-v5.0.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.3/money-cheat-5.0.3.zip)
 
 </details>
 

@@ -1,10 +1,10 @@
 ---
 title: "User Floor-Based Addressing"
-date: 2026-04-23
+date: 2026-05-31
 draft: false
 mod_id: "user-floor-addressing"
 author: "CJFWeatherhead"
-version: "0.1.11"
+version: "0.1.12"
 status: "Active Development"
 game_version: "0.10.11+"
 ---
@@ -17,11 +17,11 @@ This mod sets DHCP mode, DNS servers, and assigns network addresses based on flo
 
 | | |
 |---|---|
-| **Version** | 0.1.11 |
+| **Version** | 0.1.12 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | 0.10.11+ |
-| **Last Updated** | 2026-04-23 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ This mod sets DHCP mode, DNS servers, and assigns network addresses based on flo
 
 <div class="download-section">
 
-**[Download user-floor-addressing-0.1.11.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.11/user-floor-addressing-0.1.11.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download user-floor-addressing-0.1.12.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.12/user-floor-addressing-0.1.12.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -186,14 +186,14 @@ DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spa
 |-------|-------|
 | Mod ID | `user-floor-addressing` |
 | Creation Date | 2026-01-01 |
-| Last Updated | 2026-04-23 |
+| Last Updated | 2026-05-31 |
 | Game Version | 0.10.11+ |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/user-floor-addressing](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/lua/user-floor-addressing) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.11)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.11/user-floor-addressing-0.1.11.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/user-floor-addressing-v0.1.12)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.12/user-floor-addressing-0.1.12.zip)
 
 </details>
 

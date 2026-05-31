@@ -144,6 +144,33 @@ jobs:
           python3 generate_mod_pages.py
           echo "Regenerated mod pages"
       
+      - name: Commit updated documentation pages
+        run: |
+          git add docs/content/mods/
+          if git diff --staged --quiet; then
+            echo "No documentation changes to commit"
+          else
+            git commit -m "docs: regenerate mod pages for ${{ inputs.mod_name }} v${{ steps.version.outputs.new_version }} [skip ci]"
+            MAX_RETRIES=5
+            RETRY_COUNT=0
+            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+              if git push; then
+                echo "Push successful"
+                break
+              else
+                RETRY_COUNT=$((RETRY_COUNT + 1))
+                if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                  echo "Push failed, attempt $RETRY_COUNT of $MAX_RETRIES. Pulling with rebase..."
+                  git pull --rebase origin ${{ github.ref_name }}
+                  sleep $((RETRY_COUNT * 2))
+                else
+                  echo "Push failed after $MAX_RETRIES attempts"
+                  exit 1
+                fi
+              fi
+            done
+          fi
+      
       - name: Build Hugo site
         run: |
           cd docs

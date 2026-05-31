@@ -1,10 +1,10 @@
 ---
 title: "Device Tweaker"
-date: 2026-04-21
+date: 2026-05-31
 draft: false
 mod_id: "device-tweaker"
 author: "CJFWeatherhead"
-version: "4.0.2"
+version: "4.0.3"
 status: "Active Development"
 game_version: "stable"
 ---
@@ -17,11 +17,11 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 | | |
 |---|---|
-| **Version** | 4.0.2 |
+| **Version** | 4.0.3 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | stable |
-| **Last Updated** | 2026-04-21 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ A comprehensive mod for tweaking device properties in Tower Networking Inc.
 
 <div class="download-section">
 
-**[Download device-tweaker-4.0.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.2/device-tweaker-4.0.2.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download device-tweaker-4.0.3.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.3/device-tweaker-4.0.3.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -426,14 +426,14 @@ No input handling, no panels, no register_cmd.
 |-------|-------|
 | Mod ID | `device-tweaker` |
 | Creation Date | 2026-01-18 |
-| Last Updated | 2026-04-21 |
+| Last Updated | 2026-05-31 |
 | Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/device-tweaker](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/device-tweaker) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v4.0.2)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.2/device-tweaker-4.0.2.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/device-tweaker-v4.0.3)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/device-tweaker-v4.0.3/device-tweaker-4.0.3.zip)
 
 </details>
 

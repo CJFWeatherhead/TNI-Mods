@@ -1,10 +1,10 @@
 ---
 title: "TARDIS - Time Controller"
-date: 2026-04-21
+date: 2026-05-31
 draft: false
 mod_id: "tardis"
 author: "CJFWeatherhead"
-version: "4.0.1"
+version: "4.0.2"
 status: "Active Development"
 game_version: "stable"
 ---
@@ -17,11 +17,11 @@ Control game time like a Time Lord! Preset-based speed control and time manipula
 
 | | |
 |---|---|
-| **Version** | 4.0.1 |
+| **Version** | 4.0.2 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | stable |
-| **Last Updated** | 2026-04-21 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ Control game time like a Time Lord! Preset-based speed control and time manipula
 
 <div class="download-section">
 
-**[Download tardis-4.0.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.1/tardis-4.0.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download tardis-4.0.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.2/tardis-4.0.2.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -305,14 +305,14 @@ Day skip uses DayCycleController.force_day_clock(). Speed preset ladder is fixed
 |-------|-------|
 | Mod ID | `tardis` |
 | Creation Date | 2026-01-31 |
-| Last Updated | 2026-04-21 |
+| Last Updated | 2026-05-31 |
 | Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/tardis](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/tardis) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v4.0.1)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.1/tardis-4.0.1.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/tardis-v4.0.2)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.2/tardis-4.0.2.zip)
 
 </details>
 

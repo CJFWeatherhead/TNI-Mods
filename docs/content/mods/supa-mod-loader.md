@@ -1,10 +1,10 @@
 ---
 title: "Supa Mod Loader"
-date: 2026-04-21
+date: 2026-05-31
 draft: false
 mod_id: "supa-mod-loader"
 author: "CJFWeatherhead"
-version: "4.1.1"
+version: "4.1.2"
 status: "Active Development"
 game_version: "stable"
 ---
@@ -17,11 +17,11 @@ Automatically added by the ModManager GUI when mods are installed via ModManager
 
 | | |
 |---|---|
-| **Version** | 4.1.1 |
+| **Version** | 4.1.2 |
 | **Author** | CJFWeatherhead |
 | **Status** | 🟢 Active Development |
 | **Game Version** | stable |
-| **Last Updated** | 2026-04-21 |
+| **Last Updated** | 2026-05-31 |
 
 </div>
 
@@ -31,7 +31,7 @@ Automatically added by the ModManager GUI when mods are installed via ModManager
 
 <div class="download-section">
 
-**[Download supa-mod-loader-4.1.1.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v4.1.1/supa-mod-loader-4.1.1.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
+**[Download supa-mod-loader-4.1.2.zip](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v4.1.2/supa-mod-loader-4.1.2.zip)** | [All Releases](https://github.com/CJFWeatherhead/TNI-Mods/releases)
 
 </div>
 
@@ -94,14 +94,14 @@ The version tracks the ModManager GUI version that performed the installation.
 |-------|-------|
 | Mod ID | `supa-mod-loader` |
 | Creation Date | 2026-04-16 |
-| Last Updated | 2026-04-21 |
+| Last Updated | 2026-05-31 |
 | Game Version | stable |
 | Dependencies | None |
 | Website | [https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/supa-mod-loader](https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/supa-mod-loader) |
 
 **Release URLs:**
-- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/supa-mod-loader-v4.1.1)
-- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v4.1.1/supa-mod-loader-4.1.1.zip)
+- [Latest Release](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/supa-mod-loader-v4.1.2)
+- [Direct Download](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v4.1.2/supa-mod-loader-4.1.2.zip)
 
 </details>
 
