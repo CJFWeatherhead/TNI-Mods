@@ -2,10 +2,15 @@ name: Build with GNU RISC-V toolchain on Linux
 
 on:
   pull_request:
-    branches: [ "**" ]
+    branches: ["main"]
     paths-ignore:
       - "mods/**"
       - "*.md"
+      - "docs/**"
+
+concurrency:
+  group: build-gnu-pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:

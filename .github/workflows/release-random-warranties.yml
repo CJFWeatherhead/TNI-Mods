@@ -18,6 +18,10 @@ on:
           - minor
           - major
 
+concurrency:
+  group: mod-release
+  cancel-in-progress: false
+
 jobs:
   release:
     uses: ./.github/workflows/mod-release-reusable.yml

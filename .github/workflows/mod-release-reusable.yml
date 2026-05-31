@@ -18,6 +18,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    # Serialize all mod releases to prevent concurrent push conflicts
+    concurrency:
+      group: mod-release
+      cancel-in-progress: false
     
     steps:
       - name: Checkout repository

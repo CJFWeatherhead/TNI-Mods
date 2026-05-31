@@ -1,13 +1,18 @@
-# TODO: Can we remove the duplication with `-pr` workflows?
-
 name: Build with GNU RISC-V toolchain on Linux and update continuous release
 
 on:
   push:
-    branches: [ "**" ]
+    branches: ["main"]
     paths-ignore:
       - "*.md"
+      - "docs/**"
+      - "mods/**/metadata.yaml"
+      - "mods/**/README.md"
   # NOTE: This is privileged, do not run pull_requests.
+
+concurrency:
+  group: build-gnu-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:

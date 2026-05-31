@@ -16,6 +16,10 @@ on:
   workflow_dispatch:
     # Allow manual triggering
 
+concurrency:
+  group: generate-mod-pages-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-pages:
     runs-on: ubuntu-latest
