@@ -506,7 +506,7 @@ function Get-GitHubReleases {
                 }
             }
             
-            Write-Host "  Page $page: fetched $($response.Count) releases" -ForegroundColor Gray
+            Write-Host "  Page ${page}: fetched $($response.Count) releases" -ForegroundColor Gray
             $page++
         } while ($response.Count -eq $perPage -and $page -le $maxPages)
         
