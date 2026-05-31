@@ -9,7 +9,7 @@
     Supports mod.jsonc metadata format alongside legacy metadata.yaml.
 .NOTES
     Author: CJFWeatherhead
-    Version: 3.7.8
+    Version: 3.7.9
     Requires: PowerShell 5.1+, .NET Framework 4.5+
 #>
 
@@ -28,7 +28,7 @@ $script:ModCachePath = Join-Path $script:GameDataPath "mod_cache.json"
 $script:ConfigFileName = "entry.lua"
 $script:LuaJitModFolder = Join-Path $script:ModsDirectory "luajit-support"
 $script:LuaJitPath = Join-Path $script:LuaJitModFolder "entry.elf"
-$script:ModManagerVersion = "3.7.8"
+$script:ModManagerVersion = "3.7.9"
 $script:SupaModLoaderFolder = Join-Path $script:ModsDirectory "supa-mod-loader"
 $script:ManagedMarkerFileName = "mod.managed"
 
@@ -40,7 +40,7 @@ $script:LuaJitZipUrl = "https://github.com/$script:GitHubRepo/releases/download/
 
 # Startup logging
 Write-Host "======================================" -ForegroundColor Cyan
-Write-Host "TNI Mod Manager v3.7.8 - Starting up..." -ForegroundColor Cyan
+Write-Host "TNI Mod Manager v3.7.9 - Starting up..." -ForegroundColor Cyan
 Write-Host "======================================" -ForegroundColor Cyan
 Write-Host ""
 Write-Host "Configuration:" -ForegroundColor Yellow
@@ -946,7 +946,7 @@ function Get-ModSourceIcon {
 $xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tower Networking Inc - Mod Manager v3.7.8" 
+        Title="Tower Networking Inc - Mod Manager v3.7.9" 
         Height="800" Width="1100" 
         WindowStartupLocation="CenterScreen"
         Background="#FF37474F">
