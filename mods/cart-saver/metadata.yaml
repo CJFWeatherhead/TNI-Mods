@@ -31,7 +31,7 @@ Description: |
   - `cart_probe` : diagnostics - run this first if something misbehaves
   - `cart_scan` : dump the market UI nodes, to debug cart importing
 
-Author: CJFWeatherhead
+Author: agentd00nut
 Version: 3.5.0
 Image: icon.png
 Creation Date: 2026-08-24

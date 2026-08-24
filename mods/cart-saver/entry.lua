@@ -1,6 +1,6 @@
 -- Cart Saver Mod
 -- Purpose: Build named shopping lists and order them from merchants in one click.
--- Author: CJFWeatherhead
+-- Author: agentd00nut
 -- Version: 3.5.0
 --
 -- ============================================================================
