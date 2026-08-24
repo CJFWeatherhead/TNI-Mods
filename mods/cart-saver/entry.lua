@@ -1,7 +1,7 @@
 -- Cart Saver Mod
 -- Purpose: Build named shopping lists and order them from merchants in one click.
 -- Author: CJFWeatherhead
--- Version: 3.4.0
+-- Version: 3.5.0
 --
 -- ============================================================================
 -- SANDBOX FACTS THIS MOD IS BUILT AROUND -- read before changing anything
@@ -15,8 +15,8 @@
 --
 -- 2. get_script() IS BANNED ("Attempt to access restricted property setter get_script"), so
 --    the DeviceCheckout class cannot be reached and create_node() only makes engine classes.
---    The only way to get an order line is to BORROW a live DeviceCheckout from the D-Market2
---    cart and reuse it, which is why "Learn" exists.
+--    The only way to get an order line is to BORROW a live DeviceCheckout off a store listing
+--    row and reuse it. This happens automatically the first time an order is placed.
 --
 -- 3. A Lua function given to Godot as a Callable FIRES ONCE. gd_callable_lua() leaves the
 --    function on a coroutine stack at index 1, but lua_pcall() pops it and never pushes it
@@ -49,7 +49,7 @@
 -- 8. The per-frame hook is on_game_tick(delta). on_engine_load / on_mod_reload / on_tick /
 --    on_day_start are never called.
 
-local MOD_VER  = "3.4.0"
+local MOD_VER  = "3.5.0"
 local NOTE_BEG = "[cartsaver]"
 local NOTE_END = "[/cartsaver]"
 
@@ -607,8 +607,8 @@ local function order_cart(cart)
     if not cart or #cart.items == 0 then return false, "that list is empty" end
     local co = borrow_checkout()
     if co == nil then
-        return false, "no order-line template yet -- put any one item in the D-Market2 cart " ..
-                      "and press Learn. Once per session."
+        return false, "no order-line template yet -- open D-Market2 once so its listings exist, " ..
+                      "then try again"
     end
 
     local floor = cart.floor or 0
@@ -939,10 +939,30 @@ local function toggle_left_edge()
     return TOGGLE_FALLBACK_X
 end
 
+-- A hot reload re-runs this file with fresh Lua state, but the nodes built by the previous load
+-- are still parented to BaseUI. Nothing polls them any more, so they would sit there dead and
+-- duplicated -- remove them before building again.
+local function remove_stale_ui(base)
+    local removed = 0
+    for _, name in ipairs({ "CartSaverWindow", "CartSaverToggle" }) do
+        local ok, found = pcall(_c4, base, "find_children", name, "", true, false)
+        if ok then
+            for _, n in ipairs(arr_list(found, 8)) do
+                local parent = call0(n, "get_parent")
+                if parent then pcall(_c1, parent, "remove_child", n) end
+                pcall(_c0, n, "queue_free")
+                removed = removed + 1
+            end
+        end
+    end
+    if removed > 0 then dlog("removed " .. removed .. " node(s) from a previous load") end
+end
+
 local function build_ui()
     if ui.built then return true end
     local base = ModApiV1 and ModApiV1.get_base_ui()
     if not base then return false end
+    remove_stale_ui(base)
     local root = mk("PanelContainer", "CartSaverWindow", base)
     if not root then return false end
     ui.root = root
@@ -961,15 +981,6 @@ local function build_ui()
 
     local title_row = hbox(outer)
     label(title_row, "Saved Carts v" .. MOD_VER, true)
-    -- add_button(title_row, "Learn", function()
-    --     spare_checkout = nil
-    --     local rows = #find_cart_rows()
-    --     if borrow_checkout() then
-    --         set_status("Ready to order (" .. rows .. " cart row(s) seen). You can clear the cart.")
-    --     else
-    --         set_status("Put one item in the D-Market2 cart first, then press Learn")
-    --     end
-    -- end)
     add_button(title_row, "Code", function()
         set_prop(ui.node.code_edit, "text", encode_carts())
         show_view(VIEW_CODE)
@@ -1283,29 +1294,45 @@ end
 -- Lifecycle
 -- =========================================================================
 
-function on_game_state_ready()
+-- Setup is idempotent and driven from on_game_tick as well as on_game_state_ready, because a
+-- hot reload re-runs this file WITHOUT firing any of the one-shot lifecycle hooks again.
+-- Relying on on_game_state_ready alone leaves a reloaded mod with no panel, and no console
+-- commands either -- the previous state's one-shot Callables are gone, so every command
+-- returns null until something re-registers them.
+local initialised = false
+
+local function ensure_ready()
+    if initialised then return true end
+    local base = ModApiV1 and ModApiV1.get_base_ui()
     local world = get_world()
-    if world then
-        local d = call1(world, "get_node", "/root/DebugLayer")
-        if d then
-            dbg_layer = d
-            set_prop(d, "enabled", true)
-            set_prop(d, "visible", true)
-            for name in pairs(cmd_impls) do register_cmd(name) end
-        end
+    if not base or not world then return false end
+
+    local d = call1(world, "get_node", "/root/DebugLayer")
+    if d then
+        dbg_layer = d
+        set_prop(d, "enabled", true)
+        set_prop(d, "visible", true)
+        for name in pairs(cmd_impls) do register_cmd(name) end
     end
+
     load_carts()
-    build_ui()
-    log("v" .. MOD_VER .. " ready -- " .. #carts .. " list(s). Commands: carts, cart_code, cart_probe")
+    if not build_ui() then return false end
+
+    initialised = true
+    log("v" .. MOD_VER .. " ready -- " .. #carts ..
+        " list(s). Commands: carts, cart_code, cart_probe, cart_scan")
+    return true
 end
+
+function on_game_state_ready() pcall(ensure_ready) end
 
 local ticks = 0
 
 function on_game_tick(delta)
-    if not ui.built then return end
     ticks = ticks + 1
     if ticks < (config.poll_every_n_ticks or 4) then return end
     ticks = 0
+    if not initialised then pcall(ensure_ready) return end
     pcall(poll_ui)
     if pending_cmd then
         local n = pending_cmd

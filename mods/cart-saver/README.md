@@ -38,18 +38,9 @@ Game data folder:
 3. Give the list a name, choose a delivery floor, press **Save**.
 4. Next time you are building a floor, open the panel and press **Order**.
 
-### The one-time Learn step
-
-Before your first order in a session, press **Learn**:
-
-1. Open D-Market2 and put **any single item** in the cart.
-2. Press **Learn** in the Cart Saver panel.
-3. Clear the D-Market2 cart if you like — Cart Saver keeps what it needs.
-
-This is necessary because the sandbox will not let a mod create an order line from scratch
-(`get_script()` is banned and `create_node()` only reaches engine classes), so Cart Saver
-borrows one real order line from the game and reuses it. If you press **Order** before doing
-this, the mod tells you rather than failing quietly.
+Ordering needs one internal object that the sandbox will not let a mod create, so Cart Saver
+borrows one from a D-Market2 listing row the first time you order. That happens by itself; it
+only needs D-Market2 to have been opened at least once this session.
 
 ### Editing a list
 
@@ -118,7 +109,6 @@ Configurable through ModManager, or by editing the config block at the top of `e
 
 ## Known limitations
 
-- **Learn is needed once per session**, as described above.
 - **Add open cart** reads only the `CartItems` container. If the cart is empty it imports
   nothing rather than guessing; run `cart_scan` to see what it can find.
 - **Listings are matched by title**, then by price, then by remembered position. If a merchant
@@ -145,6 +135,7 @@ All of these were confirmed from `logs/godot.log`:
 | The OS clipboard needs `DisplayServer`, which is banned | Use `LineEdit.select_all()` + `menu_option(MENU_COPY)` instead |
 | No `Dictionary` or `Vector2` across the bridge | `current_local_cart` is unreadable; `custom_minimum_size` cannot be set |
 | The per-frame hook is `on_game_tick(delta)` | `on_tick`, `on_engine_load`, `on_mod_reload` and `on_day_start` are never called |
+| A hot reload re-runs the file but fires no hook | Make setup idempotent and drive it from `on_game_tick` too, or the reloaded mod has no UI and no working commands. Remove the previous load's nodes from `BaseUI` by name first. |
 
 ## Troubleshooting
 

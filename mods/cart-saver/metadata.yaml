@@ -19,11 +19,6 @@ Description: |
   3. Name the list and press **Save**
   4. Next time you build a floor, press **Order** on that list
 
-  ## One thing to do each session
-  The sandbox will not let a mod create an order line from nothing, so Cart Saver borrows one
-  from the game. Put **any single item** in the D-Market2 cart, press **Learn** in the panel,
-  and you are set for the rest of the session - you can clear the cart straight afterwards.
-
   ## Where lists are kept
   Mods are not allowed to write files, so lists are stored in the **in-game clipboard notepad**
   between `[cartsaver]` markers. Anything else you have written there is left alone. Press
@@ -37,7 +32,7 @@ Description: |
   - `cart_scan` : dump the market UI nodes, to debug cart importing
 
 Author: CJFWeatherhead
-Version: 3.4.0
+Version: 3.5.0
 Image: icon.png
 Creation Date: 2026-08-24
 Last Updated: 2026-08-24
@@ -51,9 +46,12 @@ Notes: |
 
   - ModFileSystem refuses writes ("writing of files is not allowed"), hence notepad storage.
   - get_script() is a banned property and create_node() only reaches engine classes, so a
-    DeviceCheckout cannot be constructed. One is borrowed from a live cart row and reused for
-    every order line, which is what the Learn button does. Orders are therefore submitted one
-    line at a time via DeviceMerchant.submit_order().
+    DeviceCheckout cannot be constructed. One is borrowed off a store listing row the first
+    time an order is placed, and reused for every order line, so orders are submitted one line
+    at a time via DeviceMerchant.submit_order().
+  - A hot reload re-runs entry.lua but fires NO lifecycle hook afterwards, so setup is
+    idempotent and also driven from on_game_tick. Nodes from the previous load are still
+    parented to BaseUI and are removed by name before the panel is rebuilt.
   - A Lua function handed to Godot as a Callable fires exactly once: gd_callable_lua() leaves
     it at index 1 of a coroutine stack, lua_pcall() pops it, and nothing pushes it back. The
     second call errors, the error is rethrown as a C++ exception, and unwinding it exhausts
