@@ -76,7 +76,7 @@ local config = {
     poll_every_n_ticks = 4,
 
     -- Extra console output
-    debug_logging = false
+    debug_logging = true
 }
 
 -- ===== MOD CONFIGURATION END =====
@@ -395,8 +395,8 @@ end
 -- script, no listing_ref, no checkout_item_ref. The only data they carry is the text of five
 -- child labels:  Name | Variant | QtyContainer | UnitPrice | Subtotal.
 -- So a row is identified STRUCTURALLY (does it have Name and Subtotal children?) and read by
--- parsing those labels. The first child of CartItems is always CartItemPreview, the template
--- row that mirrors the store's current filtered selection -- it must be skipped.
+-- parsing those labels. The first child of CartItems is always CartItemPreview... even though
+-- it's the template row that mirrors the store's current filtered selection it must be NOT skipped.
 local CART_HOLDER_PATS = { "CartItems", "*CartItems*", "*CartList*", "*cart_items*" }
 
 local function node_name(n) return tostring(call0(n, "get_name") or "") end
@@ -485,7 +485,9 @@ local function find_cart_rows()
         if type(n) == "number" then
             for i = 0, n - 1 do
                 local c = call1(holder, "get_child", i)
-                if c and not is_preview(c) and is_cart_row(c) then rows[#rows + 1] = c end
+                --if c and not is_preview(c) and is_cart_row(c) then rows[#rows + 1] = c end
+                -- The preview row is actually the first item in the cart... so it must be included in the list of rows.
+                if c  and is_cart_row(c) then rows[#rows + 1] = c end
             end
         end
         if #rows > 0 then
