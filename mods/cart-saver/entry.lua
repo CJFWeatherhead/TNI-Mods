@@ -39,8 +39,9 @@
 --    content is five child labels: Name | Variant | QtyContainer | UnitPrice | Subtotal. Rows
 --    are therefore found STRUCTURALLY inside the CartItems container and read by parsing text,
 --    with the merchant recovered by matching the title against every merchant's listings.
---    The one node that does hold a DeviceCheckout is the store's CartItemPreview, which mirrors
---    the current filtered listing -- useful only as the borrowed order-line template.
+--    CartItems' first child is named CartItemPreview but IS a real cart line -- it is the
+--    scene's template row, reused for line 1 and duplicated for the rest. The only node holding
+--    a DeviceCheckout is DeviceListingCartItem in the store area, used as the borrowed template.
 --
 -- 7. Dictionary and Vector2 do not cross the bridge, so current_local_cart is unreadable and
 --    custom_minimum_size cannot be set (layout is anchors/offsets/size-flags only).
@@ -395,8 +396,13 @@ end
 -- script, no listing_ref, no checkout_item_ref. The only data they carry is the text of five
 -- child labels:  Name | Variant | QtyContainer | UnitPrice | Subtotal.
 -- So a row is identified STRUCTURALLY (does it have Name and Subtotal children?) and read by
--- parsing those labels. The first child of CartItems is always CartItemPreview... even though
--- it's the template row that mirrors the store's current filtered selection it must be NOT skipped.
+-- parsing those labels. CartItems' first child is named CartItemPreview, but that is NOT a
+-- preview to skip: it is the template row defined in the scene, reused as cart line 1, with
+-- every further line a duplicate of it (hence the auto-names). It carries no refs and is
+-- structurally identical to the rest, so it is read like any other row. A row is only ignored
+-- when it is hidden or its Name label is blank, which is how the template looks when the cart
+-- is empty. (The node that does hold a DeviceCheckout is DeviceListingCartItem, over in the
+-- store listing area -- that one is only ever used as the borrowed order-line template.)
 local CART_HOLDER_PATS = { "CartItems", "*CartItems*", "*CartList*", "*cart_items*" }
 
 local function node_name(n) return tostring(call0(n, "get_name") or "") end
@@ -425,7 +431,9 @@ local function first_number(s)
 end
 
 local function is_cart_row(n)
-    return child_named(n, "Name") ~= nil and child_named(n, "Subtotal") ~= nil
+    if child_named(n, "Name") == nil or child_named(n, "Subtotal") == nil then return false end
+    if get_prop(n, "visible") == false then return false end
+    return text_of(child_named(n, "Name")) ~= ""
 end
 
 -- Quantity lives somewhere inside QtyContainer, next to its +/- buttons.
@@ -474,8 +482,7 @@ local function find_cart_holders(root)
     return out
 end
 
--- Never guesses: an empty cart reports empty rather than falling back to a search that
--- would land on the preview row.
+-- Never guesses: an empty cart reports empty rather than falling back to a global search.
 local function find_cart_rows()
     local root = get_scene_root()
     if not root then return {} end
@@ -485,9 +492,7 @@ local function find_cart_rows()
         if type(n) == "number" then
             for i = 0, n - 1 do
                 local c = call1(holder, "get_child", i)
-                --if c and not is_preview(c) and is_cart_row(c) then rows[#rows + 1] = c end
-                -- The preview row is actually the first item in the cart... so it must be included in the list of rows.
-                if c  and is_cart_row(c) then rows[#rows + 1] = c end
+                if c and is_cart_row(c) then rows[#rows + 1] = c end
             end
         end
         if #rows > 0 then
