@@ -1,7 +1,7 @@
 {
 	"id": "cart-saver",
 	"name": "Cart Saver - Saved Shopping Lists",
-	"authors": [ "CJFWeatherhead" ],
+	"authors": [ "agentd00nut" ],
 	"version": "3.5.0",
 	"description": [
 		"Stop re-typing the same shopping list every time you kit out a floor. Build a named list once, then order the whole thing with one button.\n\n✨ Features\n• Build lists by browsing merchants and their live stock, right in the panel\n• Order a saved list in one click - it goes through the real merchant, so stock, pricing and delivery all behave normally\n• Rename, delete and edit lists in-game; change quantities or drop lines\n• Remembers cable colours, and can order several colours of the same cable from one list - something the shop will not let you do by hand\n• Per-list delivery floor\n• Out-of-stock lines are clamped or skipped instead of losing the whole order\n• Can also import whatever D-Market2 has in its cart right now\n\n🕹️ How to use\n1. Click \"Saved Carts\" bottom-left, or type `carts` in the ~ console\n2. New list → Add item → pick merchant, item, quantity, colour\n3. Name it, press Save\n4. Next floor: press Order\n\n💾 Where lists live\nMods cannot write files, so lists are kept in the in-game clipboard notepad between [cartsaver] markers - anything else you wrote there is left alone. Press \"Code\" then \"Copy\" for a copy-paste backup string.\n\n⌨️ Console commands (~)\n• carts - open/close the panel\n• cart_code - print the backup code\n• cart_probe - diagnostics, run this first if something looks wrong\n• cart_scan - dump the market UI nodes the mod can see"
