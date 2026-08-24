@@ -100,6 +100,7 @@ Configurable through ModManager, or by editing the config block at the top of `e
 | Setting | Default | What it does |
 |---------|---------|--------------|
 | Show On-Screen Button | on | The bottom-left **Saved Carts** button. Turn off for console-only. |
+| Saved Carts Button X Position | -1 (auto) | Pixels from the left edge. Auto places it just right of the mobile-OS button. |
 | Store Lists In The Notepad | on | Persist lists in the clipboard notepad |
 | Clamp Quantities To Stock | on | Order what is left rather than skipping a short line |
 | Write Line Subtotals | on | Sets each line's subtotal to price × quantity. Turn off if you are ever charged wrongly. |

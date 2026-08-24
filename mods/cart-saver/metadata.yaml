@@ -37,7 +37,7 @@ Description: |
   - `cart_scan` : dump the market UI nodes, to debug cart importing
 
 Author: CJFWeatherhead
-Version: 3.3.0
+Version: 3.4.0
 Image: icon.png
 Creation Date: 2026-08-24
 Last Updated: 2026-08-24
@@ -101,6 +101,13 @@ Parameters:
     Type: string
     Default: Original,Yellow,Blue,Purple,Orange,Green,Red,Grey
     Description: Comma-separated colours offered for cable lines
+  - Name: toggle_x
+    Label: Saved Carts Button X Position
+    Type: integer
+    Default: -1
+    Min: -1
+    Max: 2000
+    Description: Pixels from the left edge for the on-screen button. Leave at -1 to place it automatically, just right of the mobile-OS button.
   - Name: poll_every_n_ticks
     Label: UI Poll Interval (ticks)
     Type: integer

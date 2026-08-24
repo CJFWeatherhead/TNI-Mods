@@ -1,7 +1,7 @@
 -- Cart Saver Mod
 -- Purpose: Build named shopping lists and order them from merchants in one click.
 -- Author: CJFWeatherhead
--- Version: 3.3.0
+-- Version: 3.4.0
 --
 -- ============================================================================
 -- SANDBOX FACTS THIS MOD IS BUILT AROUND -- read before changing anything
@@ -49,7 +49,7 @@
 -- 8. The per-frame hook is on_game_tick(delta). on_engine_load / on_mod_reload / on_tick /
 --    on_day_start are never called.
 
-local MOD_VER  = "3.3.0"
+local MOD_VER  = "3.4.0"
 local NOTE_BEG = "[cartsaver]"
 local NOTE_END = "[/cartsaver]"
 
@@ -75,6 +75,10 @@ local config = {
 
     -- Game ticks between UI polls. Higher is cheaper but less responsive.
     poll_every_n_ticks = 4,
+
+    -- Distance in pixels from the left edge to the "Saved Carts" button.
+    -- -1 means work it out automatically, sitting just right of the mobile-OS button.
+    toggle_x = -1,
 
     -- Extra console output
     debug_logging = true
@@ -910,6 +914,31 @@ end
 
 -- ---------- construction ----------
 
+local TOGGLE_W = 128
+local TOGGLE_GAP = 10
+local TOGGLE_FALLBACK_X = 150
+
+-- The mobile-OS activator sits in the same bottom-left corner, so the toggle is parked just
+-- to its right. Vector2 does not cross the bridge, so position/size are unreadable -- but the
+-- individual anchor/offset floats do, and that is enough to find its right edge.
+local function toggle_left_edge()
+    if type(config.toggle_x) == "number" and config.toggle_x >= 0 then return config.toggle_x end
+
+    local world = get_world()
+    local cvl = world and get_prop(world, "mobile_os_cvl")
+    local act = cvl and get_prop(cvl, "activator_control")
+    if act ~= nil then
+        local anchor_l = get_prop(act, "anchor_left")
+        local right = get_prop(act, "offset_right")
+        if anchor_l == 0 and type(right) == "number" and right > 0 then
+            dlog("toggle placed right of the mobile-OS button (edge " .. right .. ")")
+            return right + TOGGLE_GAP
+        end
+    end
+    dlog("mobile-OS button not measurable; using fallback toggle_x")
+    return TOGGLE_FALLBACK_X
+end
+
 local function build_ui()
     if ui.built then return true end
     local base = ModApiV1 and ModApiV1.get_base_ui()
@@ -919,8 +948,8 @@ local function build_ui()
     ui.root = root
     set_prop(root, "anchor_left", 0.5)  set_prop(root, "anchor_top", 0.5)
     set_prop(root, "anchor_right", 0.5) set_prop(root, "anchor_bottom", 0.5)
-    set_prop(root, "offset_left", -400) set_prop(root, "offset_top", -280)
-    set_prop(root, "offset_right", 400) set_prop(root, "offset_bottom", 280)
+    set_prop(root, "offset_left", -400) set_prop(root, "offset_top", -320)
+    set_prop(root, "offset_right", 400) set_prop(root, "offset_bottom", 320)
     set_prop(root, "mouse_filter", 0)
     set_prop(root, "visible", false)
 
@@ -932,15 +961,15 @@ local function build_ui()
 
     local title_row = hbox(outer)
     label(title_row, "Saved Carts v" .. MOD_VER, true)
-    add_button(title_row, "Learn", function()
-        spare_checkout = nil
-        local rows = #find_cart_rows()
-        if borrow_checkout() then
-            set_status("Ready to order (" .. rows .. " cart row(s) seen). You can clear the cart.")
-        else
-            set_status("Put one item in the D-Market2 cart first, then press Learn")
-        end
-    end)
+    -- add_button(title_row, "Learn", function()
+    --     spare_checkout = nil
+    --     local rows = #find_cart_rows()
+    --     if borrow_checkout() then
+    --         set_status("Ready to order (" .. rows .. " cart row(s) seen). You can clear the cart.")
+    --     else
+    --         set_status("Put one item in the D-Market2 cart first, then press Learn")
+    --     end
+    -- end)
     add_button(title_row, "Code", function()
         set_prop(ui.node.code_edit, "text", encode_carts())
         show_view(VIEW_CODE)
@@ -1091,10 +1120,11 @@ local function build_ui()
         local t = mk("Button", "CartSaverToggle", base)
         set_prop(t, "text", "Saved Carts")
         set_prop(t, "toggle_mode", true)
+        local left = toggle_left_edge()
         set_prop(t, "anchor_left", 0.0)  set_prop(t, "anchor_top", 1.0)
         set_prop(t, "anchor_right", 0.0) set_prop(t, "anchor_bottom", 1.0)
-        set_prop(t, "offset_left", 12)   set_prop(t, "offset_top", -46)
-        set_prop(t, "offset_right", 140) set_prop(t, "offset_bottom", -12)
+        set_prop(t, "offset_left", left) set_prop(t, "offset_top", -46)
+        set_prop(t, "offset_right", left + TOGGLE_W) set_prop(t, "offset_bottom", -12)
         ui.fixed[#ui.fixed + 1] = { node = t, always = true, action = function()
             local vis = get_prop(ui.root, "visible")
             set_prop(ui.root, "visible", not vis)
