@@ -32,7 +32,7 @@ Description: |
   - `cart_scan` : dump the market UI nodes, to debug cart importing
 
 Author: agentd00nut
-Version: 3.5.0
+Version: 3.6.0
 Image: icon.png
 Creation Date: 2026-08-24
 Last Updated: 2026-08-24
@@ -59,7 +59,9 @@ Notes: |
     connections at all: buttons are toggle buttons polled from on_game_tick, and console
     commands re-register only the command that just ran (each registration pins a coroutine).
   - The Lua heap is about 1800 KB and "Out of memory" is fatal, so hot paths use shared
-    helper functions with pcall(fn, args...) instead of allocating a closure per call.
+    helper functions with pcall(fn, args...) instead of allocating a closure per call. Retry
+    paths count as hot paths: setup is attempted until the game is ready, and console commands
+    are registered once only, because each registration pins another coroutine.
   - Touching a freed object raises a C++ bad_cast that pcall cannot catch, so poll entries are
     removed before their nodes are freed and never probed afterwards.
   - find_children matches the engine class, not the script class, so cart rows are reached
@@ -69,8 +71,9 @@ Notes: |
     Name, Variant, QtyContainer, UnitPrice, Subtotal. Rows are found structurally inside the
     CartItems container and read by parsing that text; the merchant is recovered by matching
     the title against every merchant's listings. The first child of CartItems is always
-    CartItemPreview, which mirrors the store's current filtered selection and must be skipped.
-    An empty cart reports empty rather than falling back to a global search.
+    CartItemPreview, but that is the scene's template row reused as cart line 1, not something
+    to skip; it is ignored only when hidden or blank. An empty cart reports empty rather than
+    falling back to a global search.
   - The OS clipboard is reachable only through LineEdit.menu_option(MENU_COPY); DisplayServer
     needs Engine.get_singleton(), which is banned.
 Parameters:

@@ -127,7 +127,8 @@ All of these were confirmed from `logs/godot.log`:
 | `get_script()` is banned, `create_node()` is engine-only | Game script classes cannot be instantiated; borrow an instance instead |
 | A Lua function used as a `Callable` **fires once** | No signal connections at all — poll instead |
 | A Lua error inside a Callable freezes the game | The bridge rethrows it as a C++ exception; unwinding it in the VM exhausts the sandbox budget (`Sandbox: Timeout`) |
-| The Lua heap is ~1800 KB and OOM is fatal | Avoid `pcall(function() ... end)` in hot paths; use `pcall(shared_fn, args...)` |
+| The Lua heap is ~1800 KB and OOM is fatal | Avoid `pcall(function() ... end)` in hot paths; use `pcall(shared_fn, args...)`. Retry paths count as hot paths. |
+| Every `register_cmd` pins a coroutine forever | Register each console command once. Re-registering on a per-frame retry exhausts the heap in seconds. |
 | Touching a freed object throws an uncatchable `bad_cast` | Deregister poll entries *before* freeing their nodes |
 | `find_children` matches the engine class | Script class names like `V2CartItem` never match; use name patterns |
 | Cart rows carry no data at all | They are plain code-built `HBoxContainer`s (`@HBoxContainer@6806`) whose only content is five labels: `Name`, `Variant`, `QtyContainer`, `UnitPrice`, `Subtotal`. Find them structurally under `CartItems` and parse the text. |

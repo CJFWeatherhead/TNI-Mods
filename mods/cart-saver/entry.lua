@@ -1,7 +1,7 @@
 -- Cart Saver Mod
 -- Purpose: Build named shopping lists and order them from merchants in one click.
 -- Author: agentd00nut
--- Version: 3.5.0
+-- Version: 3.6.0
 --
 -- ============================================================================
 -- SANDBOX FACTS THIS MOD IS BUILT AROUND -- read before changing anything
@@ -29,6 +29,9 @@
 -- 4. THE LUA HEAP IS TINY (~1800 KB) and "Exception: Out of memory" is fatal and uncatchable.
 --    Every pcall(function() ... end) allocates a closure, so the polling path uses shared
 --    helper functions (_idx/_set/_call*) with pcall(fn, args...) and allocates nothing.
+--    Anything on a retry path must be allocation-free too: setup used to re-register the
+--    console commands on every attempt, pinning ~60 coroutines a second, and a new game where
+--    the panel was not buildable yet hit "Out of memory" within seconds.
 --
 -- 5. TOUCHING A FREED OBJECT THROWS A C++ std::bad_cast THAT pcall CANNOT CATCH. Poll entries
 --    are therefore removed BEFORE their nodes are freed, never probed afterwards.
@@ -49,7 +52,7 @@
 -- 8. The per-frame hook is on_game_tick(delta). on_engine_load / on_mod_reload / on_tick /
 --    on_day_start are never called.
 
-local MOD_VER  = "3.5.0"
+local MOD_VER  = "3.6.0"
 local NOTE_BEG = "[cartsaver]"
 local NOTE_END = "[/cartsaver]"
 
@@ -1204,6 +1207,7 @@ local function register_cmd(name)
 end
 
 cmd_impls["carts"] = function()
+    if _G.cart_saver_retry and not _G.cart_saver_retry() then log("panel unavailable") return end
     if not build_ui() then log("panel unavailable") return end
     local vis = get_prop(ui.root, "visible")
     set_prop(ui.root, "visible", not vis)
@@ -1299,29 +1303,68 @@ end
 -- Relying on on_game_state_ready alone leaves a reloaded mod with no panel, and no console
 -- commands either -- the previous state's one-shot Callables are gone, so every command
 -- returns null until something re-registers them.
+-- Setup retries until the game is far enough along, so every step here must be safe to run
+-- repeatedly. Registering a console command is NOT: each registration pins another coroutine in
+-- the Lua registry forever (fact 3), so re-running it ~15x a second exhausts the 1800 KB heap in
+-- seconds and every on_game_tick then dies with "Out of memory". Hence the one-shot flags, the
+-- attempt cap, and the single reason line instead of per-attempt logging.
 local initialised = false
+local cmds_registered = false
+local init_attempts = 0
+local init_reason = nil
+local INIT_MAX_ATTEMPTS = 300     -- generous; at 4-tick spacing that is ~20s of grace
+
+local function init_blocked(reason)
+    if init_reason ~= reason then
+        init_reason = reason
+        log("waiting for " .. reason .. " before setting up")
+    end
+    return false
+end
 
 local function ensure_ready()
     if initialised then return true end
-    local base = ModApiV1 and ModApiV1.get_base_ui()
-    local world = get_world()
-    if not base or not world then return false end
-
-    local d = call1(world, "get_node", "/root/DebugLayer")
-    if d then
-        dbg_layer = d
-        set_prop(d, "enabled", true)
-        set_prop(d, "visible", true)
-        for name in pairs(cmd_impls) do register_cmd(name) end
+    if init_attempts >= INIT_MAX_ATTEMPTS then return false end
+    init_attempts = init_attempts + 1
+    if init_attempts == INIT_MAX_ATTEMPTS then
+        log("gave up setting up (" .. tostring(init_reason or "unknown") ..
+            "). Type 'carts' in the ~ console to retry.")
+        return false
     end
 
-    load_carts()
-    if not build_ui() then return false end
+    local base = ModApiV1 and ModApiV1.get_base_ui()
+    if not base then return init_blocked("the base UI") end
+    local world = get_world()
+    if not world then return init_blocked("the game world") end
 
+    -- Once only: every register_cmd call costs a permanently pinned coroutine.
+    if not cmds_registered then
+        local d = call1(world, "get_node", "/root/DebugLayer")
+        if d then
+            dbg_layer = d
+            set_prop(d, "enabled", true)
+            set_prop(d, "visible", true)
+            for name in pairs(cmd_impls) do register_cmd(name) end
+            cmds_registered = true
+        end
+    end
+
+    if not build_ui() then return init_blocked("the UI to build") end
+
+    load_carts()
+    refresh_list()
     initialised = true
     log("v" .. MOD_VER .. " ready -- " .. #carts ..
         " list(s). Commands: carts, cart_code, cart_probe, cart_scan")
     return true
+end
+
+-- Lets the player retry by hand after a give-up.
+local function retry_setup()
+    if initialised then return true end
+    init_attempts = 0
+    init_reason = nil
+    return ensure_ready()
 end
 
 function on_game_state_ready() pcall(ensure_ready) end
@@ -1340,3 +1383,5 @@ function on_game_tick(delta)
         register_cmd(n)
     end
 end
+
+_G.cart_saver_retry = retry_setup
