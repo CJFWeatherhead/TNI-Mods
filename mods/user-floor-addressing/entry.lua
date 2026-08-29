@@ -38,7 +38,8 @@ local function random_suffix(len)
     local chars = "abcdefghijklmnopqrstuvwxyz"
     local result = {}
     for i = 1, len do
-        result[i] = chars:sub(math.random(1, #chars), math.random(1, #chars))
+        local idx = math.random(1, #chars)
+        result[i] = chars:sub(idx, idx)
     end
     return table.concat(result)
 end
