@@ -4,7 +4,7 @@ date: 2026-01-24
 draft: false
 ---
 
-# Tower Networking Inc - Mod Manager v3.7.11
+# Tower Networking Inc - Mod Manager v3.7.12
 
 A modern Windows application with a graphical interface for managing Tower Networking Inc mods. Browse, download, install, configure, and manage all your mods in one place!
 
@@ -52,9 +52,9 @@ A modern Windows application with a graphical interface for managing Tower Netwo
 
 ## Download
 
-### Latest Release: v3.7.11
+### Latest Release: v3.7.12
 
-**[[U+1F4E6] Download TNI-ModManager-v3.7.11.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v3.7.11/TNI-ModManager-v3.7.11.exe)** *(Recommended)*
+**[[U+1F4E6] Download TNI-ModManager-v3.7.12.exe](https://github.com/CJFWeatherhead/TNI-Mods/releases/download/mod-manager-v3.7.12/TNI-ModManager-v3.7.12.exe)** *(Recommended)*
 
 **Windows Application** - Double-click to run. No PowerShell knowledge required!
 
@@ -69,7 +69,7 @@ powershell.exe -ExecutionPolicy Bypass -File ModManagerGUI.ps1
 
 Or use [ModManager.bat](https://raw.githubusercontent.com/CJFWeatherhead/TNI-Mods/main/ModManager.bat) for easy launching.
 
-[View all releases on GitHub [U+2192]](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v3.7.11)
+[View all releases on GitHub [U+2192]](https://github.com/CJFWeatherhead/TNI-Mods/releases/tag/mod-manager-v3.7.12)
 
 ## Quick Start
 
