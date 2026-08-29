@@ -1,6 +1,6 @@
 ---
 title: "Available Mods"
-date: 2026-05-31
+date: 2026-08-29
 draft: false
 ---
 
@@ -36,7 +36,7 @@ Browse and download community-created mods. All mods are open-source Lua scripts
 | **[Money Cheat](/mods/money-cheat/)** | Instantly add money and restock merchants via keyboard shortcuts. | `5.0.3` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/money-cheat-v5.0.3/money-cheat-5.0.3.zip" class="button inline">Download</a> |
 | **[Supa Mod Loader](/mods/supa-mod-loader/)** | Automatically added by the ModManager GUI when mods are installed via ModManagerGUI.ps1. | `4.1.2` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/supa-mod-loader-v4.1.2/supa-mod-loader-4.1.2.zip" class="button inline">Download</a> |
 | **[TARDIS - Time Controller](/mods/tardis/)** | Control game time like a Time Lord! Preset-based speed control and time manipulation via keyboard shortcuts. | `4.0.2` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/tardis-v4.0.2/tardis-4.0.2.zip" class="button inline">Download</a> |
-| **[User Floor-Based Addressing](/mods/user-floor-addressing/)** | This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment. | `0.1.12` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.12/user-floor-addressing-0.1.12.zip" class="button inline">Download</a> |
+| **[User Floor-Based Addressing](/mods/user-floor-addressing/)** | This mod assigns network addresses and DNS servers to users based on floor number. | `0.1.13` | CJFWeatherhead | 🟢 Active | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/user-floor-addressing-v0.1.13/user-floor-addressing-0.1.13.zip" class="button inline">Download</a> |
 | **[Random Device Warranties](/mods/random-warranties/)** | A simple example mod that randomizes warranty periods of all devices in Tower Networking Inc. Superseded by Device Tweaker, but kept as a useful de... | `0.1.8` | CJFWeatherhead | 🔴 Discontinued | <a href="https://github.com/CJFWeatherhead/TNI-Mods/releases/download/random-warranties-v0.1.8/random-warranties-0.1.8.zip" class="button inline">Download</a> |
 
 ---
@@ -76,4 +76,4 @@ Interested in modding? Check out the [GitHub repository](https://github.com/CJFW
 
 ---
 
-*Last updated: 2026-05-31 | 12 mods available*
+*Last updated: 2026-08-29 | 12 mods available*
