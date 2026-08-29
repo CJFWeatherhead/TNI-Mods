@@ -35,19 +35,17 @@ $parameters += @{
 }
 
 $parameters += @{
-    Name = "dhcp_mode"
-    Label = "DHCP Mode"
-    Type = "select"
-    Default = "boot_dhcp"
-    Options = @("disabled", "boot_dhcp", "periodic_dhcp")
+    Name = "use_random_suffix"
+    Label = "Use Randomised Suffix"
+    Type = "boolean"
+    Default = $false
     Description = @"
-DHCP mode for user computers:
+How the per-user part of the address is generated:
 
-- disabled: Manual configuration only, users must set addresses manually
-- boot_dhcp: DHCP requests on boot only, then static address
-- periodic_dhcp: Periodic DHCP requests, addresses may change
+- false (off): Incremental counter per floor (usr1, usr2, usr3, ...)
+- true (on):   Random 4-character lowercase suffix (usrabcd, usrxyze, ...)
 
-Recommended: boot_dhcp for stable addressing after initial setup
+Random suffixes avoid predictable addressing but may collide on very busy floors.
 "@
 }
 
@@ -55,27 +53,28 @@ $parameters += @{
     Name = "address_format"
     Label = "Network Address Format"
     Type = "string"
-    Default = "f%d/usr%d"
+    Default = "@f%d/usr%s"
     Description = @"
 Format string for network addresses.
-Uses C-style printf format with two %d placeholders:
-  1st %d = floor number
-  2nd %d = user increment (counter per floor)
+Uses C-style printf format with one %d and one %s placeholder:
+  %d = floor number
+  %s = user suffix (incremental number or random 4-char string, depending on the toggle above)
 
 Examples:
-- "f%d/usr%d" -> f0/usr1, f0/usr2, f1/usr1, ...
-- "floor-%d/u%d" -> floor-0/u1, floor-0/u2, ...
-- "%d.%d" -> 0.1, 0.2, 1.1, 1.2, ...
+- "@f%d/usr%s" -> @f0/usr1, @f0/usr2 or @f0/usrabcd, @f0/usrxyze
+- "floor-%d/u%s" -> floor-0/u1 or floor-0/uabcd
+- "%d-%s" -> 0-1, 0-2 or 0-abcd
 
-Must contain exactly two %d placeholders.
+Must contain exactly one %d placeholder and one %s placeholder.
 "@
     Validate = {
-        param($Value)
-        $matches = [regex]::Matches($Value, "%d")
-        if ($matches.Count -ne 2) {
-            return "Address format must contain exactly two %d placeholders"
+        param(`$Value)
+        `$dMatches = [regex]::Matches(`$Value, "%d")
+        `$sMatches = [regex]::Matches(`$Value, "%s")
+        if (`$dMatches.Count -ne 1 -or `$sMatches.Count -ne 1) {
+            return "Address format must contain exactly one %d placeholder and one %s placeholder"
         }
-        return $null
+        return `$null
     }
 }
 

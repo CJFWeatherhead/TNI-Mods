@@ -1,12 +1,11 @@
 Name: User Floor-Based Addressing
 Description: |
-  This mod sets DHCP mode, DNS servers, and assigns network addresses based on floor number and user increment.
+  This mod assigns network addresses and DNS servers to users based on floor number.
 
   ## Features
-  - Sets DHCP mode (default: "boot_dhcp") for all users
-  - Assigns addresses like "@f{floor}/usr{increment}" (configurable format)
+  - Assigns addresses like "@f{floor}/usr{suffix}" (configurable format)
+  - Supports incremental suffixes (usr1, usr2, ...) or random 4-character lowercase suffixes (usrabcd, usrxyze, ...)
   - Configures DNS servers with a floor-specific primary and two configurable fallbacks
-  - Tracks user count per floor for incremental addressing
 
   ## Limitations
   - Hardware (MAC) address control is not supported -- the mod API does not expose
@@ -24,19 +23,18 @@ ID: user-floor-addressing
 Dependencies: []
 Image: icon.png
 Notes: |
-  DHCP modes available: "disabled", "boot_dhcp", "periodic_dhcp". Uses on_user_spawned hook.
+  DHCP mode is now controlled natively by the game. Uses on_user_spawned hook.
 Parameters:
+  - Name: use_random_suffix
+    Label: Use Randomised Suffix
+    Type: boolean
+    Default: false
+    Description: "false = incremental counter per floor (usr1, usr2, ...); true = random 4-character lowercase suffix (usrabcd, usrxyze, ...)"
   - Name: address_format
     Label: Network Address Format
     Type: string
-    Default: "@f%d/usr%d"
-    Description: Format string for network addresses. Two %d placeholders are replaced with floor number and user increment (e.g., "@f%d/usr%d" becomes "@f0/usr1")
-  - Name: dhcp_mode
-    Label: DHCP Mode
-    Type: select
-    Default: "boot_dhcp"
-    Options: ["disabled", "boot_dhcp", "periodic_dhcp"]
-    Description: DHCP mode for users. boot_dhcp = DHCP on boot only, periodic_dhcp = periodic DHCP requests, disabled = manual only
+    Default: "@f%d/usr%s"
+    Description: Format string for network addresses. %d is replaced with floor number, %s with the user suffix (e.g., "@f%d/usr%s" becomes "@f0/usr1" or "@f0/usrabcd")
   - Name: dns_format
     Label: Floor DNS Server Format
     Type: string

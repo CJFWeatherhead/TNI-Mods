@@ -2,7 +2,7 @@
 -- Sets DHCP mode, DNS servers, and assigns network addresses based on floor number + increment
 --
 -- DHCP Modes: "disabled", "boot_dhcp", "periodic_dhcp"
--- Version: 3.0 - Cleaned up; removed dead PHONE/CCTV device-spawn code
+-- Version: 3.1 - Removed DHCP mode control (now native); added randomised suffix support
 --
 -- LIMITATIONS:
 --   Hardware (MAC) address control: not supported -- the mod API does not expose
@@ -19,8 +19,8 @@ local mod_id = "user-floor-addressing"
 
 local config = {
     -- Network addressing
-    dhcp_mode = "boot_dhcp", -- "disabled", "boot_dhcp", or "periodic_dhcp"
-    address_format = "@f%d/usr%d",
+    use_random_suffix = false, -- false = incremental (usr1, usr2...), true = random 4-char (usrabcd, usrxyze...)
+    address_format = "@f%d/usr%s",
 
     -- DNS configuration
     dns_format = "@f%d/dns",
@@ -33,7 +33,18 @@ local config = {
 
 -- ===== MOD CONFIGURATION END =====
 
+-- Generate a random lowercase alphabetic string of the given length
+local function random_suffix(len)
+    local chars = "abcdefghijklmnopqrstuvwxyz"
+    local result = {}
+    for i = 1, len do
+        result[i] = chars:sub(math.random(1, #chars), math.random(1, #chars))
+    end
+    return table.concat(result)
+end
+
 function on_engine_load()
+    math.randomseed(os.time())
     print("[user-floor-addressing] Mod loaded")
     if ModApiV1 and ModApiV1.sanity then
         ModApiV1.sanity()
@@ -43,17 +54,17 @@ function on_engine_load()
     end
 
     -- Validate format strings at load time
-    local addr_fmt = config.address_format or "@f%d/usr%d"
+    local addr_fmt = config.address_format or "@f%d/usr%s"
     local dns_fmt = config.dns_format or "@f%d/dns"
-    if not pcall(function() return string.format(addr_fmt, 1, 1) end) then
-        print("[user-floor-addressing] WARNING: address_format invalid, will use default '@f%d/usr%d'")
+    if not pcall(function() return string.format(addr_fmt, 1, "x") end) then
+        print("[user-floor-addressing] WARNING: address_format invalid, will use default '@f%d/usr%s'")
     end
     if not pcall(function() return string.format(dns_fmt, 1) end) then
         print("[user-floor-addressing] WARNING: dns_format invalid, will use default '@f%d/dns'")
     end
 
-    print(string.format("[user-floor-addressing] Config: DHCP=%s, AddrFmt='%s', DNSFmt='%s'",
-        tostring(config.dhcp_mode or "boot_dhcp"), addr_fmt, dns_fmt))
+    print(string.format("[user-floor-addressing] Config: RandomSuffix=%s, AddrFmt='%s', DNSFmt='%s'",
+        tostring(config.use_random_suffix or false), addr_fmt, dns_fmt))
 end
 
 function on_mod_reload()
@@ -104,38 +115,35 @@ function on_user_spawned(user)
     local user_increment = floor_user_counts[floor_num]
 
     -- Get configuration parameters
-    local address_format = config.address_format or "@f%d/usr%d"
-    local dhcp_mode = config.dhcp_mode or "boot_dhcp"
+    local address_format = config.address_format or "@f%d/usr%s"
     local dns_format = config.dns_format or "@f%d/dns"
     local fallback_dns_1 = config.fallback_dns_1 or "@srv/dns1"
     local fallback_dns_2 = config.fallback_dns_2 or "@srv/dns2"
+
+    -- Determine the user suffix (incremental number or random 4-char string)
+    local user_suffix
+    if config.use_random_suffix then
+        user_suffix = random_suffix(4)
+    else
+        user_suffix = tostring(user_increment)
+    end
 
     -- Generate the network address based on configured format
     local network_address
     do
         local ok, result = pcall(function()
-            return string.format(address_format, floor_num, user_increment)
+            return string.format(address_format, floor_num, user_suffix)
         end)
         if ok then
             network_address = result
         else
             print("[user-floor-addressing] WARNING: address_format mismatch -> " .. tostring(result) .. "; using default")
-            network_address = string.format("@f%d/usr%d", floor_num, user_increment)
+            network_address = string.format("@f%d/usr%s", floor_num, user_suffix)
         end
     end
 
-    -- Set DHCP mode from configuration
-    -- Important: We need to disable DHCP first, set the static address, then re-enable DHCP
-    -- Otherwise DHCP mode might clear the static address
-    networkctl.set_dhcp_mode("disabled")
-
     -- Set the network address
     networkctl.set_network_address(network_address)
-
-    -- Now set the desired DHCP mode (after address is set)
-    if dhcp_mode ~= "disabled" then
-        networkctl.set_dhcp_mode(dhcp_mode)
-    end
 
     -- Set DNS servers: floor-specific DNS first, then fallbacks
     local dns1
@@ -182,6 +190,6 @@ function on_user_spawned(user)
         print("[user-floor-addressing] WARNING: Failed to set DNS servers: " .. tostring(err))
     end
 
-    print(string.format("[user-floor-addressing] Floor %d user %d: addr=%s dhcp=%s",
-        floor_num, user_increment, network_address, dhcp_mode))
+    print(string.format("[user-floor-addressing] Floor %d user %d: addr=%s",
+        floor_num, user_increment, network_address))
 end
