@@ -32,7 +32,7 @@ Description: |
   - `cart_scan` : dump the market UI nodes, to debug cart importing
 
 Author: agentd00nut
-Version: 3.6.0
+Version: 3.7.0
 Image: icon.png
 Creation Date: 2026-08-24
 Last Updated: 2026-08-24
@@ -52,6 +52,9 @@ Notes: |
   - A hot reload re-runs entry.lua but fires NO lifecycle hook afterwards, so setup is
     idempotent and also driven from on_game_tick. Nodes from the previous load are still
     parented to BaseUI and are removed by name before the panel is rebuilt.
+  - The game boots to a main menu, and the world only exists once a save is loaded. Setup
+    therefore waits indefinitely, backing off to about once every two seconds, and never times
+    out; on_game_state_ready resets and rebuilds so loading another save is handled too.
   - A Lua function handed to Godot as a Callable fires exactly once: gd_callable_lua() leaves
     it at index 1 of a coroutine stack, lua_pcall() pops it, and nothing pushes it back. The
     second call errors, the error is rethrown as a C++ exception, and unwinding it exhausts

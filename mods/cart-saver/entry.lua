@@ -1,7 +1,7 @@
 -- Cart Saver Mod
 -- Purpose: Build named shopping lists and order them from merchants in one click.
 -- Author: agentd00nut
--- Version: 3.6.0
+-- Version: 3.7.0
 --
 -- ============================================================================
 -- SANDBOX FACTS THIS MOD IS BUILT AROUND -- read before changing anything
@@ -51,8 +51,13 @@
 --
 -- 8. The per-frame hook is on_game_tick(delta). on_engine_load / on_mod_reload / on_tick /
 --    on_day_start are never called.
+--
+-- 9. The game boots to a MAIN MENU. BaseUI appears part way through the boot and the game world
+--    only exists once the player loads a save, which may be minutes later -- so setup must wait
+--    indefinitely (cheaply), never time out, and on_game_state_ready must be able to re-trigger
+--    it. Give-up logic here is a bug, not a safety net.
 
-local MOD_VER  = "3.6.0"
+local MOD_VER  = "3.7.0"
 local NOTE_BEG = "[cartsaver]"
 local NOTE_END = "[/cartsaver]"
 
@@ -1306,13 +1311,16 @@ end
 -- Setup retries until the game is far enough along, so every step here must be safe to run
 -- repeatedly. Registering a console command is NOT: each registration pins another coroutine in
 -- the Lua registry forever (fact 3), so re-running it ~15x a second exhausts the 1800 KB heap in
--- seconds and every on_game_tick then dies with "Out of memory". Hence the one-shot flags, the
--- attempt cap, and the single reason line instead of per-attempt logging.
+-- seconds and every on_game_tick then dies with "Out of memory". Hence the one-shot flag.
+--
+-- There is NO attempt limit. The game boots to a main menu and the world only appears when the
+-- player loads a save, which can be minutes away -- an earlier build gave up after ~20s and the
+-- world then loaded on the very next line of the log, leaving the mod dead for the whole
+-- session. Instead the wait just gets cheaper: see the backoff in on_game_tick.
 local initialised = false
 local cmds_registered = false
 local init_attempts = 0
 local init_reason = nil
-local INIT_MAX_ATTEMPTS = 300     -- generous; at 4-tick spacing that is ~20s of grace
 
 local function init_blocked(reason)
     if init_reason ~= reason then
@@ -1324,13 +1332,7 @@ end
 
 local function ensure_ready()
     if initialised then return true end
-    if init_attempts >= INIT_MAX_ATTEMPTS then return false end
     init_attempts = init_attempts + 1
-    if init_attempts == INIT_MAX_ATTEMPTS then
-        log("gave up setting up (" .. tostring(init_reason or "unknown") ..
-            "). Type 'carts' in the ~ console to retry.")
-        return false
-    end
 
     local base = ModApiV1 and ModApiV1.get_base_ui()
     if not base then return init_blocked("the base UI") end
@@ -1354,28 +1356,50 @@ local function ensure_ready()
     load_carts()
     refresh_list()
     initialised = true
+    init_reason = nil
     log("v" .. MOD_VER .. " ready -- " .. #carts ..
         " list(s). Commands: carts, cart_code, cart_probe, cart_scan")
     return true
 end
 
--- Lets the player retry by hand after a give-up.
-local function retry_setup()
-    if initialised then return true end
+-- Loading a world (or returning to the menu and loading another) can replace the UI this mod
+-- hung its nodes on, so everything is dropped and rebuilt rather than polled blind. Poll entries
+-- go first: touching a freed node is an uncatchable bad_cast (fact 5).
+local function reset_for_new_world()
+    ui.fixed, ui.rows, ui.watches = {}, {}, {}
+    ui.views, ui.node, ui.edit_rows, ui.add = {}, {}, {}, {}
+    ui.built, ui.root, ui.status, ui.editing = false, nil, nil, nil
+    ui.working = {}
+    initialised = false
     init_attempts = 0
     init_reason = nil
-    return ensure_ready()
+    cmds_registered = false
+    spare_checkout = nil
 end
 
-function on_game_state_ready() pcall(ensure_ready) end
+function on_game_state_ready()
+    reset_for_new_world()
+    pcall(ensure_ready)
+end
 
 local ticks = 0
+local wait_ticks = 0
 
 function on_game_tick(delta)
+    if not initialised then
+        -- Back off while waiting. Each attempt asks the game for BaseUI, which logs a warning
+        -- of its own until it exists, and the player may sit at the menu for a long time.
+        wait_ticks = wait_ticks + 1
+        local every = init_attempts < 10 and 4 or 120
+        if wait_ticks < every then return end
+        wait_ticks = 0
+        pcall(ensure_ready)
+        return
+    end
+
     ticks = ticks + 1
     if ticks < (config.poll_every_n_ticks or 4) then return end
     ticks = 0
-    if not initialised then pcall(ensure_ready) return end
     pcall(poll_ui)
     if pending_cmd then
         local n = pending_cmd
@@ -1384,4 +1408,10 @@ function on_game_tick(delta)
     end
 end
 
-_G.cart_saver_retry = retry_setup
+-- Lets the player force a retry from the console.
+_G.cart_saver_retry = function()
+    if initialised then return true end
+    init_attempts = 0
+    init_reason = nil
+    return ensure_ready()
+end

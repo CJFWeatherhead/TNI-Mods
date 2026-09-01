@@ -136,6 +136,7 @@ All of these were confirmed from `logs/godot.log`:
 | The OS clipboard needs `DisplayServer`, which is banned | Use `LineEdit.select_all()` + `menu_option(MENU_COPY)` instead |
 | No `Dictionary` or `Vector2` across the bridge | `current_local_cart` is unreadable; `custom_minimum_size` cannot be set |
 | The per-frame hook is `on_game_tick(delta)` | `on_tick`, `on_engine_load`, `on_mod_reload` and `on_day_start` are never called |
+| The world only exists after the player loads a save | The game boots to a menu, so setup must wait indefinitely and cheaply. A timeout is a bug: the world can appear minutes later. |
 | A hot reload re-runs the file but fires no hook | Make setup idempotent and drive it from `on_game_tick` too, or the reloaded mod has no UI and no working commands. Remove the previous load's nodes from `BaseUI` by name first. |
 
 ## Troubleshooting
