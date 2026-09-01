@@ -1,0 +1,126 @@
+Name: Cart Saver - Saved Shopping Lists
+Description: |
+  Stop re-typing the same shopping list every time you kit out a floor. Build a named list
+  once, then order the whole thing with one button.
+
+  ## Features
+  - Build lists by browsing merchants and their live stock, right in the panel
+  - Order a saved list in one click, through the merchant's real order path
+  - Rename, delete and edit lists from an in-game panel
+  - Edit quantities per line, or drop lines you do not want this time
+  - Remembers cable colours, and can order **several colours of the same cable in one list**,
+    which the shop does not normally allow
+  - Per-list delivery floor
+  - Out-of-stock lines are clamped to available stock or skipped, instead of losing the order
+
+  ## How to use
+  1. Click **Saved Carts** in the bottom-left corner (or type `carts` in the `~` console)
+  2. Press **New list**, then **Add item**: pick a merchant, an item, a quantity and a colour
+  3. Name the list and press **Save**
+  4. Next time you build a floor, press **Order** on that list
+
+  ## Where lists are kept
+  Mods are not allowed to write files, so lists are stored in the **in-game clipboard notepad**
+  between `[cartsaver]` markers. Anything else you have written there is left alone. Press
+  **Code** then **Copy** to put a backup string on your system clipboard, or to move lists to
+  another save.
+
+  ## Console commands
+  - `carts` : open / close the panel
+  - `cart_code` : print the backup code for all your lists
+  - `cart_probe` : diagnostics - run this first if something misbehaves
+  - `cart_scan` : dump the market UI nodes, to debug cart importing
+
+Author: agentd00nut
+Version: 3.7.0
+Image: icon.png
+Creation Date: 2026-08-24
+Last Updated: 2026-08-24
+Website: https://github.com/CJFWeatherhead/TNI-Mods/tree/main/mods/cart-saver
+Development Status: Active Development
+Game Version Supported: stable
+ID: cart-saver
+Dependencies: []
+Notes: |
+  Built around several hard limits of the Lua sandbox, all confirmed from game logs:
+
+  - ModFileSystem refuses writes ("writing of files is not allowed"), hence notepad storage.
+  - get_script() is a banned property and create_node() only reaches engine classes, so a
+    DeviceCheckout cannot be constructed. One is borrowed off a store listing row the first
+    time an order is placed, and reused for every order line, so orders are submitted one line
+    at a time via DeviceMerchant.submit_order().
+  - A hot reload re-runs entry.lua but fires NO lifecycle hook afterwards, so setup is
+    idempotent and also driven from on_game_tick. Nodes from the previous load are still
+    parented to BaseUI and are removed by name before the panel is rebuilt.
+  - The game boots to a main menu, and the world only exists once a save is loaded. Setup
+    therefore waits indefinitely, backing off to about once every two seconds, and never times
+    out; on_game_state_ready resets and rebuilds so loading another save is handled too.
+  - A Lua function handed to Godot as a Callable fires exactly once: gd_callable_lua() leaves
+    it at index 1 of a coroutine stack, lua_pcall() pops it, and nothing pushes it back. The
+    second call errors, the error is rethrown as a C++ exception, and unwinding it exhausts
+    the sandbox budget - the game freezes with "Sandbox: Timeout". So there are no signal
+    connections at all: buttons are toggle buttons polled from on_game_tick, and console
+    commands re-register only the command that just ran (each registration pins a coroutine).
+  - The Lua heap is about 1800 KB and "Out of memory" is fatal, so hot paths use shared
+    helper functions with pcall(fn, args...) instead of allocating a closure per call. Retry
+    paths count as hot paths: setup is attempted until the game is ready, and console commands
+    are registered once only, because each registration pins another coroutine.
+  - Touching a freed object raises a C++ bad_cast that pcall cannot catch, so poll entries are
+    removed before their nodes are freed and never probed afterwards.
+  - find_children matches the engine class, not the script class, so cart rows are reached
+    through the market app's chkoctl container, falling back to node-name patterns.
+  - The cart's rows are plain HBoxContainers built in code (auto-named "@HBoxContainer@6806")
+    with no script and no listing or checkout references. Their content is five child labels:
+    Name, Variant, QtyContainer, UnitPrice, Subtotal. Rows are found structurally inside the
+    CartItems container and read by parsing that text; the merchant is recovered by matching
+    the title against every merchant's listings. The first child of CartItems is always
+    CartItemPreview, but that is the scene's template row reused as cart line 1, not something
+    to skip; it is ignored only when hidden or blank. An empty cart reports empty rather than
+    falling back to a global search.
+  - The OS clipboard is reachable only through LineEdit.menu_option(MENU_COPY); DisplayServer
+    needs Engine.get_singleton(), which is banned.
+Parameters:
+  - Name: show_toggle_button
+    Label: Show On-Screen Button
+    Type: boolean
+    Default: true
+    Description: Show the "Saved Carts" button in the bottom-left corner. Turn off to use only the ~ console commands.
+  - Name: use_notepad_storage
+    Label: Store Lists In The In-Game Notepad
+    Type: boolean
+    Default: true
+    Description: Keep lists in the clipboard notepad so they survive restarts. Turn off to use only the copy-paste code.
+  - Name: clamp_to_stock
+    Label: Clamp Quantities To Stock
+    Type: boolean
+    Default: true
+    Description: If a merchant has fewer in stock than the list asks for, order what is left instead of skipping the line
+  - Name: set_subtotal
+    Label: Write Line Subtotals
+    Type: boolean
+    Default: true
+    Description: Set each order line's subtotal to listing price x quantity. Turn off if the game ever charges you the wrong amount.
+  - Name: cable_colors
+    Label: Cable Colour Choices
+    Type: string
+    Default: Original,Yellow,Blue,Purple,Orange,Green,Red,Grey
+    Description: Comma-separated colours offered for cable lines
+  - Name: toggle_x
+    Label: Saved Carts Button X Position
+    Type: integer
+    Default: -1
+    Min: -1
+    Max: 2000
+    Description: Pixels from the left edge for the on-screen button. Leave at -1 to place it automatically, just right of the mobile-OS button.
+  - Name: poll_every_n_ticks
+    Label: UI Poll Interval (ticks)
+    Type: integer
+    Default: 4
+    Min: 1
+    Max: 30
+    Description: Game ticks between UI polls. Higher is cheaper but makes buttons feel less responsive.
+  - Name: debug_logging
+    Label: Enable Debug Logging
+    Type: boolean
+    Default: false
+    Description: Show extra detail in the console about scanning, saving and ordering
